@@ -82,6 +82,8 @@ a:hover { border-bottom-color: var(--accent); }
   text-transform: uppercase;
   margin-left: 20px;
   border-bottom: none;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .site-header nav a:hover { color: var(--accent); }
 .lang-select {

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABCD² Score — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Neurology</span>
+  <h1 class="page-title" data-i18n="title">ABCD² Score</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Estimates short-term stroke risk after a transient ischaemic attack (TIA).</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria</h2>
+    <div class="field"><label data-i18n="l_age">Age ≥ 60 years</label><select id="c_age"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="l_bp">Blood pressure ≥ 140/90 mmHg at first assessment</label><select id="c_bp"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="l_clinical">Clinical features</label>
+      <select id="c_clinical">
+        <option value="0" data-i18n="clinical0">Other symptoms (+0)</option>
+        <option value="1" data-i18n="clinical1">Speech disturbance without weakness (+1)</option>
+        <option value="2" data-i18n="clinical2">Unilateral weakness (+2)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_duration">Duration of symptoms</label>
+      <select id="c_duration">
+        <option value="0" data-i18n="duration0">&lt; 10 minutes (+0)</option>
+        <option value="1" data-i18n="duration1">10–59 minutes (+1)</option>
+        <option value="2" data-i18n="duration2">≥ 60 minutes (+2)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_diabetes">Diabetes</label><select id="c_diabetes"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcABCD2()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Johnston SC, Rothwell PM, Nguyen-Huynh MN, et al. Validation and refinement of scores to predict very early stroke risk after transient ischaemic attack. Lancet. 2007;369(9558):283–292.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/357/abcd2-score-tia" target="_blank" rel="noopener">MDCalc — ABCD²</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Neurology', title: 'ABCD² Score', subtitle: 'Estimates short-term stroke risk after a transient ischaemic attack (TIA).',
+    criteria_heading: 'Criteria',
+    l_age: 'Age ≥ 60 years', l_bp: 'Blood pressure ≥ 140/90 mmHg at first assessment',
+    l_clinical: 'Clinical features', clinical0: 'Other symptoms (+0)', clinical1: 'Speech disturbance without weakness (+1)', clinical2: 'Unilateral weakness (+2)',
+    l_duration: 'Duration of symptoms', duration0: '< 10 minutes (+0)', duration1: '10–59 minutes (+1)', duration2: '≥ 60 minutes (+2)',
+    l_diabetes: 'Diabetes', opt_no: 'No', opt_yes1: 'Yes (+1)', calc_btn: 'Calculate',
+    score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Low risk (0–3) — 2-day stroke risk approx. 1.0%.', interp_mod: 'Moderate risk (4–5) — 2-day stroke risk approx. 4.1%.', interp_high: 'High risk (6–7) — 2-day stroke risk approx. 8.1%.'
+  },
+  cs: {
+    tag: 'Neurologie', title: 'ABCD² skóre', subtitle: 'Odhad krátkodobého rizika cévní mozkové příhody po tranzitorní ischemické atace (TIA).',
+    criteria_heading: 'Kritéria',
+    l_age: 'Věk ≥ 60 let', l_bp: 'Krevní tlak ≥ 140/90 mmHg při prvním vyšetření',
+    l_clinical: 'Klinický obraz', clinical0: 'Jiné příznaky (+0)', clinical1: 'Porucha řeči bez slabosti (+1)', clinical2: 'Jednostranná slabost (+2)',
+    l_duration: 'Trvání příznaků', duration0: '< 10 minut (+0)', duration1: '10–59 minut (+1)', duration2: '≥ 60 minut (+2)',
+    l_diabetes: 'Diabetes', opt_no: 'Ne', opt_yes1: 'Ano (+1)', calc_btn: 'Vypočítat',
+    score_label: 'Skóre = ', of7: ' / 7',
+    interp_low: 'Nízké riziko (0–3) — dvoudenní riziko CMP přibl. 1,0 %.', interp_mod: 'Střední riziko (4–5) — dvoudenní riziko CMP přibl. 4,1 %.', interp_high: 'Vysoké riziko (6–7) — dvoudenní riziko CMP přibl. 8,1 %.'
+  },
+  fr: {
+    tag: 'Neurologie', title: 'Score ABCD²', subtitle: "Estime le risque d'AVC à court terme après un accident ischémique transitoire (AIT).",
+    criteria_heading: 'Critères',
+    l_age: 'Âge ≥ 60 ans', l_bp: 'Tension artérielle ≥ 140/90 mmHg à la première évaluation',
+    l_clinical: 'Caractéristiques cliniques', clinical0: 'Autres symptômes (+0)', clinical1: 'Trouble de la parole sans faiblesse (+1)', clinical2: 'Faiblesse unilatérale (+2)',
+    l_duration: 'Durée des symptômes', duration0: '< 10 minutes (+0)', duration1: '10–59 minutes (+1)', duration2: '≥ 60 minutes (+2)',
+    l_diabetes: 'Diabète', opt_no: 'Non', opt_yes1: 'Oui (+1)', calc_btn: 'Calculer',
+    score_label: 'Score = ', of7: ' / 7',
+    interp_low: "Risque faible (0–3) — risque d'AVC à 2 jours d'environ 1,0 %.", interp_mod: "Risque modéré (4–5) — risque d'AVC à 2 jours d'environ 4,1 %.", interp_high: "Risque élevé (6–7) — risque d'AVC à 2 jours d'environ 8,1 %."
+  },
+  de: {
+    tag: 'Neurologie', title: 'ABCD²-Score', subtitle: 'Schätzt das kurzfristige Schlaganfallrisiko nach einer transitorischen ischämischen Attacke (TIA).',
+    criteria_heading: 'Kriterien',
+    l_age: 'Alter ≥ 60 Jahre', l_bp: 'Blutdruck ≥ 140/90 mmHg bei Erstuntersuchung',
+    l_clinical: 'Klinisches Bild', clinical0: 'Andere Symptome (+0)', clinical1: 'Sprachstörung ohne Schwäche (+1)', clinical2: 'Einseitige Schwäche (+2)',
+    l_duration: 'Symptomdauer', duration0: '< 10 Minuten (+0)', duration1: '10–59 Minuten (+1)', duration2: '≥ 60 Minuten (+2)',
+    l_diabetes: 'Diabetes', opt_no: 'Nein', opt_yes1: 'Ja (+1)', calc_btn: 'Berechnen',
+    score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Geringes Risiko (0–3) — 2-Tage-Schlaganfallrisiko ca. 1,0 %.', interp_mod: 'Mittleres Risiko (4–5) — 2-Tage-Schlaganfallrisiko ca. 4,1 %.', interp_high: 'Hohes Risiko (6–7) — 2-Tage-Schlaganfallrisiko ca. 8,1 %.'
+  },
+  pl: {
+    tag: 'Neurologia', title: 'Skala ABCD²', subtitle: 'Szacuje krótkoterminowe ryzyko udaru po przemijającym napadzie niedokrwiennym (TIA).',
+    criteria_heading: 'Kryteria',
+    l_age: 'Wiek ≥ 60 lat', l_bp: 'Ciśnienie tętnicze ≥ 140/90 mmHg przy pierwszej ocenie',
+    l_clinical: 'Obraz kliniczny', clinical0: 'Inne objawy (+0)', clinical1: 'Zaburzenia mowy bez osłabienia (+1)', clinical2: 'Jednostronne osłabienie (+2)',
+    l_duration: 'Czas trwania objawów', duration0: '< 10 minut (+0)', duration1: '10–59 minut (+1)', duration2: '≥ 60 minut (+2)',
+    l_diabetes: 'Cukrzyca', opt_no: 'Nie', opt_yes1: 'Tak (+1)', calc_btn: 'Oblicz',
+    score_label: 'Wynik = ', of7: ' / 7',
+    interp_low: 'Niskie ryzyko (0–3) — ryzyko udaru w ciągu 2 dni ok. 1,0%.', interp_mod: 'Umiarkowane ryzyko (4–5) — ryzyko udaru w ciągu 2 dni ok. 4,1%.', interp_high: 'Wysokie ryzyko (6–7) — ryzyko udaru w ciągu 2 dni ok. 8,1%.'
+  }
+};
+
+var _lastABCD2 = null;
+
+function calcABCD2() {
+  var ids = ['c_age','c_bp','c_clinical','c_duration','c_diabetes'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastABCD2 = total;
+  renderABCD2Result();
+}
+
+function renderABCD2Result() {
+  if (_lastABCD2 === null) return;
+  var total = _lastABCD2;
+  var interp = total <= 3 ? ucmT('interp_low') : (total <= 5 ? ucmT('interp_mod') : ucmT('interp_high'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of7');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderABCD2Result(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

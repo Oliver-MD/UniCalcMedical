@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Centor / McIsaac Score — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Infection &amp; antimicrobials</span>
+  <h1 class="page-title" data-i18n="title">Centor / McIsaac Score</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Estimates the probability of group A streptococcal pharyngitis.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria</h2>
+    <div class="field"><label data-i18n="c_exudate">Tonsillar exudate or swelling</label><select id="c_exudate"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_nodes">Tender/swollen anterior cervical lymph nodes</label><select id="c_nodes"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_fever">Fever (history of, &gt; 38°C)</label><select id="c_fever"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_cough">Absence of cough</label><select id="c_cough"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_age">Age (McIsaac modification)</label>
+      <select id="c_age">
+        <option value="1" data-i18n="age1">3–14 years (+1)</option>
+        <option value="0" data-i18n="age0">15–44 years (+0)</option>
+        <option value="-1" data-i18n="ageminus1">≥ 45 years (−1)</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcCentor()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Centor RM, Witherspoon JM, Dalton HP, et al. The diagnosis of strep throat in adults in the emergency room. Med Decis Making. 1981;1(3):239–246. McIsaac WJ, White D, Tannenbaum D, Low DE. A clinical score to reduce unnecessary antibiotic use in patients with sore throat. CMAJ. 1998;158(1):75–83.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/104/centor-score-modified-mcisaac-strep-pharyngitis" target="_blank" rel="noopener">MDCalc — Centor / McIsaac</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Infection & antimicrobials', title: 'Centor / McIsaac Score', subtitle: 'Estimates the probability of group A streptococcal pharyngitis.',
+    criteria_heading: 'Criteria',
+    c_exudate: 'Tonsillar exudate or swelling', c_nodes: 'Tender/swollen anterior cervical lymph nodes',
+    c_fever: 'Fever (history of, > 38°C)', c_cough: 'Absence of cough',
+    c_age: 'Age (McIsaac modification)', age1: '3–14 years (+1)', age0: '15–44 years (+0)', ageminus1: '≥ 45 years (−1)',
+    opt_no: 'No', opt_yes1: 'Yes (+1)', calc_btn: 'Calculate',
+    score_label: 'Score = ', points: ' points',
+    interp_low: 'Low probability of strep pharyngitis — antibiotics and/or testing generally not recommended.',
+    interp_mod: 'Moderate probability — consider rapid antigen testing or throat culture before treating.',
+    interp_high: 'Higher probability of strep pharyngitis — consider empiric treatment or testing per local guidance.'
+  },
+  cs: {
+    tag: 'Infekce a antimikrobiální léčba', title: 'Centor / McIsaac skóre', subtitle: 'Odhad pravděpodobnosti streptokokové faryngitidy skupiny A.',
+    criteria_heading: 'Kritéria',
+    c_exudate: 'Tonzilární exsudát nebo otok', c_nodes: 'Bolestivé/zvětšené přední krční uzliny',
+    c_fever: 'Horečka (anamnesticky, > 38 °C)', c_cough: 'Nepřítomnost kašle',
+    c_age: 'Věk (McIsaacova modifikace)', age1: '3–14 let (+1)', age0: '15–44 let (+0)', ageminus1: '≥ 45 let (−1)',
+    opt_no: 'Ne', opt_yes1: 'Ano (+1)', calc_btn: 'Vypočítat',
+    score_label: 'Skóre = ', points: ' bodů',
+    interp_low: 'Nízká pravděpodobnost streptokokové faryngitidy — antibiotika ani testování obecně nejsou doporučeny.',
+    interp_mod: 'Střední pravděpodobnost — před léčbou zvažte rychlý antigenní test nebo kultivaci z krku.',
+    interp_high: 'Vyšší pravděpodobnost streptokokové faryngitidy — zvažte empirickou léčbu nebo testování dle místních doporučení.'
+  },
+  fr: {
+    tag: 'Infection et antimicrobiens', title: 'Score de Centor / McIsaac', subtitle: "Estime la probabilité d'une pharyngite streptococcique du groupe A.",
+    criteria_heading: 'Critères',
+    c_exudate: 'Exsudat ou œdème amygdalien', c_nodes: 'Ganglions cervicaux antérieurs sensibles/tuméfiés',
+    c_fever: 'Fièvre (anamnestique, > 38°C)', c_cough: 'Absence de toux',
+    c_age: 'Âge (modification de McIsaac)', age1: '3–14 ans (+1)', age0: '15–44 ans (+0)', ageminus1: '≥ 45 ans (−1)',
+    opt_no: 'Non', opt_yes1: 'Oui (+1)', calc_btn: 'Calculer',
+    score_label: 'Score = ', points: ' points',
+    interp_low: "Faible probabilité de pharyngite streptococcique — antibiotiques et/ou tests généralement non recommandés.",
+    interp_mod: "Probabilité modérée — envisager un test antigénique rapide ou une culture de gorge avant traitement.",
+    interp_high: "Probabilité plus élevée de pharyngite streptococcique — envisager un traitement empirique ou un test selon les recommandations locales."
+  },
+  de: {
+    tag: 'Infektion & Antibiotika', title: 'Centor- / McIsaac-Score', subtitle: 'Schätzt die Wahrscheinlichkeit einer Gruppe-A-Streptokokken-Pharyngitis.',
+    criteria_heading: 'Kriterien',
+    c_exudate: 'Tonsillenexsudat oder -schwellung', c_nodes: 'Druckschmerzhafte/geschwollene vordere Halslymphknoten',
+    c_fever: 'Fieber (anamnestisch, > 38 °C)', c_cough: 'Fehlender Husten',
+    c_age: 'Alter (McIsaac-Modifikation)', age1: '3–14 Jahre (+1)', age0: '15–44 Jahre (+0)', ageminus1: '≥ 45 Jahre (−1)',
+    opt_no: 'Nein', opt_yes1: 'Ja (+1)', calc_btn: 'Berechnen',
+    score_label: 'Score = ', points: ' Punkte',
+    interp_low: 'Geringe Wahrscheinlichkeit einer Streptokokken-Pharyngitis — Antibiotika und/oder Testung im Allgemeinen nicht empfohlen.',
+    interp_mod: 'Mittlere Wahrscheinlichkeit — Schnellantigentest oder Rachenabstrich vor Behandlung erwägen.',
+    interp_high: 'Höhere Wahrscheinlichkeit einer Streptokokken-Pharyngitis — empirische Behandlung oder Testung gemäß lokaler Leitlinie erwägen.'
+  },
+  pl: {
+    tag: 'Infekcje i leki przeciwdrobnoustrojowe', title: 'Skala Centora / McIsaaca', subtitle: 'Szacuje prawdopodobieństwo paciorkowcowego zapalenia gardła grupy A.',
+    criteria_heading: 'Kryteria',
+    c_exudate: 'Wysięk lub obrzęk migdałków', c_nodes: 'Bolesne/powiększone przednie węzły chłonne szyjne',
+    c_fever: 'Gorączka (w wywiadzie, > 38°C)', c_cough: 'Brak kaszlu',
+    c_age: 'Wiek (modyfikacja McIsaaca)', age1: '3–14 lat (+1)', age0: '15–44 lat (+0)', ageminus1: '≥ 45 lat (−1)',
+    opt_no: 'Nie', opt_yes1: 'Tak (+1)', calc_btn: 'Oblicz',
+    score_label: 'Wynik = ', points: ' punktów',
+    interp_low: 'Niskie prawdopodobieństwo paciorkowcowego zapalenia gardła — antybiotyki i/lub testy zwykle niezalecane.',
+    interp_mod: 'Umiarkowane prawdopodobieństwo — rozważ szybki test antygenowy lub posiew z gardła przed leczeniem.',
+    interp_high: 'Wyższe prawdopodobieństwo paciorkowcowego zapalenia gardła — rozważ leczenie empiryczne lub testowanie zgodnie z lokalnymi wytycznymi.'
+  }
+};
+
+var _lastCentor = null;
+
+function calcCentor() {
+  var ids = ['c_exudate','c_nodes','c_fever','c_cough','c_age'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastCentor = total;
+  renderCentorResult();
+}
+
+function renderCentorResult() {
+  if (_lastCentor === null) return;
+  var total = _lastCentor;
+  var interp = total <= 1 ? ucmT('interp_low') : (total <= 3 ? ucmT('interp_mod') : ucmT('interp_high'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('points');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderCentorResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

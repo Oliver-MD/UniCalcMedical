@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FIB-4 Index — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Renal &amp; hepatic function</span>
+  <h1 class="page-title" data-i18n="title">FIB-4 Index</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Non-invasive estimate of liver fibrosis from age, transaminases, and platelet count.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="age_label" for="age">Age (years)</label><input type="number" id="age" min="1" max="120" step="1" data-i18n-placeholder="age_ph" placeholder="e.g. 55"></div>
+    <div class="field"><label data-i18n="ast_label" for="ast">AST (U/L)</label><input type="number" id="ast" min="1" max="2000" step="1" data-i18n-placeholder="ast_ph" placeholder="e.g. 40"></div>
+    <div class="field"><label data-i18n="alt_label" for="alt">ALT (U/L)</label><input type="number" id="alt" min="1" max="2000" step="1" data-i18n-placeholder="alt_ph" placeholder="e.g. 35"></div>
+    <div class="field"><label data-i18n="plt_label" for="plt">Platelet count (×10⁹/L)</label><input type="number" id="plt" min="1" max="1000" step="1" data-i18n-placeholder="plt_ph" placeholder="e.g. 220"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcFIB4()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Sterling RK, Lissen E, Clumeck N, et al. Development of a simple noninvasive index to predict significant fibrosis in patients with HIV/HCV coinfection. Hepatology. 2006;43(6):1317–1325.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/2200/fibrosis-4-fib-4-index-liver-fibrosis" target="_blank" rel="noopener">MDCalc — FIB-4</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Renal & hepatic function', title: 'FIB-4 Index', subtitle: 'Non-invasive estimate of liver fibrosis from age, transaminases, and platelet count.',
+    calc_heading: 'Calculate', age_label: 'Age (years)', age_ph: 'e.g. 55', ast_label: 'AST (U/L)', ast_ph: 'e.g. 40',
+    alt_label: 'ALT (U/L)', alt_ph: 'e.g. 35', plt_label: 'Platelet count (×10⁹/L)', plt_ph: 'e.g. 220',
+    calc_btn: 'Calculate', err_invalid: 'Please enter valid values for all fields.',
+    formula_label: 'Formula:', formula_text: 'FIB-4 = (Age × AST) / (Platelets × √ALT)',
+    interp_low: '< 1.30 — low probability of advanced fibrosis.', interp_mid: '1.30–2.67 — indeterminate; further evaluation may be warranted.', interp_high: '> 2.67 — high probability of advanced fibrosis.'
+  },
+  cs: {
+    tag: 'Renální a jaterní funkce', title: 'FIB-4 index', subtitle: 'Neinvazivní odhad jaterní fibrózy z věku, transamináz a počtu trombocytů.',
+    calc_heading: 'Výpočet', age_label: 'Věk (roky)', age_ph: 'např. 55', ast_label: 'AST (U/l)', ast_ph: 'např. 40',
+    alt_label: 'ALT (U/l)', alt_ph: 'např. 35', plt_label: 'Počet trombocytů (×10⁹/l)', plt_ph: 'např. 220',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platné hodnoty do všech polí.',
+    formula_label: 'Vzorec:', formula_text: 'FIB-4 = (Věk × AST) / (Trombocyty × √ALT)',
+    interp_low: '< 1,30 — nízká pravděpodobnost pokročilé fibrózy.', interp_mid: '1,30–2,67 — neurčitý výsledek; může být vhodné další vyšetření.', interp_high: '> 2,67 — vysoká pravděpodobnost pokročilé fibrózy.'
+  },
+  fr: {
+    tag: 'Fonction rénale et hépatique', title: 'Indice FIB-4', subtitle: "Estimation non invasive de la fibrose hépatique à partir de l'âge, des transaminases et de la numération plaquettaire.",
+    calc_heading: 'Calculer', age_label: 'Âge (ans)', age_ph: 'p. ex. 55', ast_label: 'ASAT (U/L)', ast_ph: 'p. ex. 40',
+    alt_label: 'ALAT (U/L)', alt_ph: 'p. ex. 35', plt_label: 'Numération plaquettaire (×10⁹/L)', plt_ph: 'p. ex. 220',
+    calc_btn: 'Calculer', err_invalid: 'Veuillez saisir des valeurs valides pour tous les champs.',
+    formula_label: 'Formule :', formula_text: 'FIB-4 = (Âge × ASAT) / (Plaquettes × √ALAT)',
+    interp_low: "< 1,30 — faible probabilité de fibrose avancée.", interp_mid: '1,30–2,67 — indéterminé ; une évaluation complémentaire peut être justifiée.', interp_high: '> 2,67 — probabilité élevée de fibrose avancée.'
+  },
+  de: {
+    tag: 'Nieren- & Leberfunktion', title: 'FIB-4-Index', subtitle: 'Nicht-invasive Abschätzung der Leberfibrose anhand von Alter, Transaminasen und Thrombozytenzahl.',
+    calc_heading: 'Berechnen', age_label: 'Alter (Jahre)', age_ph: 'z. B. 55', ast_label: 'AST (U/L)', ast_ph: 'z. B. 40',
+    alt_label: 'ALT (U/L)', alt_ph: 'z. B. 35', plt_label: 'Thrombozytenzahl (×10⁹/L)', plt_ph: 'z. B. 220',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Werte für alle Felder eingeben.',
+    formula_label: 'Formel:', formula_text: 'FIB-4 = (Alter × AST) / (Thrombozyten × √ALT)',
+    interp_low: '< 1,30 — geringe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', interp_mid: '1,30–2,67 — unbestimmt; weitere Abklärung kann sinnvoll sein.', interp_high: '> 2,67 — hohe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.'
+  },
+  pl: {
+    tag: 'Czynność nerek i wątroby', title: 'Indeks FIB-4', subtitle: 'Nieinwazyjna ocena włóknienia wątroby na podstawie wieku, transaminaz i liczby płytek krwi.',
+    calc_heading: 'Oblicz', age_label: 'Wiek (lata)', age_ph: 'np. 55', ast_label: 'AST (U/l)', ast_ph: 'np. 40',
+    alt_label: 'ALT (U/l)', alt_ph: 'np. 35', plt_label: 'Liczba płytek krwi (×10⁹/l)', plt_ph: 'np. 220',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowe wartości we wszystkich polach.',
+    formula_label: 'Wzór:', formula_text: 'FIB-4 = (Wiek × AST) / (Płytki × √ALT)',
+    interp_low: '< 1,30 — niskie prawdopodobieństwo zaawansowanego włóknienia.', interp_mid: '1,30–2,67 — wynik niejednoznaczny; dalsza ocena może być wskazana.', interp_high: '> 2,67 — wysokie prawdopodobieństwo zaawansowanego włóknienia.'
+  }
+};
+
+var _lastFIB4 = null;
+
+function calcFIB4() {
+  var age = parseFloat(document.getElementById('age').value);
+  var ast = parseFloat(document.getElementById('ast').value);
+  var alt = parseFloat(document.getElementById('alt').value);
+  var plt = parseFloat(document.getElementById('plt').value);
+  if (!age || !ast || !alt || !plt || age <= 0 || ast <= 0 || alt <= 0 || plt <= 0) { alert(ucmT('err_invalid')); return; }
+  _lastFIB4 = (age * ast) / (plt * Math.sqrt(alt));
+  renderFIB4Result();
+}
+
+function renderFIB4Result() {
+  if (_lastFIB4 === null) return;
+  var val = _lastFIB4;
+  var interp = val < 1.30 ? ucmT('interp_low') : (val <= 2.67 ? ucmT('interp_mid') : ucmT('interp_high'));
+  document.getElementById('resultScore').textContent = 'FIB-4 = ' + val.toFixed(2);
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderFIB4Result(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
