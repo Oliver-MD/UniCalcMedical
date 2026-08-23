@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HbA1c ↔ eAG — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Endocrinology &amp; metabolic</span>
+  <h1 class="page-title" data-i18n="title">HbA1c ↔ eAG</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Converts glycated haemoglobin (HbA1c) to estimated average glucose (eAG).</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="hba1c_label" for="hba1c">HbA1c (%)</label><input type="number" id="hba1c" min="3" max="20" step="0.1" data-i18n-placeholder="hba1c_ph" placeholder="e.g. 7.0"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcEAG()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Nathan DM, Kuenen J, Borg R, et al. Translating the A1C assay into estimated average glucose values. Diabetes Care. 2008;31(8):1473–1478.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/558/estimated-average-glucose-eag-from-hba1c" target="_blank" rel="noopener">MDCalc — eAG from HbA1c</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Endocrinology & metabolic', title: 'HbA1c ↔ eAG', subtitle: 'Converts glycated haemoglobin (HbA1c) to estimated average glucose (eAG).',
+    calc_heading: 'Calculate', hba1c_label: 'HbA1c (%)', hba1c_ph: 'e.g. 7.0', calc_btn: 'Calculate',
+    err_invalid: 'Please enter a valid HbA1c value.', formula_label: 'Formula:', formula_text: 'eAG (mg/dL) = 28.7 × HbA1c (%) − 46.7'
+  },
+  cs: {
+    tag: 'Endokrinologie a metabolismus', title: 'HbA1c ↔ eAG', subtitle: 'Převod glykovaného hemoglobinu (HbA1c) na odhadovanou průměrnou glykémii (eAG).',
+    calc_heading: 'Výpočet', hba1c_label: 'HbA1c (%)', hba1c_ph: 'např. 7,0', calc_btn: 'Vypočítat',
+    err_invalid: 'Zadejte prosím platnou hodnotu HbA1c.', formula_label: 'Vzorec:', formula_text: 'eAG (mg/dl) = 28,7 × HbA1c (%) − 46,7'
+  },
+  fr: {
+    tag: 'Endocrinologie et métabolisme', title: 'HbA1c ↔ eAG', subtitle: "Convertit l'hémoglobine glyquée (HbA1c) en glycémie moyenne estimée (eAG).",
+    calc_heading: 'Calculer', hba1c_label: 'HbA1c (%)', hba1c_ph: 'p. ex. 7,0', calc_btn: 'Calculer',
+    err_invalid: 'Veuillez saisir une valeur HbA1c valide.', formula_label: 'Formule :', formula_text: 'eAG (mg/dL) = 28,7 × HbA1c (%) − 46,7'
+  },
+  de: {
+    tag: 'Endokrinologie & Stoffwechsel', title: 'HbA1c ↔ eAG', subtitle: 'Umrechnung des glykierten Hämoglobins (HbA1c) in den geschätzten durchschnittlichen Blutzucker (eAG).',
+    calc_heading: 'Berechnen', hba1c_label: 'HbA1c (%)', hba1c_ph: 'z. B. 7,0', calc_btn: 'Berechnen',
+    err_invalid: 'Bitte gültigen HbA1c-Wert eingeben.', formula_label: 'Formel:', formula_text: 'eAG (mg/dl) = 28,7 × HbA1c (%) − 46,7'
+  },
+  pl: {
+    tag: 'Endokrynologia i metabolizm', title: 'HbA1c ↔ eAG', subtitle: 'Przelicza hemoglobinę glikowaną (HbA1c) na szacowaną średnią glikemię (eAG).',
+    calc_heading: 'Oblicz', hba1c_label: 'HbA1c (%)', hba1c_ph: 'np. 7,0', calc_btn: 'Oblicz',
+    err_invalid: 'Proszę podać prawidłową wartość HbA1c.', formula_label: 'Wzór:', formula_text: 'eAG (mg/dl) = 28,7 × HbA1c (%) − 46,7'
+  }
+};
+
+var _lastHbA1c = null;
+
+function calcEAG() {
+  var hba1c = parseFloat(document.getElementById('hba1c').value);
+  if (!hba1c || hba1c <= 0) { alert(ucmT('err_invalid')); return; }
+  _lastHbA1c = hba1c;
+  renderEAGResult();
+}
+
+function renderEAGResult() {
+  if (_lastHbA1c === null) return;
+  var hba1c = _lastHbA1c;
+  var eagMgDl = 28.7 * hba1c - 46.7;
+  var eagMmol = eagMgDl / 18;
+  document.getElementById('resultScore').textContent = eagMgDl.toFixed(0) + ' mg/dL (' + eagMmol.toFixed(1) + ' mmol/L)';
+  document.getElementById('resultInterp').innerHTML = '<strong>' + ucmT('formula_label') + '</strong> ' + ucmT('formula_text');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderEAGResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

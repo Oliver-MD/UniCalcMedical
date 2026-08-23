@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CHA₂DS₂-VA — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">CHA₂DS₂-VA</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Estimates stroke risk in atrial fibrillation to guide anticoagulation decisions. Sex-free variant, per the 2024 ESC atrial fibrillation guideline update.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria</h2>
+    <div class="field"><label data-i18n="c_chf">Congestive heart failure / LV dysfunction</label><select id="c_chf"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_htn">Hypertension</label><select id="c_htn"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_age">Age</label>
+      <select id="c_age">
+        <option value="0" data-i18n="age0">&lt; 65 years (+0)</option>
+        <option value="1" data-i18n="age1">65–74 years (+1)</option>
+        <option value="2" data-i18n="age2">≥ 75 years (+2)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="c_dm">Diabetes mellitus</label><select id="c_dm"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_stroke">Prior stroke, TIA, or thromboembolism</label><select id="c_stroke"><option value="0" data-i18n="opt_no">No</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select></div>
+    <div class="field"><label data-i18n="c_vasc">Vascular disease (prior MI, peripheral artery disease, or aortic plaque)</label><select id="c_vasc"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcCHA2DS2VA()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Van Gelder IC, Rienstra M, Bunting KV, et al. 2024 ESC Guidelines for the management of atrial fibrillation. Eur Heart J. 2024;45(36):3314–3414. (CHA₂DS₂-VA is the sex-free evolution of the original CHA₂DS₂-VASc score: Lip GY, Nieuwlaat R, Pisters R, et al. Chest. 2010;137(2):263–272.)<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/801/cha2ds2-vasc-score-atrial-fibrillation-stroke-risk" target="_blank" rel="noopener">MDCalc — CHA₂DS₂-VASc</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'CHA₂DS₂-VA', subtitle: 'Estimates stroke risk in atrial fibrillation to guide anticoagulation decisions. Sex-free variant, per the 2024 ESC atrial fibrillation guideline update.',
+    criteria_heading: 'Criteria',
+    c_chf: 'Congestive heart failure / LV dysfunction', c_htn: 'Hypertension',
+    c_age: 'Age', age0: '< 65 years (+0)', age1: '65–74 years (+1)', age2: '≥ 75 years (+2)',
+    c_dm: 'Diabetes mellitus', c_stroke: 'Prior stroke, TIA, or thromboembolism', c_vasc: 'Vascular disease (prior MI, peripheral artery disease, or aortic plaque)',
+    opt_no: 'No', opt_yes1: 'Yes (+1)', opt_yes2: 'Yes (+2)', calc_btn: 'Calculate',
+    score_label: 'Score = ', of8: ' / 8',
+    interp_0: 'Score 0 — anticoagulation generally not recommended.',
+    interp_1: 'Score 1 — anticoagulation may be considered, individualised to patient risk/preference.',
+    interp_2: 'Score ≥2 — anticoagulation generally recommended, individualised to bleeding risk.'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'CHA₂DS₂-VA', subtitle: 'Odhad rizika CMP při fibrilaci síní pro rozhodnutí o antikoagulaci. Varianta bez pohlaví dle aktualizace doporučení ESC 2024 pro fibrilaci síní.',
+    criteria_heading: 'Kritéria',
+    c_chf: 'Srdeční selhání / dysfunkce LK', c_htn: 'Hypertenze',
+    c_age: 'Věk', age0: '< 65 let (+0)', age1: '65–74 let (+1)', age2: '≥ 75 let (+2)',
+    c_dm: 'Diabetes mellitus', c_stroke: 'Prodělaná CMP, TIA nebo tromboembolie', c_vasc: 'Vaskulární onemocnění (prodělaný IM, ischemická choroba DK nebo aortální plát)',
+    opt_no: 'Ne', opt_yes1: 'Ano (+1)', opt_yes2: 'Ano (+2)', calc_btn: 'Vypočítat',
+    score_label: 'Skóre = ', of8: ' / 8',
+    interp_0: 'Skóre 0 — antikoagulace obecně není doporučena.',
+    interp_1: 'Skóre 1 — antikoagulace může být zvážena, individuálně dle rizika/preferencí pacienta.',
+    interp_2: 'Skóre ≥2 — antikoagulace je obecně doporučena, individuálně dle rizika krvácení.'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'CHA₂DS₂-VA', subtitle: "Estime le risque d'AVC en cas de fibrillation auriculaire pour guider la décision d'anticoagulation. Variante sans sexe, selon la mise à jour 2024 des recommandations ESC sur la fibrillation auriculaire.",
+    criteria_heading: 'Critères',
+    c_chf: 'Insuffisance cardiaque congestive / dysfonction VG', c_htn: 'Hypertension',
+    c_age: 'Âge', age0: '< 65 ans (+0)', age1: '65–74 ans (+1)', age2: '≥ 75 ans (+2)',
+    c_dm: 'Diabète', c_stroke: 'Antécédent d\u2019AVC, AIT ou thromboembolie', c_vasc: "Maladie vasculaire (IDM antérieur, artériopathie périphérique ou plaque aortique)",
+    opt_no: 'Non', opt_yes1: 'Oui (+1)', opt_yes2: 'Oui (+2)', calc_btn: 'Calculer',
+    score_label: 'Score = ', of8: ' / 8',
+    interp_0: "Score 0 — anticoagulation généralement non recommandée.",
+    interp_1: "Score 1 — anticoagulation à envisager, individualisée selon le risque/la préférence du patient.",
+    interp_2: 'Score ≥2 — anticoagulation généralement recommandée, individualisée selon le risque hémorragique.'
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'CHA₂DS₂-VA', subtitle: 'Schätzt das Schlaganfallrisiko bei Vorhofflimmern zur Steuerung der Antikoagulationsentscheidung. Geschlechtsneutrale Variante gemäß Update der ESC-Leitlinie Vorhofflimmern 2024.',
+    criteria_heading: 'Kriterien',
+    c_chf: 'Herzinsuffizienz / LV-Dysfunktion', c_htn: 'Hypertonie',
+    c_age: 'Alter', age0: '< 65 Jahre (+0)', age1: '65–74 Jahre (+1)', age2: '≥ 75 Jahre (+2)',
+    c_dm: 'Diabetes mellitus', c_stroke: 'Früherer Schlaganfall, TIA oder Thromboembolie', c_vasc: 'Vaskuläre Erkrankung (früherer MI, periphere arterielle Verschlusskrankheit oder Aortenplaque)',
+    opt_no: 'Nein', opt_yes1: 'Ja (+1)', opt_yes2: 'Ja (+2)', calc_btn: 'Berechnen',
+    score_label: 'Score = ', of8: ' / 8',
+    interp_0: 'Score 0 — Antikoagulation im Allgemeinen nicht empfohlen.',
+    interp_1: 'Score 1 — Antikoagulation kann erwogen werden, individualisiert nach Risiko/Präferenz des Patienten.',
+    interp_2: 'Score ≥2 — Antikoagulation im Allgemeinen empfohlen, individualisiert nach Blutungsrisiko.'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'CHA₂DS₂-VA', subtitle: 'Szacuje ryzyko udaru w migotaniu przedsionków w celu ukierunkowania decyzji o leczeniu przeciwkrzepliwym. Wariant niezależny od płci, wg aktualizacji wytycznych ESC dotyczących migotania przedsionków z 2024 r.',
+    criteria_heading: 'Kryteria',
+    c_chf: 'Zastoinowa niewydolność serca / dysfunkcja LK', c_htn: 'Nadciśnienie tętnicze',
+    c_age: 'Wiek', age0: '< 65 lat (+0)', age1: '65–74 lat (+1)', age2: '≥ 75 lat (+2)',
+    c_dm: 'Cukrzyca', c_stroke: 'Przebyty udar, TIA lub choroba zakrzepowo-zatorowa', c_vasc: 'Choroba naczyniowa (przebyty zawał, choroba tętnic obwodowych lub blaszka miażdżycowa w aorcie)',
+    opt_no: 'Nie', opt_yes1: 'Tak (+1)', opt_yes2: 'Tak (+2)', calc_btn: 'Oblicz',
+    score_label: 'Wynik = ', of8: ' / 8',
+    interp_0: 'Wynik 0 — leczenie przeciwkrzepliwe zwykle niezalecane.',
+    interp_1: 'Wynik 1 — leczenie przeciwkrzepliwe można rozważyć, indywidualnie wg ryzyka/preferencji pacjenta.',
+    interp_2: 'Wynik ≥2 — leczenie przeciwkrzepliwe zwykle zalecane, indywidualnie wg ryzyka krwawienia.'
+  }
+};
+
+var _lastCHA2DS2VA = null;
+
+function calcCHA2DS2VA() {
+  var ids = ['c_chf','c_htn','c_age','c_dm','c_stroke','c_vasc'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastCHA2DS2VA = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastCHA2DS2VA === null) return;
+  var total = _lastCHA2DS2VA;
+  var interp = total === 0 ? ucmT('interp_0') : (total === 1 ? ucmT('interp_1') : ucmT('interp_2'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of8');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

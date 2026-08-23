@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AUDIT-C — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">AUDIT-C</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Three-item screening tool for hazardous or harmful alcohol use.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Questions</h2>
+    <div class="field"><label data-i18n="q0">How often do you have a drink containing alcohol?</label>
+      <select id="q0">
+        <option value="0" data-i18n="q0_a">Never</option>
+        <option value="1" data-i18n="q0_b">Monthly or less</option>
+        <option value="2" data-i18n="q0_c">2–4 times a month</option>
+        <option value="3" data-i18n="q0_d">2–3 times a week</option>
+        <option value="4" data-i18n="q0_e">4 or more times a week</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="q1">How many standard drinks containing alcohol do you have on a typical day when drinking?</label>
+      <select id="q1">
+        <option value="0" data-i18n="q1_a">1 or 2</option>
+        <option value="1" data-i18n="q1_b">3 or 4</option>
+        <option value="2" data-i18n="q1_c">5 or 6</option>
+        <option value="3" data-i18n="q1_d">7 to 9</option>
+        <option value="4" data-i18n="q1_e">10 or more</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="q2">How often do you have six or more drinks on one occasion?</label>
+      <select id="q2">
+        <option value="0" data-i18n="q2_a">Never</option>
+        <option value="1" data-i18n="q2_b">Less than monthly</option>
+        <option value="2" data-i18n="q2_c">Monthly</option>
+        <option value="3" data-i18n="q2_d">Weekly</option>
+        <option value="4" data-i18n="q2_e">Daily or almost daily</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcAUDITC()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Bush K, Kivlahan DR, McDonell MB, Fihn SD, Bradley KA. The AUDIT alcohol consumption questions (AUDIT-C): an effective brief screening test for problem drinking. Arch Intern Med. 1998;158(16):1789–1795. Derived from the WHO Alcohol Use Disorders Identification Test (AUDIT).<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/4013/audit-c-alcohol-use" target="_blank" rel="noopener">MDCalc — AUDIT-C</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'AUDIT-C', subtitle: 'Three-item screening tool for hazardous or harmful alcohol use.',
+    items_heading: 'Questions',
+    q0: 'How often do you have a drink containing alcohol?', q0_a: 'Never', q0_b: 'Monthly or less', q0_c: '2–4 times a month', q0_d: '2–3 times a week', q0_e: '4 or more times a week',
+    q1: 'How many standard drinks containing alcohol do you have on a typical day when drinking?', q1_a: '1 or 2', q1_b: '3 or 4', q1_c: '5 or 6', q1_d: '7 to 9', q1_e: '10 or more',
+    q2: 'How often do you have six or more drinks on one occasion?', q2_a: 'Never', q2_b: 'Less than monthly', q2_c: 'Monthly', q2_d: 'Weekly', q2_e: 'Daily or almost daily',
+    calc_btn: 'Calculate', score_label: 'Score = ', of12: ' / 12',
+    interp_neg: 'Negative screen for hazardous drinking (below commonly cited thresholds of ≥4 for men, ≥3 for women).',
+    interp_pos: 'Positive screen — score at or above commonly cited thresholds (≥4 for men, ≥3 for women) suggesting hazardous or harmful drinking; consider further assessment.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'AUDIT-C', subtitle: 'Třípoložkový screeningový nástroj pro rizikové nebo škodlivé užívání alkoholu.',
+    items_heading: 'Otázky',
+    q0: 'Jak často pijete nápoj obsahující alkohol?', q0_a: 'Nikdy', q0_b: 'Jednou měsíčně nebo méně', q0_c: '2–4× měsíčně', q0_d: '2–3× týdně', q0_e: '4× nebo vícekrát týdně',
+    q1: 'Kolik standardních dávek alkoholu obvykle vypijete v den, kdy pijete?', q1_a: '1 nebo 2', q1_b: '3 nebo 4', q1_c: '5 nebo 6', q1_d: '7 až 9', q1_e: '10 nebo více',
+    q2: 'Jak často vypijete šest nebo více dávek při jedné příležitosti?', q2_a: 'Nikdy', q2_b: 'Méně než jednou měsíčně', q2_c: 'Jednou měsíčně', q2_d: 'Jednou týdně', q2_e: 'Denně nebo téměř denně',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of12: ' / 12',
+    interp_neg: 'Negativní screening rizikového pití (pod obvykle uváděnými hranicemi ≥4 pro muže, ≥3 pro ženy).',
+    interp_pos: 'Pozitivní screening — skóre na hranici nebo nad obvykle uváděnými hranicemi (≥4 muži, ≥3 ženy) naznačuje rizikové nebo škodlivé pití; zvažte další vyšetření.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'AUDIT-C', subtitle: "Outil de dépistage en trois questions pour une consommation d'alcool à risque ou nocive.",
+    items_heading: 'Questions',
+    q0: "À quelle fréquence consommez-vous une boisson contenant de l'alcool ?", q0_a: 'Jamais', q0_b: 'Une fois par mois ou moins', q0_c: '2 à 4 fois par mois', q0_d: '2 à 3 fois par semaine', q0_e: '4 fois par semaine ou plus',
+    q1: "Combien de verres standards contenant de l'alcool consommez-vous un jour typique où vous buvez ?", q1_a: '1 ou 2', q1_b: '3 ou 4', q1_c: '5 ou 6', q1_d: '7 à 9', q1_e: '10 ou plus',
+    q2: "À quelle fréquence buvez-vous six verres ou plus en une seule occasion ?", q2_a: 'Jamais', q2_b: 'Moins d\u2019une fois par mois', q2_c: 'Une fois par mois', q2_d: 'Une fois par semaine', q2_e: 'Quotidiennement ou presque',
+    calc_btn: 'Calculer', score_label: 'Score = ', of12: ' / 12',
+    interp_neg: "Dépistage négatif de consommation à risque (en dessous des seuils habituellement cités de ≥4 pour les hommes, ≥3 pour les femmes).",
+    interp_pos: "Dépistage positif — score au niveau ou au-dessus des seuils habituellement cités (≥4 hommes, ≥3 femmes), évoquant une consommation à risque ou nocive ; envisager une évaluation complémentaire."
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'AUDIT-C', subtitle: 'Dreiteiliges Screening-Instrument für riskanten oder schädlichen Alkoholkonsum.',
+    items_heading: 'Fragen',
+    q0: 'Wie oft trinken Sie ein alkoholisches Getränk?', q0_a: 'Nie', q0_b: 'Einmal im Monat oder seltener', q0_c: '2–4-mal im Monat', q0_d: '2–3-mal in der Woche', q0_e: '4-mal oder öfter in der Woche',
+    q1: 'Wie viele Standardgetränke mit Alkohol trinken Sie typischerweise an einem Tag, an dem Sie trinken?', q1_a: '1 oder 2', q1_b: '3 oder 4', q1_c: '5 oder 6', q1_d: '7 bis 9', q1_e: '10 oder mehr',
+    q2: 'Wie oft trinken Sie sechs oder mehr Getränke bei einer Gelegenheit?', q2_a: 'Nie', q2_b: 'Seltener als einmal im Monat', q2_c: 'Einmal im Monat', q2_d: 'Einmal in der Woche', q2_e: 'Täglich oder fast täglich',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of12: ' / 12',
+    interp_neg: 'Negatives Screening auf riskanten Konsum (unter den üblicherweise genannten Schwellenwerten von ≥4 für Männer, ≥3 für Frauen).',
+    interp_pos: 'Positives Screening — Score auf oder über den üblicherweise genannten Schwellenwerten (≥4 Männer, ≥3 Frauen), was auf riskanten oder schädlichen Konsum hindeutet; weitere Abklärung erwägen.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'AUDIT-C', subtitle: 'Trzypytaniowe narzędzie przesiewowe w kierunku ryzykownego lub szkodliwego spożywania alkoholu.',
+    items_heading: 'Pytania',
+    q0: 'Jak często pije Pan/Pani napoje zawierające alkohol?', q0_a: 'Nigdy', q0_b: 'Raz w miesiącu lub rzadziej', q0_c: '2–4 razy w miesiącu', q0_d: '2–3 razy w tygodniu', q0_e: '4 razy w tygodniu lub częściej',
+    q1: 'Ile standardowych porcji alkoholu wypija Pan/Pani zwykle w dniu, w którym pije?', q1_a: '1 lub 2', q1_b: '3 lub 4', q1_c: '5 lub 6', q1_d: '7 do 9', q1_e: '10 lub więcej',
+    q2: 'Jak często wypija Pan/Pani sześć lub więcej porcji przy jednej okazji?', q2_a: 'Nigdy', q2_b: 'Rzadziej niż raz w miesiącu', q2_c: 'Raz w miesiącu', q2_d: 'Raz w tygodniu', q2_e: 'Codziennie lub prawie codziennie',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of12: ' / 12',
+    interp_neg: 'Ujemny wynik przesiewowy w kierunku ryzykownego picia (poniżej powszechnie stosowanych progów ≥4 dla mężczyzn, ≥3 dla kobiet).',
+    interp_pos: 'Dodatni wynik przesiewowy — wynik na poziomie lub powyżej powszechnie stosowanych progów (≥4 mężczyźni, ≥3 kobiety), sugerujący ryzykowne lub szkodliwe picie; rozważ dalszą ocenę.'
+  }
+};
+
+var _lastAUDITC = null;
+
+function calcAUDITC() {
+  var ids = ['q0','q1','q2'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastAUDITC = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastAUDITC === null) return;
+  var total = _lastAUDITC;
+  var interp = total >= 3 ? ucmT('interp_pos') : ucmT('interp_neg');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of12');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

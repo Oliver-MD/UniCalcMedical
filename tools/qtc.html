@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corrected QT (QTc) — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">Corrected QT (QTc)</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Corrects the measured QT interval for heart rate, using either the Bazett or Fridericia formula.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="qt_label" for="qt">QT interval (ms)</label><input type="number" id="qt" min="200" max="800" step="1" data-i18n-placeholder="qt_ph" placeholder="e.g. 400"></div>
+    <div class="field"><label data-i18n="rr_label" for="rr">RR interval (ms) — or enter heart rate below</label><input type="number" id="rr" min="300" max="2000" step="1" data-i18n-placeholder="rr_ph" placeholder="e.g. 800"></div>
+    <div class="field"><label data-i18n="hr_label" for="hr">Heart rate (bpm) — alternative to RR interval</label><input type="number" id="hr" min="20" max="300" step="1" data-i18n-placeholder="hr_ph" placeholder="e.g. 75"></div>
+    <div class="field"><label data-i18n="formula_select_label">Correction formula</label>
+      <select id="formula">
+        <option value="bazett" data-i18n="opt_bazett">Bazett</option>
+        <option value="fridericia" data-i18n="opt_fridericia">Fridericia</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcQTc()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Bazett HC. An analysis of the time-relations of electrocardiograms. Heart. 1920;7:353–370. Fridericia LS. Die Systolendauer im Elektrokardiogramm bei normalen Menschen und bei Herzkranken. Acta Med Scand. 1920;53:469–486.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/45/corrected-qt-interval-qtc" target="_blank" rel="noopener">MDCalc — QTc</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'Corrected QT (QTc)', subtitle: 'Corrects the measured QT interval for heart rate, using either the Bazett or Fridericia formula.',
+    calc_heading: 'Calculate', qt_label: 'QT interval (ms)', qt_ph: 'e.g. 400',
+    rr_label: 'RR interval (ms) — or enter heart rate below', rr_ph: 'e.g. 800',
+    hr_label: 'Heart rate (bpm) — alternative to RR interval', hr_ph: 'e.g. 75',
+    formula_select_label: 'Correction formula', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
+    calc_btn: 'Calculate', err_invalid: 'Please enter a valid QT interval, and either an RR interval or heart rate.',
+    interp_normal: 'Within typically cited normal range.', interp_borderline: 'Borderline prolongation.', interp_prolonged: 'Prolonged QTc.'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'Korigovaný QT (QTc)', subtitle: 'Korekce naměřeného intervalu QT na tepovou frekvenci, dle Bazettova nebo Fridericiova vzorce.',
+    calc_heading: 'Výpočet', qt_label: 'Interval QT (ms)', qt_ph: 'např. 400',
+    rr_label: 'Interval RR (ms) — nebo zadejte tepovou frekvenci níže', rr_ph: 'např. 800',
+    hr_label: 'Tepová frekvence (/min) — alternativa k intervalu RR', hr_ph: 'např. 75',
+    formula_select_label: 'Korekční vzorec', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platný interval QT a buď interval RR, nebo tepovou frekvenci.',
+    interp_normal: 'V obvykle uváděném normálním rozmezí.', interp_borderline: 'Hraniční prodloužení.', interp_prolonged: 'Prodloužený QTc.'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'QT corrigé (QTc)', subtitle: "Corrige l'intervalle QT mesuré en fonction de la fréquence cardiaque, selon la formule de Bazett ou de Fridericia.",
+    calc_heading: 'Calculer', qt_label: 'Intervalle QT (ms)', qt_ph: 'p. ex. 400',
+    rr_label: 'Intervalle RR (ms) — ou saisissez la fréquence cardiaque ci-dessous', rr_ph: 'p. ex. 800',
+    hr_label: 'Fréquence cardiaque (bpm) — alternative à l\u2019intervalle RR', hr_ph: 'p. ex. 75',
+    formula_select_label: 'Formule de correction', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
+    calc_btn: 'Calculer', err_invalid: "Veuillez saisir un intervalle QT valide, ainsi qu'un intervalle RR ou une fréquence cardiaque.",
+    interp_normal: 'Dans la plage normale généralement citée.', interp_borderline: 'Allongement limite.', interp_prolonged: 'QTc allongé.'
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'Korrigiertes QT (QTc)', subtitle: 'Korrigiert das gemessene QT-Intervall für die Herzfrequenz, nach der Bazett- oder Fridericia-Formel.',
+    calc_heading: 'Berechnen', qt_label: 'QT-Intervall (ms)', qt_ph: 'z. B. 400',
+    rr_label: 'RR-Intervall (ms) — oder Herzfrequenz unten eingeben', rr_ph: 'z. B. 800',
+    hr_label: 'Herzfrequenz (Schläge/min) — Alternative zum RR-Intervall', hr_ph: 'z. B. 75',
+    formula_select_label: 'Korrekturformel', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte gültiges QT-Intervall sowie entweder RR-Intervall oder Herzfrequenz eingeben.',
+    interp_normal: 'Im üblicherweise angegebenen Normbereich.', interp_borderline: 'Grenzwertige Verlängerung.', interp_prolonged: 'Verlängertes QTc.'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'Skorygowane QT (QTc)', subtitle: 'Koryguje zmierzony odstęp QT względem częstości akcji serca, według wzoru Bazetta lub Fridericii.',
+    calc_heading: 'Oblicz', qt_label: 'Odstęp QT (ms)', qt_ph: 'np. 400',
+    rr_label: 'Odstęp RR (ms) — lub podaj częstość akcji serca poniżej', rr_ph: 'np. 800',
+    hr_label: 'Częstość akcji serca (/min) — alternatywa dla odstępu RR', hr_ph: 'np. 75',
+    formula_select_label: 'Wzór korekcyjny', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowy odstęp QT oraz odstęp RR lub częstość akcji serca.',
+    interp_normal: 'W typowo podawanym zakresie prawidłowym.', interp_borderline: 'Wydłużenie graniczne.', interp_prolonged: 'Wydłużone QTc.'
+  }
+};
+
+var _lastQTc = null;
+
+function calcQTc() {
+  var qt = parseFloat(document.getElementById('qt').value);
+  var rr = parseFloat(document.getElementById('rr').value);
+  var hr = parseFloat(document.getElementById('hr').value);
+  if (!rr && hr) rr = 60000 / hr;
+  if (!qt || !rr || qt <= 0 || rr <= 0) { alert(ucmT('err_invalid')); return; }
+  var rrSec = rr / 1000;
+  var formula = document.getElementById('formula').value;
+  var qtc = formula === 'bazett' ? qt / Math.sqrt(rrSec) : qt / Math.cbrt(rrSec);
+  _lastQTc = { qtc: qtc, formula: formula };
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastQTc === null) return;
+  var qtc = _lastQTc.qtc;
+  var interp;
+  if (qtc < 450) interp = ucmT('interp_normal');
+  else if (qtc < 480) interp = ucmT('interp_borderline');
+  else interp = ucmT('interp_prolonged');
+  document.getElementById('resultScore').textContent = 'QTc = ' + qtc.toFixed(0) + ' ms';
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

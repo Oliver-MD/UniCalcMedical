@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cockcroft-Gault (CrCl) — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Renal &amp; hepatic function</span>
+  <h1 class="page-title" data-i18n="title">Cockcroft-Gault Equation</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Estimates creatinine clearance — commonly used for drug dosing adjustments.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="age_label" for="age">Age (years)</label><input type="number" id="age" min="18" max="120" step="1" data-i18n-placeholder="age_ph" placeholder="e.g. 60"></div>
+    <div class="field"><label data-i18n="sex_label">Sex</label><select id="sex"><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select></div>
+    <div class="field"><label data-i18n="weight_label" for="weight">Weight (kg)</label><input type="number" id="weight" min="20" max="300" step="0.1" data-i18n-placeholder="weight_ph" placeholder="e.g. 75"></div>
+    <div class="field"><label data-i18n="scr_label" for="scr">Serum creatinine (µmol/L)</label><input type="number" id="scr" min="10" max="2000" step="1" data-i18n-placeholder="scr_ph" placeholder="e.g. 90"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcCG()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Cockcroft DW, Gault MH. Prediction of creatinine clearance from serum creatinine. Nephron. 1976;16(1):31–41.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/43/creatinine-clearance-cockcroft-gault-equation" target="_blank" rel="noopener">MDCalc — Cockcroft-Gault</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Renal & hepatic function', title: 'Cockcroft-Gault Equation', subtitle: 'Estimates creatinine clearance — commonly used for drug dosing adjustments.',
+    calc_heading: 'Calculate', age_label: 'Age (years)', age_ph: 'e.g. 60', sex_label: 'Sex', opt_female: 'Female', opt_male: 'Male',
+    weight_label: 'Weight (kg)', weight_ph: 'e.g. 75', scr_label: 'Serum creatinine (µmol/L)', scr_ph: 'e.g. 90',
+    calc_btn: 'Calculate', err_invalid: 'Please enter valid values for all fields.', of_unit: ' mL/min',
+    note: 'Uses actual body weight as entered. For obese patients, many protocols recommend using an adjusted body weight instead — clinical judgement applies.'
+  },
+  cs: {
+    tag: 'Renální a jaterní funkce', title: 'Cockcroft-Gaultova rovnice', subtitle: 'Odhad clearance kreatininu — běžně používaný pro úpravu dávkování léků.',
+    calc_heading: 'Výpočet', age_label: 'Věk (roky)', age_ph: 'např. 60', sex_label: 'Pohlaví', opt_female: 'Žena', opt_male: 'Muž',
+    weight_label: 'Hmotnost (kg)', weight_ph: 'např. 75', scr_label: 'Sérový kreatinin (µmol/l)', scr_ph: 'např. 90',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platné hodnoty do všech polí.', of_unit: ' ml/min',
+    note: 'Použita zadaná skutečná tělesná hmotnost. U obézních pacientů řada protokolů doporučuje použít upravenou tělesnou hmotnost — uplatní se klinický úsudek.'
+  },
+  fr: {
+    tag: 'Fonction rénale et hépatique', title: 'Équation de Cockcroft-Gault', subtitle: "Estime la clairance de la créatinine — couramment utilisée pour l'ajustement posologique des médicaments.",
+    calc_heading: 'Calculer', age_label: 'Âge (ans)', age_ph: 'p. ex. 60', sex_label: 'Sexe', opt_female: 'Féminin', opt_male: 'Masculin',
+    weight_label: 'Poids (kg)', weight_ph: 'p. ex. 75', scr_label: 'Créatininémie (µmol/L)', scr_ph: 'p. ex. 90',
+    calc_btn: 'Calculer', err_invalid: 'Veuillez saisir des valeurs valides pour tous les champs.', of_unit: ' mL/min',
+    note: "Utilise le poids corporel réel saisi. Pour les patients obèses, de nombreux protocoles recommandent d'utiliser un poids corporel ajusté — le jugement clinique s'applique."
+  },
+  de: {
+    tag: 'Nieren- & Leberfunktion', title: 'Cockcroft-Gault-Gleichung', subtitle: 'Schätzt die Kreatinin-Clearance — häufig zur Dosisanpassung von Arzneimitteln verwendet.',
+    calc_heading: 'Berechnen', age_label: 'Alter (Jahre)', age_ph: 'z. B. 60', sex_label: 'Geschlecht', opt_female: 'Weiblich', opt_male: 'Männlich',
+    weight_label: 'Gewicht (kg)', weight_ph: 'z. B. 75', scr_label: 'Serumkreatinin (µmol/L)', scr_ph: 'z. B. 90',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Werte für alle Felder eingeben.', of_unit: ' ml/min',
+    note: 'Verwendet das eingegebene tatsächliche Körpergewicht. Bei adipösen Patienten wird in vielen Protokollen ein angepasstes Körpergewicht empfohlen — klinisches Urteilsvermögen ist erforderlich.'
+  },
+  pl: {
+    tag: 'Czynność nerek i wątroby', title: 'Równanie Cockcrofta-Gaulta', subtitle: 'Szacuje klirens kreatyniny — powszechnie stosowane do dostosowania dawkowania leków.',
+    calc_heading: 'Oblicz', age_label: 'Wiek (lata)', age_ph: 'np. 60', sex_label: 'Płeć', opt_female: 'Kobieta', opt_male: 'Mężczyzna',
+    weight_label: 'Waga (kg)', weight_ph: 'np. 75', scr_label: 'Kreatynina w surowicy (µmol/l)', scr_ph: 'np. 90',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowe wartości we wszystkich polach.', of_unit: ' ml/min',
+    note: 'Wykorzystuje wprowadzoną rzeczywistą masę ciała. U pacjentów otyłych wiele protokołów zaleca stosowanie skorygowanej masy ciała — zastosowanie ma ocena kliniczna.'
+  }
+};
+
+var _lastCG = null;
+
+function calcCG() {
+  var age = parseFloat(document.getElementById('age').value);
+  var sex = document.getElementById('sex').value;
+  var weight = parseFloat(document.getElementById('weight').value);
+  var scrUmol = parseFloat(document.getElementById('scr').value);
+  if (!age || !weight || !scrUmol || age <= 0 || weight <= 0 || scrUmol <= 0) { alert(ucmT('err_invalid')); return; }
+  var scr = scrUmol / 88.4; // µmol/L -> mg/dL
+  var crcl = ((140 - age) * weight) / (72 * scr);
+  if (sex === 'f') crcl *= 0.85;
+  _lastCG = crcl;
+  renderCGResult();
+}
+
+function renderCGResult() {
+  if (_lastCG === null) return;
+  document.getElementById('resultScore').textContent = _lastCG.toFixed(1) + ucmT('of_unit');
+  document.getElementById('resultInterp').innerHTML = ucmT('note');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderCGResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

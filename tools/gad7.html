@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GAD-7 — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">GAD-7</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Generalized Anxiety Disorder scale — screening and severity.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Over the last 2 weeks, how often have you been bothered by any of the following?</h2>
+    <div id="items"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcGAD7()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Spitzer RL, Kroenke K, Williams JB, Löwe B. A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med. 2006;166(10):1092–1097.<br>
+    <span data-i18n="public_domain_note">GAD-7 is in the public domain — no permission required for reproduction, translation, display, or distribution (Pfizer Inc., 2010).</span><br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://phqscreeners.com/" target="_blank" rel="noopener">phqscreeners.com</a> · <a href="https://www.mdcalc.com/calc/1727/gad7-general-anxiety-disorder7" target="_blank" rel="noopener">MDCalc — GAD-7</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'GAD-7', subtitle: 'Generalized Anxiety Disorder scale — screening and severity.',
+    items_heading: 'Over the last 2 weeks, how often have you been bothered by any of the following?',
+    calc_btn: 'Calculate', score_label: 'GAD-7 = ', of21: ' / 21',
+    q0: 'Feeling nervous, anxious, or on edge',
+    q1: 'Not being able to stop or control worrying',
+    q2: 'Worrying too much about different things',
+    q3: 'Trouble relaxing',
+    q4: "Being so restless that it's hard to sit still",
+    q5: 'Becoming easily annoyed or irritable',
+    q6: 'Feeling afraid as if something awful might happen',
+    opt0: '0 — Not at all', opt1: '1 — Several days', opt2: '2 — More than half the days', opt3: '3 — Nearly every day',
+    sev_minimal: 'Minimal anxiety.', sev_mild: 'Mild anxiety.', sev_moderate: 'Moderate anxiety.', sev_severe: 'Severe anxiety.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'GAD-7', subtitle: 'Škála generalizované úzkostné poruchy — screening a závažnost.',
+    items_heading: 'Jak často vás za posledních 14 dní obtěžovaly následující potíže?',
+    calc_btn: 'Vypočítat', score_label: 'GAD-7 = ', of21: ' / 21',
+    q0: 'Pocit nervozity, úzkosti nebo napětí',
+    q1: 'Neschopnost přestat se obávat nebo obavy ovládat',
+    q2: 'Přílišné obavy o různé věci',
+    q3: 'Potíže s uvolněním',
+    q4: 'Neklid, kvůli kterému je těžké klidně sedět',
+    q5: 'Snadná podrážděnost',
+    q6: 'Pocit strachu, jako by se mohlo stát něco hrozného',
+    opt0: '0 — Vůbec ne', opt1: '1 — Několik dní', opt2: '2 — Více než polovinu dní', opt3: '3 — Téměř každý den',
+    sev_minimal: 'Minimální úzkost.', sev_mild: 'Mírná úzkost.', sev_moderate: 'Střední úzkost.', sev_severe: 'Těžká úzkost.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'GAD-7', subtitle: "Échelle du trouble anxieux généralisé — dépistage et sévérité.",
+    items_heading: 'Au cours des deux dernières semaines, à quelle fréquence avez-vous été gêné(e) par les problèmes suivants ?',
+    calc_btn: 'Calculer', score_label: 'GAD-7 = ', of21: ' / 21',
+    q0: 'Sentiment de nervosité, d\u2019anxiété ou de tension',
+    q1: "Incapacité d'arrêter de vous inquiéter ou de contrôler vos inquiétudes",
+    q2: 'Inquiétude excessive à propos de différentes choses',
+    q3: 'Difficulté à vous détendre',
+    q4: "Agitation telle qu'il est difficile de rester assis(e) tranquille",
+    q5: 'Irritabilité facile',
+    q6: "Peur que quelque chose d'horrible puisse arriver",
+    opt0: '0 — Jamais', opt1: '1 — Plusieurs jours', opt2: '2 — Plus de la moitié des jours', opt3: '3 — Presque tous les jours',
+    sev_minimal: 'Anxiété minime.', sev_mild: 'Anxiété légère.', sev_moderate: 'Anxiété modérée.', sev_severe: 'Anxiété sévère.'
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'GAD-7', subtitle: 'Skala für generalisierte Angststörung — Screening und Schweregrad.',
+    items_heading: 'Wie oft fühlten Sie sich im Verlauf der letzten 2 Wochen durch die folgenden Beschwerden beeinträchtigt?',
+    calc_btn: 'Berechnen', score_label: 'GAD-7 = ', of21: ' / 21',
+    q0: 'Nervosität, Ängstlichkeit oder Anspannung',
+    q1: 'Unfähigkeit, Sorgen zu stoppen oder zu kontrollieren',
+    q2: 'Übermäßige Sorgen über verschiedene Dinge',
+    q3: 'Schwierigkeiten sich zu entspannen',
+    q4: 'Ruhelosigkeit, sodass Stillsitzen schwerfällt',
+    q5: 'Leichte Reizbarkeit',
+    q6: 'Angst, dass etwas Schreckliches passieren könnte',
+    opt0: '0 — Überhaupt nicht', opt1: '1 — An einzelnen Tagen', opt2: '2 — An mehr als der Hälfte der Tage', opt3: '3 — Beinahe jeden Tag',
+    sev_minimal: 'Minimale Angst.', sev_mild: 'Leichte Angst.', sev_moderate: 'Mittelschwere Angst.', sev_severe: 'Schwere Angst.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'GAD-7', subtitle: 'Skala uogólnionego zaburzenia lękowego — przesiewowa ocena i nasilenie.',
+    items_heading: 'Jak często w ciągu ostatnich 2 tygodni dokuczały Panu/Pani następujące problemy?',
+    calc_btn: 'Oblicz', score_label: 'GAD-7 = ', of21: ' / 21',
+    q0: 'Uczucie zdenerwowania, lęku lub napięcia',
+    q1: 'Niemożność powstrzymania lub kontrolowania zamartwiania się',
+    q2: 'Nadmierne zamartwianie się różnymi sprawami',
+    q3: 'Trudności z odprężeniem się',
+    q4: 'Niepokój ruchowy utrudniający usiedzenie w miejscu',
+    q5: 'Łatwe wpadanie w rozdrażnienie',
+    q6: 'Uczucie strachu, jakby miało wydarzyć się coś strasznego',
+    opt0: '0 — Wcale', opt1: '1 — Kilka dni', opt2: '2 — Więcej niż połowę dni', opt3: '3 — Niemal codziennie',
+    sev_minimal: 'Minimalny lęk.', sev_mild: 'Łagodny lęk.', sev_moderate: 'Umiarkowany lęk.', sev_severe: 'Ciężki lęk.'
+  }
+};
+
+var QUESTION_KEYS = ['q0','q1','q2','q3','q4','q5','q6'];
+
+function renderItems() {
+  var itemsDiv = document.getElementById('items');
+  var existing = QUESTION_KEYS.map(function(k, i){ return document.getElementById('q' + i); });
+  var currentValues = existing.map(function(el){ return el ? el.value : '0'; });
+  itemsDiv.innerHTML = '';
+  QUESTION_KEYS.forEach(function(key, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = '<label>' + (i+1) + '. ' + ucmT(key) + '</label>' +
+      '<select id="q' + i + '">' +
+      '<option value="0">' + ucmT('opt0') + '</option>' +
+      '<option value="1">' + ucmT('opt1') + '</option>' +
+      '<option value="2">' + ucmT('opt2') + '</option>' +
+      '<option value="3">' + ucmT('opt3') + '</option>' +
+      '</select>';
+    itemsDiv.appendChild(wrap);
+    document.getElementById('q' + i).value = currentValues[i];
+  });
+}
+
+var _hasResult = false;
+
+function calcGAD7() {
+  _hasResult = true;
+  renderGAD7Result();
+}
+
+function renderGAD7Result() {
+  if (!_hasResult) return;
+  var total = 0;
+  for (var i = 0; i < QUESTION_KEYS.length; i++) total += parseInt(document.getElementById('q' + i).value, 10);
+  var interp;
+  if (total <= 4) interp = ucmT('sev_minimal');
+  else if (total <= 9) interp = ucmT('sev_mild');
+  else if (total <= 14) interp = ucmT('sev_moderate');
+  else interp = ucmT('sev_severe');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of21');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderItems(); renderGAD7Result(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
