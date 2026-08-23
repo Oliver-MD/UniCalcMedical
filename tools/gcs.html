@@ -16,9 +16,9 @@
 </header>
 
 <div class="container">
-  <span class="category-tag">Neurology</span>
-  <h1 class="page-title">Glasgow Coma Scale</h1>
-  <p class="page-subtitle">Level of consciousness assessment.</p>
+  <span class="category-tag" data-i18n="tag">Neurology</span>
+  <h1 class="page-title" data-i18n="title">Glasgow Coma Scale</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Level of consciousness assessment.</p>
 
   <div class="disclaimer">
     <strong data-i18n="disclaimer_title">Not a medical device.</strong>
@@ -26,37 +26,37 @@
   </div>
 
   <div class="card">
-    <h2>Eye opening</h2>
+    <h2 data-i18n="eye_heading">Eye opening</h2>
     <select id="eye">
-      <option value="4">Spontaneous — 4</option>
-      <option value="3">To speech — 3</option>
-      <option value="2">To pain — 2</option>
-      <option value="1">None — 1</option>
+      <option value="4" data-i18n="eye4">Spontaneous — 4</option>
+      <option value="3" data-i18n="eye3">To speech — 3</option>
+      <option value="2" data-i18n="eye2">To pain — 2</option>
+      <option value="1" data-i18n="eye1">None — 1</option>
     </select>
   </div>
 
   <div class="card">
-    <h2>Verbal response</h2>
+    <h2 data-i18n="verbal_heading">Verbal response</h2>
     <select id="verbal">
-      <option value="5">Oriented — 5</option>
-      <option value="4">Confused — 4</option>
-      <option value="3">Inappropriate words — 3</option>
-      <option value="2">Incomprehensible sounds — 2</option>
-      <option value="1">None — 1</option>
+      <option value="5" data-i18n="verbal5">Oriented — 5</option>
+      <option value="4" data-i18n="verbal4">Confused — 4</option>
+      <option value="3" data-i18n="verbal3">Inappropriate words — 3</option>
+      <option value="2" data-i18n="verbal2">Incomprehensible sounds — 2</option>
+      <option value="1" data-i18n="verbal1">None — 1</option>
     </select>
   </div>
 
   <div class="card">
-    <h2>Motor response</h2>
+    <h2 data-i18n="motor_heading">Motor response</h2>
     <select id="motor">
-      <option value="6">Obeys commands — 6</option>
-      <option value="5">Localises pain — 5</option>
-      <option value="4">Normal flexion (withdrawal) — 4</option>
-      <option value="3">Abnormal flexion (decorticate) — 3</option>
-      <option value="2">Extension (decerebrate) — 2</option>
-      <option value="1">None — 1</option>
+      <option value="6" data-i18n="motor6">Obeys commands — 6</option>
+      <option value="5" data-i18n="motor5">Localises pain — 5</option>
+      <option value="4" data-i18n="motor4">Normal flexion (withdrawal) — 4</option>
+      <option value="3" data-i18n="motor3">Abnormal flexion (decorticate) — 3</option>
+      <option value="2" data-i18n="motor2">Extension (decerebrate) — 2</option>
+      <option value="1" data-i18n="motor1">None — 1</option>
     </select>
-    <button class="btn" onclick="calcGCS()">Calculate</button>
+    <button class="btn" data-i18n="calc_btn" onclick="calcGCS()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
       <div class="interp" id="resultInterp"></div>
@@ -74,21 +74,79 @@
 </footer>
 
 <script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Neurology', title: 'Glasgow Coma Scale', subtitle: 'Level of consciousness assessment.',
+    eye_heading: 'Eye opening', eye4: 'Spontaneous — 4', eye3: 'To speech — 3', eye2: 'To pain — 2', eye1: 'None — 1',
+    verbal_heading: 'Verbal response', verbal5: 'Oriented — 5', verbal4: 'Confused — 4', verbal3: 'Inappropriate words — 3', verbal2: 'Incomprehensible sounds — 2', verbal1: 'None — 1',
+    motor_heading: 'Motor response', motor6: 'Obeys commands — 6', motor5: 'Localises pain — 5', motor4: 'Normal flexion (withdrawal) — 4', motor3: 'Abnormal flexion (decorticate) — 3', motor2: 'Extension (decerebrate) — 2', motor1: 'None — 1',
+    calc_btn: 'Calculate', gcs_label: 'GCS = ', of15: ' / 15',
+    interp_mild: 'Mild impairment.', interp_mod: 'Moderate impairment.',
+    interp_severe: 'Severe impairment (GCS ≤ 8 is generally used as the threshold for airway protection concern).'
+  },
+  cs: {
+    tag: 'Neurologie', title: 'Glasgow Coma Scale', subtitle: 'Hodnocení úrovně vědomí.',
+    eye_heading: 'Otevírání očí', eye4: 'Spontánní — 4', eye3: 'Na oslovení — 3', eye2: 'Na bolest — 2', eye1: 'Žádné — 1',
+    verbal_heading: 'Slovní odpověď', verbal5: 'Orientovaná — 5', verbal4: 'Zmatená — 4', verbal3: 'Nepřiléhavá slova — 3', verbal2: 'Nesrozumitelné zvuky — 2', verbal1: 'Žádná — 1',
+    motor_heading: 'Motorická odpověď', motor6: 'Vyhoví výzvě — 6', motor5: 'Lokalizuje bolest — 5', motor4: 'Normální flexe (úniková reakce) — 4', motor3: 'Abnormální flexe (dekortikace) — 3', motor2: 'Extenze (decerebrace) — 2', motor1: 'Žádná — 1',
+    calc_btn: 'Vypočítat', gcs_label: 'GCS = ', of15: ' / 15',
+    interp_mild: 'Lehká porucha vědomí.', interp_mod: 'Střední porucha vědomí.',
+    interp_severe: 'Těžká porucha vědomí (GCS ≤ 8 se obecně považuje za hranici pro ohrožení dýchacích cest).'
+  },
+  fr: {
+    tag: 'Neurologie', title: 'Échelle de Glasgow', subtitle: "Évaluation du niveau de conscience.",
+    eye_heading: 'Ouverture des yeux', eye4: 'Spontanée — 4', eye3: 'À la voix — 3', eye2: 'À la douleur — 2', eye1: 'Aucune — 1',
+    verbal_heading: 'Réponse verbale', verbal5: 'Orientée — 5', verbal4: 'Confuse — 4', verbal3: 'Mots inappropriés — 3', verbal2: 'Sons incompréhensibles — 2', verbal1: 'Aucune — 1',
+    motor_heading: 'Réponse motrice', motor6: 'Obéit aux ordres — 6', motor5: 'Localise la douleur — 5', motor4: 'Flexion normale (retrait) — 4', motor3: 'Flexion anormale (décortication) — 3', motor2: 'Extension (décérébration) — 2', motor1: 'Aucune — 1',
+    calc_btn: 'Calculer', gcs_label: 'GCS = ', of15: ' / 15',
+    interp_mild: 'Atteinte légère.', interp_mod: 'Atteinte modérée.',
+    interp_severe: 'Atteinte sévère (un GCS ≤ 8 est généralement utilisé comme seuil de préoccupation pour la protection des voies aériennes).'
+  },
+  de: {
+    tag: 'Neurologie', title: 'Glasgow Coma Scale', subtitle: 'Beurteilung des Bewusstseinszustands.',
+    eye_heading: 'Augenöffnung', eye4: 'Spontan — 4', eye3: 'Auf Ansprache — 3', eye2: 'Auf Schmerzreiz — 2', eye1: 'Keine — 1',
+    verbal_heading: 'Verbale Reaktion', verbal5: 'Orientiert — 5', verbal4: 'Verwirrt — 4', verbal3: 'Unzusammenhängende Worte — 3', verbal2: 'Unverständliche Laute — 2', verbal1: 'Keine — 1',
+    motor_heading: 'Motorische Reaktion', motor6: 'Befolgt Aufforderungen — 6', motor5: 'Gezielte Schmerzabwehr — 5', motor4: 'Normale Beugung (Wegziehen) — 4', motor3: 'Abnorme Beugung (Dekortikation) — 3', motor2: 'Streckung (Dezerebration) — 2', motor1: 'Keine — 1',
+    calc_btn: 'Berechnen', gcs_label: 'GCS = ', of15: ' / 15',
+    interp_mild: 'Leichte Beeinträchtigung.', interp_mod: 'Mittelschwere Beeinträchtigung.',
+    interp_severe: 'Schwere Beeinträchtigung (GCS ≤ 8 gilt allgemein als Schwelle für Bedenken hinsichtlich des Atemwegsschutzes).'
+  },
+  pl: {
+    tag: 'Neurologia', title: 'Skala Glasgow (GCS)', subtitle: 'Ocena poziomu świadomości.',
+    eye_heading: 'Otwieranie oczu', eye4: 'Spontaniczne — 4', eye3: 'Na polecenie głosowe — 3', eye2: 'Na ból — 2', eye1: 'Brak — 1',
+    verbal_heading: 'Odpowiedź słowna', verbal5: 'Zorientowana — 5', verbal4: 'Splątana — 4', verbal3: 'Niewłaściwe słowa — 3', verbal2: 'Niezrozumiałe dźwięki — 2', verbal1: 'Brak — 1',
+    motor_heading: 'Odpowiedź ruchowa', motor6: 'Wykonuje polecenia — 6', motor5: 'Lokalizuje ból — 5', motor4: 'Prawidłowe zgięcie (wycofanie) — 4', motor3: 'Nieprawidłowe zgięcie (odkorowanie) — 3', motor2: 'Wyprost (odmóżdżenie) — 2', motor1: 'Brak — 1',
+    calc_btn: 'Oblicz', gcs_label: 'GCS = ', of15: ' / 15',
+    interp_mild: 'Łagodne zaburzenie.', interp_mod: 'Umiarkowane zaburzenie.',
+    interp_severe: 'Ciężkie zaburzenie (GCS ≤ 8 jest zwykle progiem budzącym obawy o drożność dróg oddechowych).'
+  }
+};
+
+var _lastGCS = null;
+
 function calcGCS() {
   var e = parseInt(document.getElementById('eye').value, 10);
   var v = parseInt(document.getElementById('verbal').value, 10);
   var m = parseInt(document.getElementById('motor').value, 10);
+  _lastGCS = { e: e, v: v, m: m };
+  renderGCSResult();
+}
+
+function renderGCSResult() {
+  if (!_lastGCS) return;
+  var e = _lastGCS.e, v = _lastGCS.v, m = _lastGCS.m;
   var total = e + v + m;
   var interp;
-  if (total >= 13) interp = 'Mild impairment.';
-  else if (total >= 9) interp = 'Moderate impairment.';
-  else interp = 'Severe impairment (GCS ≤ 8 is generally used as the threshold for airway protection concern).';
-  document.getElementById('resultScore').textContent = 'GCS = ' + total + ' / 15 (E' + e + 'V' + v + 'M' + m + ')';
+  if (total >= 13) interp = ucmT('interp_mild');
+  else if (total >= 9) interp = ucmT('interp_mod');
+  else interp = ucmT('interp_severe');
+  document.getElementById('resultScore').textContent = ucmT('gcs_label') + total + ucmT('of15') + ' (E' + e + 'V' + v + 'M' + m + ')';
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }
-</script>
 
+window.ucmOnLangChange = function() { renderGCSResult(); };
+</script>
 <script src="../assets/i18n.js"></script>
 </body>
 </html>

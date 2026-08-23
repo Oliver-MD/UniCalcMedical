@@ -16,9 +16,9 @@
 </header>
 
 <div class="container">
-  <span class="category-tag">Mental health &amp; substance use</span>
-  <h1 class="page-title">PHQ-9</h1>
-  <p class="page-subtitle">Patient Health Questionnaire — depression screening and severity.</p>
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">PHQ-9</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Patient Health Questionnaire — depression screening and severity.</p>
 
   <div class="disclaimer">
     <strong data-i18n="disclaimer_title">Not a medical device.</strong>
@@ -27,10 +27,10 @@
   </div>
 
   <div class="card">
-    <h2>Over the last 2 weeks, how often have you been bothered by any of the following?</h2>
-    <p style="font-size:12.5px;color:var(--text-muted);margin-top:-6px;">0 = Not at all &nbsp;·&nbsp; 1 = Several days &nbsp;·&nbsp; 2 = More than half the days &nbsp;·&nbsp; 3 = Nearly every day</p>
+    <h2 data-i18n="items_heading">Over the last 2 weeks, how often have you been bothered by any of the following?</h2>
+    <p style="font-size:12.5px;color:var(--text-muted);margin-top:-6px;" data-i18n="scale_legend">0 = Not at all &nbsp;·&nbsp; 1 = Several days &nbsp;·&nbsp; 2 = More than half the days &nbsp;·&nbsp; 3 = Nearly every day</p>
     <div id="items"></div>
-    <button class="btn" onclick="calcPHQ9()">Calculate</button>
+    <button class="btn" data-i18n="calc_btn" onclick="calcPHQ9()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
       <div class="interp" id="resultInterp"></div>
@@ -39,7 +39,7 @@
 
   <div class="source-block">
     <strong data-i18n="reference_label">Reference:</strong> Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001;16(9):606–613.<br>
-    PHQ-9 is in the public domain — no permission required for reproduction, translation, display, or distribution (Pfizer Inc., 2010).<br>
+    <span data-i18n="public_domain_note">PHQ-9 is in the public domain — no permission required for reproduction, translation, display, or distribution (Pfizer Inc., 2010).</span><br>
     <span data-i18n="verify_against">Verify against:</span> <a href="https://phqscreeners.com/" target="_blank" rel="noopener">phqscreeners.com</a> · <a href="https://www.mdcalc.com/calc/1725/phq9-patient-health-questionnaire9" target="_blank" rel="noopener">MDCalc — PHQ-9</a>
   </div>
 </div>
@@ -49,44 +49,164 @@
 </footer>
 
 <script>
-var QUESTIONS = [
-  'Little interest or pleasure in doing things',
-  'Feeling down, depressed, or hopeless',
-  'Trouble falling or staying asleep, or sleeping too much',
-  'Feeling tired or having little energy',
-  'Poor appetite or overeating',
-  'Feeling bad about yourself — or that you are a failure or have let yourself or your family down',
-  'Trouble concentrating on things, such as reading the newspaper or watching television',
-  'Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around a lot more than usual',
-  'Thoughts that you would be better off dead, or of hurting yourself in some way'
-];
-var itemsDiv = document.getElementById('items');
-QUESTIONS.forEach(function(q, i) {
-  var wrap = document.createElement('div');
-  wrap.className = 'field';
-  wrap.innerHTML = '<label>' + (i+1) + '. ' + q + '</label>' +
-    '<select id="q' + i + '"><option value="0">0 — Not at all</option><option value="1">1 — Several days</option><option value="2">2 — More than half the days</option><option value="3">3 — Nearly every day</option></select>';
-  itemsDiv.appendChild(wrap);
-});
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'PHQ-9', subtitle: 'Patient Health Questionnaire — depression screening and severity.',
+    phq9_extra_note: ' Not a diagnostic tool — a positive screen should always be followed by clinical assessment.',
+    items_heading: 'Over the last 2 weeks, how often have you been bothered by any of the following?',
+    scale_legend: '0 = Not at all &nbsp;·&nbsp; 1 = Several days &nbsp;·&nbsp; 2 = More than half the days &nbsp;·&nbsp; 3 = Nearly every day',
+    calc_btn: 'Calculate', score_label: 'PHQ-9 = ', of27: ' / 27',
+    q0: 'Little interest or pleasure in doing things',
+    q1: 'Feeling down, depressed, or hopeless',
+    q2: 'Trouble falling or staying asleep, or sleeping too much',
+    q3: 'Feeling tired or having little energy',
+    q4: 'Poor appetite or overeating',
+    q5: 'Feeling bad about yourself — or that you are a failure or have let yourself or your family down',
+    q6: 'Trouble concentrating on things, such as reading the newspaper or watching television',
+    q7: 'Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around a lot more than usual',
+    q8: 'Thoughts that you would be better off dead, or of hurting yourself in some way',
+    opt0: '0 — Not at all', opt1: '1 — Several days', opt2: '2 — More than half the days', opt3: '3 — Nearly every day',
+    sev_minimal: 'Minimal or no depression symptoms.', sev_mild: 'Mild depression symptoms.',
+    sev_moderate: 'Moderate depression symptoms.', sev_modsevere: 'Moderately severe depression symptoms.', sev_severe: 'Severe depression symptoms.',
+    item9_warning: 'Item 9 (thoughts of self-harm) was endorsed — this requires immediate clinical follow-up regardless of total score.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'PHQ-9', subtitle: 'Dotazník o zdraví pacienta — screening a závažnost deprese.',
+    phq9_extra_note: ' Nejde o diagnostický nástroj — pozitivní screening by měl být vždy následován klinickým vyšetřením.',
+    items_heading: 'Jak často vás za posledních 14 dní obtěžovaly následující potíže?',
+    scale_legend: '0 = Vůbec ne &nbsp;·&nbsp; 1 = Několik dní &nbsp;·&nbsp; 2 = Více než polovinu dní &nbsp;·&nbsp; 3 = Téměř každý den',
+    calc_btn: 'Vypočítat', score_label: 'PHQ-9 = ', of27: ' / 27',
+    q0: 'Malý zájem nebo potěšení z činností',
+    q1: 'Pocit smutku, deprese nebo beznaděje',
+    q2: 'Potíže s usínáním, udržením spánku nebo naopak nadměrná spavost',
+    q3: 'Pocit únavy nebo nedostatku energie',
+    q4: 'Špatná chuť k jídlu nebo naopak přejídání',
+    q5: 'Pocit, že jste špatný člověk nebo že jste zklamal(a) sebe či svou rodinu',
+    q6: 'Potíže se soustředěním, např. při čtení novin nebo sledování televize',
+    q7: 'Neobvykle pomalé pohyby nebo řeč, kterých by si mohli všimnout ostatní — nebo naopak neklid a neschopnost vydržet v klidu',
+    q8: 'Myšlenky, že by bylo lépe být mrtvý(á), nebo myšlenky na sebepoškození',
+    opt0: '0 — Vůbec ne', opt1: '1 — Několik dní', opt2: '2 — Více než polovinu dní', opt3: '3 — Téměř každý den',
+    sev_minimal: 'Minimální nebo žádné příznaky deprese.', sev_mild: 'Mírné příznaky deprese.',
+    sev_moderate: 'Střední příznaky deprese.', sev_modsevere: 'Středně těžké příznaky deprese.', sev_severe: 'Těžké příznaky deprese.',
+    item9_warning: 'Byla potvrzena položka 9 (myšlenky na sebepoškození) — vyžaduje okamžité klinické vyšetření bez ohledu na celkové skóre.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'PHQ-9', subtitle: 'Questionnaire de santé du patient — dépistage et sévérité de la dépression.',
+    phq9_extra_note: " Ce n'est pas un outil diagnostique — un dépistage positif doit toujours être suivi d'une évaluation clinique.",
+    items_heading: 'Au cours des deux dernières semaines, à quelle fréquence avez-vous été gêné(e) par les problèmes suivants ?',
+    scale_legend: '0 = Jamais &nbsp;·&nbsp; 1 = Plusieurs jours &nbsp;·&nbsp; 2 = Plus de la moitié des jours &nbsp;·&nbsp; 3 = Presque tous les jours',
+    calc_btn: 'Calculer', score_label: 'PHQ-9 = ', of27: ' / 27',
+    q0: "Peu d'intérêt ou de plaisir à faire les choses",
+    q1: 'Se sentir triste, déprimé(e) ou désespéré(e)',
+    q2: "Difficultés à s'endormir, sommeil interrompu, ou au contraire dormir trop",
+    q3: "Fatigue ou manque d'énergie",
+    q4: "Perte d'appétit ou au contraire trop manger",
+    q5: "Mauvaise opinion de vous-même — sentiment d'être un(e) raté(e) ou d'avoir déçu votre famille",
+    q6: 'Difficultés à vous concentrer, par exemple pour lire le journal ou regarder la télévision',
+    q7: "Bouger ou parler si lentement que cela aurait pu être remarqué — ou au contraire être si agité(e) que vous avez bougé beaucoup plus que d'habitude",
+    q8: "Penser que vous seriez mieux mort(e), ou penser à vous faire du mal",
+    opt0: '0 — Jamais', opt1: '1 — Plusieurs jours', opt2: '2 — Plus de la moitié des jours', opt3: '3 — Presque tous les jours',
+    sev_minimal: 'Symptômes dépressifs minimes ou absents.', sev_mild: 'Symptômes dépressifs légers.',
+    sev_moderate: 'Symptômes dépressifs modérés.', sev_modsevere: 'Symptômes dépressifs modérément sévères.', sev_severe: 'Symptômes dépressifs sévères.',
+    item9_warning: "L'item 9 (pensées d'auto-agression) a été rapporté — un suivi clinique immédiat est nécessaire, quel que soit le score total."
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'PHQ-9', subtitle: 'Patientenfragebogen zur Gesundheit — Depressions-Screening und Schweregrad.',
+    phq9_extra_note: ' Kein diagnostisches Instrument — auf ein positives Screening sollte immer eine klinische Beurteilung folgen.',
+    items_heading: 'Wie oft fühlten Sie sich im Verlauf der letzten 2 Wochen durch die folgenden Beschwerden beeinträchtigt?',
+    scale_legend: '0 = Überhaupt nicht &nbsp;·&nbsp; 1 = An einzelnen Tagen &nbsp;·&nbsp; 2 = An mehr als der Hälfte der Tage &nbsp;·&nbsp; 3 = Beinahe jeden Tag',
+    calc_btn: 'Berechnen', score_label: 'PHQ-9 = ', of27: ' / 27',
+    q0: 'Wenig Interesse oder Freude an Ihren Tätigkeiten',
+    q1: 'Niedergeschlagenheit, Schwermut oder Hoffnungslosigkeit',
+    q2: 'Schwierigkeiten, ein- oder durchzuschlafen, oder vermehrter Schlaf',
+    q3: 'Müdigkeit oder Gefühl, keine Energie zu haben',
+    q4: 'Verminderter Appetit oder übermäßiges Bedürfnis zu essen',
+    q5: 'Schlechte Meinung von sich selbst — Gefühl, ein Versager zu sein oder die Familie enttäuscht zu haben',
+    q6: 'Schwierigkeiten, sich zu konzentrieren, z. B. beim Zeitunglesen oder Fernsehen',
+    q7: 'Verlangsamte Sprache oder Bewegung, die anderen hätte auffallen können — oder das Gegenteil: ruhelos oder aufgedreht',
+    q8: 'Gedanken, dass Sie besser tot wären, oder sich selbst zu verletzen',
+    opt0: '0 — Überhaupt nicht', opt1: '1 — An einzelnen Tagen', opt2: '2 — An mehr als der Hälfte der Tage', opt3: '3 — Beinahe jeden Tag',
+    sev_minimal: 'Minimale oder keine depressiven Symptome.', sev_mild: 'Leichte depressive Symptome.',
+    sev_moderate: 'Mittelschwere depressive Symptome.', sev_modsevere: 'Mittelschwere bis schwere depressive Symptome.', sev_severe: 'Schwere depressive Symptome.',
+    item9_warning: 'Item 9 (Gedanken an Selbstverletzung) wurde bejaht — dies erfordert unabhängig vom Gesamtscore eine sofortige klinische Abklärung.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'PHQ-9', subtitle: 'Kwestionariusz zdrowia pacjenta — przesiewowa ocena i nasilenie depresji.',
+    phq9_extra_note: ' To nie jest narzędzie diagnostyczne — pozytywny wynik przesiewowy powinien zawsze prowadzić do oceny klinicznej.',
+    items_heading: 'Jak często w ciągu ostatnich 2 tygodni dokuczały Panu/Pani następujące problemy?',
+    scale_legend: '0 = Wcale &nbsp;·&nbsp; 1 = Kilka dni &nbsp;·&nbsp; 2 = Więcej niż połowę dni &nbsp;·&nbsp; 3 = Niemal codziennie',
+    calc_btn: 'Oblicz', score_label: 'PHQ-9 = ', of27: ' / 27',
+    q0: 'Małe zainteresowanie lub odczuwanie przyjemności z wykonywanych czynności',
+    q1: 'Uczucie smutku, przygnębienia lub beznadziei',
+    q2: 'Trudności z zasypianiem, utrzymaniem snu lub nadmierna senność',
+    q3: 'Uczucie zmęczenia lub brak energii',
+    q4: 'Słaby apetyt lub przejadanie się',
+    q5: 'Negatywna ocena samego siebie — poczucie porażki lub zawiedzenia rodziny',
+    q6: 'Trudności ze skupieniem uwagi, np. podczas czytania gazety lub oglądania telewizji',
+    q7: 'Spowolnienie ruchów lub mowy zauważalne dla innych — albo przeciwnie, niepokój ruchowy',
+    q8: 'Myśli, że lepiej byłoby nie żyć, lub myśli o zrobieniu sobie krzywdy',
+    opt0: '0 — Wcale', opt1: '1 — Kilka dni', opt2: '2 — Więcej niż połowę dni', opt3: '3 — Niemal codziennie',
+    sev_minimal: 'Minimalne lub brak objawów depresji.', sev_mild: 'Łagodne objawy depresji.',
+    sev_moderate: 'Umiarkowane objawy depresji.', sev_modsevere: 'Umiarkowanie ciężkie objawy depresji.', sev_severe: 'Ciężkie objawy depresji.',
+    item9_warning: 'Zaznaczono pozycję 9 (myśli o samookaleczeniu) — wymaga to natychmiastowej oceny klinicznej niezależnie od łącznego wyniku.'
+  }
+};
+
+var QUESTION_KEYS = ['q0','q1','q2','q3','q4','q5','q6','q7','q8'];
+
+function renderPHQItems() {
+  var itemsDiv = document.getElementById('items');
+  var existing = QUESTION_KEYS.map(function(k, i){ return document.getElementById('q' + i); });
+  var currentValues = existing.map(function(el){ return el ? el.value : '0'; });
+  itemsDiv.innerHTML = '';
+  QUESTION_KEYS.forEach(function(key, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = '<label>' + (i+1) + '. ' + ucmT(key) + '</label>' +
+      '<select id="q' + i + '">' +
+      '<option value="0">' + ucmT('opt0') + '</option>' +
+      '<option value="1">' + ucmT('opt1') + '</option>' +
+      '<option value="2">' + ucmT('opt2') + '</option>' +
+      '<option value="3">' + ucmT('opt3') + '</option>' +
+      '</select>';
+    itemsDiv.appendChild(wrap);
+    document.getElementById('q' + i).value = currentValues[i];
+  });
+}
+
+var _hasResult = false;
 
 function calcPHQ9() {
+  _hasResult = true;
+  renderPHQ9Result();
+}
+
+function renderPHQ9Result() {
+  if (!_hasResult) return;
   var total = 0;
-  for (var i = 0; i < QUESTIONS.length; i++) total += parseInt(document.getElementById('q' + i).value, 10);
+  for (var i = 0; i < QUESTION_KEYS.length; i++) total += parseInt(document.getElementById('q' + i).value, 10);
   var interp;
-  if (total <= 4) interp = 'Minimal or no depression symptoms.';
-  else if (total <= 9) interp = 'Mild depression symptoms.';
-  else if (total <= 14) interp = 'Moderate depression symptoms.';
-  else if (total <= 19) interp = 'Moderately severe depression symptoms.';
-  else interp = 'Severe depression symptoms.';
+  if (total <= 4) interp = ucmT('sev_minimal');
+  else if (total <= 9) interp = ucmT('sev_mild');
+  else if (total <= 14) interp = ucmT('sev_moderate');
+  else if (total <= 19) interp = ucmT('sev_modsevere');
+  else interp = ucmT('sev_severe');
   if (parseInt(document.getElementById('q8').value, 10) > 0) {
-    interp += '<br><strong style="color:#B71C1C;">Item 9 (thoughts of self-harm) was endorsed — this requires immediate clinical follow-up regardless of total score.</strong>';
+    interp += '<br><strong style="color:#B71C1C;">' + ucmT('item9_warning') + '</strong>';
   }
-  document.getElementById('resultScore').textContent = 'PHQ-9 = ' + total + ' / 27';
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of27');
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }
-</script>
 
+// renderPHQItems() is deliberately NOT called immediately here — at parse
+// time, i18n.js hasn't loaded yet, so ucmT() would fall back to raw key
+// names (e.g. "q0") and briefly flash placeholder text before the real
+// language loads. ucmOnLangChange fires once automatically after i18n.js
+// sets up the correct dictionary on page load, and again on every
+// subsequent language switch — so it's the single source for both.
+window.ucmOnLangChange = function() { renderPHQItems(); renderPHQ9Result(); };
+</script>
 <script src="../assets/i18n.js"></script>
 </body>
 </html>

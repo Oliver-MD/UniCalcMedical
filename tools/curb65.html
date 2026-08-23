@@ -16,9 +16,9 @@
 </header>
 
 <div class="container">
-  <span class="category-tag">Respiratory</span>
-  <h1 class="page-title">CURB-65 / CRB-65</h1>
-  <p class="page-subtitle">Severity assessment for community-acquired pneumonia.</p>
+  <span class="category-tag" data-i18n="tag">Respiratory</span>
+  <h1 class="page-title" data-i18n="title">CURB-65 / CRB-65</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Severity assessment for community-acquired pneumonia.</p>
 
   <div class="disclaimer">
     <strong data-i18n="disclaimer_title">Not a medical device.</strong>
@@ -26,13 +26,13 @@
   </div>
 
   <div class="card">
-    <h2>Criteria (1 point each)</h2>
-    <div class="check-row"><input type="checkbox" id="c"><label for="c">Confusion (new-onset, AMTS ≤ 8)</label></div>
-    <div class="check-row"><input type="checkbox" id="u"><label for="u">Urea &gt; 7 mmol/L <span style="color:#999;">(omit if unavailable — use CRB-65)</span></label></div>
-    <div class="check-row"><input type="checkbox" id="r"><label for="r">Respiratory rate ≥ 30/min</label></div>
-    <div class="check-row"><input type="checkbox" id="b"><label for="b">Blood pressure: systolic &lt; 90 mmHg or diastolic ≤ 60 mmHg</label></div>
-    <div class="check-row"><input type="checkbox" id="a"><label for="a">Age ≥ 65 years</label></div>
-    <button class="btn" onclick="calcCURB()">Calculate</button>
+    <h2 data-i18n="criteria_heading">Criteria (1 point each)</h2>
+    <div class="check-row"><input type="checkbox" id="c"><label for="c" data-i18n="crit_c">Confusion (new-onset, AMTS ≤ 8)</label></div>
+    <div class="check-row"><input type="checkbox" id="u"><label for="u"><span data-i18n="crit_u">Urea &gt; 7 mmol/L</span> <span style="color:#999;" data-i18n="crit_u_note">(omit if unavailable — use CRB-65)</span></label></div>
+    <div class="check-row"><input type="checkbox" id="r"><label for="r" data-i18n="crit_r">Respiratory rate ≥ 30/min</label></div>
+    <div class="check-row"><input type="checkbox" id="b"><label for="b" data-i18n="crit_b">Blood pressure: systolic &lt; 90 mmHg or diastolic ≤ 60 mmHg</label></div>
+    <div class="check-row"><input type="checkbox" id="a"><label for="a" data-i18n="crit_a">Age ≥ 65 years</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcCURB()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
       <div class="interp" id="resultInterp"></div>
@@ -50,18 +50,81 @@
 </footer>
 
 <script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Respiratory', title: 'CURB-65 / CRB-65', subtitle: 'Severity assessment for community-acquired pneumonia.',
+    criteria_heading: 'Criteria (1 point each)',
+    crit_c: 'Confusion (new-onset, AMTS ≤ 8)', crit_u: 'Urea > 7 mmol/L', crit_u_note: '(omit if unavailable — use CRB-65)',
+    crit_r: 'Respiratory rate ≥ 30/min', crit_b: 'Blood pressure: systolic < 90 mmHg or diastolic ≤ 60 mmHg', crit_a: 'Age ≥ 65 years',
+    calc_btn: 'Calculate', score_of: 'Score = ', of5: ' / 5',
+    interp_low: 'Low severity — likely suitable for outpatient treatment.',
+    interp_mod: 'Moderate severity — consider hospital admission or closely supervised outpatient treatment.',
+    interp_high: 'High severity — hospital admission recommended; consider intensive care assessment if score 4–5.'
+  },
+  cs: {
+    tag: 'Respirační systém', title: 'CURB-65 / CRB-65', subtitle: 'Hodnocení závažnosti komunitní pneumonie.',
+    criteria_heading: 'Kritéria (1 bod za každé)',
+    crit_c: 'Zmatenost (nově vzniklá, AMTS ≤ 8)', crit_u: 'Urea > 7 mmol/l', crit_u_note: '(pokud není dostupné, vynechte — použijte CRB-65)',
+    crit_r: 'Dechová frekvence ≥ 30/min', crit_b: 'Krevní tlak: systolický < 90 mmHg nebo diastolický ≤ 60 mmHg', crit_a: 'Věk ≥ 65 let',
+    calc_btn: 'Vypočítat', score_of: 'Skóre = ', of5: ' / 5',
+    interp_low: 'Nízká závažnost — pravděpodobně vhodná ambulantní léčba.',
+    interp_mod: 'Střední závažnost — zvažte hospitalizaci nebo pečlivě sledovanou ambulantní léčbu.',
+    interp_high: 'Vysoká závažnost — doporučena hospitalizace; při skóre 4–5 zvažte vyhodnocení na JIP.'
+  },
+  fr: {
+    tag: 'Respiratoire', title: 'CURB-65 / CRB-65', subtitle: 'Évaluation de la gravité de la pneumonie communautaire.',
+    criteria_heading: 'Critères (1 point chacun)',
+    crit_c: "Confusion (d'apparition récente, AMTS ≤ 8)", crit_u: 'Urée > 7 mmol/L', crit_u_note: '(omettre si indisponible — utiliser CRB-65)',
+    crit_r: 'Fréquence respiratoire ≥ 30/min', crit_b: 'Pression artérielle : systolique < 90 mmHg ou diastolique ≤ 60 mmHg', crit_a: 'Âge ≥ 65 ans',
+    calc_btn: 'Calculer', score_of: 'Score = ', of5: ' / 5',
+    interp_low: 'Gravité faible — traitement ambulatoire probablement approprié.',
+    interp_mod: 'Gravité modérée — envisager une hospitalisation ou un traitement ambulatoire étroitement surveillé.',
+    interp_high: "Gravité élevée — hospitalisation recommandée ; envisager une évaluation en soins intensifs si le score est de 4 à 5."
+  },
+  de: {
+    tag: 'Atemwege', title: 'CURB-65 / CRB-65', subtitle: 'Schweregradbeurteilung der ambulant erworbenen Pneumonie.',
+    criteria_heading: 'Kriterien (je 1 Punkt)',
+    crit_c: 'Verwirrtheit (neu aufgetreten, AMTS ≤ 8)', crit_u: 'Harnstoff > 7 mmol/L', crit_u_note: '(bei Nichtverfügbarkeit weglassen — CRB-65 verwenden)',
+    crit_r: 'Atemfrequenz ≥ 30/min', crit_b: 'Blutdruck: systolisch < 90 mmHg oder diastolisch ≤ 60 mmHg', crit_a: 'Alter ≥ 65 Jahre',
+    calc_btn: 'Berechnen', score_of: 'Score = ', of5: ' / 5',
+    interp_low: 'Geringer Schweregrad — ambulante Behandlung wahrscheinlich geeignet.',
+    interp_mod: 'Mittlerer Schweregrad — Krankenhauseinweisung oder engmaschig überwachte ambulante Behandlung erwägen.',
+    interp_high: 'Hoher Schweregrad — Krankenhauseinweisung empfohlen; bei Score 4–5 intensivmedizinische Beurteilung erwägen.'
+  },
+  pl: {
+    tag: 'Układ oddechowy', title: 'CURB-65 / CRB-65', subtitle: 'Ocena ciężkości pozaszpitalnego zapalenia płuc.',
+    criteria_heading: 'Kryteria (1 punkt każde)',
+    crit_c: 'Splątanie (nowo powstałe, AMTS ≤ 8)', crit_u: 'Mocznik > 7 mmol/l', crit_u_note: '(pomiń, jeśli niedostępne — użyj CRB-65)',
+    crit_r: 'Częstość oddechów ≥ 30/min', crit_b: 'Ciśnienie tętnicze: skurczowe < 90 mmHg lub rozkurczowe ≤ 60 mmHg', crit_a: 'Wiek ≥ 65 lat',
+    calc_btn: 'Oblicz', score_of: 'Wynik = ', of5: ' / 5',
+    interp_low: 'Niska ciężkość — prawdopodobnie odpowiednie leczenie ambulatoryjne.',
+    interp_mod: 'Umiarkowana ciężkość — rozważ hospitalizację lub ściśle nadzorowane leczenie ambulatoryjne.',
+    interp_high: 'Wysoka ciężkość — zalecana hospitalizacja; przy wyniku 4–5 rozważ ocenę na OIT.'
+  }
+};
+
+var _lastCURB = null;
+
 function calcCURB() {
   var score = ['c','u','r','b','a'].filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastCURB = score;
+  renderCURBResult();
+}
+
+function renderCURBResult() {
+  if (_lastCURB === null) return;
+  var score = _lastCURB;
   var interp;
-  if (score <= 1) interp = 'Low severity — likely suitable for outpatient treatment.';
-  else if (score === 2) interp = 'Moderate severity — consider hospital admission or closely supervised outpatient treatment.';
-  else interp = 'High severity — hospital admission recommended; consider intensive care assessment if score 4–5.';
-  document.getElementById('resultScore').textContent = 'Score = ' + score + ' / 5';
+  if (score <= 1) interp = ucmT('interp_low');
+  else if (score === 2) interp = ucmT('interp_mod');
+  else interp = ucmT('interp_high');
+  document.getElementById('resultScore').textContent = ucmT('score_of') + score + ucmT('of5');
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }
-</script>
 
+window.ucmOnLangChange = function() { renderCURBResult(); };
+</script>
 <script src="../assets/i18n.js"></script>
 </body>
 </html>

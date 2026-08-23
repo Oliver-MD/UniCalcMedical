@@ -16,9 +16,9 @@
 </header>
 
 <div class="container">
-  <span class="category-tag">Endocrinology &amp; metabolic</span>
-  <h1 class="page-title">BMI Calculator</h1>
-  <p class="page-subtitle">Body mass index from height and weight.</p>
+  <span class="category-tag" data-i18n="tag">Endocrinology &amp; metabolic</span>
+  <h1 class="page-title" data-i18n="title">BMI Calculator</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Body mass index from height and weight.</p>
 
   <div class="disclaimer">
     <strong data-i18n="disclaimer_title">Not a medical device.</strong>
@@ -26,16 +26,16 @@
   </div>
 
   <div class="card">
-    <h2>Calculate</h2>
+    <h2 data-i18n="calc_heading">Calculate</h2>
     <div class="field">
-      <label for="height">Height (cm)</label>
-      <input type="number" id="height" min="50" max="250" step="0.1" placeholder="e.g. 175">
+      <label data-i18n="height_label" for="height">Height (cm)</label>
+      <input type="number" id="height" min="50" max="250" step="0.1" data-i18n-placeholder="height_ph" placeholder="e.g. 175">
     </div>
     <div class="field">
-      <label for="weight">Weight (kg)</label>
-      <input type="number" id="weight" min="20" max="400" step="0.1" placeholder="e.g. 72">
+      <label data-i18n="weight_label" for="weight">Weight (kg)</label>
+      <input type="number" id="weight" min="20" max="400" step="0.1" data-i18n-placeholder="weight_ph" placeholder="e.g. 72">
     </div>
-    <button class="btn" onclick="calcBMI()">Calculate</button>
+    <button class="btn" data-i18n="calc_btn" onclick="calcBMI()">Calculate</button>
 
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
@@ -44,8 +44,8 @@
   </div>
 
   <div class="source-block">
-    <strong>Formula:</strong> BMI = weight (kg) / height (m)².<br>
-    <strong>Categories:</strong> WHO international classification — underweight &lt;18.5, normal 18.5–24.9, overweight 25–29.9, obese ≥30.<br>
+    <strong data-i18n="formula_label">Formula:</strong> <span data-i18n="formula_text">BMI = weight (kg) / height (m)².</span><br>
+    <strong data-i18n="categories_label">Categories:</strong> <span data-i18n="categories_text">WHO international classification — underweight &lt;18.5, normal 18.5–24.9, overweight 25–29.9, obese ≥30.</span><br>
     <strong data-i18n="reference_label">Reference:</strong> World Health Organization. Obesity: preventing and managing the global epidemic. WHO Technical Report Series 894, 2000.<br>
     <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/29/body-mass-index-bmi" target="_blank" rel="noopener">MDCalc — BMI</a>
   </div>
@@ -56,23 +56,87 @@
 </footer>
 
 <script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Endocrinology & metabolic', title: 'BMI Calculator', subtitle: 'Body mass index from height and weight.',
+    calc_heading: 'Calculate', height_label: 'Height (cm)', height_ph: 'e.g. 175',
+    weight_label: 'Weight (kg)', weight_ph: 'e.g. 72', calc_btn: 'Calculate',
+    formula_label: 'Formula:', formula_text: 'BMI = weight (kg) / height (m)².',
+    categories_label: 'Categories:', categories_text: 'WHO international classification — underweight <18.5, normal 18.5–24.9, overweight 25–29.9, obese ≥30.',
+    err_invalid: 'Please enter valid height and weight.',
+    cat_underweight: 'Underweight', cat_normal: 'Normal weight', cat_overweight: 'Overweight', cat_obese: 'Obese',
+    result_category: 'Category:', result_who: '(WHO classification)'
+  },
+  cs: {
+    tag: 'Endokrinologie a metabolismus', title: 'Kalkulátor BMI', subtitle: 'Index tělesné hmotnosti z výšky a hmotnosti.',
+    calc_heading: 'Výpočet', height_label: 'Výška (cm)', height_ph: 'např. 175',
+    weight_label: 'Hmotnost (kg)', weight_ph: 'např. 72', calc_btn: 'Vypočítat',
+    formula_label: 'Vzorec:', formula_text: 'BMI = hmotnost (kg) / výška (m)².',
+    categories_label: 'Kategorie:', categories_text: 'Mezinárodní klasifikace WHO — podváha <18,5, normální hmotnost 18,5–24,9, nadváha 25–29,9, obezita ≥30.',
+    err_invalid: 'Zadejte prosím platnou výšku a hmotnost.',
+    cat_underweight: 'Podváha', cat_normal: 'Normální hmotnost', cat_overweight: 'Nadváha', cat_obese: 'Obezita',
+    result_category: 'Kategorie:', result_who: '(klasifikace WHO)'
+  },
+  fr: {
+    tag: 'Endocrinologie et métabolisme', title: 'Calculateur IMC', subtitle: "Indice de masse corporelle à partir de la taille et du poids.",
+    calc_heading: 'Calculer', height_label: 'Taille (cm)', height_ph: 'p. ex. 175',
+    weight_label: 'Poids (kg)', weight_ph: 'p. ex. 72', calc_btn: 'Calculer',
+    formula_label: 'Formule :', formula_text: 'IMC = poids (kg) / taille (m)².',
+    categories_label: 'Catégories :', categories_text: "Classification internationale de l'OMS — insuffisance pondérale <18,5, poids normal 18,5–24,9, surpoids 25–29,9, obésité ≥30.",
+    err_invalid: 'Veuillez saisir une taille et un poids valides.',
+    cat_underweight: 'Insuffisance pondérale', cat_normal: 'Poids normal', cat_overweight: 'Surpoids', cat_obese: 'Obésité',
+    result_category: 'Catégorie :', result_who: "(classification de l'OMS)"
+  },
+  de: {
+    tag: 'Endokrinologie & Stoffwechsel', title: 'BMI-Rechner', subtitle: 'Body-Mass-Index aus Körpergröße und Gewicht.',
+    calc_heading: 'Berechnen', height_label: 'Größe (cm)', height_ph: 'z. B. 175',
+    weight_label: 'Gewicht (kg)', weight_ph: 'z. B. 72', calc_btn: 'Berechnen',
+    formula_label: 'Formel:', formula_text: 'BMI = Gewicht (kg) / Größe (m)².',
+    categories_label: 'Kategorien:', categories_text: 'Internationale WHO-Klassifikation — Untergewicht <18,5, Normalgewicht 18,5–24,9, Übergewicht 25–29,9, Adipositas ≥30.',
+    err_invalid: 'Bitte geben Sie eine gültige Größe und ein gültiges Gewicht ein.',
+    cat_underweight: 'Untergewicht', cat_normal: 'Normalgewicht', cat_overweight: 'Übergewicht', cat_obese: 'Adipositas',
+    result_category: 'Kategorie:', result_who: '(WHO-Klassifikation)'
+  },
+  pl: {
+    tag: 'Endokrynologia i metabolizm', title: 'Kalkulator BMI', subtitle: 'Wskaźnik masy ciała na podstawie wzrostu i wagi.',
+    calc_heading: 'Oblicz', height_label: 'Wzrost (cm)', height_ph: 'np. 175',
+    weight_label: 'Waga (kg)', weight_ph: 'np. 72', calc_btn: 'Oblicz',
+    formula_label: 'Wzór:', formula_text: 'BMI = waga (kg) / wzrost (m)².',
+    categories_label: 'Kategorie:', categories_text: 'Międzynarodowa klasyfikacja WHO — niedowaga <18,5, waga prawidłowa 18,5–24,9, nadwaga 25–29,9, otyłość ≥30.',
+    err_invalid: 'Proszę podać prawidłowy wzrost i wagę.',
+    cat_underweight: 'Niedowaga', cat_normal: 'Waga prawidłowa', cat_overweight: 'Nadwaga', cat_obese: 'Otyłość',
+    result_category: 'Kategoria:', result_who: '(klasyfikacja WHO)'
+  }
+};
+
+var _lastBMI = null;
+
 function calcBMI() {
   var h = parseFloat(document.getElementById('height').value);
   var w = parseFloat(document.getElementById('weight').value);
-  if (!h || !w || h <= 0 || w <= 0) { alert('Please enter valid height and weight.'); return; }
-  var m = h / 100;
-  var bmi = w / (m * m);
+  if (!h || !w || h <= 0 || w <= 0) { alert(ucmT('err_invalid')); return; }
+  _lastBMI = { h: h, w: w };
+  renderBMIResult();
+}
+
+function renderBMIResult() {
+  if (!_lastBMI) return;
+  var m = _lastBMI.h / 100;
+  var bmi = _lastBMI.w / (m * m);
   var cat, color;
-  if (bmi < 18.5) { cat = 'Underweight'; color = '#B8860B'; }
-  else if (bmi < 25) { cat = 'Normal weight'; color = '#2E7D32'; }
-  else if (bmi < 30) { cat = 'Overweight'; color = '#B8860B'; }
-  else { cat = 'Obese'; color = '#B71C1C'; }
+  if (bmi < 18.5) { cat = ucmT('cat_underweight'); color = '#B8860B'; }
+  else if (bmi < 25) { cat = ucmT('cat_normal'); color = '#2E7D32'; }
+  else if (bmi < 30) { cat = ucmT('cat_overweight'); color = '#B8860B'; }
+  else { cat = ucmT('cat_obese'); color = '#B71C1C'; }
   document.getElementById('resultScore').textContent = bmi.toFixed(1) + ' kg/m²';
-  document.getElementById('resultInterp').innerHTML = 'Category: <strong style="color:' + color + '">' + cat + '</strong> (WHO classification)';
+  document.getElementById('resultInterp').innerHTML = ucmT('result_category') + ' <strong style="color:' + color + '">' + cat + '</strong> ' + ucmT('result_who');
   document.getElementById('result').classList.add('show');
 }
-</script>
 
+// Called by i18n.js whenever the language changes, so a result already on
+// screen updates its wording immediately instead of staying in the old language.
+window.ucmOnLangChange = function() { renderBMIResult(); };
+</script>
 <script src="../assets/i18n.js"></script>
 </body>
 </html>
