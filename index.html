@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UniCalcMedical — Medical calculators and screening questionnaires</title>
+<meta name="description" content="Open-source implementations of widely used medical calculators and screening questionnaires, maintained by current and former medical students.">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html">UniCalcMedical</a>
+    <nav>
+      <a href="https://github.com/Oliver-MD/UniCalcMedical" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <h1 class="page-title">Medical calculators &amp; screening questionnaires</h1>
+  <p class="page-subtitle">Open-source, independently implemented, with a cited source for every tool. Maintained by current and former students of UCL, King's College London, and Université Claude Bernard Lyon 1.</p>
+
+  <div class="disclaimer">
+    <strong>Not a medical device.</strong>
+    These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.
+  </div>
+
+  <div class="section-label">Cognition &amp; frailty</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/slums.html"><div class="name">SLUMS</div><div class="use">Cognitive impairment screening</div></a>
+    <a class="tool-card" href="tools/prisma7.html"><div class="name">PRISMA-7</div><div class="use">Frailty screening</div></a>
+    <a class="tool-card" href="tools/frail-scale.html"><div class="name">FRAIL scale</div><div class="use">Frailty screening</div></a>
+    <a class="tool-card" href="tools/fried-phenotype.html"><div class="name">Fried Frailty Phenotype</div><div class="use">Frailty phenotype classification</div></a>
+  </div>
+
+  <div class="section-label">Respiratory</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/curb65.html"><div class="name">CURB-65 / CRB-65</div><div class="use">Community-acquired pneumonia severity</div></a>
+    <a class="tool-card" href="tools/mmrc-copd.html"><div class="name">mMRC + exacerbation history</div><div class="use">Dyspnoea grade &amp; GOLD group</div></a>
+    <a class="tool-card" href="tools/gina-control.html"><div class="name">GINA asthma control criteria</div><div class="use">Asthma symptom control level</div></a>
+    <a class="tool-card" href="tools/nosas.html"><div class="name">NoSAS score</div><div class="use">Obstructive sleep apnoea screening</div></a>
+  </div>
+
+  <div class="section-label">Cardiology &amp; thromboembolism</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/wells-score.html"><div class="name">Wells score (DVT &amp; PE)</div><div class="use">Thromboembolism probability</div></a>
+    <a class="tool-card" href="tools/cha2ds2-va.html"><div class="name">CHA₂DS₂-VA</div><div class="use">Stroke risk in atrial fibrillation</div></a>
+    <a class="tool-card" href="tools/has-bled.html"><div class="name">HAS-BLED</div><div class="use">Bleeding risk on anticoagulation</div></a>
+    <a class="tool-card" href="tools/heart-score.html"><div class="name">HEART score</div><div class="use">Chest pain risk stratification</div></a>
+    <a class="tool-card" href="tools/nyha.html"><div class="name">NYHA classification</div><div class="use">Heart failure functional class</div></a>
+    <a class="tool-card" href="tools/qtc.html"><div class="name">Corrected QT (QTc)</div><div class="use">Heart-rate corrected QT interval</div></a>
+    <a class="tool-card" href="tools/framingham.html"><div class="name">Framingham criteria</div><div class="use">Heart failure diagnostic criteria</div></a>
+    <a class="tool-card" href="tools/score2.html"><div class="name">SCORE2 / SCORE2-OP / SCORE2-Diabetes</div><div class="use">10-year cardiovascular risk</div></a>
+  </div>
+
+  <div class="section-label">Neurology</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/gcs.html"><div class="name">Glasgow Coma Scale</div><div class="use">Level of consciousness</div></a>
+    <a class="tool-card" href="tools/nihss.html"><div class="name">NIHSS</div><div class="use">Stroke severity</div></a>
+    <a class="tool-card" href="tools/abcd2.html"><div class="name">ABCD²</div><div class="use">Stroke risk after TIA</div></a>
+  </div>
+
+  <div class="section-label">Renal &amp; hepatic function</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/egfr.html"><div class="name">eGFR (CKD-EPI 2021, MDRD)</div><div class="use">Estimated glomerular filtration rate</div></a>
+    <a class="tool-card" href="tools/cockcroft-gault.html"><div class="name">Cockcroft-Gault</div><div class="use">Creatinine clearance for dosing</div></a>
+    <a class="tool-card" href="tools/fib4.html"><div class="name">FIB-4</div><div class="use">Liver fibrosis estimate</div></a>
+    <a class="tool-card" href="tools/child-pugh.html"><div class="name">Child-Pugh</div><div class="use">Cirrhosis severity</div></a>
+  </div>
+
+  <div class="section-label">Endocrinology &amp; metabolic</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/bmi.html"><div class="name">BMI calculator</div><div class="use">Body mass index</div></a>
+    <a class="tool-card" href="tools/bsa.html"><div class="name">BSA + ideal/adjusted weight</div><div class="use">Body surface area &amp; dosing weight</div></a>
+    <a class="tool-card" href="tools/hba1c-eag.html"><div class="name">HbA1c ↔ eAG</div><div class="use">Average glucose conversion</div></a>
+    <a class="tool-card" href="tools/findrisc.html"><div class="name">FINDRISC</div><div class="use">Type 2 diabetes risk</div></a>
+    <a class="tool-card" href="tools/levothyroxine-dosing.html"><div class="name">Levothyroxine dosing</div><div class="use">Starting &amp; maintenance dose</div></a>
+  </div>
+
+  <div class="section-label">Infection &amp; antimicrobials</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/centor-mcisaac.html"><div class="name">Centor / McIsaac</div><div class="use">Streptococcal pharyngitis probability</div></a>
+    <a class="tool-card" href="tools/qsofa.html"><div class="name">qSOFA</div><div class="use">Rapid sepsis screening</div></a>
+    <a class="tool-card" href="tools/antibiotic-dosing.html"><div class="name">Antibiotic dosing calculators</div><div class="use">Weight/renal-based dosing</div></a>
+    <a class="tool-card" href="tools/who-aware.html"><div class="name">WHO AWaRe classification</div><div class="use">Antibiotic category lookup</div></a>
+  </div>
+
+  <div class="section-label">Nutrition</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/mst.html"><div class="name">MST</div><div class="use">Malnutrition screening</div></a>
+    <a class="tool-card" href="tools/mna-sf.html"><div class="name">MNA-SF</div><div class="use">Malnutrition screening in older adults</div></a>
+  </div>
+
+  <div class="section-label">Mental health &amp; substance use</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/phq9.html"><div class="name">PHQ-9</div><div class="use">Depression screening &amp; severity</div></a>
+    <a class="tool-card" href="tools/gad7.html"><div class="name">GAD-7</div><div class="use">Anxiety screening</div></a>
+    <a class="tool-card" href="tools/gds15.html"><div class="name">GDS-15</div><div class="use">Depression screening in older adults</div></a>
+    <a class="tool-card" href="tools/audit-c.html"><div class="name">AUDIT-C</div><div class="use">Hazardous alcohol use screening</div></a>
+    <a class="tool-card" href="tools/fagerstrom.html"><div class="name">Fagerström test (FTND)</div><div class="use">Nicotine dependence</div></a>
+    <a class="tool-card" href="tools/scoff.html"><div class="name">SCOFF questionnaire</div><div class="use">Eating disorder screening</div></a>
+    <a class="tool-card" href="tools/taps.html"><div class="name">TAPS Tool</div><div class="use">Substance use screening</div></a>
+  </div>
+
+  <div class="section-label">Geriatrics &amp; functional status</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/timed-up-and-go.html"><div class="name">Timed Up and Go</div><div class="use">Mobility &amp; fall risk</div></a>
+    <a class="tool-card" href="tools/adl-barthel.html"><div class="name">ADL (Barthel Index)</div><div class="use">Basic activities of daily living</div></a>
+    <a class="tool-card" href="tools/iadl-lawton.html"><div class="name">IADL (Lawton)</div><div class="use">Instrumental activities of daily living</div></a>
+  </div>
+
+  <div class="section-label">Musculoskeletal &amp; trauma</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/ottawa-ankle.html"><div class="name">Ottawa Ankle Rules</div><div class="use">X-ray indication after ankle injury</div></a>
+    <a class="tool-card" href="tools/ottawa-knee.html"><div class="name">Ottawa Knee Rules</div><div class="use">X-ray indication after knee injury</div></a>
+  </div>
+
+  <div class="section-label">Other</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/frax.html"><div class="name">FRAX</div><div class="use">10-year fracture risk (links to official calculator)</div></a>
+    <a class="tool-card" href="tools/d-dimer-age.html"><div class="name">D-dimer age-adjusted cut-off</div><div class="use">Thromboembolism exclusion in older adults</div></a>
+    <a class="tool-card" href="tools/opioid-conversion.html"><div class="name">Opioid equianalgesic conversion</div><div class="use">Opioid dose conversion</div></a>
+    <a class="tool-card" href="tools/corticosteroid-equivalence.html"><div class="name">Corticosteroid equivalence</div><div class="use">Corticosteroid dose conversion</div></a>
+    <a class="tool-card" href="tools/hanifin-rajka.html"><div class="name">Hanifin-Rajka criteria</div><div class="use">Atopic dermatitis diagnostic criteria</div></a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  UniCalcMedical is an open-source, community-maintained project. Not a medical device.
+  Every calculator lists its primary source — see individual tool pages for full citations.
+  <br><a href="https://github.com/Oliver-MD/UniCalcMedical" target="_blank" rel="noopener">View source on GitHub</a>
+</footer>
+
+</body>
+</html>
