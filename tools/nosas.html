@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoSAS Score — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Respiratory</span>
+  <h1 class="page-title" data-i18n="title">NoSAS Score</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Screening tool for obstructive sleep apnoea / sleep-disordered breathing.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field">
+      <label data-i18n="neck_label" for="neck">Neck circumference (cm)</label>
+      <input type="number" id="neck" min="20" max="70" step="0.1" data-i18n-placeholder="neck_ph" placeholder="e.g. 40">
+    </div>
+    <div class="field">
+      <label data-i18n="bmi_label" for="bmi">BMI (kg/m²)</label>
+      <input type="number" id="bmi" min="10" max="70" step="0.1" data-i18n-placeholder="bmi_ph" placeholder="e.g. 27">
+    </div>
+    <div class="field">
+      <label data-i18n="snoring_label">Snoring</label>
+      <select id="snoring"><option value="0" data-i18n="opt_no">No</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select>
+    </div>
+    <div class="field">
+      <label data-i18n="age_label">Age &gt; 55 years</label>
+      <select id="age"><option value="0" data-i18n="opt_no">No</option><option value="4" data-i18n="opt_yes4">Yes (+4)</option></select>
+    </div>
+    <div class="field">
+      <label data-i18n="sex_label">Sex</label>
+      <select id="sex"><option value="0" data-i18n="opt_female">Female (+0)</option><option value="2" data-i18n="opt_male">Male (+2)</option></select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcNoSAS()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Marti-Soler H, Hirotsu C, Marques-Vidal P, et al. The NoSAS score for screening of sleep-disordered breathing: a derivation and validation study. Lancet Respir Med. 2016;4(9):742–748.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10486/nosas-score-obstructive-sleep-apnea" target="_blank" rel="noopener">MDCalc — NoSAS</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Respiratory', title: 'NoSAS Score', subtitle: 'Screening tool for obstructive sleep apnoea / sleep-disordered breathing.',
+    calc_heading: 'Calculate', neck_label: 'Neck circumference (cm)', neck_ph: 'e.g. 40',
+    bmi_label: 'BMI (kg/m²)', bmi_ph: 'e.g. 27', snoring_label: 'Snoring', age_label: 'Age > 55 years', sex_label: 'Sex',
+    opt_no: 'No', opt_yes2: 'Yes (+2)', opt_yes4: 'Yes (+4)', opt_female: 'Female (+0)', opt_male: 'Male (+2)',
+    calc_btn: 'Calculate', err_invalid: 'Please enter valid neck circumference and BMI.',
+    score_label: 'Score = ', of17: ' / 17',
+    interp_low: 'Low risk of sleep-disordered breathing.', interp_high: 'Score ≥ 8 — increased risk of clinically significant sleep-disordered breathing; consider further evaluation (e.g. overnight polygraphy or polysomnography).'
+  },
+  cs: {
+    tag: 'Respirační systém', title: 'NoSAS skóre', subtitle: 'Screeningový nástroj pro obstrukční spánkovou apnoe / poruchy dýchání ve spánku.',
+    calc_heading: 'Výpočet', neck_label: 'Obvod krku (cm)', neck_ph: 'např. 40',
+    bmi_label: 'BMI (kg/m²)', bmi_ph: 'např. 27', snoring_label: 'Chrápání', age_label: 'Věk > 55 let', sex_label: 'Pohlaví',
+    opt_no: 'Ne', opt_yes2: 'Ano (+2)', opt_yes4: 'Ano (+4)', opt_female: 'Žena (+0)', opt_male: 'Muž (+2)',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platný obvod krku a BMI.',
+    score_label: 'Skóre = ', of17: ' / 17',
+    interp_low: 'Nízké riziko poruchy dýchání ve spánku.', interp_high: 'Skóre ≥ 8 — zvýšené riziko klinicky významné poruchy dýchání ve spánku; zvažte další vyšetření (např. polygrafii nebo polysomnografii).'
+  },
+  fr: {
+    tag: 'Respiratoire', title: 'Score NoSAS', subtitle: "Outil de dépistage de l'apnée obstructive du sommeil / des troubles respiratoires du sommeil.",
+    calc_heading: 'Calculer', neck_label: 'Circonférence du cou (cm)', neck_ph: 'p. ex. 40',
+    bmi_label: 'IMC (kg/m²)', bmi_ph: 'p. ex. 27', snoring_label: 'Ronflement', age_label: 'Âge > 55 ans', sex_label: 'Sexe',
+    opt_no: 'Non', opt_yes2: 'Oui (+2)', opt_yes4: 'Oui (+4)', opt_female: 'Féminin (+0)', opt_male: 'Masculin (+2)',
+    calc_btn: 'Calculer', err_invalid: 'Veuillez saisir une circonférence du cou et un IMC valides.',
+    score_label: 'Score = ', of17: ' / 17',
+    interp_low: 'Faible risque de troubles respiratoires du sommeil.', interp_high: "Score ≥ 8 — risque accru de troubles respiratoires du sommeil cliniquement significatifs ; envisager une évaluation complémentaire (polygraphie ou polysomnographie nocturne)."
+  },
+  de: {
+    tag: 'Atemwege', title: 'NoSAS-Score', subtitle: 'Screening-Instrument für obstruktive Schlafapnoe / schlafbezogene Atmungsstörungen.',
+    calc_heading: 'Berechnen', neck_label: 'Halsumfang (cm)', neck_ph: 'z. B. 40',
+    bmi_label: 'BMI (kg/m²)', bmi_ph: 'z. B. 27', snoring_label: 'Schnarchen', age_label: 'Alter > 55 Jahre', sex_label: 'Geschlecht',
+    opt_no: 'Nein', opt_yes2: 'Ja (+2)', opt_yes4: 'Ja (+4)', opt_female: 'Weiblich (+0)', opt_male: 'Männlich (+2)',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte gültigen Halsumfang und BMI eingeben.',
+    score_label: 'Score = ', of17: ' / 17',
+    interp_low: 'Geringes Risiko einer schlafbezogenen Atmungsstörung.', interp_high: 'Score ≥ 8 — erhöhtes Risiko einer klinisch relevanten schlafbezogenen Atmungsstörung; weitere Abklärung erwägen (z. B. nächtliche Polygraphie oder Polysomnographie).'
+  },
+  pl: {
+    tag: 'Układ oddechowy', title: 'Skala NoSAS', subtitle: 'Narzędzie przesiewowe w kierunku obturacyjnego bezdechu sennego / zaburzeń oddychania podczas snu.',
+    calc_heading: 'Oblicz', neck_label: 'Obwód szyi (cm)', neck_ph: 'np. 40',
+    bmi_label: 'BMI (kg/m²)', bmi_ph: 'np. 27', snoring_label: 'Chrapanie', age_label: 'Wiek > 55 lat', sex_label: 'Płeć',
+    opt_no: 'Nie', opt_yes2: 'Tak (+2)', opt_yes4: 'Tak (+4)', opt_female: 'Kobieta (+0)', opt_male: 'Mężczyzna (+2)',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowy obwód szyi i BMI.',
+    score_label: 'Wynik = ', of17: ' / 17',
+    interp_low: 'Niskie ryzyko zaburzeń oddychania podczas snu.', interp_high: 'Wynik ≥ 8 — zwiększone ryzyko klinicznie istotnych zaburzeń oddychania podczas snu; rozważ dalszą diagnostykę (np. poligrafię lub polisomnografię).'
+  }
+};
+
+var _lastNoSAS = null;
+
+function calcNoSAS() {
+  var neck = parseFloat(document.getElementById('neck').value);
+  var bmi = parseFloat(document.getElementById('bmi').value);
+  if (!neck || !bmi || neck <= 0 || bmi <= 0) { alert(ucmT('err_invalid')); return; }
+  var neckPts = neck > 40 ? 4 : 0;
+  var bmiPts = bmi >= 25 && bmi < 30 ? 3 : (bmi >= 30 ? 5 : 0);
+  var snoring = parseInt(document.getElementById('snoring').value, 10);
+  var age = parseInt(document.getElementById('age').value, 10);
+  var sex = parseInt(document.getElementById('sex').value, 10);
+  _lastNoSAS = neckPts + bmiPts + snoring + age + sex;
+  renderNoSASResult();
+}
+
+function renderNoSASResult() {
+  if (_lastNoSAS === null) return;
+  var total = _lastNoSAS;
+  var interp = total >= 8 ? ucmT('interp_high') : ucmT('interp_low');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of17');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderNoSASResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
