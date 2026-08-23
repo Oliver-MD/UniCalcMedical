@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BMI Calculator — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag">Endocrinology &amp; metabolic</span>
+  <h1 class="page-title">BMI Calculator</h1>
+  <p class="page-subtitle">Body mass index from height and weight.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="card">
+    <h2>Calculate</h2>
+    <div class="field">
+      <label for="height">Height (cm)</label>
+      <input type="number" id="height" min="50" max="250" step="0.1" placeholder="e.g. 175">
+    </div>
+    <div class="field">
+      <label for="weight">Weight (kg)</label>
+      <input type="number" id="weight" min="20" max="400" step="0.1" placeholder="e.g. 72">
+    </div>
+    <button class="btn" onclick="calcBMI()">Calculate</button>
+
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="source-block">
+    <strong>Formula:</strong> BMI = weight (kg) / height (m)².<br>
+    <strong>Categories:</strong> WHO international classification — underweight &lt;18.5, normal 18.5–24.9, overweight 25–29.9, obese ≥30.<br>
+    <strong data-i18n="reference_label">Reference:</strong> World Health Organization. Obesity: preventing and managing the global epidemic. WHO Technical Report Series 894, 2000.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/29/body-mass-index-bmi" target="_blank" rel="noopener">MDCalc — BMI</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+function calcBMI() {
+  var h = parseFloat(document.getElementById('height').value);
+  var w = parseFloat(document.getElementById('weight').value);
+  if (!h || !w || h <= 0 || w <= 0) { alert('Please enter valid height and weight.'); return; }
+  var m = h / 100;
+  var bmi = w / (m * m);
+  var cat, color;
+  if (bmi < 18.5) { cat = 'Underweight'; color = '#B8860B'; }
+  else if (bmi < 25) { cat = 'Normal weight'; color = '#2E7D32'; }
+  else if (bmi < 30) { cat = 'Overweight'; color = '#B8860B'; }
+  else { cat = 'Obese'; color = '#B71C1C'; }
+  document.getElementById('resultScore').textContent = bmi.toFixed(1) + ' kg/m²';
+  document.getElementById('resultInterp').innerHTML = 'Category: <strong style="color:' + color + '">' + cat + '</strong> (WHO classification)';
+  document.getElementById('result').classList.add('show');
+}
+</script>
+
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

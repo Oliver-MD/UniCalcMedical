@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PHQ-9 — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag">Mental health &amp; substance use</span>
+  <h1 class="page-title">PHQ-9</h1>
+  <p class="page-subtitle">Patient Health Questionnaire — depression screening and severity.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+    <span data-i18n="phq9_extra_note"> Not a diagnostic tool — a positive screen should always be followed by clinical assessment.</span>
+  </div>
+
+  <div class="card">
+    <h2>Over the last 2 weeks, how often have you been bothered by any of the following?</h2>
+    <p style="font-size:12.5px;color:var(--text-muted);margin-top:-6px;">0 = Not at all &nbsp;·&nbsp; 1 = Several days &nbsp;·&nbsp; 2 = More than half the days &nbsp;·&nbsp; 3 = Nearly every day</p>
+    <div id="items"></div>
+    <button class="btn" onclick="calcPHQ9()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Kroenke K, Spitzer RL, Williams JB. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001;16(9):606–613.<br>
+    PHQ-9 is in the public domain — no permission required for reproduction, translation, display, or distribution (Pfizer Inc., 2010).<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://phqscreeners.com/" target="_blank" rel="noopener">phqscreeners.com</a> · <a href="https://www.mdcalc.com/calc/1725/phq9-patient-health-questionnaire9" target="_blank" rel="noopener">MDCalc — PHQ-9</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var QUESTIONS = [
+  'Little interest or pleasure in doing things',
+  'Feeling down, depressed, or hopeless',
+  'Trouble falling or staying asleep, or sleeping too much',
+  'Feeling tired or having little energy',
+  'Poor appetite or overeating',
+  'Feeling bad about yourself — or that you are a failure or have let yourself or your family down',
+  'Trouble concentrating on things, such as reading the newspaper or watching television',
+  'Moving or speaking so slowly that other people could have noticed — or the opposite, being so fidgety or restless that you have been moving around a lot more than usual',
+  'Thoughts that you would be better off dead, or of hurting yourself in some way'
+];
+var itemsDiv = document.getElementById('items');
+QUESTIONS.forEach(function(q, i) {
+  var wrap = document.createElement('div');
+  wrap.className = 'field';
+  wrap.innerHTML = '<label>' + (i+1) + '. ' + q + '</label>' +
+    '<select id="q' + i + '"><option value="0">0 — Not at all</option><option value="1">1 — Several days</option><option value="2">2 — More than half the days</option><option value="3">3 — Nearly every day</option></select>';
+  itemsDiv.appendChild(wrap);
+});
+
+function calcPHQ9() {
+  var total = 0;
+  for (var i = 0; i < QUESTIONS.length; i++) total += parseInt(document.getElementById('q' + i).value, 10);
+  var interp;
+  if (total <= 4) interp = 'Minimal or no depression symptoms.';
+  else if (total <= 9) interp = 'Mild depression symptoms.';
+  else if (total <= 14) interp = 'Moderate depression symptoms.';
+  else if (total <= 19) interp = 'Moderately severe depression symptoms.';
+  else interp = 'Severe depression symptoms.';
+  if (parseInt(document.getElementById('q8').value, 10) > 0) {
+    interp += '<br><strong style="color:#B71C1C;">Item 9 (thoughts of self-harm) was endorsed — this requires immediate clinical follow-up regardless of total score.</strong>';
+  }
+  document.getElementById('resultScore').textContent = 'PHQ-9 = ' + total + ' / 27';
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+</script>
+
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

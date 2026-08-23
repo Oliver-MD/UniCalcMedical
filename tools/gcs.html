@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glasgow Coma Scale — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag">Neurology</span>
+  <h1 class="page-title">Glasgow Coma Scale</h1>
+  <p class="page-subtitle">Level of consciousness assessment.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="card">
+    <h2>Eye opening</h2>
+    <select id="eye">
+      <option value="4">Spontaneous — 4</option>
+      <option value="3">To speech — 3</option>
+      <option value="2">To pain — 2</option>
+      <option value="1">None — 1</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2>Verbal response</h2>
+    <select id="verbal">
+      <option value="5">Oriented — 5</option>
+      <option value="4">Confused — 4</option>
+      <option value="3">Inappropriate words — 3</option>
+      <option value="2">Incomprehensible sounds — 2</option>
+      <option value="1">None — 1</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2>Motor response</h2>
+    <select id="motor">
+      <option value="6">Obeys commands — 6</option>
+      <option value="5">Localises pain — 5</option>
+      <option value="4">Normal flexion (withdrawal) — 4</option>
+      <option value="3">Abnormal flexion (decorticate) — 3</option>
+      <option value="2">Extension (decerebrate) — 2</option>
+      <option value="1">None — 1</option>
+    </select>
+    <button class="btn" onclick="calcGCS()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Teasdale G, Jennett B. Assessment of coma and impaired consciousness. A practical scale. Lancet. 1974;2(7872):81–84.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/64/glasgow-coma-scale-score-gcs" target="_blank" rel="noopener">MDCalc — GCS</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+function calcGCS() {
+  var e = parseInt(document.getElementById('eye').value, 10);
+  var v = parseInt(document.getElementById('verbal').value, 10);
+  var m = parseInt(document.getElementById('motor').value, 10);
+  var total = e + v + m;
+  var interp;
+  if (total >= 13) interp = 'Mild impairment.';
+  else if (total >= 9) interp = 'Moderate impairment.';
+  else interp = 'Severe impairment (GCS ≤ 8 is generally used as the threshold for airway protection concern).';
+  document.getElementById('resultScore').textContent = 'GCS = ' + total + ' / 15 (E' + e + 'V' + v + 'M' + m + ')';
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+</script>
+
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

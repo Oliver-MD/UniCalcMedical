@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CURB-65 / CRB-65 — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag">Respiratory</span>
+  <h1 class="page-title">CURB-65 / CRB-65</h1>
+  <p class="page-subtitle">Severity assessment for community-acquired pneumonia.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="card">
+    <h2>Criteria (1 point each)</h2>
+    <div class="check-row"><input type="checkbox" id="c"><label for="c">Confusion (new-onset, AMTS ≤ 8)</label></div>
+    <div class="check-row"><input type="checkbox" id="u"><label for="u">Urea &gt; 7 mmol/L <span style="color:#999;">(omit if unavailable — use CRB-65)</span></label></div>
+    <div class="check-row"><input type="checkbox" id="r"><label for="r">Respiratory rate ≥ 30/min</label></div>
+    <div class="check-row"><input type="checkbox" id="b"><label for="b">Blood pressure: systolic &lt; 90 mmHg or diastolic ≤ 60 mmHg</label></div>
+    <div class="check-row"><input type="checkbox" id="a"><label for="a">Age ≥ 65 years</label></div>
+    <button class="btn" onclick="calcCURB()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Lim WS, van der Eerden MM, Laing R, et al. Defining community acquired pneumonia severity on presentation to hospital: an international derivation and validation study. Thorax. 2003;58(5):377–382.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/324/curb-65-score-pneumonia-severity" target="_blank" rel="noopener">MDCalc — CURB-65</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+function calcCURB() {
+  var score = ['c','u','r','b','a'].filter(function(id){ return document.getElementById(id).checked; }).length;
+  var interp;
+  if (score <= 1) interp = 'Low severity — likely suitable for outpatient treatment.';
+  else if (score === 2) interp = 'Moderate severity — consider hospital admission or closely supervised outpatient treatment.';
+  else interp = 'High severity — hospital admission recommended; consider intensive care assessment if score 4–5.';
+  document.getElementById('resultScore').textContent = 'Score = ' + score + ' / 5';
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+</script>
+
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

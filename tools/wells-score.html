@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wells Score (DVT &amp; PE) — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title">Wells Score</h1>
+  <p class="page-subtitle">Clinical probability of deep vein thrombosis (DVT) or pulmonary embolism (PE). These are two separate, independently validated scoring systems — select the relevant one below.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="card">
+    <h2>Wells Score — DVT</h2>
+    <div class="field"><label>Active cancer (treatment within 6 months, or palliative)</label><select id="d_cancer"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Paralysis, paresis, or recent plaster immobilisation of the lower extremity</label><select id="d_paralysis"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Recently bedridden ≥3 days, or major surgery within 12 weeks</label><select id="d_bedridden"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Localised tenderness along the deep venous system</label><select id="d_tenderness"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Entire leg swollen</label><select id="d_swelling"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Calf swelling ≥3 cm compared to asymptomatic leg</label><select id="d_calf"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Pitting oedema, confined to the symptomatic leg</label><select id="d_edema"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Collateral superficial veins (non-varicose)</label><select id="d_veins"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Previously documented DVT</label><select id="d_prevvte"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Alternative diagnosis at least as likely as DVT</label><select id="d_altdx"><option value="0">No</option><option value="-2">Yes (−2)</option></select></div>
+    <button class="btn" onclick="calcDVT()">Calculate DVT score</button>
+    <div class="result" id="resultDVT">
+      <div class="score" id="resultDVTScore"></div>
+      <div class="interp" id="resultDVTInterp"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Wells Score — PE</h2>
+    <div class="field"><label>Clinical signs and symptoms of DVT</label><select id="p_dvt"><option value="0">No</option><option value="3">Yes (+3)</option></select></div>
+    <div class="field"><label>Alternative diagnosis less likely than PE</label><select id="p_altdx"><option value="0">No</option><option value="3">Yes (+3)</option></select></div>
+    <div class="field"><label>Heart rate &gt; 100/min</label><select id="p_hr"><option value="0">No</option><option value="1.5">Yes (+1.5)</option></select></div>
+    <div class="field"><label>Immobilisation ≥3 days or surgery in the previous 4 weeks</label><select id="p_immob"><option value="0">No</option><option value="1.5">Yes (+1.5)</option></select></div>
+    <div class="field"><label>Previous objectively diagnosed DVT or PE</label><select id="p_prevdvt"><option value="0">No</option><option value="1.5">Yes (+1.5)</option></select></div>
+    <div class="field"><label>Haemoptysis</label><select id="p_hemoptysis"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <div class="field"><label>Malignancy (treated within 6 months, or palliative)</label><select id="p_cancer"><option value="0">No</option><option value="1">Yes (+1)</option></select></div>
+    <button class="btn" onclick="calcPE()">Calculate PE score</button>
+    <div class="result" id="resultPE">
+      <div class="score" id="resultPEScore"></div>
+      <div class="interp" id="resultPEInterp"></div>
+    </div>
+  </div>
+
+  <div class="source-block">
+    <strong>References:</strong><br>
+    DVT: Wells PS, Anderson DR, Rodger M, et al. Evaluation of D-dimer in the diagnosis of suspected deep-vein thrombosis. N Engl J Med. 2003;349(13):1227–1235.<br>
+    PE: Wells PS, Anderson DR, Rodger M, et al. Derivation of a simple clinical model to categorize patients probability of pulmonary embolism. Thromb Haemost. 2000;83(3):416–420.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/362/wells-criteria-dvt" target="_blank" rel="noopener">MDCalc — Wells DVT</a> · <a href="https://www.mdcalc.com/calc/115/wells-criteria-pulmonary-embolism" target="_blank" rel="noopener">MDCalc — Wells PE</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+function sumIds(ids) {
+  var total = 0;
+  ids.forEach(function(id) { total += parseFloat(document.getElementById(id).value); });
+  return total;
+}
+function calcDVT() {
+  var total = sumIds(['d_cancer','d_paralysis','d_bedridden','d_tenderness','d_swelling','d_calf','d_edema','d_veins','d_prevvte','d_altdx']);
+  var interp = total < 2 ? 'DVT unlikely — consider D-dimer testing.' : 'DVT likely — imaging (compression ultrasound) indicated.';
+  document.getElementById('resultDVTScore').textContent = 'Score = ' + total + ' / 10 (range −2 to 10)';
+  document.getElementById('resultDVTInterp').innerHTML = interp;
+  document.getElementById('resultDVT').classList.add('show');
+}
+function calcPE() {
+  var total = sumIds(['p_dvt','p_altdx','p_hr','p_immob','p_prevdvt','p_hemoptysis','p_cancer']);
+  var interp;
+  if (total <= 4) interp = 'PE unlikely — consider D-dimer testing.';
+  else interp = 'PE likely — imaging (CT pulmonary angiography) indicated.';
+  document.getElementById('resultPEScore').textContent = 'Score = ' + total;
+  document.getElementById('resultPEInterp').innerHTML = interp;
+  document.getElementById('resultPE').classList.add('show');
+}
+</script>
+
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
