@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BSA + Ideal/Adjusted Weight — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Endocrinology &amp; metabolic</span>
+  <h1 class="page-title" data-i18n="title">BSA + Ideal/Adjusted Weight</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Body surface area and ideal/adjusted body weight, commonly used for drug dosing.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="height_label" for="height">Height (cm)</label><input type="number" id="height" min="50" max="250" step="0.1" data-i18n-placeholder="height_ph" placeholder="e.g. 175"></div>
+    <div class="field"><label data-i18n="weight_label" for="weight">Actual weight (kg)</label><input type="number" id="weight" min="20" max="400" step="0.1" data-i18n-placeholder="weight_ph" placeholder="e.g. 90"></div>
+    <div class="field"><label data-i18n="sex_label">Sex</label><select id="sex"><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcBSA()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Mosteller RD. Simplified calculation of body-surface area. N Engl J Med. 1987;317(17):1098 (BSA). Devine BJ. Gentamicin therapy. Drug Intell Clin Pharm. 1974;8:650–655 (ideal body weight).<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/56/body-surface-area-mosteller" target="_blank" rel="noopener">MDCalc — BSA (Mosteller)</a> · <a href="https://www.mdcalc.com/calc/68/ideal-body-weight-adjusted-body-weight" target="_blank" rel="noopener">MDCalc — Ideal/Adjusted Body Weight</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Endocrinology & metabolic', title: 'BSA + Ideal/Adjusted Weight', subtitle: 'Body surface area and ideal/adjusted body weight, commonly used for drug dosing.',
+    calc_heading: 'Calculate', height_label: 'Height (cm)', height_ph: 'e.g. 175', weight_label: 'Actual weight (kg)', weight_ph: 'e.g. 90',
+    sex_label: 'Sex', opt_female: 'Female', opt_male: 'Male', calc_btn: 'Calculate', err_invalid: 'Please enter valid height and weight.',
+    bsa_label: 'BSA (Mosteller): ', ibw_label: 'Ideal body weight (Devine): ', abw_label: 'Adjusted body weight: ',
+    abw_note: 'Adjusted body weight is typically used only when actual weight exceeds ~120% of ideal body weight, for certain drug dosing calculations.'
+  },
+  cs: {
+    tag: 'Endokrinologie a metabolismus', title: 'BSA + ideální/upravená hmotnost', subtitle: 'Povrch těla a ideální/upravená tělesná hmotnost, běžně používané pro dávkování léků.',
+    calc_heading: 'Výpočet', height_label: 'Výška (cm)', height_ph: 'např. 175', weight_label: 'Skutečná hmotnost (kg)', weight_ph: 'např. 90',
+    sex_label: 'Pohlaví', opt_female: 'Žena', opt_male: 'Muž', calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platnou výšku a hmotnost.',
+    bsa_label: 'BSA (Mosteller): ', ibw_label: 'Ideální tělesná hmotnost (Devine): ', abw_label: 'Upravená tělesná hmotnost: ',
+    abw_note: 'Upravená tělesná hmotnost se typicky používá jen pokud skutečná hmotnost přesahuje přibl. 120 % ideální hmotnosti, pro určité výpočty dávkování léků.'
+  },
+  fr: {
+    tag: 'Endocrinologie et métabolisme', title: 'Surface corporelle + poids idéal/ajusté', subtitle: "Surface corporelle et poids corporel idéal/ajusté, couramment utilisés pour le dosage des médicaments.",
+    calc_heading: 'Calculer', height_label: 'Taille (cm)', height_ph: 'p. ex. 175', weight_label: 'Poids réel (kg)', weight_ph: 'p. ex. 90',
+    sex_label: 'Sexe', opt_female: 'Féminin', opt_male: 'Masculin', calc_btn: 'Calculer', err_invalid: 'Veuillez saisir une taille et un poids valides.',
+    bsa_label: 'Surface corporelle (Mosteller) : ', ibw_label: 'Poids corporel idéal (Devine) : ', abw_label: 'Poids corporel ajusté : ',
+    abw_note: "Le poids corporel ajusté n'est généralement utilisé que lorsque le poids réel dépasse environ 120 % du poids idéal, pour certains calculs de dosage médicamenteux."
+  },
+  de: {
+    tag: 'Endokrinologie & Stoffwechsel', title: 'KOF + Ideal-/angepasstes Gewicht', subtitle: 'Körperoberfläche und ideales/angepasstes Körpergewicht, häufig zur Arzneimitteldosierung verwendet.',
+    calc_heading: 'Berechnen', height_label: 'Größe (cm)', height_ph: 'z. B. 175', weight_label: 'Tatsächliches Gewicht (kg)', weight_ph: 'z. B. 90',
+    sex_label: 'Geschlecht', opt_female: 'Weiblich', opt_male: 'Männlich', calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Größe und Gewicht eingeben.',
+    bsa_label: 'Körperoberfläche (Mosteller): ', ibw_label: 'Idealgewicht (Devine): ', abw_label: 'Angepasstes Körpergewicht: ',
+    abw_note: 'Das angepasste Körpergewicht wird für bestimmte Dosierungsberechnungen typischerweise nur verwendet, wenn das tatsächliche Gewicht ca. 120 % des Idealgewichts übersteigt.'
+  },
+  pl: {
+    tag: 'Endokrynologia i metabolizm', title: 'BSA + masa idealna/skorygowana', subtitle: 'Powierzchnia ciała oraz idealna/skorygowana masa ciała, powszechnie stosowane do dawkowania leków.',
+    calc_heading: 'Oblicz', height_label: 'Wzrost (cm)', height_ph: 'np. 175', weight_label: 'Aktualna masa ciała (kg)', weight_ph: 'np. 90',
+    sex_label: 'Płeć', opt_female: 'Kobieta', opt_male: 'Mężczyzna', calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowy wzrost i wagę.',
+    bsa_label: 'Powierzchnia ciała (Mosteller): ', ibw_label: 'Idealna masa ciała (Devine): ', abw_label: 'Skorygowana masa ciała: ',
+    abw_note: 'Skorygowaną masę ciała stosuje się zwykle tylko wtedy, gdy rzeczywista masa ciała przekracza ok. 120% masy idealnej, do niektórych obliczeń dawkowania leków.'
+  }
+};
+
+var _lastBSA = null;
+
+function calcBSA() {
+  var h = parseFloat(document.getElementById('height').value);
+  var w = parseFloat(document.getElementById('weight').value);
+  var sex = document.getElementById('sex').value;
+  if (!h || !w || h <= 0 || w <= 0) { alert(ucmT('err_invalid')); return; }
+  var bsa = Math.sqrt((h * w) / 3600);
+  var heightInches = h / 2.54;
+  var ibw = sex === 'f' ? 45.5 + 2.3 * (heightInches - 60) : 50 + 2.3 * (heightInches - 60);
+  if (ibw < 0) ibw = null; // formula not meaningful for very short stature
+  var abw = (ibw !== null && w > ibw) ? ibw + 0.4 * (w - ibw) : null;
+  _lastBSA = { bsa: bsa, ibw: ibw, abw: abw };
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastBSA === null) return;
+  var d = _lastBSA;
+  var html = ucmT('bsa_label') + '<strong>' + d.bsa.toFixed(2) + ' m²</strong><br>';
+  if (d.ibw !== null) {
+    html += ucmT('ibw_label') + '<strong>' + d.ibw.toFixed(1) + ' kg</strong><br>';
+    if (d.abw !== null) {
+      html += ucmT('abw_label') + '<strong>' + d.abw.toFixed(1) + ' kg</strong><br>';
+      html += '<span style="font-size:12.5px;color:var(--ink-soft);">' + ucmT('abw_note') + '</span>';
+    }
+  }
+  document.getElementById('resultScore').textContent = d.bsa.toFixed(2) + ' m²';
+  document.getElementById('resultInterp').innerHTML = html;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

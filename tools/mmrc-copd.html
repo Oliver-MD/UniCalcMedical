@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mMRC + GOLD Group — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Respiratory</span>
+  <h1 class="page-title" data-i18n="title">mMRC + Exacerbation History</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Dyspnoea grading (mMRC) combined with exacerbation history to determine GOLD ABE group in COPD.</p>
+
+  <div class="card">
+    <h2 data-i18n="mmrc_heading">mMRC dyspnoea scale</h2>
+    <div class="field">
+      <select id="mmrc">
+        <option value="0" data-i18n="mmrc0">Grade 0 — Breathless only with strenuous exercise</option>
+        <option value="1" data-i18n="mmrc1">Grade 1 — Breathless when hurrying or walking up a slight hill</option>
+        <option value="2" data-i18n="mmrc2">Grade 2 — Walks slower than peers due to breathlessness, or must stop for breath at own pace</option>
+        <option value="3" data-i18n="mmrc3">Grade 3 — Stops for breath after walking about 100 m or after a few minutes</option>
+        <option value="4" data-i18n="mmrc4">Grade 4 — Too breathless to leave the house, or breathless when dressing</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="exac_heading">Exacerbation history (past 12 months)</h2>
+    <div class="field">
+      <select id="exac">
+        <option value="low" data-i18n="exac_low">0–1 moderate exacerbations, none requiring hospitalisation</option>
+        <option value="high" data-i18n="exac_high">≥2 moderate exacerbations, or ≥1 requiring hospitalisation</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcMMRC()">Show GOLD group</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> mMRC: Fletcher CM. Standardised questionnaire on respiratory symptoms. BMJ. 1960;2:1665. GOLD ABE grouping: Global Initiative for Chronic Obstructive Lung Disease (GOLD) report, current edition.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10331/mmrc-modified-medical-research-council-dyspnea-scale" target="_blank" rel="noopener">MDCalc — mMRC</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Respiratory', title: 'mMRC + Exacerbation History', subtitle: 'Dyspnoea grading (mMRC) combined with exacerbation history to determine GOLD ABE group in COPD.',
+    mmrc_heading: 'mMRC dyspnoea scale',
+    mmrc0: 'Grade 0 — Breathless only with strenuous exercise', mmrc1: 'Grade 1 — Breathless when hurrying or walking up a slight hill',
+    mmrc2: 'Grade 2 — Walks slower than peers due to breathlessness, or must stop for breath at own pace',
+    mmrc3: 'Grade 3 — Stops for breath after walking about 100 m or after a few minutes',
+    mmrc4: 'Grade 4 — Too breathless to leave the house, or breathless when dressing',
+    exac_heading: 'Exacerbation history (past 12 months)',
+    exac_low: '0–1 moderate exacerbations, none requiring hospitalisation', exac_high: '≥2 moderate exacerbations, or ≥1 requiring hospitalisation',
+    calc_btn: 'Show GOLD group',
+    group_a: 'GOLD Group A — low symptom burden (mMRC 0–1), low exacerbation risk.',
+    group_b: 'GOLD Group B — higher symptom burden (mMRC ≥2), low exacerbation risk.',
+    group_e: 'GOLD Group E — high exacerbation risk (≥2 moderate, or ≥1 requiring hospitalisation), regardless of symptom burden.'
+  },
+  cs: {
+    tag: 'Respirační systém', title: 'mMRC + anamnéza exacerbací', subtitle: 'Hodnocení dušnosti (mMRC) v kombinaci s anamnézou exacerbací pro zařazení do skupiny GOLD A/B/E u CHOPN.',
+    mmrc_heading: 'Škála dušnosti mMRC',
+    mmrc0: 'Stupeň 0 — Dušnost pouze při velké námaze', mmrc1: 'Stupeň 1 — Dušnost při chůzi do mírného kopce nebo při spěchu',
+    mmrc2: 'Stupeň 2 — Chodí pomaleji než vrstevníci kvůli dušnosti, nebo se musí zastavit kvůli dechu i při vlastním tempu',
+    mmrc3: 'Stupeň 3 — Zastaví se kvůli dechu po ujití asi 100 m nebo po několika minutách',
+    mmrc4: 'Stupeň 4 — Příliš dušný(á) na to, aby opustil(a) dům, nebo dušnost při oblékání',
+    exac_heading: 'Anamnéza exacerbací (posledních 12 měsíců)',
+    exac_low: '0–1 středně těžká exacerbace, žádná nevyžadující hospitalizaci', exac_high: '≥2 středně těžké exacerbace, nebo ≥1 vyžadující hospitalizaci',
+    calc_btn: 'Zobrazit skupinu GOLD',
+    group_a: 'Skupina GOLD A — nízká zátěž symptomy (mMRC 0–1), nízké riziko exacerbací.',
+    group_b: 'Skupina GOLD B — vyšší zátěž symptomy (mMRC ≥2), nízké riziko exacerbací.',
+    group_e: 'Skupina GOLD E — vysoké riziko exacerbací (≥2 středně těžké, nebo ≥1 vyžadující hospitalizaci), bez ohledu na zátěž symptomy.'
+  },
+  fr: {
+    tag: 'Respiratoire', title: "mMRC + Antécédents d'exacerbations", subtitle: "Évaluation de la dyspnée (mMRC) combinée aux antécédents d'exacerbations pour déterminer le groupe GOLD ABE dans la BPCO.",
+    mmrc_heading: 'Échelle de dyspnée mMRC',
+    mmrc0: "Grade 0 — Essoufflement uniquement lors d'un effort intense", mmrc1: "Grade 1 — Essoufflement en se dépêchant ou en montant une légère côte",
+    mmrc2: "Grade 2 — Marche plus lentement que les autres personnes du même âge en raison de l'essoufflement, ou doit s'arrêter pour reprendre son souffle à son propre rythme",
+    mmrc3: "Grade 3 — S'arrête pour reprendre son souffle après avoir marché environ 100 m ou après quelques minutes",
+    mmrc4: 'Grade 4 — Trop essoufflé(e) pour sortir de la maison, ou essoufflé(e) en s\u2019habillant',
+    exac_heading: "Antécédents d'exacerbations (12 derniers mois)",
+    exac_low: 'Exacerbations modérées 0–1, aucune nécessitant une hospitalisation', exac_high: 'Exacerbations modérées ≥2, ou ≥1 nécessitant une hospitalisation',
+    calc_btn: 'Afficher le groupe GOLD',
+    group_a: 'Groupe GOLD A — faible charge symptomatique (mMRC 0–1), faible risque d\u2019exacerbation.',
+    group_b: 'Groupe GOLD B — charge symptomatique plus élevée (mMRC ≥2), faible risque d\u2019exacerbation.',
+    group_e: "Groupe GOLD E — risque élevé d'exacerbation (≥2 modérées, ou ≥1 nécessitant une hospitalisation), quelle que soit la charge symptomatique."
+  },
+  de: {
+    tag: 'Atemwege', title: 'mMRC + Exazerbationsanamnese', subtitle: 'Dyspnoe-Einstufung (mMRC) kombiniert mit Exazerbationsanamnese zur Bestimmung der GOLD-ABE-Gruppe bei COPD.',
+    mmrc_heading: 'mMRC-Dyspnoeskala',
+    mmrc0: 'Grad 0 — Atemnot nur bei starker körperlicher Anstrengung', mmrc1: 'Grad 1 — Atemnot beim Eilen oder beim Gehen einer leichten Steigung',
+    mmrc2: 'Grad 2 — Geht wegen Atemnot langsamer als Gleichaltrige oder muss beim eigenen Tempo anhalten, um Luft zu holen',
+    mmrc3: 'Grad 3 — Muss nach etwa 100 m Gehstrecke oder nach wenigen Minuten wegen Atemnot anhalten',
+    mmrc4: 'Grad 4 — Zu atemlos, um das Haus zu verlassen, oder Atemnot beim Ankleiden',
+    exac_heading: 'Exazerbationsanamnese (letzte 12 Monate)',
+    exac_low: '0–1 mäßige Exazerbationen, keine mit Krankenhausaufnahme', exac_high: '≥2 mäßige Exazerbationen, oder ≥1 mit Krankenhausaufnahme',
+    calc_btn: 'GOLD-Gruppe anzeigen',
+    group_a: 'GOLD-Gruppe A — geringe Symptomlast (mMRC 0–1), geringes Exazerbationsrisiko.',
+    group_b: 'GOLD-Gruppe B — höhere Symptomlast (mMRC ≥2), geringes Exazerbationsrisiko.',
+    group_e: 'GOLD-Gruppe E — hohes Exazerbationsrisiko (≥2 mäßige, oder ≥1 mit Krankenhausaufnahme), unabhängig von der Symptomlast.'
+  },
+  pl: {
+    tag: 'Układ oddechowy', title: 'mMRC + historia zaostrzeń', subtitle: 'Ocena duszności (mMRC) w połączeniu z historią zaostrzeń w celu ustalenia grupy GOLD ABE w POChP.',
+    mmrc_heading: 'Skala duszności mMRC',
+    mmrc0: 'Stopień 0 — Duszność tylko przy intensywnym wysiłku', mmrc1: 'Stopień 1 — Duszność przy pośpiechu lub wchodzeniu na niewielkie wzniesienie',
+    mmrc2: 'Stopień 2 — Chodzi wolniej niż rówieśnicy z powodu duszności lub musi zatrzymać się, by złapać oddech, nawet przy własnym tempie',
+    mmrc3: 'Stopień 3 — Zatrzymuje się, by złapać oddech, po przejściu ok. 100 m lub po kilku minutach',
+    mmrc4: 'Stopień 4 — Zbyt duszny(a), by wyjść z domu, lub duszność podczas ubierania się',
+    exac_heading: 'Historia zaostrzeń (ostatnie 12 miesięcy)',
+    exac_low: '0–1 umiarkowane zaostrzenie, żadne niewymagające hospitalizacji', exac_high: '≥2 umiarkowane zaostrzenia, lub ≥1 wymagające hospitalizacji',
+    calc_btn: 'Pokaż grupę GOLD',
+    group_a: 'Grupa GOLD A — niskie nasilenie objawów (mMRC 0–1), niskie ryzyko zaostrzeń.',
+    group_b: 'Grupa GOLD B — wyższe nasilenie objawów (mMRC ≥2), niskie ryzyko zaostrzeń.',
+    group_e: 'Grupa GOLD E — wysokie ryzyko zaostrzeń (≥2 umiarkowane, lub ≥1 wymagające hospitalizacji), niezależnie od nasilenia objawów.'
+  }
+};
+
+var _lastMMRC = null;
+
+function calcMMRC() {
+  var mmrc = parseInt(document.getElementById('mmrc').value, 10);
+  var exac = document.getElementById('exac').value;
+  _lastMMRC = { mmrc: mmrc, exac: exac };
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastMMRC === null) return;
+  var d = _lastMMRC;
+  var group, key;
+  if (d.exac === 'high') { group = 'E'; key = 'group_e'; }
+  else if (d.mmrc >= 2) { group = 'B'; key = 'group_b'; }
+  else { group = 'A'; key = 'group_a'; }
+  document.getElementById('resultScore').textContent = 'mMRC ' + d.mmrc + ' — GOLD ' + group;
+  document.getElementById('resultInterp').innerHTML = ucmT(key);
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

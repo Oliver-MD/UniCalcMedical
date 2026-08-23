@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SLUMS — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cognition &amp; frailty</span>
+  <h1 class="page-title" data-i18n="title">SLUMS</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Saint Louis University Mental Status exam — cognitive impairment screening. Clinician-administered; several items (clock drawing, shape recognition, story recall) require the examiner's own scoring per the official criteria.</p>
+
+  <div class="card">
+    <h2 data-i18n="orient_heading">Orientation (1 point each)</h2>
+    <div class="check-row"><input type="checkbox" id="c_day"><label for="c_day" data-i18n="c_day">Correct day of the week</label></div>
+    <div class="check-row"><input type="checkbox" id="c_year"><label for="c_year" data-i18n="c_year">Correct year</label></div>
+    <div class="check-row"><input type="checkbox" id="c_state"><label for="c_state" data-i18n="c_state">Correct state</label></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="money_heading">Calculation — "$100, buy a dozen apples for $3 and a tricycle for $20"</h2>
+    <div class="field"><label data-i18n="l_spent">How much did you spend?</label><select id="c_spent"><option value="0" data-i18n="opt_incorrect">Incorrect (0)</option><option value="1" data-i18n="opt_correct1">Correct (1)</option></select></div>
+    <div class="field"><label data-i18n="l_left">How much do you have left?</label><select id="c_left"><option value="0" data-i18n="opt_incorrect">Incorrect (0)</option><option value="2" data-i18n="opt_correct2">Correct (2)</option></select></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="animals_heading">Animal naming (1 minute)</h2>
+    <div class="field"><label data-i18n="l_animals">Number of animals named</label>
+      <select id="c_animals">
+        <option value="0" data-i18n="animals_0">0–4 animals (0)</option>
+        <option value="1" data-i18n="animals_1">5–9 animals (1)</option>
+        <option value="2" data-i18n="animals_2">10–14 animals (2)</option>
+        <option value="3" data-i18n="animals_3">15+ animals (3)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="digits_heading">Backward digit span</h2>
+    <div class="field"><label data-i18n="l_digit1">First sequence, reversed correctly</label><select id="c_digit1"><option value="0" data-i18n="opt_no">No (0)</option><option value="1" data-i18n="opt_yes1">Yes (1)</option></select></div>
+    <div class="field"><label data-i18n="l_digit2">Second sequence, reversed correctly</label><select id="c_digit2"><option value="0" data-i18n="opt_no">No (0)</option><option value="1" data-i18n="opt_yes1">Yes (1)</option></select></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="recall_heading">Delayed recall of the 5 objects named earlier</h2>
+    <div class="field"><label data-i18n="l_recall">Objects correctly recalled (0–5)</label><input type="number" id="c_recall" min="0" max="5" step="1" value="0"></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="clock_heading">Clock drawing (examiner-scored, per official criteria)</h2>
+    <div class="field"><label data-i18n="l_clock_markers">Hour markers correctly placed</label><select id="c_clock_markers"><option value="0" data-i18n="opt_no">No (0)</option><option value="2" data-i18n="opt_yes2">Yes (2)</option></select></div>
+    <div class="field"><label data-i18n="l_clock_time">Time (ten minutes to eleven) correctly shown</label><select id="c_clock_time"><option value="0" data-i18n="opt_no">No (0)</option><option value="2" data-i18n="opt_yes2">Yes (2)</option></select></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="shapes_heading">Shape recognition (examiner-scored)</h2>
+    <div class="field"><label data-i18n="l_shapes">X placed in the triangle, and largest shape correctly identified (both required)</label><select id="c_shapes"><option value="0" data-i18n="opt_no">No (0)</option><option value="1" data-i18n="opt_yes1">Yes (1)</option></select></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="story_heading">Story recall (examiner-scored, out of 8)</h2>
+    <div class="field"><label data-i18n="l_story">Points awarded for correctly recalled details</label><input type="number" id="c_story" min="0" max="8" step="1" value="0"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcSLUMS()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+    <span data-i18n="slums_extra_note"> The items above total 29 of the official 30-point scale — one point (within the language domain) could not be independently confirmed with confidence across sources and is deliberately left out rather than guessed at. Please verify the complete, current scoring criteria against the official SLU form before relying on this for any real assessment.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Tariq SH, Tumosa N, Chibnall JT, Perry MH 3rd, Morley JE. Comparison of the Saint Louis University mental status examination and the mini-mental state examination for detecting dementia and mild neurocognitive disorder. Am J Geriatr Psychiatry. 2006;14(11):900–910.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.slu.edu/medicine/internal-medicine/geriatric-medicine/aging-successfully/assessment-tools/mental-status-exam.php" target="_blank" rel="noopener">Saint Louis University — official SLUMS form</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cognition & frailty', title: 'SLUMS', subtitle: "Saint Louis University Mental Status exam — cognitive impairment screening. Clinician-administered; several items (clock drawing, shape recognition, story recall) require the examiner's own scoring per the official criteria.",
+    orient_heading: 'Orientation (1 point each)', c_day: 'Correct day of the week', c_year: 'Correct year', c_state: 'Correct state',
+    money_heading: 'Calculation — "$100, buy a dozen apples for $3 and a tricycle for $20"',
+    l_spent: 'How much did you spend?', l_left: 'How much do you have left?', opt_incorrect: 'Incorrect (0)', opt_correct1: 'Correct (1)', opt_correct2: 'Correct (2)',
+    animals_heading: 'Animal naming (1 minute)', l_animals: 'Number of animals named',
+    animals_0: '0–4 animals (0)', animals_1: '5–9 animals (1)', animals_2: '10–14 animals (2)', animals_3: '15+ animals (3)',
+    digits_heading: 'Backward digit span', l_digit1: 'First sequence, reversed correctly', l_digit2: 'Second sequence, reversed correctly',
+    opt_no: 'No (0)', opt_yes1: 'Yes (1)', opt_yes2: 'Yes (2)',
+    recall_heading: 'Delayed recall of the 5 objects named earlier', l_recall: 'Objects correctly recalled (0–5)',
+    clock_heading: 'Clock drawing (examiner-scored, per official criteria)', l_clock_markers: 'Hour markers correctly placed', l_clock_time: 'Time (ten minutes to eleven) correctly shown',
+    shapes_heading: 'Shape recognition (examiner-scored)', l_shapes: 'X placed in the triangle, and largest shape correctly identified (both required)',
+    story_heading: 'Story recall (examiner-scored, out of 8)', l_story: 'Points awarded for correctly recalled details',
+    calc_btn: 'Calculate', score_label: 'Score = ', of29: ' / 29 (see note on the 30-point scale below)',
+    slums_extra_note: ' The items above total 29 of the official 30-point scale — one point (within the language domain) could not be independently confirmed with confidence across sources and is deliberately left out rather than guessed at. Please verify the complete, current scoring criteria against the official SLU form before relying on this for any real assessment.',
+    interp_note: 'Interpretation cut-offs are education-level dependent (high school education vs. less than high school) — normal, mild neurocognitive disorder, and dementia ranges differ between the two. Consult the official form for the exact ranges.'
+  },
+  cs: {
+    tag: 'Kognice a křehkost', title: 'SLUMS', subtitle: 'Vyšetření mentálního stavu Saint Louis University — screening kognitivní poruchy. Provádí zdravotník; některé položky (kresba hodin, rozpoznání tvarů, reprodukce příběhu) vyžadují vlastní hodnocení examinátora dle oficiálních kritérií.',
+    orient_heading: 'Orientace (1 bod za každou)', c_day: 'Správný den v týdnu', c_year: 'Správný rok', c_state: 'Správný stát',
+    money_heading: 'Výpočet — "100 dolarů, koupíte tucet jablek za 3 dolary a tříkolku za 20 dolarů"',
+    l_spent: 'Kolik jste utratil(a)?', l_left: 'Kolik vám zbylo?', opt_incorrect: 'Nesprávně (0)', opt_correct1: 'Správně (1)', opt_correct2: 'Správně (2)',
+    animals_heading: 'Jmenování zvířat (1 minuta)', l_animals: 'Počet jmenovaných zvířat',
+    animals_0: '0–4 zvířata (0)', animals_1: '5–9 zvířat (1)', animals_2: '10–14 zvířat (2)', animals_3: '15+ zvířat (3)',
+    digits_heading: 'Opakování číselné řady pozpátku', l_digit1: 'První řada, správně obráceně', l_digit2: 'Druhá řada, správně obráceně',
+    opt_no: 'Ne (0)', opt_yes1: 'Ano (1)', opt_yes2: 'Ano (2)',
+    recall_heading: 'Odložené vybavení 5 dříve jmenovaných předmětů', l_recall: 'Správně vybavené předměty (0–5)',
+    clock_heading: 'Kresba hodin (hodnotí examinátor dle oficiálních kritérií)', l_clock_markers: 'Správně umístěné hodinové značky', l_clock_time: 'Správně znázorněný čas (deset minut do jedenácti)',
+    shapes_heading: 'Rozpoznání tvarů (hodnotí examinátor)', l_shapes: 'X umístěno v trojúhelníku a správně určen největší tvar (obojí nutné)',
+    story_heading: 'Reprodukce příběhu (hodnotí examinátor, max. 8 bodů)', l_story: 'Body za správně vybavené detaily',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of29: ' / 29 (viz poznámka o 30bodové škále níže)',
+    slums_extra_note: ' Výše uvedené položky dávají dohromady 29 z oficiální 30bodové škály — jeden bod (v jazykové doméně) se nepodařilo s jistotou nezávisle potvrdit napříč zdroji a je záměrně vynechán místo hádání. Před použitím pro skutečné hodnocení prosím ověřte úplná, aktuální kritéria hodnocení oproti oficiálnímu formuláři SLU.',
+    interp_note: 'Interpretační hranice závisí na úrovni vzdělání (středoškolské vzdělání vs. nižší) — rozmezí pro normu, mírnou neurokognitivní poruchu a demenci se mezi oběma skupinami liší. Přesná rozmezí naleznete v oficiálním formuláři.'
+  },
+  fr: {
+    tag: 'Cognition et fragilité', title: 'SLUMS', subtitle: "Examen de l'état mental de l'Université Saint-Louis — dépistage des troubles cognitifs. Administré par un clinicien ; plusieurs items (dessin de l'horloge, reconnaissance de formes, rappel de l'histoire) nécessitent la cotation propre de l'examinateur selon les critères officiels.",
+    orient_heading: 'Orientation (1 point chacun)', c_day: 'Jour de la semaine correct', c_year: 'Année correcte', c_state: 'État correct',
+    money_heading: 'Calcul — "100 $, achetez une douzaine de pommes à 3 $ et un tricycle à 20 $"',
+    l_spent: 'Combien avez-vous dépensé ?', l_left: 'Combien vous reste-t-il ?', opt_incorrect: 'Incorrect (0)', opt_correct1: 'Correct (1)', opt_correct2: 'Correct (2)',
+    animals_heading: "Dénomination d'animaux (1 minute)", l_animals: "Nombre d'animaux nommés",
+    animals_0: '0 à 4 animaux (0)', animals_1: '5 à 9 animaux (1)', animals_2: '10 à 14 animaux (2)', animals_3: '15+ animaux (3)',
+    digits_heading: 'Répétition de chiffres à l\u2019envers', l_digit1: 'Première séquence, inversée correctement', l_digit2: 'Deuxième séquence, inversée correctement',
+    opt_no: 'Non (0)', opt_yes1: 'Oui (1)', opt_yes2: 'Oui (2)',
+    recall_heading: 'Rappel différé des 5 objets nommés précédemment', l_recall: 'Objets correctement rappelés (0–5)',
+    clock_heading: "Dessin de l'horloge (coté par l'examinateur, selon les critères officiels)", l_clock_markers: 'Repères horaires correctement placés', l_clock_time: "Heure (dix heures cinquante) correctement représentée",
+    shapes_heading: 'Reconnaissance de formes (coté par l\u2019examinateur)', l_shapes: 'X placé dans le triangle, et plus grande forme correctement identifiée (les deux requis)',
+    story_heading: "Rappel de l'histoire (coté par l'examinateur, sur 8)", l_story: 'Points attribués pour les détails correctement rappelés',
+    calc_btn: 'Calculer', score_label: 'Score = ', of29: ' / 29 (voir la note sur l\u2019échelle sur 30 ci-dessous)',
+    slums_extra_note: " Les items ci-dessus totalisent 29 des 30 points officiels — un point (dans le domaine du langage) n'a pas pu être confirmé de manière indépendante et fiable entre les sources et est volontairement omis plutôt que deviné. Veuillez vérifier les critères de cotation complets et actuels par rapport au formulaire officiel de la SLU avant de vous y fier pour une véritable évaluation.",
+    interp_note: "Les seuils d'interprétation dépendent du niveau d'éducation (études secondaires terminées ou non) — les plages normale, trouble neurocognitif léger et démence diffèrent entre les deux groupes. Consultez le formulaire officiel pour les plages exactes."
+  },
+  de: {
+    tag: 'Kognition & Gebrechlichkeit', title: 'SLUMS', subtitle: 'Saint Louis University Mental Status Exam — Screening auf kognitive Beeinträchtigung. Vom Kliniker durchgeführt; mehrere Items (Uhrzeichnen, Formerkennung, Geschichtenrekall) erfordern die eigene Bewertung des Untersuchers nach den offiziellen Kriterien.',
+    orient_heading: 'Orientierung (je 1 Punkt)', c_day: 'Korrekter Wochentag', c_year: 'Korrektes Jahr', c_state: 'Korrekter Bundesstaat',
+    money_heading: 'Rechenaufgabe — "100 $, kaufen Sie ein Dutzend Äpfel für 3 $ und ein Dreirad für 20 $"',
+    l_spent: 'Wie viel haben Sie ausgegeben?', l_left: 'Wie viel bleibt Ihnen übrig?', opt_incorrect: 'Falsch (0)', opt_correct1: 'Richtig (1)', opt_correct2: 'Richtig (2)',
+    animals_heading: 'Tiere benennen (1 Minute)', l_animals: 'Anzahl genannter Tiere',
+    animals_0: '0–4 Tiere (0)', animals_1: '5–9 Tiere (1)', animals_2: '10–14 Tiere (2)', animals_3: '15+ Tiere (3)',
+    digits_heading: 'Zahlen rückwärts wiederholen', l_digit1: 'Erste Sequenz, korrekt umgekehrt', l_digit2: 'Zweite Sequenz, korrekt umgekehrt',
+    opt_no: 'Nein (0)', opt_yes1: 'Ja (1)', opt_yes2: 'Ja (2)',
+    recall_heading: 'Verzögerte Erinnerung an die 5 zuvor genannten Gegenstände', l_recall: 'Korrekt erinnerte Gegenstände (0–5)',
+    clock_heading: 'Uhr zeichnen (vom Untersucher nach offiziellen Kriterien bewertet)', l_clock_markers: 'Stundenmarkierungen korrekt platziert', l_clock_time: 'Uhrzeit (zehn vor elf) korrekt dargestellt',
+    shapes_heading: 'Formerkennung (vom Untersucher bewertet)', l_shapes: 'X im Dreieck platziert und größte Form korrekt identifiziert (beides erforderlich)',
+    story_heading: 'Geschichte wiedergeben (vom Untersucher bewertet, von 8)', l_story: 'Punkte für korrekt erinnerte Details',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of29: ' / 29 (siehe Hinweis zur 30-Punkte-Skala unten)',
+    slums_extra_note: ' Die obigen Items ergeben insgesamt 29 der offiziellen 30 Punkte — ein Punkt (im Sprachbereich) konnte über die Quellen hinweg nicht sicher unabhängig bestätigt werden und wird bewusst weggelassen statt geraten. Bitte prüfen Sie die vollständigen, aktuellen Bewertungskriterien anhand des offiziellen SLU-Formulars, bevor Sie sich für eine echte Beurteilung darauf verlassen.',
+    interp_note: 'Interpretationsschwellen hängen vom Bildungsniveau ab (Schulabschluss vorhanden oder nicht) — die Bereiche für normal, leichte neurokognitive Störung und Demenz unterscheiden sich zwischen beiden Gruppen. Die genauen Bereiche entnehmen Sie bitte dem offiziellen Formular.'
+  },
+  pl: {
+    tag: 'Funkcje poznawcze i zespół kruchości', title: 'SLUMS', subtitle: 'Badanie stanu psychicznego Uniwersytetu Saint Louis — przesiewowa ocena zaburzeń poznawczych. Przeprowadzane przez klinicystę; kilka pozycji (rysowanie zegara, rozpoznawanie kształtów, przypominanie opowiadania) wymaga własnej oceny badającego zgodnie z oficjalnymi kryteriami.',
+    orient_heading: 'Orientacja (1 punkt każda)', c_day: 'Prawidłowy dzień tygodnia', c_year: 'Prawidłowy rok', c_state: 'Prawidłowy stan/region',
+    money_heading: 'Obliczenia — "100 dolarów, kupujesz tuzin jabłek za 3 dolary i trójkołowy rower za 20 dolarów"',
+    l_spent: 'Ile wydałeś(aś)?', l_left: 'Ile ci zostało?', opt_incorrect: 'Niepoprawnie (0)', opt_correct1: 'Poprawnie (1)', opt_correct2: 'Poprawnie (2)',
+    animals_heading: 'Nazywanie zwierząt (1 minuta)', l_animals: 'Liczba nazwanych zwierząt',
+    animals_0: '0–4 zwierzęta (0)', animals_1: '5–9 zwierząt (1)', animals_2: '10–14 zwierząt (2)', animals_3: '15+ zwierząt (3)',
+    digits_heading: 'Powtarzanie cyfr wspak', l_digit1: 'Pierwsza sekwencja, poprawnie odwrócona', l_digit2: 'Druga sekwencja, poprawnie odwrócona',
+    opt_no: 'Nie (0)', opt_yes1: 'Tak (1)', opt_yes2: 'Tak (2)',
+    recall_heading: 'Odroczone przypomnienie 5 wcześniej nazwanych przedmiotów', l_recall: 'Poprawnie przypomniane przedmioty (0–5)',
+    clock_heading: 'Rysowanie zegara (ocenia badający wg oficjalnych kryteriów)', l_clock_markers: 'Prawidłowo umieszczone oznaczenia godzin', l_clock_time: 'Prawidłowo pokazany czas (za dziesięć jedenasta)',
+    shapes_heading: 'Rozpoznawanie kształtów (ocenia badający)', l_shapes: 'X umieszczony w trójkącie i poprawnie wskazany największy kształt (oba wymagane)',
+    story_heading: 'Przypomnienie opowiadania (ocenia badający, maks. 8)', l_story: 'Punkty za poprawnie przypomniane szczegóły',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of29: ' / 29 (patrz uwaga o skali 30-punktowej poniżej)',
+    slums_extra_note: ' Powyższe pozycje sumują się do 29 z oficjalnych 30 punktów — jeden punkt (w domenie językowej) nie mógł zostać niezależnie potwierdzony z pewnością na podstawie dostępnych źródeł i został celowo pominięty zamiast zgadywany. Przed wykorzystaniem do rzeczywistej oceny należy zweryfikować pełne, aktualne kryteria oceny względem oficjalnego formularza SLU.',
+    interp_note: 'Progi interpretacyjne zależą od poziomu wykształcenia (ukończona szkoła średnia lub nie) — zakresy normy, łagodnego zaburzenia neurokognitywnego i otępienia różnią się między obiema grupami. Dokładne zakresy znajdują się w oficjalnym formularzu.'
+  }
+};
+
+var _lastSLUMS = null;
+
+function calcSLUMS() {
+  var ids = ['c_day','c_year','c_state','c_spent','c_left','c_animals','c_digit1','c_digit2','c_clock_markers','c_clock_time','c_shapes'];
+  var total = 0;
+  ids.forEach(function(id){
+    var el = document.getElementById(id);
+    if (el.type === 'checkbox') total += el.checked ? 1 : 0;
+    else total += parseInt(el.value, 10) || 0;
+  });
+  var recall = parseInt(document.getElementById('c_recall').value, 10) || 0;
+  var story = parseInt(document.getElementById('c_story').value, 10) || 0;
+  total += recall + story;
+  _lastSLUMS = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastSLUMS === null) return;
+  document.getElementById('resultScore').textContent = ucmT('score_label') + _lastSLUMS + ucmT('of29');
+  document.getElementById('resultInterp').innerHTML = ucmT('interp_note');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Timed Up and Go — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Geriatrics &amp; functional status</span>
+  <h1 class="page-title" data-i18n="title">Timed Up and Go (TUG)</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Assesses mobility and fall risk. The patient rises from a chair, walks 3 metres, turns, walks back, and sits down, timed with a stopwatch.</p>
+
+  <div class="card">
+    <h2 data-i18n="stopwatch_heading">Stopwatch</h2>
+    <div class="score" id="stopwatchDisplay" style="margin-bottom:14px;">0.0 s</div>
+    <button class="btn" id="stopwatchBtn" onclick="toggleStopwatch()" data-i18n="start_btn">Start</button>
+    <button class="btn" onclick="resetStopwatch()" style="background:var(--ink-soft);margin-left:8px;" data-i18n="reset_btn">Reset</button>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="enter_heading">Or enter a time directly</h2>
+    <div class="field"><label data-i18n="time_label" for="time">Time (seconds)</label><input type="number" id="time" min="0" max="300" step="0.1" data-i18n-placeholder="time_ph" placeholder="e.g. 12.5"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcTUG()">Show interpretation</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Podsiadlo D, Richardson S. The timed "Up & Go": a test of basic functional mobility for frail elderly persons. J Am Geriatr Soc. 1991;39(2):142–148.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10309/timed-up-go-tug-test" target="_blank" rel="noopener">MDCalc — TUG</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Geriatrics & functional status', title: 'Timed Up and Go (TUG)', subtitle: 'Assesses mobility and fall risk. The patient rises from a chair, walks 3 metres, turns, walks back, and sits down, timed with a stopwatch.',
+    stopwatch_heading: 'Stopwatch', start_btn: 'Start', stop_btn: 'Stop', reset_btn: 'Reset',
+    enter_heading: 'Or enter a time directly', time_label: 'Time (seconds)', time_ph: 'e.g. 12.5', calc_btn: 'Show interpretation',
+    err_invalid: 'Please enter a valid time.',
+    interp_normal: '< 10 s — normal, freely mobile.', interp_mostly: '10–19 s — mostly independent mobility.',
+    interp_variable: '20–29 s — variable mobility; further assessment may be warranted.', interp_impaired: '≥ 30 s — impaired mobility; associated with increased fall risk.'
+  },
+  cs: {
+    tag: 'Geriatrie a funkční stav', title: 'Timed Up and Go (TUG)', subtitle: 'Hodnocení mobility a rizika pádů. Pacient vstane ze židle, ujde 3 metry, otočí se, vrátí se a znovu se posadí; měří se čas stopkami.',
+    stopwatch_heading: 'Stopky', start_btn: 'Start', stop_btn: 'Stop', reset_btn: 'Vynulovat',
+    enter_heading: 'Nebo zadejte čas přímo', time_label: 'Čas (sekundy)', time_ph: 'např. 12,5', calc_btn: 'Zobrazit interpretaci',
+    err_invalid: 'Zadejte prosím platný čas.',
+    interp_normal: '< 10 s — normální, volně pohyblivý(á).', interp_mostly: '10–19 s — převážně samostatná mobilita.',
+    interp_variable: '20–29 s — proměnlivá mobilita; může být vhodné další vyšetření.', interp_impaired: '≥ 30 s — snížená mobilita; spojeno se zvýšeným rizikem pádu.'
+  },
+  fr: {
+    tag: 'Gériatrie et statut fonctionnel', title: 'Timed Up and Go (TUG)', subtitle: "Évalue la mobilité et le risque de chute. Le patient se lève d'une chaise, marche 3 mètres, fait demi-tour, revient et se rassoit, chronométré au chronomètre.",
+    stopwatch_heading: 'Chronomètre', start_btn: 'Démarrer', stop_btn: 'Arrêter', reset_btn: 'Réinitialiser',
+    enter_heading: 'Ou saisissez un temps directement', time_label: 'Temps (secondes)', time_ph: 'p. ex. 12,5', calc_btn: "Afficher l'interprétation",
+    err_invalid: 'Veuillez saisir un temps valide.',
+    interp_normal: '< 10 s — normal, mobilité libre.', interp_mostly: '10–19 s — mobilité majoritairement indépendante.',
+    interp_variable: '20–29 s — mobilité variable ; une évaluation complémentaire peut être justifiée.', interp_impaired: '≥ 30 s — mobilité altérée ; associée à un risque accru de chute.'
+  },
+  de: {
+    tag: 'Geriatrie & Funktionsstatus', title: 'Timed Up and Go (TUG)', subtitle: 'Beurteilt Mobilität und Sturzrisiko. Der Patient steht von einem Stuhl auf, geht 3 Meter, dreht sich um, geht zurück und setzt sich wieder hin; die Zeit wird mit einer Stoppuhr gemessen.',
+    stopwatch_heading: 'Stoppuhr', start_btn: 'Start', stop_btn: 'Stopp', reset_btn: 'Zurücksetzen',
+    enter_heading: 'Oder Zeit direkt eingeben', time_label: 'Zeit (Sekunden)', time_ph: 'z. B. 12,5', calc_btn: 'Interpretation anzeigen',
+    err_invalid: 'Bitte gültige Zeit eingeben.',
+    interp_normal: '< 10 s — normal, frei beweglich.', interp_mostly: '10–19 s — überwiegend selbstständige Mobilität.',
+    interp_variable: '20–29 s — variable Mobilität; weitere Abklärung kann sinnvoll sein.', interp_impaired: '≥ 30 s — eingeschränkte Mobilität; mit erhöhtem Sturzrisiko assoziiert.'
+  },
+  pl: {
+    tag: 'Geriatria i stan funkcjonalny', title: 'Timed Up and Go (TUG)', subtitle: 'Ocenia mobilność i ryzyko upadków. Pacjent wstaje z krzesła, przechodzi 3 metry, zawraca, wraca i siada; czas mierzony jest stoperem.',
+    stopwatch_heading: 'Stoper', start_btn: 'Start', stop_btn: 'Stop', reset_btn: 'Resetuj',
+    enter_heading: 'Lub wpisz czas bezpośrednio', time_label: 'Czas (sekundy)', time_ph: 'np. 12,5', calc_btn: 'Pokaż interpretację',
+    err_invalid: 'Proszę podać prawidłowy czas.',
+    interp_normal: '< 10 s — prawidłowo, swobodna mobilność.', interp_mostly: '10–19 s — w większości niezależna mobilność.',
+    interp_variable: '20–29 s — zmienna mobilność; dalsza ocena może być wskazana.', interp_impaired: '≥ 30 s — zaburzona mobilność; związana ze zwiększonym ryzykiem upadku.'
+  }
+};
+
+var swInterval = null, swElapsed = 0, swRunning = false;
+
+function toggleStopwatch() {
+  var btn = document.getElementById('stopwatchBtn');
+  if (!swRunning) {
+    swRunning = true;
+    var start = Date.now() - swElapsed;
+    swInterval = setInterval(function() {
+      swElapsed = Date.now() - start;
+      document.getElementById('stopwatchDisplay').textContent = (swElapsed / 1000).toFixed(1) + ' s';
+    }, 100);
+    btn.textContent = ucmT('stop_btn');
+  } else {
+    swRunning = false;
+    clearInterval(swInterval);
+    btn.textContent = ucmT('start_btn');
+    document.getElementById('time').value = (swElapsed / 1000).toFixed(1);
+  }
+}
+
+function resetStopwatch() {
+  swRunning = false;
+  clearInterval(swInterval);
+  swElapsed = 0;
+  document.getElementById('stopwatchDisplay').textContent = '0.0 s';
+  document.getElementById('stopwatchBtn').textContent = ucmT('start_btn');
+}
+
+var _lastTUG = null;
+
+function calcTUG() {
+  var t = parseFloat(document.getElementById('time').value);
+  if (isNaN(t) || t < 0) { alert(ucmT('err_invalid')); return; }
+  _lastTUG = t;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastTUG === null) return;
+  var t = _lastTUG;
+  var interp;
+  if (t < 10) interp = ucmT('interp_normal');
+  else if (t < 20) interp = ucmT('interp_mostly');
+  else if (t < 30) interp = ucmT('interp_variable');
+  else interp = ucmT('interp_impaired');
+  document.getElementById('resultScore').textContent = t.toFixed(1) + ' s';
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() {
+  if (!swRunning) document.getElementById('stopwatchBtn').textContent = ucmT('start_btn');
+  renderResult();
+};
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

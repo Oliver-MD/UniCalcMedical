@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRAIL Scale — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cognition &amp; frailty</span>
+  <h1 class="page-title" data-i18n="title">FRAIL Scale</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Five-item screening tool for frailty in older adults.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Criteria (1 point each if present)</h2>
+    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n-html="c0"><strong>Fatigue</strong> — Are you fatigued most or all of the time?</label></div>
+    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n-html="c1"><strong>Resistance</strong> — Are you unable to climb one flight of stairs?</label></div>
+    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n-html="c2"><strong>Aerobic</strong> — Are you unable to walk one block (approx. 100 m)?</label></div>
+    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n-html="c3"><strong>Illnesses</strong> — Do you have more than 5 illnesses?</label></div>
+    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n-html="c4"><strong>Loss of weight</strong> — Have you lost more than 5% of your body weight in the past year?</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcFRAIL()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Morley JE, Malmstrom TK, Miller DK. A simple frailty questionnaire (FRAIL) predicts outcomes in middle aged African Americans. J Nutr Health Aging. 2012;16(7):601–608.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cognition & frailty', title: 'FRAIL Scale', subtitle: 'Five-item screening tool for frailty in older adults.',
+    items_heading: 'Criteria (1 point each if present)',
+    c0: '<strong>Fatigue</strong> — Are you fatigued most or all of the time?',
+    c1: '<strong>Resistance</strong> — Are you unable to climb one flight of stairs?',
+    c2: '<strong>Aerobic</strong> — Are you unable to walk one block (approx. 100 m)?',
+    c3: '<strong>Illnesses</strong> — Do you have more than 5 illnesses?',
+    c4: '<strong>Loss of weight</strong> — Have you lost more than 5% of your body weight in the past year?',
+    calc_btn: 'Calculate', score_label: 'Score = ', of5: ' / 5',
+    interp_robust: 'Robust (0 criteria).', interp_prefrail: 'Pre-frail (1–2 criteria).', interp_frail: 'Frail (3–5 criteria).'
+  },
+  cs: {
+    tag: 'Kognice a křehkost', title: 'Škála FRAIL', subtitle: 'Pětiotázkový screeningový nástroj pro křehkost u starších dospělých.',
+    items_heading: 'Kritéria (1 bod za každé přítomné)',
+    c0: '<strong>Únava</strong> — Cítíte se unavený(á) po většinu nebo celou dobu?',
+    c1: '<strong>Odolnost</strong> — Nezvládnete vyjít jedno patro po schodech?',
+    c2: '<strong>Aerobní kapacita</strong> — Nezvládnete ujít jeden blok (přibl. 100 m)?',
+    c3: '<strong>Nemoci</strong> — Máte více než 5 onemocnění?',
+    c4: '<strong>Úbytek hmotnosti</strong> — Zhubl(a) jste za poslední rok o více než 5 % tělesné hmotnosti?',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of5: ' / 5',
+    interp_robust: 'Robustní (0 kritérií).', interp_prefrail: 'Prefrailní (1–2 kritéria).', interp_frail: 'Křehký(á) (3–5 kritérií).'
+  },
+  fr: {
+    tag: 'Cognition et fragilité', title: 'Échelle FRAIL', subtitle: 'Outil de dépistage en cinq questions de la fragilité chez les personnes âgées.',
+    items_heading: 'Critères (1 point chacun si présent)',
+    c0: '<strong>Fatigue</strong> — Vous sentez-vous fatigué(e) la majeure partie ou la totalité du temps ?',
+    c1: '<strong>Résistance</strong> — Êtes-vous incapable de monter un étage à pied ?',
+    c2: '<strong>Aérobie</strong> — Êtes-vous incapable de marcher un pâté de maisons (environ 100 m) ?',
+    c3: '<strong>Maladies</strong> — Avez-vous plus de 5 maladies ?',
+    c4: '<strong>Perte de poids</strong> — Avez-vous perdu plus de 5 % de votre poids corporel au cours de la dernière année ?',
+    calc_btn: 'Calculer', score_label: 'Score = ', of5: ' / 5',
+    interp_robust: 'Robuste (0 critère).', interp_prefrail: 'Pré-fragile (1–2 critères).', interp_frail: 'Fragile (3–5 critères).'
+  },
+  de: {
+    tag: 'Kognition & Gebrechlichkeit', title: 'FRAIL-Skala', subtitle: 'Fünf-Fragen-Screening-Instrument für Gebrechlichkeit bei älteren Erwachsenen.',
+    items_heading: 'Kriterien (je 1 Punkt, falls zutreffend)',
+    c0: '<strong>Erschöpfung</strong> — Fühlen Sie sich die meiste oder ganze Zeit erschöpft?',
+    c1: '<strong>Kraft</strong> — Können Sie kein Stockwerk Treppen steigen?',
+    c2: '<strong>Ausdauer</strong> — Können Sie keinen Block (ca. 100 m) gehen?',
+    c3: '<strong>Erkrankungen</strong> — Haben Sie mehr als 5 Erkrankungen?',
+    c4: '<strong>Gewichtsverlust</strong> — Haben Sie im letzten Jahr mehr als 5 % Ihres Körpergewichts verloren?',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of5: ' / 5',
+    interp_robust: 'Robust (0 Kriterien).', interp_prefrail: 'Prä-gebrechlich (1–2 Kriterien).', interp_frail: 'Gebrechlich (3–5 Kriterien).'
+  },
+  pl: {
+    tag: 'Funkcje poznawcze i zespół kruchości', title: 'Skala FRAIL', subtitle: 'Pięciopytaniowe narzędzie przesiewowe w kierunku zespołu kruchości u osób starszych.',
+    items_heading: 'Kryteria (1 punkt za każde obecne)',
+    c0: '<strong>Zmęczenie</strong> — Czy czuje się Pan/Pani zmęczony(a) przez większość lub cały czas?',
+    c1: '<strong>Wytrzymałość</strong> — Czy nie jest Pan/Pani w stanie wejść na jedno piętro schodów?',
+    c2: '<strong>Wydolność</strong> — Czy nie jest Pan/Pani w stanie przejść jednego bloku (ok. 100 m)?',
+    c3: '<strong>Choroby</strong> — Czy ma Pan/Pani więcej niż 5 chorób?',
+    c4: '<strong>Utrata masy ciała</strong> — Czy w ciągu ostatniego roku schudł(a) Pan/Pani ponad 5% masy ciała?',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of5: ' / 5',
+    interp_robust: 'Sprawny (0 kryteriów).', interp_prefrail: 'Wstępna kruchość (1–2 kryteria).', interp_frail: 'Zespół kruchości (3–5 kryteriów).'
+  }
+};
+
+var _lastFRAIL = null;
+
+function calcFRAIL() {
+  var ids = ['c0','c1','c2','c3','c4'];
+  var total = ids.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastFRAIL = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastFRAIL === null) return;
+  var total = _lastFRAIL;
+  var interp = total === 0 ? ucmT('interp_robust') : (total <= 2 ? ucmT('interp_prefrail') : ucmT('interp_frail'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of5');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

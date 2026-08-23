@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IADL (Lawton) — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Geriatrics &amp; functional status</span>
+  <h1 class="page-title" data-i18n="title">IADL (Lawton)</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Measures instrumental activities of daily living needed for independent community living.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">For each domain, select the level of independence</h2>
+    <div id="items"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcIADL()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Lawton MP, Brody EM. Assessment of older people: self-maintaining and instrumental activities of daily living. Gerontologist. 1969;9(3):179–186.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/3906/lawton-instrumental-activities-daily-living-iadl-scale" target="_blank" rel="noopener">MDCalc — Lawton IADL</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Geriatrics & functional status', title: 'IADL (Lawton)', subtitle: 'Measures instrumental activities of daily living needed for independent community living.',
+    criteria_heading: 'For each domain, select the level of independence',
+    d0: 'Ability to use telephone', d1: 'Shopping', d2: 'Food preparation', d3: 'Housekeeping',
+    d4: 'Laundry', d5: 'Mode of transportation', d6: 'Responsibility for own medications', d7: 'Ability to handle finances',
+    opt_indep: 'Independent (1)', opt_dep: 'Needs assistance / dependent (0)',
+    calc_btn: 'Calculate', score_label: 'Score = ', of8: ' / 8',
+    interp_note: 'Higher scores indicate greater independence. There is no single universal cut-off; scores are generally interpreted alongside clinical context and change over time.'
+  },
+  cs: {
+    tag: 'Geriatrie a funkční stav', title: 'IADL (Lawton)', subtitle: 'Měří instrumentální všední denní aktivity potřebné pro samostatný život v komunitě.',
+    criteria_heading: 'U každé oblasti vyberte úroveň soběstačnosti',
+    d0: 'Schopnost používat telefon', d1: 'Nakupování', d2: 'Příprava jídla', d3: 'Vedení domácnosti',
+    d4: 'Praní prádla', d5: 'Způsob dopravy', d6: 'Zodpovědnost za užívání vlastních léků', d7: 'Schopnost hospodařit s penězi',
+    opt_indep: 'Samostatný(á) (1)', opt_dep: 'Potřebuje pomoc / závislý(á) (0)',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of8: ' / 8',
+    interp_note: 'Vyšší skóre znamená vyšší soběstačnost. Neexistuje jedna univerzální hranice; skóre se obvykle interpretuje v kontextu klinického stavu a jeho vývoje v čase.'
+  },
+  fr: {
+    tag: 'Gériatrie et statut fonctionnel', title: 'IADL (Lawton)', subtitle: 'Mesure les activités instrumentales de la vie quotidienne nécessaires à une vie autonome en communauté.',
+    criteria_heading: "Pour chaque domaine, sélectionnez le niveau d'autonomie",
+    d0: 'Capacité à utiliser le téléphone', d1: 'Faire les courses', d2: 'Préparation des repas', d3: 'Entretien du domicile',
+    d4: 'Lessive', d5: 'Moyen de transport', d6: 'Responsabilité de la prise de ses propres médicaments', d7: 'Capacité à gérer ses finances',
+    opt_indep: 'Indépendant(e) (1)', opt_dep: "A besoin d'aide / dépendant(e) (0)",
+    calc_btn: 'Calculer', score_label: 'Score = ', of8: ' / 8',
+    interp_note: "Un score plus élevé indique une plus grande autonomie. Il n'existe pas de seuil universel unique ; les scores sont généralement interprétés dans le contexte clinique et selon leur évolution dans le temps."
+  },
+  de: {
+    tag: 'Geriatrie & Funktionsstatus', title: 'IADL (Lawton)', subtitle: 'Misst instrumentelle Aktivitäten des täglichen Lebens, die für ein selbstständiges Leben in der Gemeinschaft nötig sind.',
+    criteria_heading: 'Wählen Sie für jeden Bereich den Grad der Selbstständigkeit',
+    d0: 'Fähigkeit zur Telefonnutzung', d1: 'Einkaufen', d2: 'Essenszubereitung', d3: 'Haushaltsführung',
+    d4: 'Wäschepflege', d5: 'Fortbewegungsmittel', d6: 'Eigenverantwortung für Medikamenteneinnahme', d7: 'Fähigkeit zur Finanzverwaltung',
+    opt_indep: 'Selbstständig (1)', opt_dep: 'Benötigt Hilfe / abhängig (0)',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of8: ' / 8',
+    interp_note: 'Höhere Werte zeigen eine größere Selbstständigkeit an. Es gibt keinen einzelnen universellen Grenzwert; Werte werden im Allgemeinen im klinischen Kontext und im zeitlichen Verlauf interpretiert.'
+  },
+  pl: {
+    tag: 'Geriatria i stan funkcjonalny', title: 'IADL (Lawton)', subtitle: 'Ocenia złożone czynności dnia codziennego niezbędne do samodzielnego funkcjonowania w społeczności.',
+    criteria_heading: 'Dla każdego obszaru wybierz poziom samodzielności',
+    d0: 'Zdolność korzystania z telefonu', d1: 'Robienie zakupów', d2: 'Przygotowywanie posiłków', d3: 'Prowadzenie gospodarstwa domowego',
+    d4: 'Pranie', d5: 'Sposób przemieszczania się', d6: 'Odpowiedzialność za przyjmowanie własnych leków', d7: 'Zdolność zarządzania finansami',
+    opt_indep: 'Samodzielny(a) (1)', opt_dep: 'Wymaga pomocy / zależny(a) (0)',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of8: ' / 8',
+    interp_note: 'Wyższy wynik oznacza większą samodzielność. Nie ma jednego uniwersalnego progu; wyniki są zwykle interpretowane w kontekście klinicznym i w czasie.'
+  }
+};
+
+var DOMAIN_KEYS = ['d0','d1','d2','d3','d4','d5','d6','d7'];
+
+function renderItems() {
+  var itemsDiv = document.getElementById('items');
+  var existing = DOMAIN_KEYS.map(function(k, i){ return document.getElementById('d' + i); });
+  var currentValues = existing.map(function(el){ return el ? el.value : '1'; });
+  itemsDiv.innerHTML = '';
+  DOMAIN_KEYS.forEach(function(key, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = '<label>' + ucmT(key) + '</label>' +
+      '<select id="d' + i + '"><option value="1">' + ucmT('opt_indep') + '</option><option value="0">' + ucmT('opt_dep') + '</option></select>';
+    itemsDiv.appendChild(wrap);
+    document.getElementById('d' + i).value = currentValues[i];
+  });
+}
+
+var _hasResult = false;
+
+function calcIADL() { _hasResult = true; renderResult(); }
+
+function renderResult() {
+  if (!_hasResult) return;
+  var total = 0;
+  DOMAIN_KEYS.forEach(function(key, i){ total += parseInt(document.getElementById('d' + i).value, 10); });
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of8');
+  document.getElementById('resultInterp').innerHTML = ucmT('interp_note');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderItems(); renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

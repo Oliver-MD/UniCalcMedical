@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NIHSS — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Neurology</span>
+  <h1 class="page-title" data-i18n="title">NIHSS</h1>
+  <p class="page-subtitle" data-i18n="subtitle">National Institutes of Health Stroke Scale — assesses stroke severity across 15 items.</p>
+
+  <div class="card">
+    <div class="field"><label data-i18n="l1a">1a. Level of consciousness</label>
+      <select id="i1a"><option value="0" data-i18n="i1a_0">Alert (0)</option><option value="1" data-i18n="i1a_1">Not alert, arousable by minor stimulation (1)</option><option value="2" data-i18n="i1a_2">Not alert, requires repeated stimulation (2)</option><option value="3" data-i18n="i1a_3">Coma / unresponsive (3)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l1b">1b. LOC questions (age, month)</label>
+      <select id="i1b"><option value="0" data-i18n="i1b_0">Both correct (0)</option><option value="1" data-i18n="i1b_1">One correct (1)</option><option value="2" data-i18n="i1b_2">Neither correct (2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l1c">1c. LOC commands (open/close eyes, grip/release hand)</label>
+      <select id="i1c"><option value="0" data-i18n="i1c_0">Both correct (0)</option><option value="1" data-i18n="i1c_1">One correct (1)</option><option value="2" data-i18n="i1c_2">Neither correct (2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l2">2. Best gaze</label>
+      <select id="i2"><option value="0" data-i18n="i2_0">Normal (0)</option><option value="1" data-i18n="i2_1">Partial gaze palsy (1)</option><option value="2" data-i18n="i2_2">Forced deviation (2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l3">3. Visual fields</label>
+      <select id="i3"><option value="0" data-i18n="i3_0">No visual loss (0)</option><option value="1" data-i18n="i3_1">Partial hemianopia (1)</option><option value="2" data-i18n="i3_2">Complete hemianopia (2)</option><option value="3" data-i18n="i3_3">Bilateral hemianopia (3)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l4">4. Facial palsy</label>
+      <select id="i4"><option value="0" data-i18n="i4_0">Normal (0)</option><option value="1" data-i18n="i4_1">Minor paralysis (1)</option><option value="2" data-i18n="i4_2">Partial paralysis (2)</option><option value="3" data-i18n="i4_3">Complete paralysis (3)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l5a">5a. Motor arm — left</label>
+      <select id="i5a"><option value="0" data-i18n="motor_0">No drift (0)</option><option value="1" data-i18n="motor_1">Drift (1)</option><option value="2" data-i18n="motor_2">Some effort against gravity (2)</option><option value="3" data-i18n="motor_3">No effort against gravity (3)</option><option value="4" data-i18n="motor_4">No movement (4)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l5b">5b. Motor arm — right</label>
+      <select id="i5b"><option value="0" data-i18n="motor_0">No drift (0)</option><option value="1" data-i18n="motor_1">Drift (1)</option><option value="2" data-i18n="motor_2">Some effort against gravity (2)</option><option value="3" data-i18n="motor_3">No effort against gravity (3)</option><option value="4" data-i18n="motor_4">No movement (4)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l6a">6a. Motor leg — left</label>
+      <select id="i6a"><option value="0" data-i18n="motor_0">No drift (0)</option><option value="1" data-i18n="motor_1">Drift (1)</option><option value="2" data-i18n="motor_2">Some effort against gravity (2)</option><option value="3" data-i18n="motor_3">No effort against gravity (3)</option><option value="4" data-i18n="motor_4">No movement (4)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l6b">6b. Motor leg — right</label>
+      <select id="i6b"><option value="0" data-i18n="motor_0">No drift (0)</option><option value="1" data-i18n="motor_1">Drift (1)</option><option value="2" data-i18n="motor_2">Some effort against gravity (2)</option><option value="3" data-i18n="motor_3">No effort against gravity (3)</option><option value="4" data-i18n="motor_4">No movement (4)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l7">7. Limb ataxia</label>
+      <select id="i7"><option value="0" data-i18n="i7_0">Absent (0)</option><option value="1" data-i18n="i7_1">Present in one limb (1)</option><option value="2" data-i18n="i7_2">Present in two limbs (2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l8">8. Sensory</label>
+      <select id="i8"><option value="0" data-i18n="i8_0">Normal (0)</option><option value="1" data-i18n="i8_1">Mild to moderate loss (1)</option><option value="2" data-i18n="i8_2">Severe to total loss (2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l9">9. Best language</label>
+      <select id="i9"><option value="0" data-i18n="i9_0">No aphasia (0)</option><option value="1" data-i18n="i9_1">Mild to moderate aphasia (1)</option><option value="2" data-i18n="i9_2">Severe aphasia (2)</option><option value="3" data-i18n="i9_3">Mute / global aphasia (3)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l10">10. Dysarthria</label>
+      <select id="i10"><option value="0" data-i18n="i10_0">Normal (0)</option><option value="1" data-i18n="i10_1">Mild to moderate (1)</option><option value="2" data-i18n="i10_2">Severe (2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l11">11. Extinction and inattention (neglect)</label>
+      <select id="i11"><option value="0" data-i18n="i11_0">No abnormality (0)</option><option value="1" data-i18n="i11_1">Mild — one sensory modality (1)</option><option value="2" data-i18n="i11_2">Severe — more than one modality (2)</option></select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcNIHSS()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Brott T, Adams HP Jr, Olinger CP, et al. Measurements of acute cerebral infarction: a clinical examination scale. Stroke. 1989;20(7):864–870. Public domain instrument developed with U.S. federal funding (NIH/NINDS).<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/715/nih-stroke-scale-score-nihss" target="_blank" rel="noopener">MDCalc — NIHSS</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Neurology', title: 'NIHSS', subtitle: 'National Institutes of Health Stroke Scale — assesses stroke severity across 15 items.',
+    l1a: '1a. Level of consciousness', i1a_0: 'Alert (0)', i1a_1: 'Not alert, arousable by minor stimulation (1)', i1a_2: 'Not alert, requires repeated stimulation (2)', i1a_3: 'Coma / unresponsive (3)',
+    l1b: '1b. LOC questions (age, month)', i1b_0: 'Both correct (0)', i1b_1: 'One correct (1)', i1b_2: 'Neither correct (2)',
+    l1c: '1c. LOC commands (open/close eyes, grip/release hand)', i1c_0: 'Both correct (0)', i1c_1: 'One correct (1)', i1c_2: 'Neither correct (2)',
+    l2: '2. Best gaze', i2_0: 'Normal (0)', i2_1: 'Partial gaze palsy (1)', i2_2: 'Forced deviation (2)',
+    l3: '3. Visual fields', i3_0: 'No visual loss (0)', i3_1: 'Partial hemianopia (1)', i3_2: 'Complete hemianopia (2)', i3_3: 'Bilateral hemianopia (3)',
+    l4: '4. Facial palsy', i4_0: 'Normal (0)', i4_1: 'Minor paralysis (1)', i4_2: 'Partial paralysis (2)', i4_3: 'Complete paralysis (3)',
+    l5a: '5a. Motor arm — left', l5b: '5b. Motor arm — right', l6a: '6a. Motor leg — left', l6b: '6b. Motor leg — right',
+    motor_0: 'No drift (0)', motor_1: 'Drift (1)', motor_2: 'Some effort against gravity (2)', motor_3: 'No effort against gravity (3)', motor_4: 'No movement (4)',
+    l7: '7. Limb ataxia', i7_0: 'Absent (0)', i7_1: 'Present in one limb (1)', i7_2: 'Present in two limbs (2)',
+    l8: '8. Sensory', i8_0: 'Normal (0)', i8_1: 'Mild to moderate loss (1)', i8_2: 'Severe to total loss (2)',
+    l9: '9. Best language', i9_0: 'No aphasia (0)', i9_1: 'Mild to moderate aphasia (1)', i9_2: 'Severe aphasia (2)', i9_3: 'Mute / global aphasia (3)',
+    l10: '10. Dysarthria', i10_0: 'Normal (0)', i10_1: 'Mild to moderate (1)', i10_2: 'Severe (2)',
+    l11: '11. Extinction and inattention (neglect)', i11_0: 'No abnormality (0)', i11_1: 'Mild — one sensory modality (1)', i11_2: 'Severe — more than one modality (2)',
+    calc_btn: 'Calculate', score_label: 'NIHSS = ', of42: ' / 42',
+    interp_none: 'No stroke symptoms (0).', interp_minor: 'Minor stroke (1–4).', interp_moderate: 'Moderate stroke (5–15).',
+    interp_modsevere: 'Moderate to severe stroke (16–20).', interp_severe: 'Severe stroke (21–42).'
+  },
+  cs: {
+    tag: 'Neurologie', title: 'NIHSS', subtitle: 'Škála NIHSS (National Institutes of Health Stroke Scale) — hodnocení tíže cévní mozkové příhody v 15 položkách.',
+    l1a: '1a. Úroveň vědomí', i1a_0: 'Při vědomí (0)', i1a_1: 'Není zcela při vědomí, probuditelný mírnou stimulací (1)', i1a_2: 'Není při vědomí, vyžaduje opakovanou stimulaci (2)', i1a_3: 'Kóma / bez reakce (3)',
+    l1b: '1b. Orientační otázky (věk, měsíc)', i1b_0: 'Obě správně (0)', i1b_1: 'Jedna správně (1)', i1b_2: 'Žádná správně (2)',
+    l1c: '1c. Plnění pokynů (otevřít/zavřít oči, sevřít/uvolnit ruku)', i1c_0: 'Oba pokyny splněny (0)', i1c_1: 'Jeden pokyn splněn (1)', i1c_2: 'Žádný pokyn nesplněn (2)',
+    l2: '2. Okulomotorika (pohledová paréza)', i2_0: 'Normální (0)', i2_1: 'Částečná pohledová paréza (1)', i2_2: 'Nucená deviace (2)',
+    l3: '3. Zorná pole', i3_0: 'Bez výpadku (0)', i3_1: 'Částečná hemianopsie (1)', i3_2: 'Úplná hemianopsie (2)', i3_3: 'Oboustranná hemianopsie (3)',
+    l4: '4. Paréza lícního nervu', i4_0: 'Normální (0)', i4_1: 'Lehká paréza (1)', i4_2: 'Částečná paréza (2)', i4_3: 'Úplná paréza (3)',
+    l5a: '5a. Motorika horní končetiny — vlevo', l5b: '5b. Motorika horní končetiny — vpravo', l6a: '6a. Motorika dolní končetiny — vlevo', l6b: '6b. Motorika dolní končetiny — vpravo',
+    motor_0: 'Bez poklesu (0)', motor_1: 'Pokles (1)', motor_2: 'Určité úsilí proti gravitaci (2)', motor_3: 'Žádné úsilí proti gravitaci (3)', motor_4: 'Žádný pohyb (4)',
+    l7: '7. Ataxie končetin', i7_0: 'Nepřítomna (0)', i7_1: 'Přítomna na jedné končetině (1)', i7_2: 'Přítomna na dvou končetinách (2)',
+    l8: '8. Čití', i8_0: 'Normální (0)', i8_1: 'Lehká až střední porucha (1)', i8_2: 'Těžká až úplná ztráta (2)',
+    l9: '9. Řeč', i9_0: 'Bez afázie (0)', i9_1: 'Lehká až střední afázie (1)', i9_2: 'Těžká afázie (2)', i9_3: 'Mutismus / globální afázie (3)',
+    l10: '10. Dysartrie', i10_0: 'Normální (0)', i10_1: 'Lehká až střední (1)', i10_2: 'Těžká (2)',
+    l11: '11. Extinkce a neglect', i11_0: 'Bez abnormality (0)', i11_1: 'Lehký — jedna smyslová modalita (1)', i11_2: 'Těžký — více než jedna modalita (2)',
+    calc_btn: 'Vypočítat', score_label: 'NIHSS = ', of42: ' / 42',
+    interp_none: 'Bez příznaků CMP (0).', interp_minor: 'Lehká CMP (1–4).', interp_moderate: 'Středně těžká CMP (5–15).',
+    interp_modsevere: 'Středně těžká až těžká CMP (16–20).', interp_severe: 'Těžká CMP (21–42).'
+  },
+  fr: {
+    tag: 'Neurologie', title: 'NIHSS', subtitle: "Échelle NIHSS (National Institutes of Health Stroke Scale) — évalue la sévérité de l'AVC sur 15 items.",
+    l1a: '1a. Niveau de conscience', i1a_0: 'Alerte (0)', i1a_1: 'Non alerte, éveillable par une stimulation mineure (1)', i1a_2: 'Non alerte, nécessite une stimulation répétée (2)', i1a_3: 'Coma / non réactif (3)',
+    l1b: '1b. Questions LOC (âge, mois)', i1b_0: 'Les deux correctes (0)', i1b_1: 'Une correcte (1)', i1b_2: 'Aucune correcte (2)',
+    l1c: '1c. Commandes LOC (ouvrir/fermer les yeux, serrer/relâcher la main)', i1c_0: 'Les deux correctes (0)', i1c_1: 'Une correcte (1)', i1c_2: 'Aucune correcte (2)',
+    l2: '2. Oculomotricité', i2_0: 'Normale (0)', i2_1: 'Paralysie partielle du regard (1)', i2_2: 'Déviation forcée (2)',
+    l3: '3. Champs visuels', i3_0: 'Aucune perte visuelle (0)', i3_1: 'Hémianopsie partielle (1)', i3_2: 'Hémianopsie complète (2)', i3_3: 'Hémianopsie bilatérale (3)',
+    l4: '4. Paralysie faciale', i4_0: 'Normale (0)', i4_1: 'Paralysie mineure (1)', i4_2: 'Paralysie partielle (2)', i4_3: 'Paralysie complète (3)',
+    l5a: '5a. Motricité bras — gauche', l5b: '5b. Motricité bras — droit', l6a: '6a. Motricité jambe — gauche', l6b: '6b. Motricité jambe — droite',
+    motor_0: 'Pas de dérive (0)', motor_1: 'Dérive (1)', motor_2: 'Effort contre gravité (2)', motor_3: 'Aucun effort contre gravité (3)', motor_4: 'Aucun mouvement (4)',
+    l7: '7. Ataxie des membres', i7_0: 'Absente (0)', i7_1: "Présente dans un membre (1)", i7_2: 'Présente dans deux membres (2)',
+    l8: '8. Sensibilité', i8_0: 'Normale (0)', i8_1: 'Perte légère à modérée (1)', i8_2: 'Perte sévère à totale (2)',
+    l9: '9. Langage', i9_0: "Pas d'aphasie (0)", i9_1: 'Aphasie légère à modérée (1)', i9_2: 'Aphasie sévère (2)', i9_3: 'Mutisme / aphasie globale (3)',
+    l10: '10. Dysarthrie', i10_0: 'Normale (0)', i10_1: 'Légère à modérée (1)', i10_2: 'Sévère (2)',
+    l11: '11. Extinction et négligence', i11_0: 'Aucune anomalie (0)', i11_1: 'Légère — une modalité sensorielle (1)', i11_2: 'Sévère — plus d\u2019une modalité (2)',
+    calc_btn: 'Calculer', score_label: 'NIHSS = ', of42: ' / 42',
+    interp_none: "Aucun symptôme d'AVC (0).", interp_minor: 'AVC mineur (1–4).', interp_moderate: 'AVC modéré (5–15).',
+    interp_modsevere: 'AVC modéré à sévère (16–20).', interp_severe: 'AVC sévère (21–42).'
+  },
+  de: {
+    tag: 'Neurologie', title: 'NIHSS', subtitle: 'NIHSS (National Institutes of Health Stroke Scale) — beurteilt den Schweregrad des Schlaganfalls anhand von 15 Items.',
+    l1a: '1a. Bewusstseinsgrad', i1a_0: 'Wach (0)', i1a_1: 'Nicht wach, durch geringe Stimulation erweckbar (1)', i1a_2: 'Nicht wach, wiederholte Stimulation nötig (2)', i1a_3: 'Koma / keine Reaktion (3)',
+    l1b: '1b. Orientierungsfragen (Alter, Monat)', i1b_0: 'Beide richtig (0)', i1b_1: 'Eine richtig (1)', i1b_2: 'Keine richtig (2)',
+    l1c: '1c. Befolgen von Aufforderungen (Augen öffnen/schließen, Hand schließen/öffnen)', i1c_0: 'Beide richtig ausgeführt (0)', i1c_1: 'Eine richtig ausgeführt (1)', i1c_2: 'Keine richtig ausgeführt (2)',
+    l2: '2. Okulomotorik', i2_0: 'Normal (0)', i2_1: 'Partielle Blickparese (1)', i2_2: 'Erzwungene Deviation (2)',
+    l3: '3. Gesichtsfelder', i3_0: 'Kein Gesichtsfeldausfall (0)', i3_1: 'Partielle Hemianopsie (1)', i3_2: 'Vollständige Hemianopsie (2)', i3_3: 'Bilaterale Hemianopsie (3)',
+    l4: '4. Fazialisparese', i4_0: 'Normal (0)', i4_1: 'Geringe Lähmung (1)', i4_2: 'Teillähmung (2)', i4_3: 'Vollständige Lähmung (3)',
+    l5a: '5a. Motorik Arm — links', l5b: '5b. Motorik Arm — rechts', l6a: '6a. Motorik Bein — links', l6b: '6b. Motorik Bein — rechts',
+    motor_0: 'Kein Absinken (0)', motor_1: 'Absinken (1)', motor_2: 'Etwas Kraft gegen Schwerkraft (2)', motor_3: 'Keine Kraft gegen Schwerkraft (3)', motor_4: 'Keine Bewegung (4)',
+    l7: '7. Extremitätenataxie', i7_0: 'Fehlend (0)', i7_1: 'In einer Extremität vorhanden (1)', i7_2: 'In zwei Extremitäten vorhanden (2)',
+    l8: '8. Sensibilität', i8_0: 'Normal (0)', i8_1: 'Leichte bis mittlere Störung (1)', i8_2: 'Schwere bis vollständige Störung (2)',
+    l9: '9. Sprache', i9_0: 'Keine Aphasie (0)', i9_1: 'Leichte bis mittelschwere Aphasie (1)', i9_2: 'Schwere Aphasie (2)', i9_3: 'Mutismus / globale Aphasie (3)',
+    l10: '10. Dysarthrie', i10_0: 'Normal (0)', i10_1: 'Leicht bis mittelschwer (1)', i10_2: 'Schwer (2)',
+    l11: '11. Auslöschung und Neglect', i11_0: 'Keine Auffälligkeit (0)', i11_1: 'Leicht — eine sensorische Modalität (1)', i11_2: 'Schwer — mehr als eine Modalität (2)',
+    calc_btn: 'Berechnen', score_label: 'NIHSS = ', of42: ' / 42',
+    interp_none: 'Keine Schlaganfallsymptome (0).', interp_minor: 'Leichter Schlaganfall (1–4).', interp_moderate: 'Mittelschwerer Schlaganfall (5–15).',
+    interp_modsevere: 'Mittelschwerer bis schwerer Schlaganfall (16–20).', interp_severe: 'Schwerer Schlaganfall (21–42).'
+  },
+  pl: {
+    tag: 'Neurologia', title: 'NIHSS', subtitle: 'Skala NIHSS (National Institutes of Health Stroke Scale) — ocenia ciężkość udaru na podstawie 15 elementów.',
+    l1a: '1a. Poziom świadomości', i1a_0: 'Przytomny (0)', i1a_1: 'Nieprzytomny, budzi się po niewielkiej stymulacji (1)', i1a_2: 'Nieprzytomny, wymaga powtarzanej stymulacji (2)', i1a_3: 'Śpiączka / brak reakcji (3)',
+    l1b: '1b. Pytania orientacyjne (wiek, miesiąc)', i1b_0: 'Obie odpowiedzi poprawne (0)', i1b_1: 'Jedna odpowiedź poprawna (1)', i1b_2: 'Żadna odpowiedź poprawna (2)',
+    l1c: '1c. Wykonywanie poleceń (otwórz/zamknij oczy, zaciśnij/otwórz dłoń)', i1c_0: 'Obie czynności wykonane (0)', i1c_1: 'Jedna czynność wykonana (1)', i1c_2: 'Żadna czynność niewykonana (2)',
+    l2: '2. Ruchy gałek ocznych', i2_0: 'Prawidłowe (0)', i2_1: 'Częściowy niedowład spojrzenia (1)', i2_2: 'Wymuszone odchylenie (2)',
+    l3: '3. Pola widzenia', i3_0: 'Brak ubytku (0)', i3_1: 'Częściowa niedowidzenie połowicze (1)', i3_2: 'Całkowite niedowidzenie połowicze (2)', i3_3: 'Obustronne niedowidzenie połowicze (3)',
+    l4: '4. Niedowład twarzy', i4_0: 'Prawidłowy (0)', i4_1: 'Niewielki niedowład (1)', i4_2: 'Częściowy niedowład (2)', i4_3: 'Całkowity niedowład (3)',
+    l5a: '5a. Motoryka ręki — lewa', l5b: '5b. Motoryka ręki — prawa', l6a: '6a. Motoryka nogi — lewa', l6b: '6b. Motoryka nogi — prawa',
+    motor_0: 'Brak opadania (0)', motor_1: 'Opadanie (1)', motor_2: 'Pewien wysiłek przeciw grawitacji (2)', motor_3: 'Brak wysiłku przeciw grawitacji (3)', motor_4: 'Brak ruchu (4)',
+    l7: '7. Ataksja kończyn', i7_0: 'Nieobecna (0)', i7_1: 'Obecna w jednej kończynie (1)', i7_2: 'Obecna w dwóch kończynach (2)',
+    l8: '8. Czucie', i8_0: 'Prawidłowe (0)', i8_1: 'Łagodne do umiarkowanego zaburzenie (1)', i8_2: 'Ciężkie do całkowitego zaburzenie (2)',
+    l9: '9. Mowa', i9_0: 'Brak afazji (0)', i9_1: 'Łagodna do umiarkowanej afazja (1)', i9_2: 'Ciężka afazja (2)', i9_3: 'Mutyzm / afazja globalna (3)',
+    l10: '10. Dyzartria', i10_0: 'Prawidłowa (0)', i10_1: 'Łagodna do umiarkowanej (1)', i10_2: 'Ciężka (2)',
+    l11: '11. Wygaszanie i zaniedbywanie połowicze', i11_0: 'Brak nieprawidłowości (0)', i11_1: 'Łagodne — jedna modalność czuciowa (1)', i11_2: 'Ciężkie — więcej niż jedna modalność (2)',
+    calc_btn: 'Oblicz', score_label: 'NIHSS = ', of42: ' / 42',
+    interp_none: 'Brak objawów udaru (0).', interp_minor: 'Łagodny udar (1–4).', interp_moderate: 'Umiarkowany udar (5–15).',
+    interp_modsevere: 'Umiarkowany do ciężkiego udar (16–20).', interp_severe: 'Ciężki udar (21–42).'
+  }
+};
+
+var ITEM_IDS = ['i1a','i1b','i1c','i2','i3','i4','i5a','i5b','i6a','i6b','i7','i8','i9','i10','i11'];
+
+var _lastNIHSS = null;
+
+function calcNIHSS() {
+  var total = 0;
+  ITEM_IDS.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastNIHSS = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastNIHSS === null) return;
+  var total = _lastNIHSS;
+  var interp;
+  if (total === 0) interp = ucmT('interp_none');
+  else if (total <= 4) interp = ucmT('interp_minor');
+  else if (total <= 15) interp = ucmT('interp_moderate');
+  else if (total <= 20) interp = ucmT('interp_modsevere');
+  else interp = ucmT('interp_severe');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of42');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

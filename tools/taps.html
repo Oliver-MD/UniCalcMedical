@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TAPS Tool — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">TAPS Tool</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Tobacco, Alcohol, Prescription medication, and other Substance use screening tool.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">In the past 12 months, how often have you used the following?</h2>
+    <div class="field"><label data-i18n="q0">Tobacco products</label><select id="q0"><option value="0" data-i18n="f_never">Never</option><option value="1" data-i18n="f_used">Used, at least once</option></select></div>
+    <div class="field"><label data-i18n="q1">Alcohol, 4+ drinks a day (women) / 5+ drinks a day (men), at least weekly</label><select id="q1"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <div class="field"><label data-i18n="q2">Prescription medications used for non-medical reasons</label><select id="q2"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <div class="field"><label data-i18n="q3">Illegal drugs</label><select id="q3"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcTAPS()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> McNeely J, Wu LT, Subramaniam G, et al. Performance of the Tobacco, Alcohol, Prescription Medication, and Other Substance Use (TAPS) Tool for Substance Use Screening in Primary Care Patients. Ann Intern Med. 2016;165(10):690–699. Developed by the NIDA Center for Trial Network (CTN) Common Data Elements. This screening version is in the public domain.<br>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'TAPS Tool', subtitle: 'Tobacco, Alcohol, Prescription medication, and other Substance use screening tool.',
+    items_heading: 'In the past 12 months, how often have you used the following?',
+    q0: 'Tobacco products', f_never: 'Never', f_used: 'Used, at least once',
+    q1: 'Alcohol, 4+ drinks a day (women) / 5+ drinks a day (men), at least weekly', opt_no: 'No', opt_yes: 'Yes',
+    q2: 'Prescription medications used for non-medical reasons',
+    q3: 'Illegal drugs',
+    calc_btn: 'Calculate', score_label: 'Screen: ', positive: 'Positive on at least one substance domain — further assessment recommended.', negative: 'Negative on all screened domains.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'Nástroj TAPS', subtitle: 'Screeningový nástroj pro tabák, alkohol, léky na předpis a další návykové látky.',
+    items_heading: 'Jak často jste za posledních 12 měsíců užíval(a) následující?',
+    q0: 'Tabákové výrobky', f_never: 'Nikdy', f_used: 'Užíval(a), alespoň jednou',
+    q1: 'Alkohol, 4+ dávky denně (ženy) / 5+ dávek denně (muži), alespoň jednou týdně', opt_no: 'Ne', opt_yes: 'Ano',
+    q2: 'Léky na předpis užívané k nemedicínským účelům',
+    q3: 'Nelegální drogy',
+    calc_btn: 'Vypočítat', score_label: 'Screening: ', positive: 'Pozitivní alespoň v jedné oblasti návykových látek — doporučeno další vyšetření.', negative: 'Negativní ve všech sledovaných oblastech.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'Outil TAPS', subtitle: "Outil de dépistage du tabac, de l'alcool, des médicaments sur ordonnance et d'autres substances.",
+    items_heading: "Au cours des 12 derniers mois, à quelle fréquence avez-vous utilisé ce qui suit ?",
+    q0: 'Produits du tabac', f_never: 'Jamais', f_used: 'Utilisé, au moins une fois',
+    q1: "Alcool, 4 verres ou plus par jour (femmes) / 5 verres ou plus par jour (hommes), au moins chaque semaine", opt_no: 'Non', opt_yes: 'Oui',
+    q2: 'Médicaments sur ordonnance utilisés à des fins non médicales',
+    q3: 'Drogues illégales',
+    calc_btn: 'Calculer', score_label: 'Dépistage : ', positive: "Positif dans au moins un domaine de substance — une évaluation complémentaire est recommandée.", negative: 'Négatif dans tous les domaines dépistés.'
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'TAPS-Tool', subtitle: 'Screening-Instrument für Tabak, Alkohol, verschreibungspflichtige Medikamente und andere Substanzen.',
+    items_heading: 'Wie oft haben Sie in den letzten 12 Monaten Folgendes verwendet?',
+    q0: 'Tabakprodukte', f_never: 'Nie', f_used: 'Verwendet, mindestens einmal',
+    q1: 'Alkohol, 4+ Getränke/Tag (Frauen) / 5+ Getränke/Tag (Männer), mindestens wöchentlich', opt_no: 'Nein', opt_yes: 'Ja',
+    q2: 'Verschreibungspflichtige Medikamente für nicht-medizinische Zwecke',
+    q3: 'Illegale Drogen',
+    calc_btn: 'Berechnen', score_label: 'Screening: ', positive: 'Positiv in mindestens einem Substanzbereich — weitere Abklärung empfohlen.', negative: 'Negativ in allen untersuchten Bereichen.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'Narzędzie TAPS', subtitle: 'Narzędzie przesiewowe w kierunku używania tytoniu, alkoholu, leków na receptę i innych substancji.',
+    items_heading: 'Jak często w ciągu ostatnich 12 miesięcy używał(a) Pan/Pani następujących substancji?',
+    q0: 'Wyroby tytoniowe', f_never: 'Nigdy', f_used: 'Używał(a), co najmniej raz',
+    q1: 'Alkohol, 4+ porcje dziennie (kobiety) / 5+ porcji dziennie (mężczyźni), co najmniej raz w tygodniu', opt_no: 'Nie', opt_yes: 'Tak',
+    q2: 'Leki na receptę stosowane w celach niemedycznych',
+    q3: 'Narkotyki',
+    calc_btn: 'Oblicz', score_label: 'Wynik przesiewowy: ', positive: 'Wynik dodatni w co najmniej jednym obszarze substancji — zalecana dalsza ocena.', negative: 'Wynik ujemny we wszystkich badanych obszarach.'
+  }
+};
+
+var _lastTAPS = null;
+
+function calcTAPS() {
+  var ids = ['q0','q1','q2','q3'];
+  var anyPositive = ids.some(function(id){ return document.getElementById(id).value === '1'; });
+  _lastTAPS = anyPositive;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastTAPS === null) return;
+  document.getElementById('resultScore').textContent = ucmT('score_label') + (_lastTAPS ? '⚠' : '✓');
+  document.getElementById('resultInterp').innerHTML = _lastTAPS ? ucmT('positive') : ucmT('negative');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

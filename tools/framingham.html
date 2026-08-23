@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Framingham Criteria — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">Framingham Criteria</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Clinical diagnostic criteria for congestive heart failure. Diagnosis requires 2 major criteria, or 1 major plus 2 minor criteria.</p>
+
+  <div class="card">
+    <h2 data-i18n="major_heading">Major criteria</h2>
+    <div class="check-row"><input type="checkbox" id="maj0"><label for="maj0" data-i18n="maj0">Paroxysmal nocturnal dyspnoea</label></div>
+    <div class="check-row"><input type="checkbox" id="maj1"><label for="maj1" data-i18n="maj1">Jugular venous distension</label></div>
+    <div class="check-row"><input type="checkbox" id="maj2"><label for="maj2" data-i18n="maj2">Pulmonary rales</label></div>
+    <div class="check-row"><input type="checkbox" id="maj3"><label for="maj3" data-i18n="maj3">Radiographic cardiomegaly</label></div>
+    <div class="check-row"><input type="checkbox" id="maj4"><label for="maj4" data-i18n="maj4">Acute pulmonary oedema</label></div>
+    <div class="check-row"><input type="checkbox" id="maj5"><label for="maj5" data-i18n="maj5">S3 gallop</label></div>
+    <div class="check-row"><input type="checkbox" id="maj6"><label for="maj6" data-i18n="maj6">Increased central venous pressure (&gt; 16 cmH₂O)</label></div>
+    <div class="check-row"><input type="checkbox" id="maj7"><label for="maj7" data-i18n="maj7">Hepatojugular reflux</label></div>
+    <div class="check-row"><input type="checkbox" id="maj8"><label for="maj8" data-i18n="maj8">Weight loss ≥ 4.5 kg in 5 days in response to treatment</label></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="minor_heading">Minor criteria (count only if not attributable to another condition)</h2>
+    <div class="check-row"><input type="checkbox" id="min0"><label for="min0" data-i18n="min0">Bilateral ankle oedema</label></div>
+    <div class="check-row"><input type="checkbox" id="min1"><label for="min1" data-i18n="min1">Nocturnal cough</label></div>
+    <div class="check-row"><input type="checkbox" id="min2"><label for="min2" data-i18n="min2">Dyspnoea on ordinary exertion</label></div>
+    <div class="check-row"><input type="checkbox" id="min3"><label for="min3" data-i18n="min3">Hepatomegaly</label></div>
+    <div class="check-row"><input type="checkbox" id="min4"><label for="min4" data-i18n="min4">Pleural effusion</label></div>
+    <div class="check-row"><input type="checkbox" id="min5"><label for="min5" data-i18n="min5">Decrease in vital capacity by 1/3 from maximum recorded</label></div>
+    <div class="check-row"><input type="checkbox" id="min6"><label for="min6" data-i18n="min6">Tachycardia (heart rate &gt; 120/min)</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcFramingham()">Check criteria</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> McKee PA, Castelli WP, McNamara PM, Kannel WB. The natural history of congestive heart failure: the Framingham study. N Engl J Med. 1971;285(26):1441–1446.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/1873/framingham-criteria-chf" target="_blank" rel="noopener">MDCalc — Framingham Criteria</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'Framingham Criteria', subtitle: 'Clinical diagnostic criteria for congestive heart failure. Diagnosis requires 2 major criteria, or 1 major plus 2 minor criteria.',
+    major_heading: 'Major criteria',
+    maj0: 'Paroxysmal nocturnal dyspnoea', maj1: 'Jugular venous distension', maj2: 'Pulmonary rales', maj3: 'Radiographic cardiomegaly',
+    maj4: 'Acute pulmonary oedema', maj5: 'S3 gallop', maj6: 'Increased central venous pressure (> 16 cmH₂O)',
+    maj7: 'Hepatojugular reflux', maj8: 'Weight loss ≥ 4.5 kg in 5 days in response to treatment',
+    minor_heading: 'Minor criteria (count only if not attributable to another condition)',
+    min0: 'Bilateral ankle oedema', min1: 'Nocturnal cough', min2: 'Dyspnoea on ordinary exertion', min3: 'Hepatomegaly',
+    min4: 'Pleural effusion', min5: 'Decrease in vital capacity by 1/3 from maximum recorded', min6: 'Tachycardia (heart rate > 120/min)',
+    calc_btn: 'Check criteria',
+    met_label: 'Criteria met: ', diagnostic: 'Meets Framingham criteria for congestive heart failure.', not_diagnostic: 'Does not meet Framingham criteria for congestive heart failure.'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'Framinghamská kritéria', subtitle: 'Klinická diagnostická kritéria pro městnavé srdeční selhání. Diagnóza vyžaduje 2 velká kritéria nebo 1 velké a 2 malá kritéria.',
+    major_heading: 'Velká kritéria',
+    maj0: 'Paroxysmální noční dušnost', maj1: 'Náplň krčních žil', maj2: 'Plicní chrůpky', maj3: 'Kardiomegalie na RTG',
+    maj4: 'Akutní plicní edém', maj5: 'Cval S3', maj6: 'Zvýšený centrální žilní tlak (> 16 cmH₂O)',
+    maj7: 'Hepatojugulární reflux', maj8: 'Úbytek hmotnosti ≥ 4,5 kg za 5 dní jako odpověď na léčbu',
+    minor_heading: 'Malá kritéria (počítat pouze pokud nejsou vysvětlitelná jiným onemocněním)',
+    min0: 'Oboustranné otoky kotníků', min1: 'Noční kašel', min2: 'Dušnost při běžné námaze', min3: 'Hepatomegalie',
+    min4: 'Pleurální výpotek', min5: 'Pokles vitální kapacity o 1/3 od maximální naměřené hodnoty', min6: 'Tachykardie (srdeční frekvence > 120/min)',
+    calc_btn: 'Zkontrolovat kritéria',
+    met_label: 'Splněná kritéria: ', diagnostic: 'Splňuje Framinghamská kritéria pro městnavé srdeční selhání.', not_diagnostic: 'Nesplňuje Framinghamská kritéria pro městnavé srdeční selhání.'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'Critères de Framingham', subtitle: "Critères diagnostiques cliniques de l'insuffisance cardiaque congestive. Le diagnostic nécessite 2 critères majeurs, ou 1 critère majeur et 2 critères mineurs.",
+    major_heading: 'Critères majeurs',
+    maj0: 'Dyspnée paroxystique nocturne', maj1: 'Turgescence jugulaire', maj2: 'Râles pulmonaires', maj3: 'Cardiomégalie radiographique',
+    maj4: 'Œdème pulmonaire aigu', maj5: 'Galop B3', maj6: 'Pression veineuse centrale augmentée (> 16 cmH₂O)',
+    maj7: 'Reflux hépatojugulaire', maj8: 'Perte de poids ≥ 4,5 kg en 5 jours en réponse au traitement',
+    minor_heading: "Critères mineurs (comptabiliser uniquement s'ils ne sont pas attribuables à une autre pathologie)",
+    min0: 'Œdème bilatéral des chevilles', min1: 'Toux nocturne', min2: "Dyspnée à l'effort ordinaire", min3: 'Hépatomégalie',
+    min4: 'Épanchement pleural', min5: 'Diminution de la capacité vitale de 1/3 par rapport au maximum enregistré', min6: 'Tachycardie (fréquence cardiaque > 120/min)',
+    calc_btn: 'Vérifier les critères',
+    met_label: 'Critères remplis : ', diagnostic: "Répond aux critères de Framingham pour l'insuffisance cardiaque congestive.", not_diagnostic: "Ne répond pas aux critères de Framingham pour l'insuffisance cardiaque congestive."
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'Framingham-Kriterien', subtitle: 'Klinische Diagnosekriterien für die kongestive Herzinsuffizienz. Die Diagnose erfordert 2 Hauptkriterien oder 1 Hauptkriterium und 2 Nebenkriterien.',
+    major_heading: 'Hauptkriterien',
+    maj0: 'Paroxysmale nächtliche Dyspnoe', maj1: 'Jugularvenenstauung', maj2: 'Lungenrasselgeräusche', maj3: 'Radiologische Kardiomegalie',
+    maj4: 'Akutes Lungenödem', maj5: 'S3-Galopp', maj6: 'Erhöhter zentralvenöser Druck (> 16 cmH₂O)',
+    maj7: 'Hepatojugulärer Reflux', maj8: 'Gewichtsverlust ≥ 4,5 kg in 5 Tagen als Reaktion auf die Behandlung',
+    minor_heading: 'Nebenkriterien (nur zählen, wenn nicht durch eine andere Erkrankung erklärbar)',
+    min0: 'Beidseitige Knöchelödeme', min1: 'Nächtlicher Husten', min2: 'Dyspnoe bei gewöhnlicher Belastung', min3: 'Hepatomegalie',
+    min4: 'Pleuraerguss', min5: 'Abnahme der Vitalkapazität um 1/3 gegenüber dem gemessenen Maximum', min6: 'Tachykardie (Herzfrequenz > 120/min)',
+    calc_btn: 'Kriterien prüfen',
+    met_label: 'Erfüllte Kriterien: ', diagnostic: 'Erfüllt die Framingham-Kriterien für kongestive Herzinsuffizienz.', not_diagnostic: 'Erfüllt die Framingham-Kriterien für kongestive Herzinsuffizienz nicht.'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'Kryteria Framingham', subtitle: 'Kliniczne kryteria diagnostyczne zastoinowej niewydolności serca. Rozpoznanie wymaga 2 kryteriów dużych lub 1 dużego i 2 małych.',
+    major_heading: 'Kryteria duże',
+    maj0: 'Napadowa duszność nocna', maj1: 'Poszerzenie żył szyjnych', maj2: 'Rzężenia płucne', maj3: 'Kardiomegalia w badaniu radiologicznym',
+    maj4: 'Ostry obrzęk płuc', maj5: 'Rytm cwałowy S3', maj6: 'Zwiększone ośrodkowe ciśnienie żylne (> 16 cmH₂O)',
+    maj7: 'Refluks wątrobowo-szyjny', maj8: 'Utrata masy ciała ≥ 4,5 kg w ciągu 5 dni w odpowiedzi na leczenie',
+    minor_heading: 'Kryteria małe (liczyć tylko, jeśli nie można ich przypisać innej chorobie)',
+    min0: 'Obustronne obrzęki kostek', min1: 'Kaszel nocny', min2: 'Duszność przy zwykłym wysiłku', min3: 'Powiększenie wątroby',
+    min4: 'Wysięk opłucnowy', min5: 'Zmniejszenie pojemności życiowej o 1/3 w stosunku do maksymalnej zarejestrowanej', min6: 'Tachykardia (częstość akcji serca > 120/min)',
+    calc_btn: 'Sprawdź kryteria',
+    met_label: 'Spełnione kryteria: ', diagnostic: 'Spełnia kryteria Framingham dla zastoinowej niewydolności serca.', not_diagnostic: 'Nie spełnia kryteriów Framingham dla zastoinowej niewydolności serca.'
+  }
+};
+
+var MAJ_IDS = ['maj0','maj1','maj2','maj3','maj4','maj5','maj6','maj7','maj8'];
+var MIN_IDS = ['min0','min1','min2','min3','min4','min5','min6'];
+
+var _lastFramingham = null;
+
+function calcFramingham() {
+  var majCount = MAJ_IDS.filter(function(id){ return document.getElementById(id).checked; }).length;
+  var minCount = MIN_IDS.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastFramingham = { maj: majCount, min: minCount };
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastFramingham === null) return;
+  var maj = _lastFramingham.maj, min = _lastFramingham.min;
+  var meets = maj >= 2 || (maj >= 1 && min >= 2);
+  document.getElementById('resultScore').textContent = ucmT('met_label') + maj + ' major, ' + min + ' minor';
+  document.getElementById('resultInterp').innerHTML = meets ? ucmT('diagnostic') : ucmT('not_diagnostic');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

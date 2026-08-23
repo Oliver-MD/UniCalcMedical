@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corticosteroid Equivalence — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Other</span>
+  <h1 class="page-title" data-i18n="title">Corticosteroid Equivalence</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Converts a dose of one corticosteroid to its approximate equivalent glucocorticoid (anti-inflammatory) potency dose in others.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="drug_label">Drug</label>
+      <select id="drug">
+        <option value="20" data-i18n="d_hydrocortisone">Hydrocortisone (reference, 20 mg)</option>
+        <option value="25" data-i18n="d_cortisone">Cortisone (25 mg)</option>
+        <option value="5" data-i18n="d_prednisone">Prednisone (5 mg)</option>
+        <option value="5" data-i18n="d_prednisolone">Prednisolone (5 mg)</option>
+        <option value="4" data-i18n="d_methylprednisolone">Methylprednisolone (4 mg)</option>
+        <option value="4" data-i18n="d_triamcinolone">Triamcinolone (4 mg)</option>
+        <option value="0.75" data-i18n="d_dexamethasone">Dexamethasone (0.75 mg)</option>
+        <option value="0.6" data-i18n="d_betamethasone">Betamethasone (0.6 mg)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="dose_label" for="dose">Dose (mg)</label><input type="number" id="dose" min="0" max="1000" step="0.1" data-i18n-placeholder="dose_ph" placeholder="e.g. 10"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcSteroid()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+    <span data-i18n="extra_note"> These are widely cited approximate anti-inflammatory potency equivalences, not exact 1:1 clinical substitutions — mineralocorticoid activity and duration of action differ substantially between agents and matter clinically.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Widely cited standard glucocorticoid equivalence ratios, consistent across major pharmacology references (e.g. relative potency tables in the BNF and Lexicomp).<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/2040/steroid-conversion-calculator" target="_blank" rel="noopener">MDCalc — Steroid Conversion</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var POTENCY = { hydrocortisone: 20, cortisone: 25, prednisone: 5, prednisolone: 5, methylprednisolone: 4, triamcinolone: 4, dexamethasone: 0.75, betamethasone: 0.6 };
+var DRUG_ORDER = ['hydrocortisone','cortisone','prednisone','prednisolone','methylprednisolone','triamcinolone','dexamethasone','betamethasone'];
+
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Other', title: 'Corticosteroid Equivalence', subtitle: 'Converts a dose of one corticosteroid to its approximate equivalent glucocorticoid (anti-inflammatory) potency dose in others.',
+    calc_heading: 'Calculate', drug_label: 'Drug',
+    d_hydrocortisone: 'Hydrocortisone (reference, 20 mg)', d_cortisone: 'Cortisone (25 mg)', d_prednisone: 'Prednisone (5 mg)', d_prednisolone: 'Prednisolone (5 mg)',
+    d_methylprednisolone: 'Methylprednisolone (4 mg)', d_triamcinolone: 'Triamcinolone (4 mg)', d_dexamethasone: 'Dexamethasone (0.75 mg)', d_betamethasone: 'Betamethasone (0.6 mg)',
+    dose_label: 'Dose (mg)', dose_ph: 'e.g. 10', calc_btn: 'Calculate', err_invalid: 'Please enter a valid dose.',
+    extra_note: ' These are widely cited approximate anti-inflammatory potency equivalences, not exact 1:1 clinical substitutions — mineralocorticoid activity and duration of action differ substantially between agents and matter clinically.',
+    equiv_heading: 'Approximately equivalent doses:'
+  },
+  cs: {
+    tag: 'Ostatní', title: 'Ekvivalence kortikoidů', subtitle: 'Převod dávky jednoho kortikoidu na přibližně ekvivalentní glukokortikoidní (protizánětlivou) potenci u ostatních.',
+    calc_heading: 'Výpočet', drug_label: 'Léčivo',
+    d_hydrocortisone: 'Hydrokortizon (referenční, 20 mg)', d_cortisone: 'Kortizon (25 mg)', d_prednisone: 'Prednison (5 mg)', d_prednisolone: 'Prednisolon (5 mg)',
+    d_methylprednisolone: 'Metylprednisolon (4 mg)', d_triamcinolone: 'Triamcinolon (4 mg)', d_dexamethasone: 'Dexametazon (0,75 mg)', d_betamethasone: 'Betametazon (0,6 mg)',
+    dose_label: 'Dávka (mg)', dose_ph: 'např. 10', calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platnou dávku.',
+    extra_note: ' Jde o obecně uváděné přibližné ekvivalence protizánětlivé potence, nikoliv přesnou 1:1 klinickou záměnu — mineralokortikoidní aktivita a délka účinku se mezi jednotlivými léčivy klinicky významně liší.',
+    equiv_heading: 'Přibližně ekvivalentní dávky:'
+  },
+  fr: {
+    tag: 'Autre', title: 'Équivalence des corticoïdes', subtitle: "Convertit la dose d'un corticoïde en sa dose de puissance glucocorticoïde (anti-inflammatoire) approximativement équivalente pour d'autres.",
+    calc_heading: 'Calculer', drug_label: 'Médicament',
+    d_hydrocortisone: 'Hydrocortisone (référence, 20 mg)', d_cortisone: 'Cortisone (25 mg)', d_prednisone: 'Prednisone (5 mg)', d_prednisolone: 'Prednisolone (5 mg)',
+    d_methylprednisolone: 'Méthylprednisolone (4 mg)', d_triamcinolone: 'Triamcinolone (4 mg)', d_dexamethasone: 'Dexaméthasone (0,75 mg)', d_betamethasone: 'Bétaméthasone (0,6 mg)',
+    dose_label: 'Dose (mg)', dose_ph: 'p. ex. 10', calc_btn: 'Calculer', err_invalid: 'Veuillez saisir une dose valide.',
+    extra_note: " Il s'agit d'équivalences de puissance anti-inflammatoire approximatives largement citées, et non de substitutions cliniques exactes de 1:1 — l'activité minéralocorticoïde et la durée d'action diffèrent substantiellement entre les agents et ont une importance clinique.",
+    equiv_heading: 'Doses approximativement équivalentes :'
+  },
+  de: {
+    tag: 'Sonstiges', title: 'Kortikosteroid-Äquivalenz', subtitle: 'Rechnet die Dosis eines Kortikosteroids in die ungefähr äquivalente glukokortikoide (entzündungshemmende) Wirkstärke anderer um.',
+    calc_heading: 'Berechnen', drug_label: 'Arzneimittel',
+    d_hydrocortisone: 'Hydrocortison (Referenz, 20 mg)', d_cortisone: 'Cortison (25 mg)', d_prednisone: 'Prednison (5 mg)', d_prednisolone: 'Prednisolon (5 mg)',
+    d_methylprednisolone: 'Methylprednisolon (4 mg)', d_triamcinolone: 'Triamcinolon (4 mg)', d_dexamethasone: 'Dexamethason (0,75 mg)', d_betamethasone: 'Betamethason (0,6 mg)',
+    dose_label: 'Dosis (mg)', dose_ph: 'z. B. 10', calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Dosis eingeben.',
+    extra_note: ' Dies sind weithin zitierte ungefähre entzündungshemmende Wirkstärke-Äquivalenzen, keine exakten 1:1-klinischen Substitutionen — mineralokortikoide Aktivität und Wirkdauer unterscheiden sich zwischen den Substanzen erheblich und sind klinisch relevant.',
+    equiv_heading: 'Ungefähr äquivalente Dosen:'
+  },
+  pl: {
+    tag: 'Inne', title: 'Równoważność kortykosteroidów', subtitle: 'Przelicza dawkę jednego kortykosteroidu na przybliżoną równoważną siłę glikokortykoidową (przeciwzapalną) innych.',
+    calc_heading: 'Oblicz', drug_label: 'Lek',
+    d_hydrocortisone: 'Hydrokortyzon (referencyjny, 20 mg)', d_cortisone: 'Kortyzon (25 mg)', d_prednisone: 'Prednizon (5 mg)', d_prednisolone: 'Prednizolon (5 mg)',
+    d_methylprednisolone: 'Metyloprednizolon (4 mg)', d_triamcinolone: 'Triamcynolon (4 mg)', d_dexamethasone: 'Deksametazon (0,75 mg)', d_betamethasone: 'Betametazon (0,6 mg)',
+    dose_label: 'Dawka (mg)', dose_ph: 'np. 10', calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłową dawkę.',
+    extra_note: ' Są to powszechnie cytowane przybliżone równoważności siły przeciwzapalnej, a nie dokładne zamienniki kliniczne 1:1 — aktywność mineralokortykoidowa i czas działania różnią się istotnie między lekami i mają znaczenie kliniczne.',
+    equiv_heading: 'Przybliżone dawki równoważne:'
+  }
+};
+
+var _lastSteroid = null;
+
+function calcSteroid() {
+  var factor = parseFloat(document.getElementById('drug').value);
+  var dose = parseFloat(document.getElementById('dose').value);
+  if (!dose || dose <= 0) { alert(ucmT('err_invalid')); return; }
+  var hydrocortisoneEquiv = (dose / factor) * 20;
+  _lastSteroid = hydrocortisoneEquiv;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastSteroid === null) return;
+  var hc = _lastSteroid;
+  var html = '<strong>' + ucmT('equiv_heading') + '</strong><br>';
+  DRUG_ORDER.forEach(function(key) {
+    var d = hc / 20 * POTENCY[key];
+    html += ucmT('d_' + key).replace(/ \(.*\)$/, '') + ': ' + d.toFixed(2) + ' mg<br>';
+  });
+  document.getElementById('resultScore').textContent = hc.toFixed(1) + ' mg hydrocortisone-equivalent';
+  document.getElementById('resultInterp').innerHTML = html;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

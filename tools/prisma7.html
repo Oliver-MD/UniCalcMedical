@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRISMA-7 — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cognition &amp; frailty</span>
+  <h1 class="page-title" data-i18n="title">PRISMA-7</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Seven-question screening tool for frailty and disability risk in community-dwelling older adults.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Questions (answer as they apply)</h2>
+    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n="c0">Are you older than 85 years?</label></div>
+    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n="c1">Male?</label></div>
+    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n="c2">In general, do you have any health problems that require you to limit your activities?</label></div>
+    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n="c3">Do you need someone to help you on a regular basis?</label></div>
+    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n="c4">In general, do you have any health problems that require you to stay at home?</label></div>
+    <div class="check-row"><input type="checkbox" id="c5"><label for="c5" data-i18n="c5">If you need help, can you count on someone close to you?</label></div>
+    <div class="check-row"><input type="checkbox" id="c6"><label for="c6" data-i18n="c6">Do you regularly use a cane, walker, or wheelchair to move about?</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcPRISMA7()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Raîche M, Hébert R, Dubois MF. PRISMA-7: a case-finding tool to identify older adults with moderate to severe disabilities. Arch Gerontol Geriatr. 2008;47(1):9–18.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cognition & frailty', title: 'PRISMA-7', subtitle: 'Seven-question screening tool for frailty and disability risk in community-dwelling older adults.',
+    items_heading: 'Questions (answer as they apply)',
+    c0: 'Are you older than 85 years?', c1: 'Male?', c2: 'In general, do you have any health problems that require you to limit your activities?',
+    c3: 'Do you need someone to help you on a regular basis?', c4: 'In general, do you have any health problems that require you to stay at home?',
+    c5: 'If you need help, can you count on someone close to you?', c6: 'Do you regularly use a cane, walker, or wheelchair to move about?',
+    calc_btn: 'Calculate', score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Score 0–2 — low likelihood of frailty/disability on this screen.',
+    interp_high: 'Score ≥3 — suggests possible frailty or disability; further assessment recommended.'
+  },
+  cs: {
+    tag: 'Kognice a křehkost', title: 'PRISMA-7', subtitle: 'Sedmiotázkový screeningový nástroj pro riziko křehkosti a disability u starších dospělých žijících v komunitě.',
+    items_heading: 'Otázky (odpovězte podle skutečnosti)',
+    c0: 'Je vám více než 85 let?', c1: 'Jste muž?', c2: 'Máte celkově nějaké zdravotní potíže, kvůli kterým musíte omezovat své aktivity?',
+    c3: 'Potřebujete pravidelně pomoc jiné osoby?', c4: 'Máte celkově nějaké zdravotní potíže, kvůli kterým musíte zůstávat doma?',
+    c5: 'Pokud potřebujete pomoc, můžete se spolehnout na někoho blízkého?', c6: 'Používáte pravidelně hůl, chodítko nebo invalidní vozík k pohybu?',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of7: ' / 7',
+    interp_low: 'Skóre 0–2 — nízká pravděpodobnost křehkosti/disability dle tohoto screeningu.',
+    interp_high: 'Skóre ≥3 — naznačuje možnou křehkost nebo disabilitu; doporučeno další vyšetření.'
+  },
+  fr: {
+    tag: 'Cognition et fragilité', title: 'PRISMA-7', subtitle: 'Outil de dépistage en sept questions du risque de fragilité et de handicap chez les personnes âgées vivant en communauté.',
+    items_heading: 'Questions (répondez selon votre situation)',
+    c0: 'Avez-vous plus de 85 ans ?', c1: 'Êtes-vous un homme ?', c2: "En général, avez-vous des problèmes de santé qui vous obligent à limiter vos activités ?",
+    c3: "Avez-vous besoin de quelqu'un de façon régulière pour vous aider ?", c4: "En général, avez-vous des problèmes de santé qui vous obligent à rester à la maison ?",
+    c5: "Si vous avez besoin d'aide, pouvez-vous compter sur quelqu'un de proche ?", c6: 'Utilisez-vous régulièrement une canne, un déambulateur ou un fauteuil roulant pour vous déplacer ?',
+    calc_btn: 'Calculer', score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Score 0–2 — faible probabilité de fragilité/handicap selon ce dépistage.',
+    interp_high: "Score ≥3 — évoque une possible fragilité ou un handicap ; une évaluation complémentaire est recommandée."
+  },
+  de: {
+    tag: 'Kognition & Gebrechlichkeit', title: 'PRISMA-7', subtitle: 'Sieben-Fragen-Screening-Instrument für Gebrechlichkeits- und Behinderungsrisiko bei zu Hause lebenden älteren Erwachsenen.',
+    items_heading: 'Fragen (nach Zutreffen beantworten)',
+    c0: 'Sind Sie älter als 85 Jahre?', c1: 'Männlich?', c2: 'Haben Sie im Allgemeinen gesundheitliche Probleme, die Sie zwingen, Ihre Aktivitäten einzuschränken?',
+    c3: 'Benötigen Sie regelmäßig Hilfe von jemandem?', c4: 'Haben Sie im Allgemeinen gesundheitliche Probleme, die Sie zwingen, zu Hause zu bleiben?',
+    c5: 'Können Sie, falls Sie Hilfe benötigen, auf jemanden aus Ihrem Umfeld zählen?', c6: 'Benutzen Sie regelmäßig einen Gehstock, Rollator oder Rollstuhl, um sich fortzubewegen?',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Score 0–2 — geringe Wahrscheinlichkeit von Gebrechlichkeit/Behinderung nach diesem Screening.',
+    interp_high: 'Score ≥3 — weist auf mögliche Gebrechlichkeit oder Behinderung hin; weitere Abklärung empfohlen.'
+  },
+  pl: {
+    tag: 'Funkcje poznawcze i zespół kruchości', title: 'PRISMA-7', subtitle: 'Siedmiopytaniowe narzędzie przesiewowe w kierunku ryzyka kruchości i niepełnosprawności u osób starszych mieszkających w społeczności.',
+    items_heading: 'Pytania (odpowiedz zgodnie z sytuacją)',
+    c0: 'Czy ma Pan/Pani więcej niż 85 lat?', c1: 'Czy jest Pan mężczyzną?', c2: 'Czy ogólnie ma Pan/Pani problemy zdrowotne, które zmuszają do ograniczenia aktywności?',
+    c3: 'Czy potrzebuje Pan/Pani regularnej pomocy innej osoby?', c4: 'Czy ogólnie ma Pan/Pani problemy zdrowotne, które zmuszają do pozostawania w domu?',
+    c5: 'Czy jeśli potrzebuje Pan/Pani pomocy, może liczyć na kogoś bliskiego?', c6: 'Czy regularnie korzysta Pan/Pani z laski, balkonika lub wózka inwalidzkiego do poruszania się?',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of7: ' / 7',
+    interp_low: 'Wynik 0–2 — niskie prawdopodobieństwo kruchości/niepełnosprawności wg tego przesiewu.',
+    interp_high: 'Wynik ≥3 — sugeruje możliwą kruchość lub niepełnosprawność; zalecana dalsza ocena.'
+  }
+};
+
+var _lastPRISMA = null;
+
+function calcPRISMA7() {
+  var ids = ['c0','c1','c2','c3','c4','c5','c6'];
+  var total = ids.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastPRISMA = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastPRISMA === null) return;
+  var total = _lastPRISMA;
+  var interp = total >= 3 ? ucmT('interp_high') : ucmT('interp_low');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of7');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

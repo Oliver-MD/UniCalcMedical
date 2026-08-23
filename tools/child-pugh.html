@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Child-Pugh Score — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Renal &amp; hepatic function</span>
+  <h1 class="page-title" data-i18n="title">Child-Pugh Score</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Estimates severity and prognosis of cirrhosis.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria</h2>
+    <div class="field"><label data-i18n="l_bili">Bilirubin</label>
+      <select id="c_bili">
+        <option value="1" data-i18n="bili1">&lt; 34 µmol/L (+1)</option>
+        <option value="2" data-i18n="bili2">34–50 µmol/L (+2)</option>
+        <option value="3" data-i18n="bili3">&gt; 50 µmol/L (+3)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_alb">Albumin</label>
+      <select id="c_alb">
+        <option value="1" data-i18n="alb1">&gt; 35 g/L (+1)</option>
+        <option value="2" data-i18n="alb2">28–35 g/L (+2)</option>
+        <option value="3" data-i18n="alb3">&lt; 28 g/L (+3)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_inr">INR</label>
+      <select id="c_inr">
+        <option value="1" data-i18n="inr1">&lt; 1.7 (+1)</option>
+        <option value="2" data-i18n="inr2">1.7–2.3 (+2)</option>
+        <option value="3" data-i18n="inr3">&gt; 2.3 (+3)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_ascites">Ascites</label>
+      <select id="c_ascites">
+        <option value="1" data-i18n="ascites1">None (+1)</option>
+        <option value="2" data-i18n="ascites2">Mild, diuretic-responsive (+2)</option>
+        <option value="3" data-i18n="ascites3">Moderate–severe, diuretic-refractory (+3)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_enceph">Hepatic encephalopathy</label>
+      <select id="c_enceph">
+        <option value="1" data-i18n="enceph1">None (+1)</option>
+        <option value="2" data-i18n="enceph2">Grade 1–2 (+2)</option>
+        <option value="3" data-i18n="enceph3">Grade 3–4 (+3)</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcChildPugh()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Pugh RN, Murray-Lyon IM, Dawson JL, Pietroni MC, Williams R. Transection of the oesophagus for bleeding oesophageal varices. Br J Surg. 1973;60(8):646–649.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/340/child-pugh-score-cirrhosis-mortality" target="_blank" rel="noopener">MDCalc — Child-Pugh</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Renal & hepatic function', title: 'Child-Pugh Score', subtitle: 'Estimates severity and prognosis of cirrhosis.',
+    criteria_heading: 'Criteria',
+    l_bili: 'Bilirubin', bili1: '< 34 µmol/L (+1)', bili2: '34–50 µmol/L (+2)', bili3: '> 50 µmol/L (+3)',
+    l_alb: 'Albumin', alb1: '> 35 g/L (+1)', alb2: '28–35 g/L (+2)', alb3: '< 28 g/L (+3)',
+    l_inr: 'INR', inr1: '< 1.7 (+1)', inr2: '1.7–2.3 (+2)', inr3: '> 2.3 (+3)',
+    l_ascites: 'Ascites', ascites1: 'None (+1)', ascites2: 'Mild, diuretic-responsive (+2)', ascites3: 'Moderate–severe, diuretic-refractory (+3)',
+    l_enceph: 'Hepatic encephalopathy', enceph1: 'None (+1)', enceph2: 'Grade 1–2 (+2)', enceph3: 'Grade 3–4 (+3)',
+    calc_btn: 'Calculate', score_label: 'Score = ', of15: ' / 15',
+    class_a: 'Class A (5–6 points) — well-compensated disease; 1-year survival approx. 100%.',
+    class_b: 'Class B (7–9 points) — significant functional compromise; 1-year survival approx. 80%.',
+    class_c: 'Class C (10–15 points) — decompensated disease; 1-year survival approx. 45%.'
+  },
+  cs: {
+    tag: 'Renální a jaterní funkce', title: 'Child-Pugh skóre', subtitle: 'Odhad závažnosti a prognózy jaterní cirhózy.',
+    criteria_heading: 'Kritéria',
+    l_bili: 'Bilirubin', bili1: '< 34 µmol/l (+1)', bili2: '34–50 µmol/l (+2)', bili3: '> 50 µmol/l (+3)',
+    l_alb: 'Albumin', alb1: '> 35 g/l (+1)', alb2: '28–35 g/l (+2)', alb3: '< 28 g/l (+3)',
+    l_inr: 'INR', inr1: '< 1,7 (+1)', inr2: '1,7–2,3 (+2)', inr3: '> 2,3 (+3)',
+    l_ascites: 'Ascites', ascites1: 'Žádný (+1)', ascites2: 'Mírný, reagující na diuretika (+2)', ascites3: 'Střední až závažný, refrakterní na diuretika (+3)',
+    l_enceph: 'Jaterní encefalopatie', enceph1: 'Žádná (+1)', enceph2: 'Stupeň 1–2 (+2)', enceph3: 'Stupeň 3–4 (+3)',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of15: ' / 15',
+    class_a: 'Třída A (5–6 bodů) — dobře kompenzované onemocnění; roční přežití přibl. 100 %.',
+    class_b: 'Třída B (7–9 bodů) — významné funkční omezení; roční přežití přibl. 80 %.',
+    class_c: 'Třída C (10–15 bodů) — dekompenzované onemocnění; roční přežití přibl. 45 %.'
+  },
+  fr: {
+    tag: 'Fonction rénale et hépatique', title: 'Score de Child-Pugh', subtitle: 'Estime la sévérité et le pronostic de la cirrhose.',
+    criteria_heading: 'Critères',
+    l_bili: 'Bilirubine', bili1: '< 34 µmol/L (+1)', bili2: '34–50 µmol/L (+2)', bili3: '> 50 µmol/L (+3)',
+    l_alb: 'Albumine', alb1: '> 35 g/L (+1)', alb2: '28–35 g/L (+2)', alb3: '< 28 g/L (+3)',
+    l_inr: 'INR', inr1: '< 1,7 (+1)', inr2: '1,7–2,3 (+2)', inr3: '> 2,3 (+3)',
+    l_ascites: 'Ascite', ascites1: 'Absente (+1)', ascites2: 'Légère, sensible aux diurétiques (+2)', ascites3: 'Modérée à sévère, réfractaire aux diurétiques (+3)',
+    l_enceph: 'Encéphalopathie hépatique', enceph1: 'Absente (+1)', enceph2: 'Grade 1–2 (+2)', enceph3: 'Grade 3–4 (+3)',
+    calc_btn: 'Calculer', score_label: 'Score = ', of15: ' / 15',
+    class_a: "Classe A (5–6 points) — maladie bien compensée ; survie à 1 an d'environ 100 %.",
+    class_b: "Classe B (7–9 points) — compromission fonctionnelle significative ; survie à 1 an d'environ 80 %.",
+    class_c: "Classe C (10–15 points) — maladie décompensée ; survie à 1 an d'environ 45 %."
+  },
+  de: {
+    tag: 'Nieren- & Leberfunktion', title: 'Child-Pugh-Score', subtitle: 'Schätzt Schweregrad und Prognose einer Leberzirrhose.',
+    criteria_heading: 'Kriterien',
+    l_bili: 'Bilirubin', bili1: '< 34 µmol/L (+1)', bili2: '34–50 µmol/L (+2)', bili3: '> 50 µmol/L (+3)',
+    l_alb: 'Albumin', alb1: '> 35 g/L (+1)', alb2: '28–35 g/L (+2)', alb3: '< 28 g/L (+3)',
+    l_inr: 'INR', inr1: '< 1,7 (+1)', inr2: '1,7–2,3 (+2)', inr3: '> 2,3 (+3)',
+    l_ascites: 'Aszites', ascites1: 'Keiner (+1)', ascites2: 'Mild, diuretikaresponsiv (+2)', ascites3: 'Mäßig bis schwer, diuretikarefraktär (+3)',
+    l_enceph: 'Hepatische Enzephalopathie', enceph1: 'Keine (+1)', enceph2: 'Grad 1–2 (+2)', enceph3: 'Grad 3–4 (+3)',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of15: ' / 15',
+    class_a: 'Klasse A (5–6 Punkte) — gut kompensierte Erkrankung; 1-Jahres-Überleben ca. 100 %.',
+    class_b: 'Klasse B (7–9 Punkte) — deutliche funktionelle Beeinträchtigung; 1-Jahres-Überleben ca. 80 %.',
+    class_c: 'Klasse C (10–15 Punkte) — dekompensierte Erkrankung; 1-Jahres-Überleben ca. 45 %.'
+  },
+  pl: {
+    tag: 'Czynność nerek i wątroby', title: 'Skala Child-Pugh', subtitle: 'Szacuje ciężkość i rokowanie w marskości wątroby.',
+    criteria_heading: 'Kryteria',
+    l_bili: 'Bilirubina', bili1: '< 34 µmol/l (+1)', bili2: '34–50 µmol/l (+2)', bili3: '> 50 µmol/l (+3)',
+    l_alb: 'Albumina', alb1: '> 35 g/l (+1)', alb2: '28–35 g/l (+2)', alb3: '< 28 g/l (+3)',
+    l_inr: 'INR', inr1: '< 1,7 (+1)', inr2: '1,7–2,3 (+2)', inr3: '> 2,3 (+3)',
+    l_ascites: 'Wodobrzusze', ascites1: 'Brak (+1)', ascites2: 'Łagodne, reagujące na diuretyki (+2)', ascites3: 'Umiarkowane–ciężkie, oporne na diuretyki (+3)',
+    l_enceph: 'Encefalopatia wątrobowa', enceph1: 'Brak (+1)', enceph2: 'Stopień 1–2 (+2)', enceph3: 'Stopień 3–4 (+3)',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of15: ' / 15',
+    class_a: 'Klasa A (5–6 pkt) — dobrze wyrównana choroba; przeżycie roczne ok. 100%.',
+    class_b: 'Klasa B (7–9 pkt) — istotne upośledzenie czynności; przeżycie roczne ok. 80%.',
+    class_c: 'Klasa C (10–15 pkt) — choroba niewyrównana; przeżycie roczne ok. 45%.'
+  }
+};
+
+var _lastChildPugh = null;
+
+function calcChildPugh() {
+  var ids = ['c_bili','c_alb','c_inr','c_ascites','c_enceph'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastChildPugh = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastChildPugh === null) return;
+  var total = _lastChildPugh;
+  var interp = total <= 6 ? ucmT('class_a') : (total <= 9 ? ucmT('class_b') : ucmT('class_c'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of15');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

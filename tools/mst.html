@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MST — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Nutrition</span>
+  <h1 class="page-title" data-i18n="title">MST</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Malnutrition Screening Tool — quick, two-item screen for malnutrition risk.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Questions</h2>
+    <div class="field"><label data-i18n="q0">Have you recently lost weight without trying?</label>
+      <select id="q0">
+        <option value="0" data-i18n="q0_no">No</option>
+        <option value="2" data-i18n="q0_unsure">Unsure</option>
+        <option value="yes" data-i18n="q0_yes">Yes</option>
+      </select>
+    </div>
+    <div class="field" id="amountField" style="display:none;">
+      <label data-i18n="q0b">If yes, how much weight (kg) have you lost?</label>
+      <select id="q0b">
+        <option value="1" data-i18n="amt1">1–5 kg</option>
+        <option value="2" data-i18n="amt2">6–10 kg</option>
+        <option value="3" data-i18n="amt3">11–15 kg</option>
+        <option value="4" data-i18n="amt4">&gt; 15 kg</option>
+        <option value="2" data-i18n="amt_unsure">Unsure</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="q1">Have you been eating poorly because of a decreased appetite?</label>
+      <select id="q1"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcMST()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Ferguson M, Capra S, Bauer J, Banks M. Development of a valid and reliable malnutrition screening tool for adult acute hospital patients. Nutrition. 1999;15(6):458–464. Recommended by the Academy of Nutrition and Dietetics.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10457/malnutrition-screening-tool-mst" target="_blank" rel="noopener">MDCalc — MST</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Nutrition', title: 'MST', subtitle: 'Malnutrition Screening Tool — quick, two-item screen for malnutrition risk.',
+    items_heading: 'Questions',
+    q0: 'Have you recently lost weight without trying?', q0_no: 'No', q0_unsure: 'Unsure', q0_yes: 'Yes',
+    q0b: 'If yes, how much weight (kg) have you lost?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Unsure',
+    q1: 'Have you been eating poorly because of a decreased appetite?', opt_no: 'No', opt_yes: 'Yes',
+    calc_btn: 'Calculate', score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Score 0–1 — low risk of malnutrition.', interp_high: 'Score ≥2 — at risk of malnutrition; further nutritional assessment recommended.'
+  },
+  cs: {
+    tag: 'Výživa', title: 'MST', subtitle: 'Screeningový nástroj pro riziko malnutrice — rychlý, dvouotázkový screening.',
+    items_heading: 'Otázky',
+    q0: 'Zhubl(a) jste nedávno neúmyslně?', q0_no: 'Ne', q0_unsure: 'Nejsem si jistý(á)', q0_yes: 'Ano',
+    q0b: 'Pokud ano, kolik kg jste zhubl(a)?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Nejsem si jistý(á)',
+    q1: 'Jedl(a) jste málo kvůli sníženému apetitu?', opt_no: 'Ne', opt_yes: 'Ano',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of7: ' / 7',
+    interp_low: 'Skóre 0–1 — nízké riziko malnutrice.', interp_high: 'Skóre ≥2 — riziko malnutrice; doporučeno další nutriční vyšetření.'
+  },
+  fr: {
+    tag: 'Nutrition', title: 'MST', subtitle: "Outil de dépistage de la malnutrition — dépistage rapide en deux questions du risque de malnutrition.",
+    items_heading: 'Questions',
+    q0: 'Avez-vous récemment perdu du poids sans le vouloir ?', q0_no: 'Non', q0_unsure: 'Incertain(e)', q0_yes: 'Oui',
+    q0b: 'Si oui, combien de kg avez-vous perdu ?', amt1: '1 à 5 kg', amt2: '6 à 10 kg', amt3: '11 à 15 kg', amt4: '> 15 kg', amt_unsure: 'Incertain(e)',
+    q1: "Avez-vous mal mangé en raison d'une diminution de l'appétit ?", opt_no: 'Non', opt_yes: 'Oui',
+    calc_btn: 'Calculer', score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Score 0–1 — faible risque de malnutrition.', interp_high: 'Score ≥2 — à risque de malnutrition ; une évaluation nutritionnelle complémentaire est recommandée.'
+  },
+  de: {
+    tag: 'Ernährung', title: 'MST', subtitle: 'Malnutrition Screening Tool — schnelles Zwei-Fragen-Screening auf Mangelernährungsrisiko.',
+    items_heading: 'Fragen',
+    q0: 'Haben Sie kürzlich ungewollt Gewicht verloren?', q0_no: 'Nein', q0_unsure: 'Unsicher', q0_yes: 'Ja',
+    q0b: 'Wenn ja, wie viel Gewicht (kg) haben Sie verloren?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Unsicher',
+    q1: 'Haben Sie aufgrund verminderten Appetits schlecht gegessen?', opt_no: 'Nein', opt_yes: 'Ja',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of7: ' / 7',
+    interp_low: 'Score 0–1 — geringes Risiko für Mangelernährung.', interp_high: 'Score ≥2 — Risiko für Mangelernährung; weitere Ernährungsabklärung empfohlen.'
+  },
+  pl: {
+    tag: 'Odżywianie', title: 'MST', subtitle: 'Narzędzie przesiewowe niedożywienia — szybki, dwupytaniowy przesiew ryzyka niedożywienia.',
+    items_heading: 'Pytania',
+    q0: 'Czy niedawno schudł(a) Pan/Pani niezamierzenie?', q0_no: 'Nie', q0_unsure: 'Nie jestem pewien/pewna', q0_yes: 'Tak',
+    q0b: 'Jeśli tak, ile kg Pan/Pani schudł(a)?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Nie jestem pewien/pewna',
+    q1: 'Czy jadł(a) Pan/Pani mało z powodu zmniejszonego apetytu?', opt_no: 'Nie', opt_yes: 'Tak',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of7: ' / 7',
+    interp_low: 'Wynik 0–1 — niskie ryzyko niedożywienia.', interp_high: 'Wynik ≥2 — ryzyko niedożywienia; zalecana dalsza ocena żywieniowa.'
+  }
+};
+
+var q0el = null;
+
+function initQ0Listener() {
+  q0el = document.getElementById('q0');
+  q0el.addEventListener('change', function() {
+    document.getElementById('amountField').style.display = q0el.value === 'yes' ? 'block' : 'none';
+  });
+}
+initQ0Listener();
+
+var _lastMST = null;
+
+function calcMST() {
+  var q0 = document.getElementById('q0').value;
+  var q1 = parseInt(document.getElementById('q1').value, 10);
+  var weightPts = q0 === 'yes' ? parseInt(document.getElementById('q0b').value, 10) : parseInt(q0, 10);
+  _lastMST = weightPts + q1;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastMST === null) return;
+  var total = _lastMST;
+  var interp = total >= 2 ? ucmT('interp_high') : ucmT('interp_low');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of7');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

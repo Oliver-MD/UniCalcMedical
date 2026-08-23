@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fagerström Test (FTND) — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">Fagerström Test (FTND)</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Assesses the intensity of physical nicotine dependence.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Questions</h2>
+    <div class="field"><label data-i18n="q0">How soon after waking do you smoke your first cigarette?</label>
+      <select id="q0">
+        <option value="3" data-i18n="q0_a">Within 5 minutes</option>
+        <option value="2" data-i18n="q0_b">6–30 minutes</option>
+        <option value="1" data-i18n="q0_c">31–60 minutes</option>
+        <option value="0" data-i18n="q0_d">After 60 minutes</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="q1">Do you find it difficult to refrain from smoking in places where it is forbidden?</label>
+      <select id="q1"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+    </div>
+    <div class="field"><label data-i18n="q2">Which cigarette would you hate most to give up?</label>
+      <select id="q2"><option value="1" data-i18n="q2_a">The first one in the morning</option><option value="0" data-i18n="q2_b">Any other</option></select>
+    </div>
+    <div class="field"><label data-i18n="q3">How many cigarettes per day do you smoke?</label>
+      <select id="q3">
+        <option value="0" data-i18n="q3_a">10 or fewer</option>
+        <option value="1" data-i18n="q3_b">11–20</option>
+        <option value="2" data-i18n="q3_c">21–30</option>
+        <option value="3" data-i18n="q3_d">31 or more</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="q4">Do you smoke more frequently during the first hours after waking than during the rest of the day?</label>
+      <select id="q4"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+    </div>
+    <div class="field"><label data-i18n="q5">Do you smoke even if you are so ill that you are in bed most of the day?</label>
+      <select id="q5"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcFTND()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Heatherton TF, Kozlowski LT, Frecker RC, Fagerström KO. The Fagerström Test for Nicotine Dependence: a revision of the Fagerström Tolerance Questionnaire. Br J Addict. 1991;86(9):1119–1127.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10613/fagerstrom-test-nicotine-dependence" target="_blank" rel="noopener">MDCalc — FTND</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'Fagerström Test (FTND)', subtitle: 'Assesses the intensity of physical nicotine dependence.',
+    items_heading: 'Questions',
+    q0: 'How soon after waking do you smoke your first cigarette?', q0_a: 'Within 5 minutes', q0_b: '6–30 minutes', q0_c: '31–60 minutes', q0_d: 'After 60 minutes',
+    q1: 'Do you find it difficult to refrain from smoking in places where it is forbidden?', opt_no: 'No', opt_yes: 'Yes',
+    q2: 'Which cigarette would you hate most to give up?', q2_a: 'The first one in the morning', q2_b: 'Any other',
+    q3: 'How many cigarettes per day do you smoke?', q3_a: '10 or fewer', q3_b: '11–20', q3_c: '21–30', q3_d: '31 or more',
+    q4: 'Do you smoke more frequently during the first hours after waking than during the rest of the day?',
+    q5: 'Do you smoke even if you are so ill that you are in bed most of the day?',
+    calc_btn: 'Calculate', score_label: 'Score = ', of10: ' / 10',
+    interp_verylow: 'Very low dependence.', interp_low: 'Low dependence.', interp_moderate: 'Moderate dependence.', interp_high: 'High dependence.', interp_veryhigh: 'Very high dependence.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'Fagerströmův test (FTND)', subtitle: 'Hodnocení intenzity fyzické závislosti na nikotinu.',
+    items_heading: 'Otázky',
+    q0: 'Jak brzy po probuzení si zapálíte první cigaretu?', q0_a: 'Do 5 minut', q0_b: '6–30 minut', q0_c: '31–60 minut', q0_d: 'Po 60 minutách',
+    q1: 'Je pro vás obtížné nekouřit v místech, kde je to zakázáno?', opt_no: 'Ne', opt_yes: 'Ano',
+    q2: 'Které cigarety byste se nejtěžeji vzdal(a)?', q2_a: 'První ranní', q2_b: 'Jiné',
+    q3: 'Kolik cigaret denně kouříte?', q3_a: '10 nebo méně', q3_b: '11–20', q3_c: '21–30', q3_d: '31 nebo více',
+    q4: 'Kouříte častěji během prvních hodin po probuzení než po zbytek dne?',
+    q5: 'Kouříte i tehdy, když jste tak nemocný(á), že většinu dne ležíte v posteli?',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of10: ' / 10',
+    interp_verylow: 'Velmi nízká závislost.', interp_low: 'Nízká závislost.', interp_moderate: 'Střední závislost.', interp_high: 'Vysoká závislost.', interp_veryhigh: 'Velmi vysoká závislost.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'Test de Fagerström (FTND)', subtitle: 'Évalue l\u2019intensité de la dépendance physique à la nicotine.',
+    items_heading: 'Questions',
+    q0: 'Combien de temps après votre réveil fumez-vous votre première cigarette ?', q0_a: 'Dans les 5 minutes', q0_b: '6 à 30 minutes', q0_c: '31 à 60 minutes', q0_d: 'Après 60 minutes',
+    q1: "Trouvez-vous difficile de ne pas fumer dans les endroits où c'est interdit ?", opt_no: 'Non', opt_yes: 'Oui',
+    q2: 'À quelle cigarette auriez-vous le plus de mal à renoncer ?', q2_a: 'La première du matin', q2_b: 'Une autre',
+    q3: 'Combien de cigarettes fumez-vous par jour ?', q3_a: '10 ou moins', q3_b: '11 à 20', q3_c: '21 à 30', q3_d: '31 ou plus',
+    q4: 'Fumez-vous plus fréquemment durant les premières heures après le réveil que pendant le reste de la journée ?',
+    q5: 'Fumez-vous même lorsque vous êtes malade au point de rester au lit presque toute la journée ?',
+    calc_btn: 'Calculer', score_label: 'Score = ', of10: ' / 10',
+    interp_verylow: 'Dépendance très faible.', interp_low: 'Dépendance faible.', interp_moderate: 'Dépendance modérée.', interp_high: 'Dépendance forte.', interp_veryhigh: 'Dépendance très forte.'
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'Fagerström-Test (FTND)', subtitle: 'Erfasst die Intensität der körperlichen Nikotinabhängigkeit.',
+    items_heading: 'Fragen',
+    q0: 'Wie schnell nach dem Aufwachen rauchen Sie Ihre erste Zigarette?', q0_a: 'Innerhalb von 5 Minuten', q0_b: '6–30 Minuten', q0_c: '31–60 Minuten', q0_d: 'Nach 60 Minuten',
+    q1: 'Fällt es Ihnen schwer, an Orten, wo Rauchen verboten ist, nicht zu rauchen?', opt_no: 'Nein', opt_yes: 'Ja',
+    q2: 'Auf welche Zigarette würden Sie am ungernsten verzichten?', q2_a: 'Die erste am Morgen', q2_b: 'Eine andere',
+    q3: 'Wie viele Zigaretten rauchen Sie pro Tag?', q3_a: '10 oder weniger', q3_b: '11–20', q3_c: '21–30', q3_d: '31 oder mehr',
+    q4: 'Rauchen Sie in den ersten Stunden nach dem Aufwachen mehr als im Rest des Tages?',
+    q5: 'Rauchen Sie auch, wenn Sie so krank sind, dass Sie fast den ganzen Tag im Bett bleiben?',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of10: ' / 10',
+    interp_verylow: 'Sehr geringe Abhängigkeit.', interp_low: 'Geringe Abhängigkeit.', interp_moderate: 'Mittlere Abhängigkeit.', interp_high: 'Hohe Abhängigkeit.', interp_veryhigh: 'Sehr hohe Abhängigkeit.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'Test Fagerströma (FTND)', subtitle: 'Ocenia nasilenie fizycznego uzależnienia od nikotyny.',
+    items_heading: 'Pytania',
+    q0: 'Jak szybko po przebudzeniu pali Pan/Pani pierwszego papierosa?', q0_a: 'W ciągu 5 minut', q0_b: '6–30 minut', q0_c: '31–60 minut', q0_d: 'Po 60 minutach',
+    q1: 'Czy trudno jest Panu/Pani powstrzymać się od palenia w miejscach, gdzie jest to zabronione?', opt_no: 'Nie', opt_yes: 'Tak',
+    q2: 'Którego papierosa najtrudniej byłoby Panu/Pani odrzucić?', q2_a: 'Pierwszego rano', q2_b: 'Innego',
+    q3: 'Ile papierosów dziennie Pan/Pani pali?', q3_a: '10 lub mniej', q3_b: '11–20', q3_c: '21–30', q3_d: '31 lub więcej',
+    q4: 'Czy pali Pan/Pani częściej w pierwszych godzinach po przebudzeniu niż w ciągu reszty dnia?',
+    q5: 'Czy pali Pan/Pani nawet gdy jest Pan/Pani tak chory(a), że większość dnia spędza w łóżku?',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of10: ' / 10',
+    interp_verylow: 'Bardzo niskie uzależnienie.', interp_low: 'Niskie uzależnienie.', interp_moderate: 'Umiarkowane uzależnienie.', interp_high: 'Wysokie uzależnienie.', interp_veryhigh: 'Bardzo wysokie uzależnienie.'
+  }
+};
+
+var _lastFTND = null;
+
+function calcFTND() {
+  var ids = ['q0','q1','q2','q3','q4','q5'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastFTND = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastFTND === null) return;
+  var total = _lastFTND;
+  var interp;
+  if (total <= 2) interp = ucmT('interp_verylow');
+  else if (total <= 4) interp = ucmT('interp_low');
+  else if (total === 5) interp = ucmT('interp_moderate');
+  else if (total <= 7) interp = ucmT('interp_high');
+  else interp = ucmT('interp_veryhigh');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of10');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

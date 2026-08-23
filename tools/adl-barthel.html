@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADL (Barthel Index) — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Geriatrics &amp; functional status</span>
+  <h1 class="page-title" data-i18n="title">ADL (Barthel Index)</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Measures basic activities of daily living and functional independence.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria</h2>
+    <div class="field"><label data-i18n="l_feeding">Feeding</label><select id="c_feeding">
+      <option value="10" data-i18n="feeding10">Independent (+10)</option>
+      <option value="5" data-i18n="feeding5">Needs some help (+5)</option>
+      <option value="0" data-i18n="feeding0">Unable (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_bathing">Bathing</label><select id="c_bathing">
+      <option value="5" data-i18n="bathing5">Independent (+5)</option>
+      <option value="0" data-i18n="bathing0">Dependent (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_grooming">Grooming</label><select id="c_grooming">
+      <option value="5" data-i18n="grooming5">Independent (+5)</option>
+      <option value="0" data-i18n="grooming0">Needs help (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_dressing">Dressing</label><select id="c_dressing">
+      <option value="10" data-i18n="dressing10">Independent (+10)</option>
+      <option value="5" data-i18n="dressing5">Needs some help (+5)</option>
+      <option value="0" data-i18n="dressing0">Dependent (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_bowels">Bowels</label><select id="c_bowels">
+      <option value="10" data-i18n="bowels10">Continent (+10)</option>
+      <option value="5" data-i18n="bowels5">Occasional accident (+5)</option>
+      <option value="0" data-i18n="bowels0">Incontinent (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_bladder">Bladder</label><select id="c_bladder">
+      <option value="10" data-i18n="bladder10">Continent (+10)</option>
+      <option value="5" data-i18n="bladder5">Occasional accident (+5)</option>
+      <option value="0" data-i18n="bladder0">Incontinent (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_toilet">Toilet use</label><select id="c_toilet">
+      <option value="10" data-i18n="toilet10">Independent (+10)</option>
+      <option value="5" data-i18n="toilet5">Needs some help (+5)</option>
+      <option value="0" data-i18n="toilet0">Dependent (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_transfer">Transfers (bed to chair)</label><select id="c_transfer">
+      <option value="15" data-i18n="transfer15">Independent (+15)</option>
+      <option value="10" data-i18n="transfer10">Minor help needed (+10)</option>
+      <option value="5" data-i18n="transfer5">Able to sit, major help to transfer (+5)</option>
+      <option value="0" data-i18n="transfer0">Unable, no sitting balance (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_mobility">Mobility (on level surfaces)</label><select id="c_mobility">
+      <option value="15" data-i18n="mobility15">Independent, may use aid (+15)</option>
+      <option value="10" data-i18n="mobility10">Needs help from one person (+10)</option>
+      <option value="5" data-i18n="mobility5">Wheelchair independent (+5)</option>
+      <option value="0" data-i18n="mobility0">Immobile (+0)</option>
+    </select></div>
+    <div class="field"><label data-i18n="l_stairs">Stairs</label><select id="c_stairs">
+      <option value="10" data-i18n="stairs10">Independent (+10)</option>
+      <option value="5" data-i18n="stairs5">Needs help (+5)</option>
+      <option value="0" data-i18n="stairs0">Unable (+0)</option>
+    </select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcBarthel()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Mahoney FI, Barthel DW. Functional evaluation: the Barthel Index. Md State Med J. 1965;14:61–65.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/3917/barthel-index-activities-daily-living-adl" target="_blank" rel="noopener">MDCalc — Barthel Index</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Geriatrics & functional status', title: 'ADL (Barthel Index)', subtitle: 'Measures basic activities of daily living and functional independence.',
+    criteria_heading: 'Criteria',
+    l_feeding: 'Feeding', feeding10: 'Independent (+10)', feeding5: 'Needs some help (+5)', feeding0: 'Unable (+0)',
+    l_bathing: 'Bathing', bathing5: 'Independent (+5)', bathing0: 'Dependent (+0)',
+    l_grooming: 'Grooming', grooming5: 'Independent (+5)', grooming0: 'Needs help (+0)',
+    l_dressing: 'Dressing', dressing10: 'Independent (+10)', dressing5: 'Needs some help (+5)', dressing0: 'Dependent (+0)',
+    l_bowels: 'Bowels', bowels10: 'Continent (+10)', bowels5: 'Occasional accident (+5)', bowels0: 'Incontinent (+0)',
+    l_bladder: 'Bladder', bladder10: 'Continent (+10)', bladder5: 'Occasional accident (+5)', bladder0: 'Incontinent (+0)',
+    l_toilet: 'Toilet use', toilet10: 'Independent (+10)', toilet5: 'Needs some help (+5)', toilet0: 'Dependent (+0)',
+    l_transfer: 'Transfers (bed to chair)', transfer15: 'Independent (+15)', transfer10: 'Minor help needed (+10)', transfer5: 'Able to sit, major help to transfer (+5)', transfer0: 'Unable, no sitting balance (+0)',
+    l_mobility: 'Mobility (on level surfaces)', mobility15: 'Independent, may use aid (+15)', mobility10: 'Needs help from one person (+10)', mobility5: 'Wheelchair independent (+5)', mobility0: 'Immobile (+0)',
+    l_stairs: 'Stairs', stairs10: 'Independent (+10)', stairs5: 'Needs help (+5)', stairs0: 'Unable (+0)',
+    calc_btn: 'Calculate', score_label: 'Score = ', of100: ' / 100',
+    interp_total: 'Total dependency (0–20).', interp_severe: 'Severe dependency (21–60).', interp_moderate: 'Moderate dependency (61–90).', interp_slight: 'Slight dependency (91–99).', interp_independent: 'Independent (100).'
+  },
+  cs: {
+    tag: 'Geriatrie a funkční stav', title: 'ADL (Barthelové index)', subtitle: 'Měří základní všední denní aktivity a funkční soběstačnost.',
+    criteria_heading: 'Kritéria',
+    l_feeding: 'Jídlo', feeding10: 'Samostatný(á) (+10)', feeding5: 'Potřebuje pomoc (+5)', feeding0: 'Neschopen(na) (+0)',
+    l_bathing: 'Koupání', bathing5: 'Samostatný(á) (+5)', bathing0: 'Závislý(á) (+0)',
+    l_grooming: 'Osobní hygiena', grooming5: 'Samostatný(á) (+5)', grooming0: 'Potřebuje pomoc (+0)',
+    l_dressing: 'Oblékání', dressing10: 'Samostatný(á) (+10)', dressing5: 'Potřebuje pomoc (+5)', dressing0: 'Závislý(á) (+0)',
+    l_bowels: 'Stolice', bowels10: 'Plně kontinentní (+10)', bowels5: 'Občasná inkontinence (+5)', bowels0: 'Inkontinentní (+0)',
+    l_bladder: 'Moč', bladder10: 'Plně kontinentní (+10)', bladder5: 'Občasná inkontinence (+5)', bladder0: 'Inkontinentní (+0)',
+    l_toilet: 'Použití WC', toilet10: 'Samostatný(á) (+10)', toilet5: 'Potřebuje pomoc (+5)', toilet0: 'Závislý(á) (+0)',
+    l_transfer: 'Přesun lůžko–židle', transfer15: 'Samostatný(á) (+15)', transfer10: 'Nutná mírná pomoc (+10)', transfer5: 'Umí sedět, nutná výrazná pomoc (+5)', transfer0: 'Neschopen(na), bez rovnováhy vsedě (+0)',
+    l_mobility: 'Chůze po rovině', mobility15: 'Samostatný(á), případně s pomůckou (+15)', mobility10: 'Potřebuje pomoc jedné osoby (+10)', mobility5: 'Samostatný(á) na vozíku (+5)', mobility0: 'Neschopen(na) chůze (+0)',
+    l_stairs: 'Chůze po schodech', stairs10: 'Samostatný(á) (+10)', stairs5: 'Potřebuje pomoc (+5)', stairs0: 'Neschopen(na) (+0)',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of100: ' / 100',
+    interp_total: 'Plná závislost (0–20).', interp_severe: 'Vysoká závislost (21–60).', interp_moderate: 'Střední závislost (61–90).', interp_slight: 'Mírná závislost (91–99).', interp_independent: 'Plná soběstačnost (100).'
+  },
+  fr: {
+    tag: 'Gériatrie et statut fonctionnel', title: 'ADL (Indice de Barthel)', subtitle: 'Mesure les activités de base de la vie quotidienne et l\u2019indépendance fonctionnelle.',
+    criteria_heading: 'Critères',
+    l_feeding: 'Alimentation', feeding10: 'Indépendant(e) (+10)', feeding5: "A besoin d'aide (+5)", feeding0: 'Incapable (+0)',
+    l_bathing: 'Bain', bathing5: 'Indépendant(e) (+5)', bathing0: 'Dépendant(e) (+0)',
+    l_grooming: 'Toilette', grooming5: 'Indépendant(e) (+5)', grooming0: "A besoin d'aide (+0)",
+    l_dressing: "S'habiller", dressing10: 'Indépendant(e) (+10)', dressing5: "A besoin d'aide (+5)", dressing0: 'Dépendant(e) (+0)',
+    l_bowels: 'Selles', bowels10: 'Continent(e) (+10)', bowels5: 'Accident occasionnel (+5)', bowels0: 'Incontinent(e) (+0)',
+    l_bladder: 'Urines', bladder10: 'Continent(e) (+10)', bladder5: 'Accident occasionnel (+5)', bladder0: 'Incontinent(e) (+0)',
+    l_toilet: 'Utilisation des toilettes', toilet10: 'Indépendant(e) (+10)', toilet5: "A besoin d'aide (+5)", toilet0: 'Dépendant(e) (+0)',
+    l_transfer: 'Transferts (lit–chaise)', transfer15: 'Indépendant(e) (+15)', transfer10: "Aide mineure nécessaire (+10)", transfer5: "Peut s'asseoir, aide majeure pour le transfert (+5)", transfer0: "Incapable, pas d'équilibre assis (+0)",
+    l_mobility: 'Mobilité (sur surface plane)', mobility15: "Indépendant(e), peut utiliser une aide (+15)", mobility10: "A besoin de l'aide d'une personne (+10)", mobility5: 'Indépendant(e) en fauteuil roulant (+5)', mobility0: 'Immobile (+0)',
+    l_stairs: 'Escaliers', stairs10: 'Indépendant(e) (+10)', stairs5: "A besoin d'aide (+5)", stairs0: 'Incapable (+0)',
+    calc_btn: 'Calculer', score_label: 'Score = ', of100: ' / 100',
+    interp_total: 'Dépendance totale (0–20).', interp_severe: 'Dépendance sévère (21–60).', interp_moderate: 'Dépendance modérée (61–90).', interp_slight: 'Dépendance légère (91–99).', interp_independent: 'Indépendant(e) (100).'
+  },
+  de: {
+    tag: 'Geriatrie & Funktionsstatus', title: 'ADL (Barthel-Index)', subtitle: 'Misst grundlegende Aktivitäten des täglichen Lebens und funktionelle Selbstständigkeit.',
+    criteria_heading: 'Kriterien',
+    l_feeding: 'Essen', feeding10: 'Selbstständig (+10)', feeding5: 'Braucht etwas Hilfe (+5)', feeding0: 'Unfähig (+0)',
+    l_bathing: 'Baden', bathing5: 'Selbstständig (+5)', bathing0: 'Abhängig (+0)',
+    l_grooming: 'Körperpflege', grooming5: 'Selbstständig (+5)', grooming0: 'Braucht Hilfe (+0)',
+    l_dressing: 'Ankleiden', dressing10: 'Selbstständig (+10)', dressing5: 'Braucht etwas Hilfe (+5)', dressing0: 'Abhängig (+0)',
+    l_bowels: 'Stuhlkontinenz', bowels10: 'Kontinent (+10)', bowels5: 'Gelegentlich inkontinent (+5)', bowels0: 'Inkontinent (+0)',
+    l_bladder: 'Harnkontinenz', bladder10: 'Kontinent (+10)', bladder5: 'Gelegentlich inkontinent (+5)', bladder0: 'Inkontinent (+0)',
+    l_toilet: 'Toilettenbenutzung', toilet10: 'Selbstständig (+10)', toilet5: 'Braucht etwas Hilfe (+5)', toilet0: 'Abhängig (+0)',
+    l_transfer: 'Transfer (Bett–Stuhl)', transfer15: 'Selbstständig (+15)', transfer10: 'Geringe Hilfe nötig (+10)', transfer5: 'Kann sitzen, erhebliche Hilfe beim Transfer (+5)', transfer0: 'Unfähig, kein Sitzgleichgewicht (+0)',
+    l_mobility: 'Mobilität (auf ebenem Untergrund)', mobility15: 'Selbstständig, ggf. mit Hilfsmittel (+15)', mobility10: 'Braucht Hilfe einer Person (+10)', mobility5: 'Rollstuhl-selbstständig (+5)', mobility0: 'Immobil (+0)',
+    l_stairs: 'Treppensteigen', stairs10: 'Selbstständig (+10)', stairs5: 'Braucht Hilfe (+5)', stairs0: 'Unfähig (+0)',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of100: ' / 100',
+    interp_total: 'Vollständige Abhängigkeit (0–20).', interp_severe: 'Schwere Abhängigkeit (21–60).', interp_moderate: 'Mittlere Abhängigkeit (61–90).', interp_slight: 'Leichte Abhängigkeit (91–99).', interp_independent: 'Selbstständig (100).'
+  },
+  pl: {
+    tag: 'Geriatria i stan funkcjonalny', title: 'ADL (Skala Barthel)', subtitle: 'Ocenia podstawowe czynności dnia codziennego i samodzielność funkcjonalną.',
+    criteria_heading: 'Kryteria',
+    l_feeding: 'Odżywianie', feeding10: 'Samodzielny(a) (+10)', feeding5: 'Wymaga pomocy (+5)', feeding0: 'Niezdolny(a) (+0)',
+    l_bathing: 'Kąpiel', bathing5: 'Samodzielny(a) (+5)', bathing0: 'Zależny(a) (+0)',
+    l_grooming: 'Higiena osobista', grooming5: 'Samodzielny(a) (+5)', grooming0: 'Wymaga pomocy (+0)',
+    l_dressing: 'Ubieranie się', dressing10: 'Samodzielny(a) (+10)', dressing5: 'Wymaga pomocy (+5)', dressing0: 'Zależny(a) (+0)',
+    l_bowels: 'Wypróżnianie', bowels10: 'Pełna kontrola (+10)', bowels5: 'Okazjonalne epizody (+5)', bowels0: 'Nietrzymanie stolca (+0)',
+    l_bladder: 'Oddawanie moczu', bladder10: 'Pełna kontrola (+10)', bladder5: 'Okazjonalne epizody (+5)', bladder0: 'Nietrzymanie moczu (+0)',
+    l_toilet: 'Korzystanie z toalety', toilet10: 'Samodzielny(a) (+10)', toilet5: 'Wymaga pomocy (+5)', toilet0: 'Zależny(a) (+0)',
+    l_transfer: 'Przemieszczanie się (łóżko–krzesło)', transfer15: 'Samodzielny(a) (+15)', transfer10: 'Potrzebna niewielka pomoc (+10)', transfer5: 'Potrafi siedzieć, potrzebna znaczna pomoc (+5)', transfer0: 'Niezdolny(a), brak równowagi w siadzie (+0)',
+    l_mobility: 'Poruszanie się (po płaskim podłożu)', mobility15: 'Samodzielny(a), może korzystać z pomocy (+15)', mobility10: 'Wymaga pomocy jednej osoby (+10)', mobility5: 'Samodzielny(a) na wózku (+5)', mobility0: 'Unieruchomiony(a) (+0)',
+    l_stairs: 'Schody', stairs10: 'Samodzielny(a) (+10)', stairs5: 'Wymaga pomocy (+5)', stairs0: 'Niezdolny(a) (+0)',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of100: ' / 100',
+    interp_total: 'Całkowita zależność (0–20).', interp_severe: 'Duża zależność (21–60).', interp_moderate: 'Umiarkowana zależność (61–90).', interp_slight: 'Niewielka zależność (91–99).', interp_independent: 'Samodzielność (100).'
+  }
+};
+
+var _lastBarthel = null;
+
+function calcBarthel() {
+  var ids = ['c_feeding','c_bathing','c_grooming','c_dressing','c_bowels','c_bladder','c_toilet','c_transfer','c_mobility','c_stairs'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastBarthel = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastBarthel === null) return;
+  var total = _lastBarthel;
+  var interp;
+  if (total <= 20) interp = ucmT('interp_total');
+  else if (total <= 60) interp = ucmT('interp_severe');
+  else if (total <= 90) interp = ucmT('interp_moderate');
+  else if (total <= 99) interp = ucmT('interp_slight');
+  else interp = ucmT('interp_independent');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of100');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

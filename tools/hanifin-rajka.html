@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hanifin-Rajka Criteria — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Other</span>
+  <h1 class="page-title" data-i18n="title">Hanifin-Rajka Criteria</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Diagnostic criteria for atopic dermatitis. Diagnosis requires at least 3 major and at least 3 minor criteria.</p>
+
+  <div class="card">
+    <h2 data-i18n="major_heading">Major criteria (need ≥3)</h2>
+    <div class="check-row"><input type="checkbox" id="maj0"><label for="maj0" data-i18n="maj0">Pruritus</label></div>
+    <div class="check-row"><input type="checkbox" id="maj1"><label for="maj1" data-i18n="maj1">Typical morphology and distribution (flexural lichenification in adults; facial and extensor involvement in infants)</label></div>
+    <div class="check-row"><input type="checkbox" id="maj2"><label for="maj2" data-i18n="maj2">Chronic or chronically relapsing dermatitis</label></div>
+    <div class="check-row"><input type="checkbox" id="maj3"><label for="maj3" data-i18n="maj3">Personal or family history of atopy (asthma, allergic rhinitis, atopic dermatitis)</label></div>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="minor_heading">Minor criteria (need ≥3) — representative selection from the original 23-item list</h2>
+    <div class="check-row"><input type="checkbox" id="min0"><label for="min0" data-i18n="min0">Xerosis (dry skin)</label></div>
+    <div class="check-row"><input type="checkbox" id="min1"><label for="min1" data-i18n="min1">Ichthyosis / palmar hyperlinearity / keratosis pilaris</label></div>
+    <div class="check-row"><input type="checkbox" id="min2"><label for="min2" data-i18n="min2">Immediate (type I) skin test reactivity or elevated serum IgE</label></div>
+    <div class="check-row"><input type="checkbox" id="min3"><label for="min3" data-i18n="min3">Early age of onset</label></div>
+    <div class="check-row"><input type="checkbox" id="min4"><label for="min4" data-i18n="min4">Tendency toward cutaneous infections (especially S. aureus and herpes simplex)</label></div>
+    <div class="check-row"><input type="checkbox" id="min5"><label for="min5" data-i18n="min5">Tendency toward non-specific hand or foot dermatitis</label></div>
+    <div class="check-row"><input type="checkbox" id="min6"><label for="min6" data-i18n="min6">Nipple eczema</label></div>
+    <div class="check-row"><input type="checkbox" id="min7"><label for="min7" data-i18n="min7">Cheilitis</label></div>
+    <div class="check-row"><input type="checkbox" id="min8"><label for="min8" data-i18n="min8">Recurrent conjunctivitis</label></div>
+    <div class="check-row"><input type="checkbox" id="min9"><label for="min9" data-i18n="min9">Dennie-Morgan infraorbital fold</label></div>
+    <div class="check-row"><input type="checkbox" id="min10"><label for="min10" data-i18n="min10">Orbital darkening / periorbital pallor or erythema</label></div>
+    <div class="check-row"><input type="checkbox" id="min11"><label for="min11" data-i18n="min11">Pityriasis alba</label></div>
+    <div class="check-row"><input type="checkbox" id="min12"><label for="min12" data-i18n="min12">Anterior neck folds</label></div>
+    <div class="check-row"><input type="checkbox" id="min13"><label for="min13" data-i18n="min13">Itch when sweating</label></div>
+    <div class="check-row"><input type="checkbox" id="min14"><label for="min14" data-i18n="min14">Intolerance to wool and lipid solvents</label></div>
+    <div class="check-row"><input type="checkbox" id="min15"><label for="min15" data-i18n="min15">Perifollicular accentuation</label></div>
+    <div class="check-row"><input type="checkbox" id="min16"><label for="min16" data-i18n="min16">Food intolerance</label></div>
+    <div class="check-row"><input type="checkbox" id="min17"><label for="min17" data-i18n="min17">Course influenced by environmental or emotional factors</label></div>
+    <div class="check-row"><input type="checkbox" id="min18"><label for="min18" data-i18n="min18">White dermographism / delayed blanch response</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcHanifinRajka()">Check criteria</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+    <span data-i18n="hr_extra_note"> The original Hanifin and Rajka criteria list 23 minor criteria; this page presents a representative selection rather than the complete original list. Consult the primary source for the full set.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Hanifin JM, Rajka G. Diagnostic features of atopic dermatitis. Acta Derm Venereol (Stockh). 1980;92(Suppl):44–47.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Other', title: 'Hanifin-Rajka Criteria', subtitle: 'Diagnostic criteria for atopic dermatitis. Diagnosis requires at least 3 major and at least 3 minor criteria.',
+    major_heading: 'Major criteria (need ≥3)',
+    maj0: 'Pruritus', maj1: 'Typical morphology and distribution (flexural lichenification in adults; facial and extensor involvement in infants)',
+    maj2: 'Chronic or chronically relapsing dermatitis', maj3: 'Personal or family history of atopy (asthma, allergic rhinitis, atopic dermatitis)',
+    minor_heading: 'Minor criteria (need ≥3) — representative selection from the original 23-item list',
+    min0: 'Xerosis (dry skin)', min1: 'Ichthyosis / palmar hyperlinearity / keratosis pilaris', min2: 'Immediate (type I) skin test reactivity or elevated serum IgE',
+    min3: 'Early age of onset', min4: 'Tendency toward cutaneous infections (especially S. aureus and herpes simplex)', min5: 'Tendency toward non-specific hand or foot dermatitis',
+    min6: 'Nipple eczema', min7: 'Cheilitis', min8: 'Recurrent conjunctivitis', min9: 'Dennie-Morgan infraorbital fold',
+    min10: 'Orbital darkening / periorbital pallor or erythema', min11: 'Pityriasis alba', min12: 'Anterior neck folds', min13: 'Itch when sweating',
+    min14: 'Intolerance to wool and lipid solvents', min15: 'Perifollicular accentuation', min16: 'Food intolerance',
+    min17: 'Course influenced by environmental or emotional factors', min18: 'White dermographism / delayed blanch response',
+    calc_btn: 'Check criteria', hr_extra_note: ' The original Hanifin and Rajka criteria list 23 minor criteria; this page presents a representative selection rather than the complete original list. Consult the primary source for the full set.',
+    met_label: 'Criteria met: ', diagnostic: 'Meets Hanifin-Rajka criteria for atopic dermatitis (≥3 major, ≥3 minor).', not_diagnostic: 'Does not meet Hanifin-Rajka criteria based on the items selected here.'
+  },
+  cs: {
+    tag: 'Ostatní', title: 'Kritéria Hanifin-Rajka', subtitle: 'Diagnostická kritéria atopické dermatitidy. Diagnóza vyžaduje alespoň 3 velká a alespoň 3 malá kritéria.',
+    major_heading: 'Velká kritéria (nutno ≥3)',
+    maj0: 'Pruritus', maj1: 'Typická morfologie a distribuce (flexorová lichenifikace u dospělých; obličej a extenzorové plochy u kojenců)',
+    maj2: 'Chronická nebo chronicky recidivující dermatitida', maj3: 'Osobní nebo rodinná anamnéza atopie (astma, alergická rýma, atopická dermatitida)',
+    minor_heading: 'Malá kritéria (nutno ≥3) — reprezentativní výběr z původního seznamu 23 položek',
+    min0: 'Xeróza (suchá kůže)', min1: 'Ichtyóza / palmární hyperlinearita / keratosis pilaris', min2: 'Okamžitá (I. typu) reaktivita kožních testů nebo zvýšené sérové IgE',
+    min3: 'Časný začátek onemocnění', min4: 'Sklon ke kožním infekcím (zejména S. aureus a herpes simplex)', min5: 'Sklon k nespecifické dermatitidě rukou nebo nohou',
+    min6: 'Ekzém bradavky', min7: 'Cheilitida', min8: 'Recidivující konjunktivitida', min9: 'Dennie-Morganova infraorbitální řasa',
+    min10: 'Orbitální ztmavnutí / periorbitální bledost nebo erytém', min11: 'Pityriasis alba', min12: 'Přední krční řasy', min13: 'Svědění při pocení',
+    min14: 'Nesnášenlivost vlny a lipidových rozpouštědel', min15: 'Perifolikulární akcentace', min16: 'Nesnášenlivost potravin',
+    min17: 'Průběh ovlivněný faktory prostředí nebo emočními faktory', min18: 'Bílý dermografismus / opožděná bledost',
+    calc_btn: 'Zkontrolovat kritéria', hr_extra_note: ' Původní kritéria Hanifin a Rajka uvádějí 23 malých kritérií; tato stránka představuje reprezentativní výběr, nikoliv kompletní původní seznam. Pro úplný seznam nahlédněte do primárního zdroje.',
+    met_label: 'Splněná kritéria: ', diagnostic: 'Splňuje kritéria Hanifin-Rajka pro atopickou dermatitidu (≥3 velká, ≥3 malá).', not_diagnostic: 'Na základě zde vybraných položek nesplňuje kritéria Hanifin-Rajka.'
+  },
+  fr: {
+    tag: 'Autre', title: 'Critères de Hanifin-Rajka', subtitle: "Critères diagnostiques de la dermatite atopique. Le diagnostic nécessite au moins 3 critères majeurs et au moins 3 critères mineurs.",
+    major_heading: 'Critères majeurs (≥3 nécessaires)',
+    maj0: 'Prurit', maj1: "Morphologie et distribution typiques (lichénification des plis chez l'adulte ; atteinte du visage et des surfaces d'extension chez le nourrisson)",
+    maj2: 'Dermatite chronique ou chroniquement récidivante', maj3: "Antécédents personnels ou familiaux d'atopie (asthme, rhinite allergique, dermatite atopique)",
+    minor_heading: 'Critères mineurs (≥3 nécessaires) — sélection représentative de la liste originale de 23 éléments',
+    min0: 'Xérose (peau sèche)', min1: 'Ichtyose / hyperlinéarité palmaire / kératose pilaire', min2: "Réactivité cutanée immédiate (type I) ou IgE sérique élevée",
+    min3: 'Début précoce', min4: 'Tendance aux infections cutanées (en particulier S. aureus et herpès simplex)', min5: 'Tendance à une dermatite non spécifique des mains ou des pieds',
+    min6: 'Eczéma du mamelon', min7: 'Chéilite', min8: 'Conjonctivite récurrente', min9: 'Pli infraorbitaire de Dennie-Morgan',
+    min10: 'Assombrissement orbitaire / pâleur ou érythème périorbitaire', min11: 'Pityriasis alba', min12: 'Plis antérieurs du cou', min13: 'Démangeaisons à la transpiration',
+    min14: 'Intolérance à la laine et aux solvants lipidiques', min15: 'Accentuation périfolliculaire', min16: 'Intolérance alimentaire',
+    min17: 'Évolution influencée par des facteurs environnementaux ou émotionnels', min18: 'Dermographisme blanc / réponse de blanchiment retardée',
+    calc_btn: 'Vérifier les critères', hr_extra_note: " Les critères originaux de Hanifin et Rajka comptent 23 critères mineurs ; cette page présente une sélection représentative plutôt que la liste originale complète. Consultez la source primaire pour l'ensemble complet.",
+    met_label: 'Critères remplis : ', diagnostic: 'Répond aux critères de Hanifin-Rajka pour la dermatite atopique (≥3 majeurs, ≥3 mineurs).', not_diagnostic: 'Ne répond pas aux critères de Hanifin-Rajka sur la base des éléments sélectionnés ici.'
+  },
+  de: {
+    tag: 'Sonstiges', title: 'Hanifin-Rajka-Kriterien', subtitle: 'Diagnosekriterien für atopische Dermatitis. Die Diagnose erfordert mindestens 3 Haupt- und mindestens 3 Nebenkriterien.',
+    major_heading: 'Hauptkriterien (≥3 erforderlich)',
+    maj0: 'Pruritus', maj1: 'Typische Morphologie und Verteilung (Beugelichenifikation bei Erwachsenen; Gesichts- und Streckseitenbefall bei Säuglingen)',
+    maj2: 'Chronische oder chronisch rezidivierende Dermatitis', maj3: 'Persönliche oder familiäre Atopieanamnese (Asthma, allergische Rhinitis, atopische Dermatitis)',
+    minor_heading: 'Nebenkriterien (≥3 erforderlich) — repräsentative Auswahl aus der ursprünglichen 23-Punkte-Liste',
+    min0: 'Xerose (trockene Haut)', min1: 'Ichthyose / palmare Hyperlinearität / Keratosis pilaris', min2: 'Sofortreaktivität (Typ I) im Hauttest oder erhöhtes Serum-IgE',
+    min3: 'Früher Krankheitsbeginn', min4: 'Neigung zu Hautinfektionen (insbesondere S. aureus und Herpes simplex)', min5: 'Neigung zu unspezifischer Hand- oder Fußdermatitis',
+    min6: 'Mamillenekzem', min7: 'Cheilitis', min8: 'Rezidivierende Konjunktivitis', min9: 'Dennie-Morgan-Infraorbitalfalte',
+    min10: 'Orbitale Verdunkelung / periorbitale Blässe oder Erythem', min11: 'Pityriasis alba', min12: 'Vordere Halsfalten', min13: 'Juckreiz beim Schwitzen',
+    min14: 'Unverträglichkeit von Wolle und Lipidlösungsmitteln', min15: 'Perifollikuläre Betonung', min16: 'Nahrungsmittelunverträglichkeit',
+    min17: 'Durch Umwelt- oder emotionale Faktoren beeinflusster Verlauf', min18: 'Weißer Dermographismus / verzögerte Abblassreaktion',
+    calc_btn: 'Kriterien prüfen', hr_extra_note: ' Die ursprünglichen Hanifin-und-Rajka-Kriterien listen 23 Nebenkriterien; diese Seite zeigt eine repräsentative Auswahl statt der vollständigen ursprünglichen Liste. Konsultieren Sie die Primärquelle für die vollständige Liste.',
+    met_label: 'Erfüllte Kriterien: ', diagnostic: 'Erfüllt die Hanifin-Rajka-Kriterien für atopische Dermatitis (≥3 Haupt-, ≥3 Nebenkriterien).', not_diagnostic: 'Erfüllt die Hanifin-Rajka-Kriterien anhand der hier ausgewählten Punkte nicht.'
+  },
+  pl: {
+    tag: 'Inne', title: 'Kryteria Hanifina-Rajki', subtitle: 'Kryteria diagnostyczne atopowego zapalenia skóry. Rozpoznanie wymaga co najmniej 3 kryteriów dużych i co najmniej 3 małych.',
+    major_heading: 'Kryteria duże (wymagane ≥3)',
+    maj0: 'Świąd', maj1: 'Typowa morfologia i lokalizacja (lichenizacja zgięć u dorosłych; zajęcie twarzy i powierzchni wyprostnych u niemowląt)',
+    maj2: 'Przewlekłe lub przewlekle nawracające zapalenie skóry', maj3: 'Osobisty lub rodzinny wywiad atopii (astma, alergiczny nieżyt nosa, atopowe zapalenie skóry)',
+    minor_heading: 'Kryteria małe (wymagane ≥3) — reprezentatywny wybór z oryginalnej listy 23 pozycji',
+    min0: 'Kserosis (sucha skóra)', min1: 'Rybia łuska / hiperlinearność dłoni / rogowacenie mieszkowe', min2: 'Natychmiastowa reaktywność testów skórnych (typ I) lub podwyższone IgE w surowicy',
+    min3: 'Wczesny wiek zachorowania', min4: 'Skłonność do zakażeń skóry (zwłaszcza S. aureus i opryszczki)', min5: 'Skłonność do nieswoistego zapalenia skóry rąk lub stóp',
+    min6: 'Wyprysk brodawki sutkowej', min7: 'Zapalenie warg', min8: 'Nawracające zapalenie spojówek', min9: 'Fałd Dennie-Morgana',
+    min10: 'Przebarwienie oczodołu / bladość lub rumień okołooczodołowy', min11: 'Łupież biały', min12: 'Przednie fałdy szyi', min13: 'Świąd podczas pocenia',
+    min14: 'Nietolerancja wełny i rozpuszczalników lipidowych', min15: 'Akcentacja okołomieszkowa', min16: 'Nietolerancja pokarmowa',
+    min17: 'Przebieg zależny od czynników środowiskowych lub emocjonalnych', min18: 'Biały dermografizm / opóźniona reakcja blaknięcia',
+    calc_btn: 'Sprawdź kryteria', hr_extra_note: ' Oryginalne kryteria Hanifina i Rajki wymieniają 23 kryteria małe; ta strona przedstawia reprezentatywny wybór, a nie pełną oryginalną listę. Pełny zestaw znajdziesz w źródle pierwotnym.',
+    met_label: 'Spełnione kryteria: ', diagnostic: 'Spełnia kryteria Hanifina-Rajki dla atopowego zapalenia skóry (≥3 duże, ≥3 małe).', not_diagnostic: 'Nie spełnia kryteriów Hanifina-Rajki na podstawie wybranych tu pozycji.'
+  }
+};
+
+var MAJ_IDS = ['maj0','maj1','maj2','maj3'];
+var MIN_IDS = [];
+for (var i = 0; i <= 18; i++) MIN_IDS.push('min' + i);
+
+var _lastHR = null;
+
+function calcHanifinRajka() {
+  var majCount = MAJ_IDS.filter(function(id){ return document.getElementById(id).checked; }).length;
+  var minCount = MIN_IDS.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastHR = { maj: majCount, min: minCount };
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastHR === null) return;
+  var maj = _lastHR.maj, min = _lastHR.min;
+  var meets = maj >= 3 && min >= 3;
+  document.getElementById('resultScore').textContent = ucmT('met_label') + maj + ' major, ' + min + ' minor';
+  document.getElementById('resultInterp').innerHTML = meets ? ucmT('diagnostic') : ucmT('not_diagnostic');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

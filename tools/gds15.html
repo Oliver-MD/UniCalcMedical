@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GDS-15 — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">GDS-15</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Geriatric Depression Scale (short form) — depression screening in older adults.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Over the past week, choose the best answer for how you have felt</h2>
+    <div id="items"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcGDS15()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Sheikh JI, Yesavage JA. Geriatric Depression Scale (GDS): recent evidence and development of a shorter version. Clin Gerontol. 1986;5(1–2):165–173.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/2691/geriatric-depression-scale-gds-15" target="_blank" rel="noopener">MDCalc — GDS-15</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'GDS-15', subtitle: 'Geriatric Depression Scale (short form) — depression screening in older adults.',
+    items_heading: 'Over the past week, choose the best answer for how you have felt',
+    calc_btn: 'Calculate', score_label: 'GDS-15 = ', of15: ' / 15', opt_yes: 'Yes', opt_no: 'No',
+    q0: 'Are you basically satisfied with your life?', q1: 'Have you dropped many of your activities and interests?',
+    q2: 'Do you feel that your life is empty?', q3: 'Do you often get bored?', q4: 'Are you in good spirits most of the time?',
+    q5: 'Are you afraid that something bad is going to happen to you?', q6: 'Do you feel happy most of the time?',
+    q7: 'Do you often feel helpless?', q8: 'Do you prefer to stay at home, rather than going out and doing new things?',
+    q9: 'Do you feel you have more problems with memory than most?', q10: 'Do you think it is wonderful to be alive now?',
+    q11: 'Do you feel pretty worthless the way you are now?', q12: 'Do you feel full of energy?',
+    q13: 'Do you feel that your situation is hopeless?', q14: 'Do you think that most people are better off than you are?',
+    interp_normal: 'Score 0–4 — normal range.', interp_positive: 'Score ≥5 — suggestive of depression; further clinical assessment recommended.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'GDS-15', subtitle: 'Geriatrická škála deprese (krátká forma) — screening deprese u starších dospělých.',
+    items_heading: 'Za poslední týden zvolte odpověď, která nejlépe vystihuje, jak jste se cítil(a)',
+    calc_btn: 'Vypočítat', score_label: 'GDS-15 = ', of15: ' / 15', opt_yes: 'Ano', opt_no: 'Ne',
+    q0: 'Jste v zásadě spokojen(a) se svým životem?', q1: 'Vzdal(a) jste se mnoha svých aktivit a zájmů?',
+    q2: 'Cítíte, že je váš život prázdný?', q3: 'Nudíte se často?', q4: 'Máte většinu času dobrou náladu?',
+    q5: 'Obáváte se, že se vám stane něco zlého?', q6: 'Cítíte se většinu času šťastně?',
+    q7: 'Cítíte se často bezmocný(á)?', q8: 'Dáváte přednost zůstat doma, spíše než chodit ven a dělat nové věci?',
+    q9: 'Máte pocit, že máte více problémů s pamětí než ostatní?', q10: 'Myslíte si, že je báječné být nyní naživu?',
+    q11: 'Cítíte se v současnosti dost bezcenně?', q12: 'Cítíte se plný(á) energie?',
+    q13: 'Máte pocit, že je vaše situace beznadějná?', q14: 'Myslíte si, že většina lidí je na tom lépe než vy?',
+    interp_normal: 'Skóre 0–4 — v normě.', interp_positive: 'Skóre ≥5 — svědčí pro depresi; doporučeno další klinické vyšetření.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'GDS-15', subtitle: "Échelle de dépression gériatrique (forme courte) — dépistage de la dépression chez les personnes âgées.",
+    items_heading: 'Au cours de la semaine écoulée, choisissez la meilleure réponse quant à la façon dont vous vous êtes senti(e)',
+    calc_btn: 'Calculer', score_label: 'GDS-15 = ', of15: ' / 15', opt_yes: 'Oui', opt_no: 'Non',
+    q0: 'Êtes-vous fondamentalement satisfait(e) de votre vie ?', q1: 'Avez-vous abandonné beaucoup de vos activités et intérêts ?',
+    q2: 'Avez-vous le sentiment que votre vie est vide ?', q3: 'Vous ennuyez-vous souvent ?', q4: 'Êtes-vous de bonne humeur la plupart du temps ?',
+    q5: "Craignez-vous qu'il vous arrive quelque chose de mauvais ?", q6: 'Vous sentez-vous heureux(se) la plupart du temps ?',
+    q7: 'Vous sentez-vous souvent impuissant(e) ?', q8: "Préférez-vous rester à la maison plutôt que de sortir et faire de nouvelles choses ?",
+    q9: 'Pensez-vous avoir plus de problèmes de mémoire que la plupart des gens ?', q10: "Pensez-vous qu'il est merveilleux d'être en vie maintenant ?",
+    q11: 'Vous sentez-vous plutôt inutile tel(le) que vous êtes actuellement ?', q12: "Vous sentez-vous plein(e) d'énergie ?",
+    q13: 'Avez-vous le sentiment que votre situation est désespérée ?', q14: 'Pensez-vous que la plupart des gens sont mieux lotis que vous ?',
+    interp_normal: 'Score 0–4 — dans la plage normale.', interp_positive: 'Score ≥5 — évocateur de dépression ; une évaluation clinique complémentaire est recommandée.'
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'GDS-15', subtitle: 'Geriatrische Depressionsskala (Kurzform) — Depressions-Screening bei älteren Erwachsenen.',
+    items_heading: 'Wählen Sie für die letzte Woche die Antwort, die am besten beschreibt, wie Sie sich gefühlt haben',
+    calc_btn: 'Berechnen', score_label: 'GDS-15 = ', of15: ' / 15', opt_yes: 'Ja', opt_no: 'Nein',
+    q0: 'Sind Sie grundsätzlich mit Ihrem Leben zufrieden?', q1: 'Haben Sie viele Ihrer Aktivitäten und Interessen aufgegeben?',
+    q2: 'Haben Sie das Gefühl, dass Ihr Leben leer ist?', q3: 'Langweilen Sie sich oft?', q4: 'Sind Sie meistens guter Laune?',
+    q5: 'Haben Sie Angst, dass Ihnen etwas Schlimmes zustößt?', q6: 'Fühlen Sie sich meistens glücklich?',
+    q7: 'Fühlen Sie sich oft hilflos?', q8: 'Bleiben Sie lieber zu Hause, statt auszugehen und etwas Neues zu unternehmen?',
+    q9: 'Haben Sie das Gefühl, mehr Gedächtnisprobleme zu haben als die meisten anderen?', q10: 'Finden Sie es wunderbar, jetzt zu leben?',
+    q11: 'Fühlen Sie sich so, wie Sie jetzt sind, ziemlich wertlos?', q12: 'Fühlen Sie sich voller Energie?',
+    q13: 'Haben Sie das Gefühl, dass Ihre Situation hoffnungslos ist?', q14: 'Glauben Sie, dass es den meisten Menschen besser geht als Ihnen?',
+    interp_normal: 'Score 0–4 — im Normbereich.', interp_positive: 'Score ≥5 — hinweisend auf Depression; weitere klinische Abklärung empfohlen.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'GDS-15', subtitle: 'Geriatryczna Skala Depresji (wersja krótka) — przesiewowa ocena depresji u osób starszych.',
+    items_heading: 'W ciągu ostatniego tygodnia wybierz odpowiedź najlepiej opisującą Twoje samopoczucie',
+    calc_btn: 'Oblicz', score_label: 'GDS-15 = ', of15: ' / 15', opt_yes: 'Tak', opt_no: 'Nie',
+    q0: 'Czy jest Pan/Pani zasadniczo zadowolony(a) ze swojego życia?', q1: 'Czy zrezygnował(a) Pan/Pani z wielu swoich zajęć i zainteresowań?',
+    q2: 'Czy czuje Pan/Pani, że Pana/Pani życie jest puste?', q3: 'Czy często się Pan/Pani nudzi?', q4: 'Czy przez większość czasu jest Pan/Pani w dobrym nastroju?',
+    q5: 'Czy obawia się Pan/Pani, że przydarzy się coś złego?', q6: 'Czy przez większość czasu czuje się Pan/Pani szczęśliwy(a)?',
+    q7: 'Czy często czuje się Pan/Pani bezradny(a)?', q8: 'Czy woli Pan/Pani zostać w domu niż wyjść i robić coś nowego?',
+    q9: 'Czy uważa Pan/Pani, że ma więcej problemów z pamięcią niż większość ludzi?', q10: 'Czy uważa Pan/Pani, że wspaniale jest teraz żyć?',
+    q11: 'Czy czuje się Pan/Pani dość bezwartościowy(a) w obecnej sytuacji?', q12: 'Czy czuje się Pan/Pani pełen(pełna) energii?',
+    q13: 'Czy czuje Pan/Pani, że Pana/Pani sytuacja jest beznadziejna?', q14: 'Czy uważa Pan/Pani, że większości ludzi wiedzie się lepiej niż Panu/Pani?',
+    interp_normal: 'Wynik 0–4 — w normie.', interp_positive: 'Wynik ≥5 — sugeruje depresję; zalecana dalsza ocena kliniczna.'
+  }
+};
+
+// true = a "No" answer scores the point (reverse-scored item)
+var REVERSE = [true, false, false, false, true, false, true, false, false, false, true, false, true, false, false];
+var QUESTION_KEYS = ['q0','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q11','q12','q13','q14'];
+
+function renderItems() {
+  var itemsDiv = document.getElementById('items');
+  var existing = QUESTION_KEYS.map(function(k, i){ return document.getElementById('q' + i); });
+  var currentValues = existing.map(function(el){ return el ? el.value : '0'; });
+  itemsDiv.innerHTML = '';
+  QUESTION_KEYS.forEach(function(key, i) {
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.innerHTML = '<label>' + (i+1) + '. ' + ucmT(key) + '</label>' +
+      '<select id="q' + i + '"><option value="1">' + ucmT('opt_yes') + '</option><option value="0">' + ucmT('opt_no') + '</option></select>';
+    itemsDiv.appendChild(wrap);
+    document.getElementById('q' + i).value = currentValues[i];
+  });
+}
+
+var _hasResult = false;
+
+function calcGDS15() { _hasResult = true; renderGDS15Result(); }
+
+function renderGDS15Result() {
+  if (!_hasResult) return;
+  var total = 0;
+  QUESTION_KEYS.forEach(function(key, i) {
+    var answeredYes = document.getElementById('q' + i).value === '1';
+    var scoresPoint = REVERSE[i] ? !answeredYes : answeredYes;
+    if (scoresPoint) total += 1;
+  });
+  var interp = total >= 5 ? ucmT('interp_positive') : ucmT('interp_normal');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of15');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderItems(); renderGDS15Result(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

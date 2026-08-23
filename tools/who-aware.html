@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WHO AWaRe Classification — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Infection &amp; antimicrobials</span>
+  <h1 class="page-title" data-i18n="title">WHO AWaRe Classification</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Looks up which AWaRe category (Access, Watch, or Reserve) an antibiotic belongs to.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Look up</h2>
+    <div class="field"><label data-i18n="drug_label">Antibiotic</label>
+      <select id="drug"></select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="showAWaRe()">Show category</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+    <span data-i18n="aware_note"> This is a selected subset of commonly used antibiotics, not the complete WHO AWaRe list — always verify against the current official list for any antibiotic not shown here or for the latest classification updates.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> World Health Organization. 2023 AWaRe classification of antibiotics for evaluation and monitoring of use.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.who.int/publications/i/item/WHO-MHP-HPS-EML-2023.04" target="_blank" rel="noopener">WHO AWaRe classification</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var DRUGS = [
+  ['amoxicillin', 'access'], ['amoxicillin-clavulanate', 'access'], ['ampicillin', 'access'], ['benzylpenicillin', 'access'],
+  ['cefalexin', 'access'], ['chloramphenicol', 'access'], ['clindamycin', 'access'], ['cloxacillin', 'access'],
+  ['doxycycline', 'access'], ['gentamicin', 'access'], ['metronidazole', 'access'], ['nitrofurantoin', 'access'],
+  ['cotrimoxazole', 'access'], ['trimethoprim', 'access'], ['procaine_benzylpenicillin', 'access'],
+  ['azithromycin', 'watch'], ['cefixime', 'watch'], ['cefotaxime', 'watch'], ['ceftriaxone', 'watch'],
+  ['cefuroxime', 'watch'], ['ciprofloxacin', 'watch'], ['clarithromycin', 'watch'], ['erythromycin', 'watch'],
+  ['levofloxacin', 'watch'], ['meropenem', 'watch'], ['piperacillin_tazobactam', 'watch'], ['vancomycin', 'watch'],
+  ['fluconazole', 'watch'], ['cefazolin', 'watch'], ['cefepime', 'watch'],
+  ['colistin', 'reserve'], ['linezolid', 'reserve'], ['daptomycin', 'reserve'], ['polymyxin_b', 'reserve'],
+  ['tigecycline', 'reserve'], ['fosfomycin_iv', 'reserve']
+];
+
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Infection & antimicrobials', title: 'WHO AWaRe Classification', subtitle: 'Looks up which AWaRe category (Access, Watch, or Reserve) an antibiotic belongs to.',
+    calc_heading: 'Look up', drug_label: 'Antibiotic', calc_btn: 'Show category',
+    aware_note: ' This is a selected subset of commonly used antibiotics, not the complete WHO AWaRe list — always verify against the current official list for any antibiotic not shown here or for the latest classification updates.',
+    cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
+    desc_access: 'First- or second-choice antibiotics with a narrower spectrum and lower resistance potential.',
+    desc_watch: 'Higher resistance potential — recommended as first- or second-choice only for specific, limited indications; prioritised as targets for stewardship monitoring.',
+    desc_reserve: 'Last-resort antibiotics for confirmed or suspected infections due to multidrug-resistant organisms; reserved for when other options have failed.',
+    amoxicillin: 'Amoxicillin', 'amoxicillin-clavulanate': 'Amoxicillin-clavulanate', ampicillin: 'Ampicillin', benzylpenicillin: 'Benzylpenicillin',
+    cefalexin: 'Cefalexin', chloramphenicol: 'Chloramphenicol', clindamycin: 'Clindamycin', cloxacillin: 'Cloxacillin',
+    doxycycline: 'Doxycycline', gentamicin: 'Gentamicin', metronidazole: 'Metronidazole', nitrofurantoin: 'Nitrofurantoin',
+    cotrimoxazole: 'Sulfamethoxazole-trimethoprim', trimethoprim: 'Trimethoprim', procaine_benzylpenicillin: 'Procaine benzylpenicillin',
+    azithromycin: 'Azithromycin', cefixime: 'Cefixime', cefotaxime: 'Cefotaxime', ceftriaxone: 'Ceftriaxone',
+    cefuroxime: 'Cefuroxime', ciprofloxacin: 'Ciprofloxacin', clarithromycin: 'Clarithromycin', erythromycin: 'Erythromycin',
+    levofloxacin: 'Levofloxacin', meropenem: 'Meropenem', piperacillin_tazobactam: 'Piperacillin-tazobactam', vancomycin: 'Vancomycin',
+    fluconazole: 'Fluconazole', cefazolin: 'Cefazolin', cefepime: 'Cefepime',
+    colistin: 'Colistin', linezolid: 'Linezolid', daptomycin: 'Daptomycin', polymyxin_b: 'Polymyxin B',
+    tigecycline: 'Tigecycline', fosfomycin_iv: 'Fosfomycin (IV)'
+  },
+  cs: {
+    tag: 'Infekce a antimikrobiální léčba', title: 'Klasifikace WHO AWaRe', subtitle: 'Vyhledá, do které kategorie AWaRe (Access, Watch, Reserve) antibiotikum patří.',
+    calc_heading: 'Vyhledat', drug_label: 'Antibiotikum', calc_btn: 'Zobrazit kategorii',
+    aware_note: ' Jde o vybraný podsoubor běžně používaných antibiotik, nikoliv úplný seznam WHO AWaRe — u jakéhokoli antibiotika zde neuvedeného nebo pro nejnovější aktualizace klasifikace vždy ověřte oproti aktuálnímu oficiálnímu seznamu.',
+    cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
+    desc_access: 'Antibiotika první nebo druhé volby s užším spektrem a nižším potenciálem k rozvoji rezistence.',
+    desc_watch: 'Vyšší potenciál k rezistenci — doporučena jako první nebo druhá volba jen pro specifické, omezené indikace; prioritní cíl pro sledování spotřeby.',
+    desc_reserve: 'Antibiotika poslední volby pro potvrzené nebo suspektní infekce multirezistentními organismy; vyhrazena pro selhání jiných možností.',
+    amoxicillin: 'Amoxicilin', 'amoxicillin-clavulanate': 'Amoxicilin-klavulanát', ampicillin: 'Ampicilin', benzylpenicillin: 'Benzylpenicilin',
+    cefalexin: 'Cefalexin', chloramphenicol: 'Chloramfenikol', clindamycin: 'Klindamycin', cloxacillin: 'Kloxacilin',
+    doxycycline: 'Doxycyklin', gentamicin: 'Gentamicin', metronidazole: 'Metronidazol', nitrofurantoin: 'Nitrofurantoin',
+    cotrimoxazole: 'Sulfametoxazol-trimetoprim', trimethoprim: 'Trimetoprim', procaine_benzylpenicillin: 'Prokain-benzylpenicilin',
+    azithromycin: 'Azitromycin', cefixime: 'Cefixim', cefotaxime: 'Cefotaxim', ceftriaxone: 'Ceftriaxon',
+    cefuroxime: 'Cefuroxim', ciprofloxacin: 'Ciprofloxacin', clarithromycin: 'Klaritromycin', erythromycin: 'Erytromycin',
+    levofloxacin: 'Levofloxacin', meropenem: 'Meropenem', piperacillin_tazobactam: 'Piperacilin-tazobaktam', vancomycin: 'Vankomycin',
+    fluconazole: 'Flukonazol', cefazolin: 'Cefazolin', cefepime: 'Cefepim',
+    colistin: 'Kolistin', linezolid: 'Linezolid', daptomycin: 'Daptomycin', polymyxin_b: 'Polymyxin B',
+    tigecycline: 'Tigecyklin', fosfomycin_iv: 'Fosfomycin (IV)'
+  },
+  fr: {
+    tag: 'Infection et antimicrobiens', title: 'Classification OMS AWaRe', subtitle: "Recherche la catégorie AWaRe (Access, Watch ou Reserve) à laquelle appartient un antibiotique.",
+    calc_heading: 'Rechercher', drug_label: 'Antibiotique', calc_btn: 'Afficher la catégorie',
+    aware_note: " Il s'agit d'un sous-ensemble sélectionné d'antibiotiques couramment utilisés, pas de la liste complète de l'OMS AWaRe — vérifiez toujours par rapport à la liste officielle actuelle pour tout antibiotique non présenté ici ou pour les dernières mises à jour de classification.",
+    cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
+    desc_access: 'Antibiotiques de première ou deuxième intention à spectre plus étroit et à potentiel de résistance plus faible.',
+    desc_watch: "Potentiel de résistance plus élevé — recommandés en première ou deuxième intention uniquement pour des indications spécifiques et limitées ; ciblés en priorité pour la surveillance de la consommation.",
+    desc_reserve: "Antibiotiques de dernier recours pour les infections confirmées ou suspectées dues à des organismes multirésistants ; réservés en cas d'échec des autres options.",
+    amoxicillin: 'Amoxicilline', 'amoxicillin-clavulanate': 'Amoxicilline-acide clavulanique', ampicillin: 'Ampicilline', benzylpenicillin: 'Benzylpénicilline',
+    cefalexin: 'Céfalexine', chloramphenicol: 'Chloramphénicol', clindamycin: 'Clindamycine', cloxacillin: 'Cloxacilline',
+    doxycycline: 'Doxycycline', gentamicin: 'Gentamicine', metronidazole: 'Métronidazole', nitrofurantoin: 'Nitrofurantoïne',
+    cotrimoxazole: 'Sulfaméthoxazole-triméthoprime', trimethoprim: 'Triméthoprime', procaine_benzylpenicillin: 'Benzylpénicilline procaïne',
+    azithromycin: 'Azithromycine', cefixime: 'Céfixime', cefotaxime: 'Céfotaxime', ceftriaxone: 'Ceftriaxone',
+    cefuroxime: 'Céfuroxime', ciprofloxacin: 'Ciprofloxacine', clarithromycin: 'Clarithromycine', erythromycin: 'Érythromycine',
+    levofloxacin: 'Lévofloxacine', meropenem: 'Méropénème', piperacillin_tazobactam: 'Pipéracilline-tazobactam', vancomycin: 'Vancomycine',
+    fluconazole: 'Fluconazole', cefazolin: 'Céfazoline', cefepime: 'Céfépime',
+    colistin: 'Colistine', linezolid: 'Linézolide', daptomycin: 'Daptomycine', polymyxin_b: 'Polymyxine B',
+    tigecycline: 'Tigécycline', fosfomycin_iv: 'Fosfomycine (IV)'
+  },
+  de: {
+    tag: 'Infektion & Antibiotika', title: 'WHO-AWaRe-Klassifikation', subtitle: 'Sucht, welcher AWaRe-Kategorie (Access, Watch oder Reserve) ein Antibiotikum zugeordnet ist.',
+    calc_heading: 'Nachschlagen', drug_label: 'Antibiotikum', calc_btn: 'Kategorie anzeigen',
+    aware_note: ' Dies ist eine ausgewählte Teilmenge häufig verwendeter Antibiotika, nicht die vollständige WHO-AWaRe-Liste — bei nicht aufgeführten Antibiotika oder für die neuesten Klassifikationsaktualisierungen stets die aktuelle offizielle Liste prüfen.',
+    cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
+    desc_access: 'Mittel der ersten oder zweiten Wahl mit engerem Spektrum und geringerem Resistenzpotenzial.',
+    desc_watch: 'Höheres Resistenzpotenzial — nur für spezifische, begrenzte Indikationen als erste oder zweite Wahl empfohlen; vorrangiges Ziel für Verbrauchsüberwachung.',
+    desc_reserve: 'Antibiotika der letzten Wahl bei bestätigten oder vermuteten Infektionen durch multiresistente Erreger; reserviert für das Versagen anderer Optionen.',
+    amoxicillin: 'Amoxicillin', 'amoxicillin-clavulanate': 'Amoxicillin-Clavulansäure', ampicillin: 'Ampicillin', benzylpenicillin: 'Benzylpenicillin',
+    cefalexin: 'Cefalexin', chloramphenicol: 'Chloramphenicol', clindamycin: 'Clindamycin', cloxacillin: 'Cloxacillin',
+    doxycycline: 'Doxycyclin', gentamicin: 'Gentamicin', metronidazole: 'Metronidazol', nitrofurantoin: 'Nitrofurantoin',
+    cotrimoxazole: 'Sulfamethoxazol-Trimethoprim', trimethoprim: 'Trimethoprim', procaine_benzylpenicillin: 'Procain-Benzylpenicillin',
+    azithromycin: 'Azithromycin', cefixime: 'Cefixim', cefotaxime: 'Cefotaxim', ceftriaxone: 'Ceftriaxon',
+    cefuroxime: 'Cefuroxim', ciprofloxacin: 'Ciprofloxacin', clarithromycin: 'Clarithromycin', erythromycin: 'Erythromycin',
+    levofloxacin: 'Levofloxacin', meropenem: 'Meropenem', piperacillin_tazobactam: 'Piperacillin-Tazobactam', vancomycin: 'Vancomycin',
+    fluconazole: 'Fluconazol', cefazolin: 'Cefazolin', cefepime: 'Cefepim',
+    colistin: 'Colistin', linezolid: 'Linezolid', daptomycin: 'Daptomycin', polymyxin_b: 'Polymyxin B',
+    tigecycline: 'Tigecyclin', fosfomycin_iv: 'Fosfomycin (IV)'
+  },
+  pl: {
+    tag: 'Infekcje i leki przeciwdrobnoustrojowe', title: 'Klasyfikacja WHO AWaRe', subtitle: 'Wyszukuje, do której kategorii AWaRe (Access, Watch lub Reserve) należy antybiotyk.',
+    calc_heading: 'Wyszukaj', drug_label: 'Antybiotyk', calc_btn: 'Pokaż kategorię',
+    aware_note: ' To wybrany podzbiór powszechnie stosowanych antybiotyków, a nie pełna lista WHO AWaRe — zawsze zweryfikuj z aktualną oficjalną listą dla antybiotyków tu niewymienionych lub najnowszych aktualizacji klasyfikacji.',
+    cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
+    desc_access: 'Antybiotyki pierwszego lub drugiego wyboru o węższym spektrum i niższym potencjale oporności.',
+    desc_watch: 'Wyższy potencjał oporności — zalecane jako pierwszy lub drugi wybór tylko w określonych, ograniczonych wskazaniach; priorytetowy cel monitorowania zużycia.',
+    desc_reserve: 'Antybiotyki ostatniego wyboru w potwierdzonych lub podejrzewanych zakażeniach organizmami wielolekoopornymi; zarezerwowane na wypadek niepowodzenia innych opcji.',
+    amoxicillin: 'Amoksycylina', 'amoxicillin-clavulanate': 'Amoksycylina z kwasem klawulanowym', ampicillin: 'Ampicylina', benzylpenicillin: 'Benzylopenicylina',
+    cefalexin: 'Cefaleksyna', chloramphenicol: 'Chloramfenikol', clindamycin: 'Klindamycyna', cloxacillin: 'Kloksacylina',
+    doxycycline: 'Doksycyklina', gentamicin: 'Gentamycyna', metronidazole: 'Metronidazol', nitrofurantoin: 'Nitrofurantoina',
+    cotrimoxazole: 'Sulfametoksazol-trimetoprim', trimethoprim: 'Trimetoprim', procaine_benzylpenicillin: 'Penicylina prokainowa',
+    azithromycin: 'Azytromycyna', cefixime: 'Cefiksym', cefotaxime: 'Cefotaksym', ceftriaxone: 'Ceftriakson',
+    cefuroxime: 'Cefuroksym', ciprofloxacin: 'Cyprofloksacyna', clarithromycin: 'Klarytromycyna', erythromycin: 'Erytromycyna',
+    levofloxacin: 'Lewofloksacyna', meropenem: 'Meropenem', piperacillin_tazobactam: 'Piperacylina-tazobaktam', vancomycin: 'Wankomycyna',
+    fluconazole: 'Flukonazol', cefazolin: 'Cefazolina', cefepime: 'Cefepim',
+    colistin: 'Kolistyna', linezolid: 'Linezolid', daptomycin: 'Daptomycyna', polymyxin_b: 'Polimyksyna B',
+    tigecycline: 'Tygecyklina', fosfomycin_iv: 'Fosfomycyna (IV)'
+  }
+};
+
+function populateDrugs() {
+  var sel = document.getElementById('drug');
+  sel.innerHTML = '';
+  DRUGS.forEach(function(pair) {
+    var opt = document.createElement('option');
+    opt.value = pair[0] + '|' + pair[1];
+    opt.textContent = ucmT(pair[0]);
+    sel.appendChild(opt);
+  });
+}
+populateDrugs();
+
+var _lastDrug = null;
+
+function showAWaRe() {
+  _lastDrug = document.getElementById('drug').value;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastDrug === null) return;
+  var parts = _lastDrug.split('|');
+  var cat = parts[1];
+  var catLabel = ucmT('cat_' + cat);
+  var desc = ucmT('desc_' + cat);
+  document.getElementById('resultScore').textContent = catLabel;
+  document.getElementById('resultInterp').innerHTML = desc;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() {
+  var prevIndex = document.getElementById('drug') ? document.getElementById('drug').selectedIndex : 0;
+  populateDrugs();
+  if (document.getElementById('drug').options.length > prevIndex) document.getElementById('drug').selectedIndex = prevIndex;
+  renderResult();
+};
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

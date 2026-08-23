@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fried Frailty Phenotype — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cognition &amp; frailty</span>
+  <h1 class="page-title" data-i18n="title">Fried Frailty Phenotype</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Five-criterion physical frailty phenotype. Grip strength and gait speed require direct measurement against published sex/height-stratified cut-offs — enter the result of that assessment below.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria (1 point each if present)</h2>
+    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n-html="c0"><strong>Weight loss</strong> — Unintentional weight loss ≥ 4.5 kg (or ≥5%) in the past year</label></div>
+    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n-html="c1"><strong>Exhaustion</strong> — Self-reported exhaustion (e.g. felt that everything was an effort, or could not get going, several/most days)</label></div>
+    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n-html="c2"><strong>Low physical activity</strong> — Weekly energy expenditure below the lowest quintile for age and sex</label></div>
+    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n-html="c3"><strong>Slowness</strong> — Measured gait speed below the cut-off for height and sex (typically ~15th percentile of a reference population)</label></div>
+    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n-html="c4"><strong>Weakness</strong> — Measured grip strength below the cut-off for BMI and sex (typically ~lowest quintile of a reference population)</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcFried()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+    <span data-i18n="fried_extra_note"> The original cut-offs for slowness and weakness are stratified by sex and either height or BMI, from specific reference population tables — they are not reproduced here. This tool assumes those thresholds have already been applied by the examiner.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Fried LP, Tangen CM, Walston J, et al. Frailty in older adults: evidence for a phenotype. J Gerontol A Biol Sci Med Sci. 2001;56(3):M146–M156.
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cognition & frailty', title: 'Fried Frailty Phenotype', subtitle: 'Five-criterion physical frailty phenotype. Grip strength and gait speed require direct measurement against published sex/height-stratified cut-offs — enter the result of that assessment below.',
+    criteria_heading: 'Criteria (1 point each if present)',
+    c0: '<strong>Weight loss</strong> — Unintentional weight loss ≥ 4.5 kg (or ≥5%) in the past year',
+    c1: '<strong>Exhaustion</strong> — Self-reported exhaustion (e.g. felt that everything was an effort, or could not get going, several/most days)',
+    c2: '<strong>Low physical activity</strong> — Weekly energy expenditure below the lowest quintile for age and sex',
+    c3: '<strong>Slowness</strong> — Measured gait speed below the cut-off for height and sex (typically ~15th percentile of a reference population)',
+    c4: '<strong>Weakness</strong> — Measured grip strength below the cut-off for BMI and sex (typically ~lowest quintile of a reference population)',
+    calc_btn: 'Calculate', score_label: 'Criteria met = ', of5: ' / 5',
+    fried_extra_note: ' The original cut-offs for slowness and weakness are stratified by sex and either height or BMI, from specific reference population tables — they are not reproduced here. This tool assumes those thresholds have already been applied by the examiner.',
+    interp_robust: 'Not frail (0 criteria).', interp_prefrail: 'Pre-frail (1–2 criteria).', interp_frail: 'Frail (3–5 criteria).'
+  },
+  cs: {
+    tag: 'Kognice a křehkost', title: 'Friedův fenotyp křehkosti', subtitle: 'Pětikriteriální fenotyp fyzické křehkosti. Síla stisku a rychlost chůze vyžadují přímé měření oproti publikovaným pohlaví/výškou stratifikovaným hranicím — zadejte výsledek tohoto hodnocení níže.',
+    criteria_heading: 'Kritéria (1 bod za každé přítomné)',
+    c0: '<strong>Úbytek hmotnosti</strong> — Nezáměrný úbytek hmotnosti ≥ 4,5 kg (nebo ≥5 %) za poslední rok',
+    c1: '<strong>Vyčerpanost</strong> — Subjektivně udávaná vyčerpanost (např. pocit, že vše vyžaduje úsilí, nebo neschopnost se rozpohybovat, po většinu/mnoho dní)',
+    c2: '<strong>Nízká fyzická aktivita</strong> — Týdenní energetický výdej pod nejnižším kvintilem pro věk a pohlaví',
+    c3: '<strong>Zpomalení</strong> — Naměřená rychlost chůze pod hranicí pro výšku a pohlaví (obvykle přibl. 15. percentil referenční populace)',
+    c4: '<strong>Slabost</strong> — Naměřená síla stisku pod hranicí pro BMI a pohlaví (obvykle přibl. nejnižší kvintil referenční populace)',
+    calc_btn: 'Vypočítat', score_label: 'Splněná kritéria = ', of5: ' / 5',
+    fried_extra_note: ' Původní hranice pro zpomalení a slabost jsou stratifikovány dle pohlaví a buď výšky, nebo BMI, na základě konkrétních tabulek referenční populace — zde nejsou reprodukovány. Tento nástroj předpokládá, že tyto hranice již byly vyšetřujícím aplikovány.',
+    interp_robust: 'Bez křehkosti (0 kritérií).', interp_prefrail: 'Prefrailní (1–2 kritéria).', interp_frail: 'Křehký(á) (3–5 kritérií).'
+  },
+  fr: {
+    tag: 'Cognition et fragilité', title: 'Phénotype de fragilité de Fried', subtitle: "Phénotype de fragilité physique à cinq critères. La force de préhension et la vitesse de marche nécessitent une mesure directe par rapport aux seuils publiés stratifiés par sexe/taille — saisissez le résultat de cette évaluation ci-dessous.",
+    criteria_heading: 'Critères (1 point chacun si présent)',
+    c0: "<strong>Perte de poids</strong> — Perte de poids involontaire ≥ 4,5 kg (ou ≥5 %) au cours de la dernière année",
+    c1: "<strong>Épuisement</strong> — Épuisement rapporté par le patient (p. ex. sentiment que tout demande un effort, ou incapacité à démarrer, la plupart des jours)",
+    c2: "<strong>Faible activité physique</strong> — Dépense énergétique hebdomadaire inférieure au quintile le plus bas pour l'âge et le sexe",
+    c3: "<strong>Lenteur</strong> — Vitesse de marche mesurée inférieure au seuil pour la taille et le sexe (généralement environ le 15e percentile d'une population de référence)",
+    c4: "<strong>Faiblesse</strong> — Force de préhension mesurée inférieure au seuil pour l'IMC et le sexe (généralement environ le quintile le plus bas d'une population de référence)",
+    calc_btn: 'Calculer', score_label: 'Critères remplis = ', of5: ' / 5',
+    fried_extra_note: " Les seuils originaux de lenteur et de faiblesse sont stratifiés par sexe et par taille ou IMC, à partir de tableaux de population de référence spécifiques — ils ne sont pas reproduits ici. Cet outil suppose que ces seuils ont déjà été appliqués par l'examinateur.",
+    interp_robust: 'Non fragile (0 critère).', interp_prefrail: 'Pré-fragile (1–2 critères).', interp_frail: 'Fragile (3–5 critères).'
+  },
+  de: {
+    tag: 'Kognition & Gebrechlichkeit', title: 'Fried-Gebrechlichkeitsphänotyp', subtitle: 'Physischer Gebrechlichkeitsphänotyp mit fünf Kriterien. Griffkraft und Gehgeschwindigkeit erfordern eine direkte Messung anhand veröffentlichter geschlechts-/größenstratifizierter Grenzwerte — geben Sie das Ergebnis dieser Beurteilung unten ein.',
+    criteria_heading: 'Kriterien (je 1 Punkt, falls vorhanden)',
+    c0: '<strong>Gewichtsverlust</strong> — Unbeabsichtigter Gewichtsverlust ≥ 4,5 kg (oder ≥5 %) im letzten Jahr',
+    c1: '<strong>Erschöpfung</strong> — Selbstberichtete Erschöpfung (z. B. das Gefühl, dass alles Anstrengung erfordert, oder Antriebslosigkeit, an den meisten Tagen)',
+    c2: '<strong>Geringe körperliche Aktivität</strong> — Wöchentlicher Energieverbrauch unter dem niedrigsten Quintil für Alter und Geschlecht',
+    c3: '<strong>Verlangsamung</strong> — Gemessene Gehgeschwindigkeit unter dem Grenzwert für Größe und Geschlecht (typischerweise ca. 15. Perzentile einer Referenzpopulation)',
+    c4: '<strong>Schwäche</strong> — Gemessene Griffkraft unter dem Grenzwert für BMI und Geschlecht (typischerweise ca. niedrigstes Quintil einer Referenzpopulation)',
+    calc_btn: 'Berechnen', score_label: 'Erfüllte Kriterien = ', of5: ' / 5',
+    fried_extra_note: ' Die ursprünglichen Grenzwerte für Verlangsamung und Schwäche sind nach Geschlecht und entweder Größe oder BMI stratifiziert, basierend auf spezifischen Referenzpopulationstabellen — sie werden hier nicht wiedergegeben. Dieses Tool geht davon aus, dass diese Schwellenwerte bereits vom Untersucher angewendet wurden.',
+    interp_robust: 'Nicht gebrechlich (0 Kriterien).', interp_prefrail: 'Prä-gebrechlich (1–2 Kriterien).', interp_frail: 'Gebrechlich (3–5 Kriterien).'
+  },
+  pl: {
+    tag: 'Funkcje poznawcze i zespół kruchości', title: 'Fenotyp kruchości Fried', subtitle: 'Pięciokryterialny fenotyp kruchości fizycznej. Siła uścisku i prędkość chodu wymagają bezpośredniego pomiaru względem opublikowanych progów stratyfikowanych wg płci/wzrostu — wpisz wynik tej oceny poniżej.',
+    criteria_heading: 'Kryteria (1 punkt za każde obecne)',
+    c0: '<strong>Utrata masy ciała</strong> — Niezamierzona utrata masy ciała ≥ 4,5 kg (lub ≥5%) w ciągu ostatniego roku',
+    c1: '<strong>Wyczerpanie</strong> — Zgłaszane przez pacjenta wyczerpanie (np. poczucie, że wszystko wymaga wysiłku, lub brak energii, przez większość dni)',
+    c2: '<strong>Niska aktywność fizyczna</strong> — Tygodniowy wydatek energetyczny poniżej najniższego kwintyla dla wieku i płci',
+    c3: '<strong>Spowolnienie</strong> — Zmierzona prędkość chodu poniżej progu dla wzrostu i płci (zwykle ok. 15. percentyla populacji referencyjnej)',
+    c4: '<strong>Osłabienie</strong> — Zmierzona siła uścisku poniżej progu dla BMI i płci (zwykle ok. najniższego kwintyla populacji referencyjnej)',
+    calc_btn: 'Oblicz', score_label: 'Spełnione kryteria = ', of5: ' / 5',
+    fried_extra_note: ' Oryginalne progi dla spowolnienia i osłabienia są stratyfikowane wg płci oraz wzrostu lub BMI, na podstawie konkretnych tabel populacji referencyjnej — nie są tu odtworzone. To narzędzie zakłada, że te progi zostały już zastosowane przez badającego.',
+    interp_robust: 'Brak kruchości (0 kryteriów).', interp_prefrail: 'Wstępna kruchość (1–2 kryteria).', interp_frail: 'Zespół kruchości (3–5 kryteriów).'
+  }
+};
+
+var CRIT_IDS = ['c0','c1','c2','c3','c4'];
+
+var _lastFried = null;
+
+function calcFried() {
+  var total = CRIT_IDS.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastFried = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastFried === null) return;
+  var total = _lastFried;
+  var interp = total === 0 ? ucmT('interp_robust') : (total <= 2 ? ucmT('interp_prefrail') : ucmT('interp_frail'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of5');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

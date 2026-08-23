@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D-dimer Age-Adjusted Cut-off — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">D-dimer Age-Adjusted Cut-off</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Age-adjusted D-dimer threshold for excluding venous thromboembolism in patients over 50.</p>
+
+  <div class="card">
+    <h2 data-i18n="calc_heading">Calculate</h2>
+    <div class="field"><label data-i18n="age_label" for="age">Age (years)</label><input type="number" id="age" min="18" max="120" step="1" data-i18n-placeholder="age_ph" placeholder="e.g. 68"></div>
+    <div class="field"><label data-i18n="ddimer_label" for="ddimer">D-dimer (ng/mL FEU)</label><input type="number" id="ddimer" min="0" max="20000" step="1" data-i18n-placeholder="ddimer_ph" placeholder="e.g. 750"></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcDDimer()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Righini M, Van Es J, Den Exter PL, et al. Age-adjusted D-dimer cutoff levels to rule out pulmonary embolism: the ADJUST-PE study. JAMA. 2014;311(11):1117–1124.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/3818/age-adjusted-d-dimer" target="_blank" rel="noopener">MDCalc — Age-Adjusted D-dimer</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'D-dimer Age-Adjusted Cut-off', subtitle: 'Age-adjusted D-dimer threshold for excluding venous thromboembolism in patients over 50.',
+    calc_heading: 'Calculate', age_label: 'Age (years)', age_ph: 'e.g. 68', ddimer_label: 'D-dimer (ng/mL FEU)', ddimer_ph: 'e.g. 750',
+    calc_btn: 'Calculate', err_invalid: 'Please enter a valid age and D-dimer value.',
+    cutoff_label: 'Applicable cut-off: ', standard_note: 'For patients ≤50 years, the standard cut-off of 500 ng/mL FEU applies (not age-adjusted).',
+    below: 'D-dimer is below the applicable cut-off.', above: 'D-dimer is at or above the applicable cut-off.',
+    interp_note: 'This applies specifically to patients with low or moderate pretest clinical probability of VTE — always used alongside, not instead of, clinical assessment.'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'Věkově upravený cut-off D-dimeru', subtitle: 'Věkově upravená hranice D-dimeru pro vyloučení žilní tromboembolie u pacientů nad 50 let.',
+    calc_heading: 'Výpočet', age_label: 'Věk (roky)', age_ph: 'např. 68', ddimer_label: 'D-dimer (ng/ml FEU)', ddimer_ph: 'např. 750',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platný věk a hodnotu D-dimeru.',
+    cutoff_label: 'Platná hranice: ', standard_note: 'U pacientů ≤50 let platí standardní hranice 500 ng/ml FEU (bez věkové úpravy).',
+    below: 'D-dimer je pod platnou hranicí.', above: 'D-dimer je na nebo nad platnou hranicí.',
+    interp_note: 'Toto platí konkrétně pro pacienty s nízkou nebo střední pre-test klinickou pravděpodobností VTE — vždy se používá společně s klinickým hodnocením, nikoliv místo něj.'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'D-dimères — seuil ajusté à l\u2019âge', subtitle: "Seuil de D-dimères ajusté à l'âge pour exclure une thromboembolie veineuse chez les patients de plus de 50 ans.",
+    calc_heading: 'Calculer', age_label: 'Âge (ans)', age_ph: 'p. ex. 68', ddimer_label: 'D-dimères (ng/mL FEU)', ddimer_ph: 'p. ex. 750',
+    calc_btn: 'Calculer', err_invalid: 'Veuillez saisir un âge et une valeur de D-dimères valides.',
+    cutoff_label: 'Seuil applicable : ', standard_note: 'Pour les patients ≤50 ans, le seuil standard de 500 ng/mL FEU s\u2019applique (non ajusté à l\u2019âge).',
+    below: 'Les D-dimères sont inférieurs au seuil applicable.', above: 'Les D-dimères sont au niveau ou au-dessus du seuil applicable.',
+    interp_note: "Ceci s'applique spécifiquement aux patients ayant une probabilité clinique prétest faible ou modérée de MTEV — toujours utilisé en complément de, et non à la place de, l'évaluation clinique."
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'Altersadjustierter D-Dimer-Grenzwert', subtitle: 'Altersadjustierter D-Dimer-Grenzwert zum Ausschluss einer venösen Thromboembolie bei Patienten über 50 Jahren.',
+    calc_heading: 'Berechnen', age_label: 'Alter (Jahre)', age_ph: 'z. B. 68', ddimer_label: 'D-Dimer (ng/ml FEU)', ddimer_ph: 'z. B. 750',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte gültiges Alter und D-Dimer-Wert eingeben.',
+    cutoff_label: 'Anwendbarer Grenzwert: ', standard_note: 'Bei Patienten ≤50 Jahren gilt der Standardgrenzwert von 500 ng/ml FEU (nicht altersadjustiert).',
+    below: 'D-Dimer liegt unter dem anwendbaren Grenzwert.', above: 'D-Dimer liegt auf oder über dem anwendbaren Grenzwert.',
+    interp_note: 'Dies gilt speziell für Patienten mit niedriger oder mittlerer klinischer Vortestwahrscheinlichkeit für VTE — stets ergänzend zur, nicht anstelle der, klinischen Beurteilung.'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'D-dimer — próg skorygowany wiekiem', subtitle: 'Skorygowany wiekiem próg D-dimeru do wykluczenia żylnej choroby zakrzepowo-zatorowej u pacjentów powyżej 50 roku życia.',
+    calc_heading: 'Oblicz', age_label: 'Wiek (lata)', age_ph: 'np. 68', ddimer_label: 'D-dimer (ng/ml FEU)', ddimer_ph: 'np. 750',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowy wiek i wartość D-dimeru.',
+    cutoff_label: 'Obowiązujący próg: ', standard_note: 'U pacjentów ≤50 lat obowiązuje standardowy próg 500 ng/ml FEU (bez korekty wiekowej).',
+    below: 'D-dimer jest poniżej obowiązującego progu.', above: 'D-dimer jest na poziomie lub powyżej obowiązującego progu.',
+    interp_note: 'Dotyczy to konkretnie pacjentów z niskim lub umiarkowanym klinicznym prawdopodobieństwem wstępnym ŻChZZ — zawsze stosowane razem z oceną kliniczną, a nie zamiast niej.'
+  }
+};
+
+var _lastDDimer = null;
+
+function calcDDimer() {
+  var age = parseFloat(document.getElementById('age').value);
+  var ddimer = parseFloat(document.getElementById('ddimer').value);
+  if (!age || age <= 0 || ddimer < 0 || isNaN(ddimer)) { alert(ucmT('err_invalid')); return; }
+  var cutoff = age > 50 ? age * 10 : 500;
+  _lastDDimer = { age: age, ddimer: ddimer, cutoff: cutoff };
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastDDimer === null) return;
+  var d = _lastDDimer;
+  var html = ucmT('cutoff_label') + '<strong>' + d.cutoff + ' ng/mL FEU</strong><br>';
+  if (d.age <= 50) html += '<span style="font-size:12.5px;color:var(--ink-soft);">' + ucmT('standard_note') + '</span><br>';
+  html += (d.ddimer < d.cutoff ? ucmT('below') : ucmT('above')) + '<br>';
+  html += '<span style="font-size:12.5px;color:var(--ink-soft);">' + ucmT('interp_note') + '</span>';
+  document.getElementById('resultScore').textContent = d.ddimer + ' ng/mL FEU';
+  document.getElementById('resultInterp').innerHTML = html;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
