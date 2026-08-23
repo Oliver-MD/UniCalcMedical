@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEART Score — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">HEART Score</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Risk stratification for major adverse cardiac events in patients presenting with chest pain.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria</h2>
+    <div class="field"><label data-i18n="l_history">History</label>
+      <select id="c_history">
+        <option value="0" data-i18n="history0">Slightly suspicious (+0)</option>
+        <option value="1" data-i18n="history1">Moderately suspicious (+1)</option>
+        <option value="2" data-i18n="history2">Highly suspicious (+2)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_ecg">ECG</label>
+      <select id="c_ecg">
+        <option value="0" data-i18n="ecg0">Normal (+0)</option>
+        <option value="1" data-i18n="ecg1">Non-specific repolarisation disturbance (+1)</option>
+        <option value="2" data-i18n="ecg2">Significant ST-segment deviation (+2)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_age">Age</label>
+      <select id="c_age">
+        <option value="0" data-i18n="age0">&lt; 45 years (+0)</option>
+        <option value="1" data-i18n="age1">45–64 years (+1)</option>
+        <option value="2" data-i18n="age2">≥ 65 years (+2)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_risk">Risk factors</label>
+      <select id="c_risk">
+        <option value="0" data-i18n="risk0">No known risk factors (+0)</option>
+        <option value="1" data-i18n="risk1">1–2 risk factors (+1)</option>
+        <option value="2" data-i18n="risk2">≥3 risk factors, or history of atherosclerotic disease (+2)</option>
+      </select>
+      <div class="help" data-i18n="risk_help">Risk factors: hypertension, hypercholesterolaemia, diabetes, obesity (BMI &gt; 30), smoking (current or stopped ≤3 months), family history, and atherosclerotic disease (prior MI, PCI/CABG, stroke, or peripheral arterial disease).</div>
+    </div>
+    <div class="field"><label data-i18n="l_trop">Initial troponin</label>
+      <select id="c_trop">
+        <option value="0" data-i18n="trop0">≤ normal limit (+0)</option>
+        <option value="1" data-i18n="trop1">1–3× normal limit (+1)</option>
+        <option value="2" data-i18n="trop2">&gt; 3× normal limit (+2)</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcHEART()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Six AJ, Backus BE, Kelder JC. Chest pain in the emergency room: value of the HEART score. Neth Heart J. 2008;16(6):191–196.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/1752/heart-score-major-cardiac-events" target="_blank" rel="noopener">MDCalc — HEART score</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'HEART Score', subtitle: 'Risk stratification for major adverse cardiac events in patients presenting with chest pain.',
+    criteria_heading: 'Criteria',
+    l_history: 'History', history0: 'Slightly suspicious (+0)', history1: 'Moderately suspicious (+1)', history2: 'Highly suspicious (+2)',
+    l_ecg: 'ECG', ecg0: 'Normal (+0)', ecg1: 'Non-specific repolarisation disturbance (+1)', ecg2: 'Significant ST-segment deviation (+2)',
+    l_age: 'Age', age0: '< 45 years (+0)', age1: '45–64 years (+1)', age2: '≥ 65 years (+2)',
+    l_risk: 'Risk factors', risk0: 'No known risk factors (+0)', risk1: '1–2 risk factors (+1)', risk2: '≥3 risk factors, or history of atherosclerotic disease (+2)',
+    risk_help: 'Risk factors: hypertension, hypercholesterolaemia, diabetes, obesity (BMI > 30), smoking (current or stopped ≤3 months), family history, and atherosclerotic disease (prior MI, PCI/CABG, stroke, or peripheral arterial disease).',
+    l_trop: 'Initial troponin', trop0: '≤ normal limit (+0)', trop1: '1–3× normal limit (+1)', trop2: '> 3× normal limit (+2)',
+    calc_btn: 'Calculate', score_label: 'Score = ', of10: ' / 10',
+    interp_low: 'Low risk (0–3) — 6-week risk of major adverse cardiac events approx. 0.9–1.7%.',
+    interp_mod: 'Moderate risk (4–6) — 6-week risk of major adverse cardiac events approx. 12–16.6%.',
+    interp_high: 'High risk (7–10) — 6-week risk of major adverse cardiac events approx. 50–65%.'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'HEART skóre', subtitle: 'Stratifikace rizika závažných kardiálních příhod u pacientů s bolestí na hrudi.',
+    criteria_heading: 'Kritéria',
+    l_history: 'Anamnéza', history0: 'Málo suspektní (+0)', history1: 'Středně suspektní (+1)', history2: 'Vysoce suspektní (+2)',
+    l_ecg: 'EKG', ecg0: 'Normální (+0)', ecg1: 'Nespecifická porucha repolarizace (+1)', ecg2: 'Významná deviace ST úseku (+2)',
+    l_age: 'Věk', age0: '< 45 let (+0)', age1: '45–64 let (+1)', age2: '≥ 65 let (+2)',
+    l_risk: 'Rizikové faktory', risk0: 'Žádné známé rizikové faktory (+0)', risk1: '1–2 rizikové faktory (+1)', risk2: '≥3 rizikové faktory nebo anamnéza aterosklerotického onemocnění (+2)',
+    risk_help: 'Rizikové faktory: hypertenze, hypercholesterolemie, diabetes, obezita (BMI > 30), kouření (aktuální nebo ukončené ≤3 měsíce), rodinná anamnéza a aterosklerotické onemocnění (prodělaný IM, PCI/CABG, CMP nebo ischemická choroba dolních končetin).',
+    l_trop: 'Vstupní troponin', trop0: '≤ horní hranice normy (+0)', trop1: '1–3× horní hranice normy (+1)', trop2: '> 3× horní hranice normy (+2)',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of10: ' / 10',
+    interp_low: 'Nízké riziko (0–3) — 6týdenní riziko závažné kardiální příhody přibl. 0,9–1,7 %.',
+    interp_mod: 'Střední riziko (4–6) — 6týdenní riziko závažné kardiální příhody přibl. 12–16,6 %.',
+    interp_high: 'Vysoké riziko (7–10) — 6týdenní riziko závažné kardiální příhody přibl. 50–65 %.'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'Score HEART', subtitle: "Stratification du risque d'événements cardiaques majeurs chez les patients présentant une douleur thoracique.",
+    criteria_heading: 'Critères',
+    l_history: 'Anamnèse', history0: 'Peu évocatrice (+0)', history1: 'Modérément évocatrice (+1)', history2: 'Fortement évocatrice (+2)',
+    l_ecg: 'ECG', ecg0: 'Normal (+0)', ecg1: 'Trouble de repolarisation non spécifique (+1)', ecg2: 'Déviation significative du segment ST (+2)',
+    l_age: 'Âge', age0: '< 45 ans (+0)', age1: '45–64 ans (+1)', age2: '≥ 65 ans (+2)',
+    l_risk: 'Facteurs de risque', risk0: 'Aucun facteur de risque connu (+0)', risk1: '1–2 facteurs de risque (+1)', risk2: '≥3 facteurs de risque, ou antécédent de maladie athérosclérotique (+2)',
+    risk_help: "Facteurs de risque : hypertension, hypercholestérolémie, diabète, obésité (IMC > 30), tabagisme (actuel ou arrêté depuis ≤3 mois), antécédents familiaux, et maladie athérosclérotique (IDM antérieur, ICP/pontage, AVC ou artériopathie périphérique).",
+    l_trop: 'Troponine initiale', trop0: '≤ limite normale (+0)', trop1: '1–3× la limite normale (+1)', trop2: '> 3× la limite normale (+2)',
+    calc_btn: 'Calculer', score_label: 'Score = ', of10: ' / 10',
+    interp_low: "Risque faible (0–3) — risque à 6 semaines d'événement cardiaque majeur d'environ 0,9–1,7 %.",
+    interp_mod: "Risque modéré (4–6) — risque à 6 semaines d'événement cardiaque majeur d'environ 12–16,6 %.",
+    interp_high: "Risque élevé (7–10) — risque à 6 semaines d'événement cardiaque majeur d'environ 50–65 %."
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'HEART-Score', subtitle: 'Risikostratifizierung für schwerwiegende kardiale Ereignisse bei Patienten mit Brustschmerzen.',
+    criteria_heading: 'Kriterien',
+    l_history: 'Anamnese', history0: 'Wenig verdächtig (+0)', history1: 'Mäßig verdächtig (+1)', history2: 'Hochgradig verdächtig (+2)',
+    l_ecg: 'EKG', ecg0: 'Normal (+0)', ecg1: 'Unspezifische Repolarisationsstörung (+1)', ecg2: 'Signifikante ST-Streckenabweichung (+2)',
+    l_age: 'Alter', age0: '< 45 Jahre (+0)', age1: '45–64 Jahre (+1)', age2: '≥ 65 Jahre (+2)',
+    l_risk: 'Risikofaktoren', risk0: 'Keine bekannten Risikofaktoren (+0)', risk1: '1–2 Risikofaktoren (+1)', risk2: '≥3 Risikofaktoren oder bekannte Atherosklerose (+2)',
+    risk_help: 'Risikofaktoren: Hypertonie, Hypercholesterinämie, Diabetes, Adipositas (BMI > 30), Rauchen (aktuell oder Beendigung ≤3 Monate), Familienanamnese sowie atherosklerotische Erkrankung (früherer MI, PCI/Bypass, Schlaganfall oder periphere arterielle Verschlusskrankheit).',
+    l_trop: 'Initiales Troponin', trop0: '≤ oberer Normwert (+0)', trop1: '1–3-fach des oberen Normwerts (+1)', trop2: '> 3-fach des oberen Normwerts (+2)',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of10: ' / 10',
+    interp_low: 'Geringes Risiko (0–3) — 6-Wochen-Risiko eines schwerwiegenden kardialen Ereignisses ca. 0,9–1,7 %.',
+    interp_mod: 'Mittleres Risiko (4–6) — 6-Wochen-Risiko eines schwerwiegenden kardialen Ereignisses ca. 12–16,6 %.',
+    interp_high: 'Hohes Risiko (7–10) — 6-Wochen-Risiko eines schwerwiegenden kardialen Ereignisses ca. 50–65 %.'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'Skala HEART', subtitle: 'Stratyfikacja ryzyka poważnych zdarzeń sercowych u pacjentów z bólem w klatce piersiowej.',
+    criteria_heading: 'Kryteria',
+    l_history: 'Wywiad', history0: 'Mało sugerujący (+0)', history1: 'Umiarkowanie sugerujący (+1)', history2: 'Wysoce sugerujący (+2)',
+    l_ecg: 'EKG', ecg0: 'Prawidłowe (+0)', ecg1: 'Nieswoiste zaburzenia repolaryzacji (+1)', ecg2: 'Istotne odchylenie odcinka ST (+2)',
+    l_age: 'Wiek', age0: '< 45 lat (+0)', age1: '45–64 lat (+1)', age2: '≥ 65 lat (+2)',
+    l_risk: 'Czynniki ryzyka', risk0: 'Brak znanych czynników ryzyka (+0)', risk1: '1–2 czynniki ryzyka (+1)', risk2: '≥3 czynniki ryzyka lub choroba miażdżycowa w wywiadzie (+2)',
+    risk_help: 'Czynniki ryzyka: nadciśnienie tętnicze, hipercholesterolemia, cukrzyca, otyłość (BMI > 30), palenie tytoniu (obecnie lub zaprzestane ≤3 miesiące temu), wywiad rodzinny oraz choroba miażdżycowa (przebyty zawał, PCI/CABG, udar lub choroba tętnic obwodowych).',
+    l_trop: 'Troponina wyjściowa', trop0: '≤ górna granica normy (+0)', trop1: '1–3× górna granica normy (+1)', trop2: '> 3× górna granica normy (+2)',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of10: ' / 10',
+    interp_low: 'Niskie ryzyko (0–3) — ryzyko poważnego zdarzenia sercowego w ciągu 6 tygodni ok. 0,9–1,7%.',
+    interp_mod: 'Umiarkowane ryzyko (4–6) — ryzyko poważnego zdarzenia sercowego w ciągu 6 tygodni ok. 12–16,6%.',
+    interp_high: 'Wysokie ryzyko (7–10) — ryzyko poważnego zdarzenia sercowego w ciągu 6 tygodni ok. 50–65%.'
+  }
+};
+
+var _lastHEART = null;
+
+function calcHEART() {
+  var ids = ['c_history','c_ecg','c_age','c_risk','c_trop'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastHEART = total;
+  renderHEARTResult();
+}
+
+function renderHEARTResult() {
+  if (_lastHEART === null) return;
+  var total = _lastHEART;
+  var interp = total <= 3 ? ucmT('interp_low') : (total <= 6 ? ucmT('interp_mod') : ucmT('interp_high'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of10');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderHEARTResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

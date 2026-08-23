@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NYHA Classification — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">NYHA Classification</h1>
+  <p class="page-subtitle" data-i18n="subtitle">New York Heart Association functional classification of heart failure severity.</p>
+
+  <div class="card">
+    <h2 data-i18n="select_heading">Select the class matching the patient's symptoms</h2>
+    <div class="field">
+      <select id="nyha">
+        <option value="1" data-i18n="class1">Class I — No limitation of physical activity. Ordinary activity does not cause symptoms.</option>
+        <option value="2" data-i18n="class2">Class II — Slight limitation of physical activity. Comfortable at rest, but ordinary activity causes symptoms.</option>
+        <option value="3" data-i18n="class3">Class III — Marked limitation of physical activity. Comfortable at rest, but less-than-ordinary activity causes symptoms.</option>
+        <option value="4" data-i18n="class4">Class IV — Unable to carry out any physical activity without symptoms. Symptoms may be present even at rest.</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="show_btn" onclick="showNYHA()">Show classification</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> The Criteria Committee of the New York Heart Association. Nomenclature and Criteria for Diagnosis of Diseases of the Heart and Great Vessels, 9th ed. Boston: Little, Brown & Co; 1994:253–256.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/1783/nyha-functional-classification-heart-failure" target="_blank" rel="noopener">MDCalc — NYHA</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'NYHA Classification', subtitle: 'New York Heart Association functional classification of heart failure severity.',
+    select_heading: "Select the class matching the patient's symptoms",
+    class1: 'Class I — No limitation of physical activity. Ordinary activity does not cause symptoms.',
+    class2: 'Class II — Slight limitation of physical activity. Comfortable at rest, but ordinary activity causes symptoms.',
+    class3: 'Class III — Marked limitation of physical activity. Comfortable at rest, but less-than-ordinary activity causes symptoms.',
+    class4: 'Class IV — Unable to carry out any physical activity without symptoms. Symptoms may be present even at rest.',
+    show_btn: 'Show classification', class_label: 'NYHA Class '
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'Klasifikace NYHA', subtitle: 'Funkční klasifikace srdečního selhání dle New York Heart Association.',
+    select_heading: 'Vyberte třídu odpovídající symptomům pacienta',
+    class1: 'Třída I — Bez omezení fyzické aktivity. Běžná aktivita nezpůsobuje symptomy.',
+    class2: 'Třída II — Mírné omezení fyzické aktivity. V klidu bez potíží, ale běžná aktivita způsobuje symptomy.',
+    class3: 'Třída III — Výrazné omezení fyzické aktivity. V klidu bez potíží, ale méně než běžná aktivita způsobuje symptomy.',
+    class4: 'Třída IV — Neschopnost jakékoliv fyzické aktivity bez symptomů. Symptomy mohou být přítomny i v klidu.',
+    show_btn: 'Zobrazit klasifikaci', class_label: 'Třída NYHA '
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'Classification NYHA', subtitle: "Classification fonctionnelle de la New York Heart Association pour la sévérité de l'insuffisance cardiaque.",
+    select_heading: 'Sélectionnez la classe correspondant aux symptômes du patient',
+    class1: "Classe I — Aucune limitation de l'activité physique. L'activité ordinaire ne provoque pas de symptômes.",
+    class2: "Classe II — Légère limitation de l'activité physique. À l'aise au repos, mais l'activité ordinaire provoque des symptômes.",
+    class3: "Classe III — Limitation marquée de l'activité physique. À l'aise au repos, mais une activité moindre que l'ordinaire provoque des symptômes.",
+    class4: "Classe IV — Incapable de mener une activité physique sans symptômes. Les symptômes peuvent être présents même au repos.",
+    show_btn: 'Afficher la classification', class_label: 'Classe NYHA '
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'NYHA-Klassifikation', subtitle: 'Funktionelle Klassifikation der Herzinsuffizienz-Schwere nach der New York Heart Association.',
+    select_heading: 'Wählen Sie die zu den Symptomen des Patienten passende Klasse',
+    class1: 'Klasse I — Keine Einschränkung der körperlichen Aktivität. Normale Belastung verursacht keine Symptome.',
+    class2: 'Klasse II — Geringe Einschränkung der körperlichen Aktivität. Beschwerdefrei in Ruhe, aber normale Belastung verursacht Symptome.',
+    class3: 'Klasse III — Deutliche Einschränkung der körperlichen Aktivität. Beschwerdefrei in Ruhe, aber geringere als normale Belastung verursacht Symptome.',
+    class4: 'Klasse IV — Keine körperliche Aktivität ohne Symptome möglich. Symptome können bereits in Ruhe bestehen.',
+    show_btn: 'Klassifikation anzeigen', class_label: 'NYHA-Klasse '
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'Klasyfikacja NYHA', subtitle: 'Czynnościowa klasyfikacja niewydolności serca według New York Heart Association.',
+    select_heading: 'Wybierz klasę odpowiadającą objawom pacjenta',
+    class1: 'Klasa I — Brak ograniczenia aktywności fizycznej. Zwykła aktywność nie powoduje objawów.',
+    class2: 'Klasa II — Niewielkie ograniczenie aktywności fizycznej. Komfort w spoczynku, ale zwykła aktywność powoduje objawy.',
+    class3: 'Klasa III — Znaczne ograniczenie aktywności fizycznej. Komfort w spoczynku, ale mniejsza niż zwykła aktywność powoduje objawy.',
+    class4: 'Klasa IV — Niezdolność do jakiejkolwiek aktywności fizycznej bez objawów. Objawy mogą występować nawet w spoczynku.',
+    show_btn: 'Pokaż klasyfikację', class_label: 'Klasa NYHA '
+  }
+};
+
+var _lastNYHA = null;
+
+function showNYHA() {
+  _lastNYHA = document.getElementById('nyha').value;
+  renderNYHAResult();
+}
+
+function renderNYHAResult() {
+  if (_lastNYHA === null) return;
+  var val = _lastNYHA;
+  var roman = { '1':'I', '2':'II', '3':'III', '4':'IV' }[val];
+  var key = 'class' + val;
+  document.getElementById('resultScore').textContent = ucmT('class_label') + roman;
+  document.getElementById('resultInterp').innerHTML = ucmT(key);
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderNYHAResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

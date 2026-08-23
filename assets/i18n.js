@@ -19,7 +19,7 @@
                                                       user input)
 */
 
-var UCM_SUPPORTED_LANGS = ['en', 'cs', 'fr', 'de', 'pl'];
+var UCM_SUPPORTED_LANGS = ['en', 'fr', 'de', 'cs', 'pl'];
 var UCM_LANG_NAMES = { en: 'English', cs: 'Čeština', fr: 'Français', de: 'Deutsch', pl: 'Polski' };
 
 var UCM_I18N_SHARED = {

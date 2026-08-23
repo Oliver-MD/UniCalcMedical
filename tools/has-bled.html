@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HAS-BLED — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">HAS-BLED</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Estimates major bleeding risk in patients on anticoagulation for atrial fibrillation.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria (1 point each unless noted)</h2>
+    <div class="field"><label data-i18n="c_hyp">Hypertension (uncontrolled, systolic &gt; 160 mmHg)</label><select id="c_hyp"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_renal">Abnormal renal function (dialysis, transplant, creatinine &gt; 200 µmol/L)</label><select id="c_renal"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_liver">Abnormal liver function (cirrhosis, bilirubin &gt; 2× normal, AST/ALT/ALP &gt; 3× normal)</label><select id="c_liver"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_stroke">Prior stroke</label><select id="c_stroke"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_bleed">Prior major bleeding or predisposition to bleeding</label><select id="c_bleed"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_inr">Labile INR (unstable/high, or time in therapeutic range &lt; 60%)</label><select id="c_inr"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_age">Age &gt; 65 years</label><select id="c_age"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_drugs">Concomitant drugs predisposing to bleeding (antiplatelets, NSAIDs)</label><select id="c_drugs"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_alcohol">Alcohol use (≥8 drinks/week)</label><select id="c_alcohol"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcHASBLED()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Pisters R, Lane DA, Nieuwlaat R, et al. A novel user-friendly score (HAS-BLED) to assess 1-year risk of major bleeding in patients with atrial fibrillation. Chest. 2010;138(5):1093–1100.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/799/has-bled-score-major-bleeding-risk" target="_blank" rel="noopener">MDCalc — HAS-BLED</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism', title: 'HAS-BLED', subtitle: 'Estimates major bleeding risk in patients on anticoagulation for atrial fibrillation.',
+    criteria_heading: 'Criteria (1 point each unless noted)',
+    c_hyp: 'Hypertension (uncontrolled, systolic > 160 mmHg)', c_renal: 'Abnormal renal function (dialysis, transplant, creatinine > 200 µmol/L)',
+    c_liver: 'Abnormal liver function (cirrhosis, bilirubin > 2× normal, AST/ALT/ALP > 3× normal)', c_stroke: 'Prior stroke',
+    c_bleed: 'Prior major bleeding or predisposition to bleeding', c_inr: 'Labile INR (unstable/high, or time in therapeutic range < 60%)',
+    c_age: 'Age > 65 years', c_drugs: 'Concomitant drugs predisposing to bleeding (antiplatelets, NSAIDs)', c_alcohol: 'Alcohol use (≥8 drinks/week)',
+    calc_btn: 'Calculate', opt_no: 'No', opt_yes1: 'Yes (+1)',
+    score_label: 'Score = ', of9: ' / 9',
+    interp_low: 'Low bleeding risk.', interp_mod: 'Moderate bleeding risk.', interp_high: 'High bleeding risk — score ≥3 suggests caution and regular review; this alone should not automatically preclude anticoagulation, which is often still indicated.'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie', title: 'HAS-BLED', subtitle: 'Odhad rizika velkého krvácení u pacientů na antikoagulační léčbě pro fibrilaci síní.',
+    criteria_heading: 'Kritéria (1 bod za každé, pokud není uvedeno jinak)',
+    c_hyp: 'Hypertenze (nekontrolovaná, systolický TK > 160 mmHg)', c_renal: 'Porucha renálních funkcí (dialýza, transplantace, kreatinin > 200 µmol/l)',
+    c_liver: 'Porucha jaterních funkcí (cirhóza, bilirubin > 2× norma, AST/ALT/ALP > 3× norma)', c_stroke: 'Prodělaná cévní mozková příhoda',
+    c_bleed: 'Předchozí velké krvácení nebo predispozice ke krvácení', c_inr: 'Nestabilní INR (kolísavé/vysoké, nebo čas v terapeutickém rozmezí < 60 %)',
+    c_age: 'Věk > 65 let', c_drugs: 'Souběžná léčiva predisponující ke krvácení (antiagregancia, NSAID)', c_alcohol: 'Konzumace alkoholu (≥8 dávek týdně)',
+    calc_btn: 'Vypočítat', opt_no: 'Ne', opt_yes1: 'Ano (+1)',
+    score_label: 'Skóre = ', of9: ' / 9',
+    interp_low: 'Nízké riziko krvácení.', interp_mod: 'Střední riziko krvácení.', interp_high: 'Vysoké riziko krvácení — skóre ≥3 znamená opatrnost a pravidelné přehodnocování; samo o sobě by nemělo automaticky vylučovat antikoagulační léčbu, která je často stále indikována.'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie', title: 'HAS-BLED', subtitle: "Estime le risque hémorragique majeur chez les patients sous anticoagulation pour fibrillation auriculaire.",
+    criteria_heading: 'Critères (1 point chacun sauf indication contraire)',
+    c_hyp: 'Hypertension (non contrôlée, systolique > 160 mmHg)', c_renal: 'Fonction rénale anormale (dialyse, greffe, créatinine > 200 µmol/L)',
+    c_liver: 'Fonction hépatique anormale (cirrhose, bilirubine > 2× la normale, AST/ALT/ALP > 3× la normale)', c_stroke: 'Antécédent d\u2019AVC',
+    c_bleed: 'Antécédent d\u2019hémorragie majeure ou prédisposition hémorragique', c_inr: 'INR labile (instable/élevé, ou temps dans la zone thérapeutique < 60 %)',
+    c_age: 'Âge > 65 ans', c_drugs: 'Médicaments concomitants prédisposant aux saignements (antiplaquettaires, AINS)', c_alcohol: 'Consommation d\u2019alcool (≥8 verres/semaine)',
+    calc_btn: 'Calculer', opt_no: 'Non', opt_yes1: 'Oui (+1)',
+    score_label: 'Score = ', of9: ' / 9',
+    interp_low: 'Risque hémorragique faible.', interp_mod: 'Risque hémorragique modéré.', interp_high: "Risque hémorragique élevé — un score ≥3 justifie prudence et suivi régulier ; cela ne devrait pas, à lui seul, exclure automatiquement l'anticoagulation, souvent toujours indiquée."
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie', title: 'HAS-BLED', subtitle: 'Schätzt das Risiko schwerer Blutungen bei Patienten unter Antikoagulation wegen Vorhofflimmern.',
+    criteria_heading: 'Kriterien (je 1 Punkt, sofern nicht anders angegeben)',
+    c_hyp: 'Hypertonie (unkontrolliert, systolisch > 160 mmHg)', c_renal: 'Eingeschränkte Nierenfunktion (Dialyse, Transplantation, Kreatinin > 200 µmol/L)',
+    c_liver: 'Eingeschränkte Leberfunktion (Zirrhose, Bilirubin > 2-fach der Norm, AST/ALT/ALP > 3-fach der Norm)', c_stroke: 'Früherer Schlaganfall',
+    c_bleed: 'Frühere schwere Blutung oder Blutungsneigung', c_inr: 'Labile INR (instabil/hoch, oder Zeit im therapeutischen Bereich < 60 %)',
+    c_age: 'Alter > 65 Jahre', c_drugs: 'Begleitmedikation mit Blutungsneigung (Thrombozytenaggregationshemmer, NSAR)', c_alcohol: 'Alkoholkonsum (≥8 Getränke/Woche)',
+    calc_btn: 'Berechnen', opt_no: 'Nein', opt_yes1: 'Ja (+1)',
+    score_label: 'Score = ', of9: ' / 9',
+    interp_low: 'Geringes Blutungsrisiko.', interp_mod: 'Mittleres Blutungsrisiko.', interp_high: 'Hohes Blutungsrisiko — ein Score ≥3 spricht für Vorsicht und regelmäßige Überprüfung; dies allein sollte eine Antikoagulation, die oft weiterhin indiziert ist, nicht automatisch ausschließen.'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'HAS-BLED', subtitle: 'Szacuje ryzyko dużego krwawienia u pacjentów leczonych przeciwkrzepliwie z powodu migotania przedsionków.',
+    criteria_heading: 'Kryteria (1 punkt każde, chyba że zaznaczono inaczej)',
+    c_hyp: 'Nadciśnienie tętnicze (niekontrolowane, skurczowe > 160 mmHg)', c_renal: 'Nieprawidłowa czynność nerek (dializa, przeszczep, kreatynina > 200 µmol/l)',
+    c_liver: 'Nieprawidłowa czynność wątroby (marskość, bilirubina > 2× norma, AST/ALT/ALP > 3× norma)', c_stroke: 'Przebyty udar mózgu',
+    c_bleed: 'Przebyte poważne krwawienie lub skłonność do krwawień', c_inr: 'Niestabilne INR (chwiejne/wysokie lub czas w zakresie terapeutycznym < 60%)',
+    c_age: 'Wiek > 65 lat', c_drugs: 'Jednoczesne przyjmowanie leków sprzyjających krwawieniu (leki przeciwpłytkowe, NLPZ)', c_alcohol: 'Spożycie alkoholu (≥8 porcji/tydzień)',
+    calc_btn: 'Oblicz', opt_no: 'Nie', opt_yes1: 'Tak (+1)',
+    score_label: 'Wynik = ', of9: ' / 9',
+    interp_low: 'Niskie ryzyko krwawienia.', interp_mod: 'Umiarkowane ryzyko krwawienia.', interp_high: 'Wysokie ryzyko krwawienia — wynik ≥3 wskazuje na potrzebę ostrożności i regularnej kontroli; sam w sobie nie powinien automatycznie wykluczać leczenia przeciwkrzepliwego, które często nadal jest wskazane.'
+  }
+};
+
+var _lastHASBLED = null;
+
+function calcHASBLED() {
+  var ids = ['c_hyp','c_renal','c_liver','c_stroke','c_bleed','c_inr','c_age','c_drugs','c_alcohol'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastHASBLED = total;
+  renderHASBLEDResult();
+}
+
+function renderHASBLEDResult() {
+  if (_lastHASBLED === null) return;
+  var total = _lastHASBLED;
+  var interp = total <= 1 ? ucmT('interp_low') : (total === 2 ? ucmT('interp_mod') : ucmT('interp_high'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of9');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderHASBLEDResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
