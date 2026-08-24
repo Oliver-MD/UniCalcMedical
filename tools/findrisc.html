@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FINDRISC — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Endocrinology &amp; metabolic</span>
+  <h1 class="page-title" data-i18n="title">FINDRISC</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Finnish Diabetes Risk Score — estimates 10-year risk of developing type 2 diabetes.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Questions</h2>
+    <div class="field"><label data-i18n="l_age">Age</label>
+      <select id="c_age"><option value="0" data-i18n="age0">&lt; 45 years (+0)</option><option value="2" data-i18n="age2">45–54 years (+2)</option><option value="3" data-i18n="age3">55–64 years (+3)</option><option value="4" data-i18n="age4">&gt; 64 years (+4)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_bmi">BMI</label>
+      <select id="c_bmi"><option value="0" data-i18n="bmi0">&lt; 25 kg/m² (+0)</option><option value="1" data-i18n="bmi1">25–30 kg/m² (+1)</option><option value="3" data-i18n="bmi3">&gt; 30 kg/m² (+3)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_sex">Sex</label>
+      <select id="c_sex"><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_waist">Waist circumference</label>
+      <select id="c_waist">
+        <option value="0" data-i18n="waist0">Below threshold (+0)</option>
+        <option value="3" data-i18n="waist3">Men 94–102 cm / Women 80–88 cm (+3)</option>
+        <option value="4" data-i18n="waist4">Men &gt; 102 cm / Women &gt; 88 cm (+4)</option>
+      </select>
+    </div>
+    <div class="field"><label data-i18n="l_activity">At least 30 minutes of physical activity daily (work and/or leisure)</label>
+      <select id="c_activity"><option value="0" data-i18n="opt_yes0">Yes (+0)</option><option value="2" data-i18n="opt_no2">No (+2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_diet">Daily consumption of vegetables, fruit, or berries</label>
+      <select id="c_diet"><option value="0" data-i18n="opt_daily0">Every day (+0)</option><option value="1" data-i18n="opt_notdaily1">Not every day (+1)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_bp">Ever taken medication for high blood pressure regularly</label>
+      <select id="c_bp"><option value="0" data-i18n="opt_no0">No (+0)</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_glucose">Ever found to have high blood glucose (e.g. in a health check, during illness, or pregnancy)</label>
+      <select id="c_glucose"><option value="0" data-i18n="opt_no0">No (+0)</option><option value="5" data-i18n="opt_yes5">Yes (+5)</option></select>
+    </div>
+    <div class="field"><label data-i18n="l_family">Family history of diabetes</label>
+      <select id="c_family">
+        <option value="0" data-i18n="family0">No (+0)</option>
+        <option value="3" data-i18n="family3">Yes — grandparent, aunt, uncle, or first cousin (+3)</option>
+        <option value="5" data-i18n="family5">Yes — parent, sibling, or own child (+5)</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcFINDRISC()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Lindström J, Tuomilehto J. The Diabetes Risk Score: a practical tool to predict type 2 diabetes risk. Diabetes Care. 2003;26(3):725–731. Developed by the Finnish Diabetes Association.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10333/findrisc-finnish-diabetes-risk-score" target="_blank" rel="noopener">MDCalc — FINDRISC</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Endocrinology & metabolic', title: 'FINDRISC', subtitle: 'Finnish Diabetes Risk Score — estimates 10-year risk of developing type 2 diabetes.',
+    criteria_heading: 'Questions',
+    l_age: 'Age', age0: '< 45 years (+0)', age2: '45–54 years (+2)', age3: '55–64 years (+3)', age4: '> 64 years (+4)',
+    l_bmi: 'BMI', bmi0: '< 25 kg/m² (+0)', bmi1: '25–30 kg/m² (+1)', bmi3: '> 30 kg/m² (+3)',
+    l_sex: 'Sex', opt_female: 'Female', opt_male: 'Male',
+    l_waist: 'Waist circumference', waist0: 'Below threshold (+0)', waist3: 'Men 94–102 cm / Women 80–88 cm (+3)', waist4: 'Men > 102 cm / Women > 88 cm (+4)',
+    l_activity: 'At least 30 minutes of physical activity daily (work and/or leisure)', opt_yes0: 'Yes (+0)', opt_no2: 'No (+2)',
+    l_diet: 'Daily consumption of vegetables, fruit, or berries', opt_daily0: 'Every day (+0)', opt_notdaily1: 'Not every day (+1)',
+    l_bp: 'Ever taken medication for high blood pressure regularly', opt_no0: 'No (+0)', opt_yes2: 'Yes (+2)',
+    l_glucose: 'Ever found to have high blood glucose (e.g. in a health check, during illness, or pregnancy)', opt_yes5: 'Yes (+5)',
+    l_family: 'Family history of diabetes', family0: 'No (+0)', family3: 'Yes — grandparent, aunt, uncle, or first cousin (+3)', family5: 'Yes — parent, sibling, or own child (+5)',
+    calc_btn: 'Calculate', score_label: 'Score = ', of26: ' / 26',
+    interp_low: 'Low risk (score < 7) — estimated 10-year risk approx. 1 in 100.',
+    interp_slight: 'Slightly elevated risk (7–11) — estimated 10-year risk approx. 1 in 25.',
+    interp_moderate: 'Moderate risk (12–14) — estimated 10-year risk approx. 1 in 6.',
+    interp_high: 'High risk (15–20) — estimated 10-year risk approx. 1 in 3.',
+    interp_veryhigh: 'Very high risk (> 20) — estimated 10-year risk approx. 1 in 2.'
+  },
+  cs: {
+    tag: 'Endokrinologie a metabolismus', title: 'FINDRISC', subtitle: 'Finské skóre rizika diabetu — odhad 10letého rizika rozvoje diabetu 2. typu.',
+    criteria_heading: 'Otázky',
+    l_age: 'Věk', age0: '< 45 let (+0)', age2: '45–54 let (+2)', age3: '55–64 let (+3)', age4: '> 64 let (+4)',
+    l_bmi: 'BMI', bmi0: '< 25 kg/m² (+0)', bmi1: '25–30 kg/m² (+1)', bmi3: '> 30 kg/m² (+3)',
+    l_sex: 'Pohlaví', opt_female: 'Žena', opt_male: 'Muž',
+    l_waist: 'Obvod pasu', waist0: 'Pod hranicí (+0)', waist3: 'Muži 94–102 cm / Ženy 80–88 cm (+3)', waist4: 'Muži > 102 cm / Ženy > 88 cm (+4)',
+    l_activity: 'Alespoň 30 minut fyzické aktivity denně (práce a/nebo volný čas)', opt_yes0: 'Ano (+0)', opt_no2: 'Ne (+2)',
+    l_diet: 'Denní konzumace zeleniny, ovoce nebo bobulovin', opt_daily0: 'Každý den (+0)', opt_notdaily1: 'Ne každý den (+1)',
+    l_bp: 'Někdy pravidelně užíval(a) léky na vysoký krevní tlak', opt_no0: 'Ne (+0)', opt_yes2: 'Ano (+2)',
+    l_glucose: 'Byla vám někdy zjištěna vysoká glykémie (např. při preventivní prohlídce, nemoci nebo těhotenství)', opt_yes5: 'Ano (+5)',
+    l_family: 'Rodinná anamnéza diabetu', family0: 'Ne (+0)', family3: 'Ano — prarodič, teta, strýc nebo bratranec/sestřenice (+3)', family5: 'Ano — rodič, sourozenec nebo vlastní dítě (+5)',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of26: ' / 26',
+    interp_low: 'Nízké riziko (skóre < 7) — odhadované 10leté riziko přibl. 1 ze 100.',
+    interp_slight: 'Mírně zvýšené riziko (7–11) — odhadované 10leté riziko přibl. 1 z 25.',
+    interp_moderate: 'Střední riziko (12–14) — odhadované 10leté riziko přibl. 1 ze 6.',
+    interp_high: 'Vysoké riziko (15–20) — odhadované 10leté riziko přibl. 1 ze 3.',
+    interp_veryhigh: 'Velmi vysoké riziko (> 20) — odhadované 10leté riziko přibl. 1 ze 2.'
+  },
+  fr: {
+    tag: 'Endocrinologie et métabolisme', title: 'FINDRISC', subtitle: "Score finlandais de risque de diabète — estime le risque à 10 ans de développer un diabète de type 2.",
+    criteria_heading: 'Questions',
+    l_age: 'Âge', age0: '< 45 ans (+0)', age2: '45–54 ans (+2)', age3: '55–64 ans (+3)', age4: '> 64 ans (+4)',
+    l_bmi: 'IMC', bmi0: '< 25 kg/m² (+0)', bmi1: '25–30 kg/m² (+1)', bmi3: '> 30 kg/m² (+3)',
+    l_sex: 'Sexe', opt_female: 'Féminin', opt_male: 'Masculin',
+    l_waist: 'Tour de taille', waist0: 'Sous le seuil (+0)', waist3: 'Hommes 94–102 cm / Femmes 80–88 cm (+3)', waist4: 'Hommes > 102 cm / Femmes > 88 cm (+4)',
+    l_activity: 'Au moins 30 minutes d\u2019activité physique par jour (travail et/ou loisirs)', opt_yes0: 'Oui (+0)', opt_no2: 'Non (+2)',
+    l_diet: 'Consommation quotidienne de légumes, fruits ou baies', opt_daily0: 'Tous les jours (+0)', opt_notdaily1: 'Pas tous les jours (+1)',
+    l_bp: "A déjà pris régulièrement des médicaments pour l'hypertension", opt_no0: 'Non (+0)', opt_yes2: 'Oui (+2)',
+    l_glucose: "Glycémie déjà retrouvée élevée (p. ex. lors d'un bilan de santé, d'une maladie ou d'une grossesse)", opt_yes5: 'Oui (+5)',
+    l_family: 'Antécédents familiaux de diabète', family0: 'Non (+0)', family3: 'Oui — grand-parent, tante, oncle ou cousin germain (+3)', family5: 'Oui — parent, frère/sœur ou enfant (+5)',
+    calc_btn: 'Calculer', score_label: 'Score = ', of26: ' / 26',
+    interp_low: 'Risque faible (score < 7) — risque estimé à 10 ans d\u2019environ 1 sur 100.',
+    interp_slight: 'Risque légèrement élevé (7–11) — risque estimé à 10 ans d\u2019environ 1 sur 25.',
+    interp_moderate: 'Risque modéré (12–14) — risque estimé à 10 ans d\u2019environ 1 sur 6.',
+    interp_high: 'Risque élevé (15–20) — risque estimé à 10 ans d\u2019environ 1 sur 3.',
+    interp_veryhigh: 'Risque très élevé (> 20) — risque estimé à 10 ans d\u2019environ 1 sur 2.'
+  },
+  de: {
+    tag: 'Endokrinologie & Stoffwechsel', title: 'FINDRISC', subtitle: 'Finnischer Diabetes-Risiko-Score — schätzt das 10-Jahres-Risiko für Typ-2-Diabetes.',
+    criteria_heading: 'Fragen',
+    l_age: 'Alter', age0: '< 45 Jahre (+0)', age2: '45–54 Jahre (+2)', age3: '55–64 Jahre (+3)', age4: '> 64 Jahre (+4)',
+    l_bmi: 'BMI', bmi0: '< 25 kg/m² (+0)', bmi1: '25–30 kg/m² (+1)', bmi3: '> 30 kg/m² (+3)',
+    l_sex: 'Geschlecht', opt_female: 'Weiblich', opt_male: 'Männlich',
+    l_waist: 'Taillenumfang', waist0: 'Unter dem Grenzwert (+0)', waist3: 'Männer 94–102 cm / Frauen 80–88 cm (+3)', waist4: 'Männer > 102 cm / Frauen > 88 cm (+4)',
+    l_activity: 'Mindestens 30 Minuten körperliche Aktivität täglich (Arbeit und/oder Freizeit)', opt_yes0: 'Ja (+0)', opt_no2: 'Nein (+2)',
+    l_diet: 'Täglicher Verzehr von Gemüse, Obst oder Beeren', opt_daily0: 'Jeden Tag (+0)', opt_notdaily1: 'Nicht jeden Tag (+1)',
+    l_bp: 'Jemals regelmäßig Medikamente gegen Bluthochdruck eingenommen', opt_no0: 'Nein (+0)', opt_yes2: 'Ja (+2)',
+    l_glucose: 'Jemals erhöhter Blutzucker festgestellt (z. B. bei einer Untersuchung, Krankheit oder Schwangerschaft)', opt_yes5: 'Ja (+5)',
+    l_family: 'Familiäre Diabetesvorbelastung', family0: 'Nein (+0)', family3: 'Ja — Großeltern, Tante, Onkel oder Cousin/Cousine (+3)', family5: 'Ja — Elternteil, Geschwister oder eigenes Kind (+5)',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of26: ' / 26',
+    interp_low: 'Geringes Risiko (Score < 7) — geschätztes 10-Jahres-Risiko ca. 1 von 100.',
+    interp_slight: 'Leicht erhöhtes Risiko (7–11) — geschätztes 10-Jahres-Risiko ca. 1 von 25.',
+    interp_moderate: 'Mittleres Risiko (12–14) — geschätztes 10-Jahres-Risiko ca. 1 von 6.',
+    interp_high: 'Hohes Risiko (15–20) — geschätztes 10-Jahres-Risiko ca. 1 von 3.',
+    interp_veryhigh: 'Sehr hohes Risiko (> 20) — geschätztes 10-Jahres-Risiko ca. 1 von 2.'
+  },
+  pl: {
+    tag: 'Endokrynologia i metabolizm', title: 'FINDRISC', subtitle: 'Fiński wskaźnik ryzyka cukrzycy — szacuje 10-letnie ryzyko rozwoju cukrzycy typu 2.',
+    criteria_heading: 'Pytania',
+    l_age: 'Wiek', age0: '< 45 lat (+0)', age2: '45–54 lat (+2)', age3: '55–64 lat (+3)', age4: '> 64 lat (+4)',
+    l_bmi: 'BMI', bmi0: '< 25 kg/m² (+0)', bmi1: '25–30 kg/m² (+1)', bmi3: '> 30 kg/m² (+3)',
+    l_sex: 'Płeć', opt_female: 'Kobieta', opt_male: 'Mężczyzna',
+    l_waist: 'Obwód talii', waist0: 'Poniżej progu (+0)', waist3: 'Mężczyźni 94–102 cm / Kobiety 80–88 cm (+3)', waist4: 'Mężczyźni > 102 cm / Kobiety > 88 cm (+4)',
+    l_activity: 'Co najmniej 30 minut aktywności fizycznej dziennie (praca i/lub czas wolny)', opt_yes0: 'Tak (+0)', opt_no2: 'Nie (+2)',
+    l_diet: 'Codzienne spożywanie warzyw, owoców lub jagód', opt_daily0: 'Codziennie (+0)', opt_notdaily1: 'Nie codziennie (+1)',
+    l_bp: 'Kiedykolwiek regularnie przyjmował(a) leki na nadciśnienie', opt_no0: 'Nie (+0)', opt_yes2: 'Tak (+2)',
+    l_glucose: 'Kiedykolwiek stwierdzono podwyższony poziom glukozy (np. podczas badania, choroby lub ciąży)', opt_yes5: 'Tak (+5)',
+    l_family: 'Cukrzyca w rodzinie', family0: 'Nie (+0)', family3: 'Tak — dziadek/babcia, ciotka, wujek lub kuzyn (+3)', family5: 'Tak — rodzic, rodzeństwo lub własne dziecko (+5)',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of26: ' / 26',
+    interp_low: 'Niskie ryzyko (wynik < 7) — szacowane ryzyko 10-letnie ok. 1 na 100.',
+    interp_slight: 'Nieznacznie podwyższone ryzyko (7–11) — szacowane ryzyko 10-letnie ok. 1 na 25.',
+    interp_moderate: 'Umiarkowane ryzyko (12–14) — szacowane ryzyko 10-letnie ok. 1 na 6.',
+    interp_high: 'Wysokie ryzyko (15–20) — szacowane ryzyko 10-letnie ok. 1 na 3.',
+    interp_veryhigh: 'Bardzo wysokie ryzyko (> 20) — szacowane ryzyko 10-letnie ok. 1 na 2.'
+  }
+};
+
+var _lastFINDRISC = null;
+
+function calcFINDRISC() {
+  var ids = ['c_age','c_bmi','c_waist','c_activity','c_diet','c_bp','c_glucose','c_family'];
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
+  _lastFINDRISC = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastFINDRISC === null) return;
+  var total = _lastFINDRISC;
+  var interp;
+  if (total < 7) interp = ucmT('interp_low');
+  else if (total <= 11) interp = ucmT('interp_slight');
+  else if (total <= 14) interp = ucmT('interp_moderate');
+  else if (total <= 20) interp = ucmT('interp_high');
+  else interp = ucmT('interp_veryhigh');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of26');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

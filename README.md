@@ -1,6 +1,6 @@
 # UniCalcMedical
 
-UniCalcMedical provides reliable, independently implemented code for a range of medical calculators and screening questionnaires used in educational institutions. The project is collaboratively maintained by current and former students from University College London, King's College London, and Université Claude Bernard Lyon 1, and aims to offer clear, well-sourced reference implementations for clinicians, students, and developers.
+UniCalcMedical provides reliable, independently implemented code for a range of medical calculators and screening questionnaires used in clinical practice and education. The project is collaboratively maintained by current and former students from University College London, King's College London, and Université Claude Bernard Lyon 1, and aims to offer clear, well-sourced reference implementations for clinicians, students, and developers.
 
 **Live site:** https://oliver-md.github.io/UniCalcMedical/
 

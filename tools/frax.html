@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FRAX — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Other</span>
+  <h1 class="page-title" data-i18n="title">FRAX</h1>
+  <p class="page-subtitle" data-i18n="subtitle">10-year probability of osteoporotic fracture.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="why_heading">Why this links out instead of calculating directly</h2>
+    <p data-i18n="why_body">FRAX's underlying statistical model uses country-specific coefficients that the University of Sheffield has not published. Any independent implementation would necessarily be an approximation rather than the validated tool. Rather than offer an unverified substitute, this page links directly to the official calculator.</p>
+    <a class="btn" style="display:inline-block;text-decoration:none;" href="https://www.sheffield.ac.uk/FRAX/" target="_blank" rel="noopener" data-i18n="go_btn">Open the official FRAX calculator →</a>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Kanis JA, Johnell O, Oden A, Johansson H, McCloskey E. FRAX and the assessment of fracture probability in men and women from the UK. Osteoporos Int. 2008;19(4):385–397. Developed and maintained by the University of Sheffield.<br>
+    <span data-i18n="verify_against">Official calculator:</span> <a href="https://www.sheffield.ac.uk/FRAX/" target="_blank" rel="noopener">sheffield.ac.uk/FRAX</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: { tag: 'Other', title: 'FRAX', subtitle: '10-year probability of osteoporotic fracture.',
+    why_heading: 'Why this links out instead of calculating directly',
+    why_body: "FRAX's underlying statistical model uses country-specific coefficients that the University of Sheffield has not published. Any independent implementation would necessarily be an approximation rather than the validated tool. Rather than offer an unverified substitute, this page links directly to the official calculator.",
+    go_btn: 'Open the official FRAX calculator →' },
+  cs: { tag: 'Ostatní', title: 'FRAX', subtitle: '10leté riziko osteoporotické zlomeniny.',
+    why_heading: 'Proč zde odkazujeme místo vlastního výpočtu',
+    why_body: 'Statistický model FRAX používá koeficienty specifické pro danou zemi, které University of Sheffield nepublikovala. Jakákoli nezávislá implementace by nutně byla pouhou aproximací, ne validovaným nástrojem. Namísto neověřené náhrady tato stránka odkazuje přímo na oficiální kalkulátor.',
+    go_btn: 'Otevřít oficiální kalkulátor FRAX →' },
+  fr: { tag: 'Autre', title: 'FRAX', subtitle: 'Probabilité à 10 ans de fracture ostéoporotique.',
+    why_heading: 'Pourquoi un lien externe plutôt qu\u2019un calcul direct',
+    why_body: "Le modèle statistique sous-jacent de FRAX utilise des coefficients propres à chaque pays que l'Université de Sheffield n'a pas publiés. Toute implémentation indépendante serait nécessairement une approximation plutôt que l'outil validé. Plutôt que de proposer un substitut non vérifié, cette page renvoie directement vers le calculateur officiel.",
+    go_btn: 'Ouvrir le calculateur FRAX officiel →' },
+  de: { tag: 'Sonstiges', title: 'FRAX', subtitle: '10-Jahres-Wahrscheinlichkeit einer osteoporotischen Fraktur.',
+    why_heading: 'Warum hier ein externer Link statt direkter Berechnung',
+    why_body: 'Das zugrunde liegende statistische Modell von FRAX verwendet länderspezifische Koeffizienten, die die University of Sheffield nicht veröffentlicht hat. Jede unabhängige Umsetzung wäre zwangsläufig nur eine Annäherung und nicht das validierte Tool. Anstelle eines nicht verifizierten Ersatzes verlinkt diese Seite direkt auf den offiziellen Rechner.',
+    go_btn: 'Offiziellen FRAX-Rechner öffnen →' },
+  pl: { tag: 'Inne', title: 'FRAX', subtitle: '10-letnie prawdopodobieństwo złamania osteoporotycznego.',
+    why_heading: 'Dlaczego tu jest link zewnętrzny, a nie bezpośrednie obliczenia',
+    why_body: 'Model statystyczny FRAX wykorzystuje współczynniki specyficzne dla danego kraju, których Uniwersytet w Sheffield nie opublikował. Każda niezależna implementacja byłaby jedynie przybliżeniem, a nie zwalidowanym narzędziem. Zamiast oferować niezweryfikowany zamiennik, ta strona prowadzi bezpośrednio do oficjalnego kalkulatora.',
+    go_btn: 'Otwórz oficjalny kalkulator FRAX →' }
+};
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
