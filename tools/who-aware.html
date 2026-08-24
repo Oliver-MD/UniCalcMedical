@@ -240,9 +240,16 @@ function onSearch() {
   document.getElementById('awNoResult').classList.toggle('show', q.length > 0 && !anyVisible);
 }
 
-buildCats();
 document.getElementById('awSearch').addEventListener('input', onSearch);
 window.ucmOnLangChange = function() { buildCats(); onSearch(); };
+// Deliberately no standalone buildCats() call here — this page renders its
+// main content immediately on load (unlike most tools, which only render
+// after a button click), so calling buildCats() directly at this point
+// would run before i18n.js has loaded and defined ucmT(), throwing a
+// ReferenceError that silently aborts the render. i18n.js's own init
+// (DOMContentLoaded) calls ucmOnLangChange automatically on first load too,
+// by which point ucmT is guaranteed to exist — so this hook alone is
+// sufficient for both the initial render and later language switches.
 </script>
 <script src="../assets/i18n.js"></script>
 </body>
