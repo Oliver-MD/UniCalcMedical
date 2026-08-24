@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Opioid MME Conversion — UniCalcMedical</title>
+<title>Opioid Conversion — UniCalcMedical</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
@@ -17,20 +17,20 @@
 
 <div class="container">
   <span class="category-tag" data-i18n="tag">Other</span>
-  <h1 class="page-title" data-i18n="title">Opioid MME Conversion</h1>
-  <p class="page-subtitle" data-i18n="subtitle">Converts a daily oral opioid dose to its morphine milligram equivalent (MME), using CDC conversion factors.</p>
+  <h1 class="page-title" data-i18n="title">Opioid Conversion</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Converts an opioid dose to its oral morphine equivalent (OME), and to an equivalent starting dose of a different opioid, using CDC conversion factors.</p>
 
   <div class="disclaimer">
     <strong data-i18n="disclaimer_title">Not a medical device.</strong>
     <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
-    <span data-i18n="opioid_extra_note"> MME conversion factors are intended for analytical/educational purposes, not as direct clinical dosing instructions. Actual opioid rotation must account for incomplete cross-tolerance (typically reducing the calculated equivalent by 25–50%) and always requires a licensed prescriber's judgement. Methadone and fentanyl are deliberately excluded here — both require non-linear, specialist-guided conversion and are not safely represented by a simple multiplication factor.</span>
+    <span data-i18n="opioid_extra_note"> These conversion factors are intended for analytical/educational purposes, not as direct clinical dosing instructions. Actual opioid rotation must account for incomplete cross-tolerance and always requires a licensed prescriber's judgement. Methadone is deliberately excluded — it requires non-linear, specialist-guided conversion and is not safely represented by a simple multiplication factor.</span>
   </div>
 
   <div class="card">
     <h2 data-i18n="calc_heading">Calculate</h2>
-    <div class="field"><label data-i18n="drug_label">Opioid</label>
-      <select id="drug">
-        <option value="1" data-i18n="d_morphine">Morphine, oral (reference)</option>
+    <div class="field"><label data-i18n="from_label">Current opioid</label>
+      <select id="from">
+        <option value="1" data-i18n="d_morphine">Morphine, oral</option>
         <option value="0.15" data-i18n="d_codeine">Codeine, oral</option>
         <option value="0.25" data-i18n="d_dihydrocodeine">Dihydrocodeine, oral</option>
         <option value="1" data-i18n="d_hydrocodone">Hydrocodone, oral</option>
@@ -39,10 +39,19 @@
         <option value="3" data-i18n="d_oxymorphone">Oxymorphone, oral</option>
         <option value="0.4" data-i18n="d_tapentadol">Tapentadol, oral</option>
         <option value="0.1" data-i18n="d_tramadol">Tramadol, oral</option>
+        <option value="fentanyl" data-i18n="d_fentanyl">Fentanyl, transdermal patch (mcg/hr)</option>
       </select>
     </div>
-    <div class="field"><label data-i18n="dose_label" for="dose">Total daily dose (mg)</label><input type="number" id="dose" min="0" max="5000" step="0.1" data-i18n-placeholder="dose_ph" placeholder="e.g. 60"></div>
-    <button class="btn" data-i18n="calc_btn" onclick="calcMME()">Calculate</button>
+    <div class="field"><label data-i18n="dose_label" for="dose">Current daily dose (mg — or mcg/hr for fentanyl)</label><input type="number" id="dose" min="0" max="5000" step="0.1" data-i18n-placeholder="dose_ph" placeholder="e.g. 60"></div>
+    <div class="field"><label data-i18n="to_label">Convert to</label>
+      <select id="to">
+        <option value="1" data-i18n="d_morphine">Morphine, oral</option>
+        <option value="1.5" data-i18n="d_oxycodone">Oxycodone, oral</option>
+        <option value="4" data-i18n="d_hydromorphone">Hydromorphone, oral</option>
+        <option value="0.1" data-i18n="d_tramadol">Tramadol, oral</option>
+      </select>
+    </div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcConversion()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
       <div class="interp" id="resultInterp"></div>
@@ -62,78 +71,95 @@
 <script>
 var UCM_I18N_PAGE = {
   en: {
-    tag: 'Other', title: 'Opioid MME Conversion', subtitle: 'Converts a daily oral opioid dose to its morphine milligram equivalent (MME), using CDC conversion factors.',
-    opioid_extra_note: " MME conversion factors are intended for analytical/educational purposes, not as direct clinical dosing instructions. Actual opioid rotation must account for incomplete cross-tolerance (typically reducing the calculated equivalent by 25–50%) and always requires a licensed prescriber's judgement. Methadone and fentanyl are deliberately excluded here — both require non-linear, specialist-guided conversion and are not safely represented by a simple multiplication factor.",
-    calc_heading: 'Calculate', drug_label: 'Opioid',
-    d_morphine: 'Morphine, oral (reference)', d_codeine: 'Codeine, oral', d_dihydrocodeine: 'Dihydrocodeine, oral',
+    tag: 'Other', title: 'Opioid Conversion', subtitle: 'Converts an opioid dose to its oral morphine equivalent (OME), and to an equivalent starting dose of a different opioid, using CDC conversion factors.',
+    opioid_extra_note: " These conversion factors are intended for analytical/educational purposes, not as direct clinical dosing instructions. Actual opioid rotation must account for incomplete cross-tolerance and always requires a licensed prescriber's judgement. Methadone is deliberately excluded — it requires non-linear, specialist-guided conversion and is not safely represented by a simple multiplication factor.",
+    calc_heading: 'Calculate', from_label: 'Current opioid',
+    d_morphine: 'Morphine, oral', d_codeine: 'Codeine, oral', d_dihydrocodeine: 'Dihydrocodeine, oral',
     d_hydrocodone: 'Hydrocodone, oral', d_hydromorphone: 'Hydromorphone, oral', d_oxycodone: 'Oxycodone, oral',
     d_oxymorphone: 'Oxymorphone, oral', d_tapentadol: 'Tapentadol, oral', d_tramadol: 'Tramadol, oral',
-    dose_label: 'Total daily dose (mg)', dose_ph: 'e.g. 60', calc_btn: 'Calculate', err_invalid: 'Please enter a valid dose.',
-    mme_label: 'MME/day: ', risk_low: 'Below 50 MME/day.', risk_mod: '50–90 MME/day — moderate range; many guidelines suggest caution above this level.',
-    risk_high: 'Above 90 MME/day — higher range; typically associated with increased overdose risk in guideline literature.'
+    d_fentanyl: 'Fentanyl, transdermal patch (mcg/hr)',
+    dose_label: 'Current daily dose (mg — or mcg/hr for fentanyl)', dose_ph: 'e.g. 60',
+    to_label: 'Convert to', calc_btn: 'Calculate', err_invalid: 'Please enter a valid dose.',
+    ome_label: 'Oral morphine equivalent (OME) ≈ ', target_label: 'Equivalent dose of the target opioid ≈ ',
+    cross_tol_note: 'For opioid rotation, consider reducing by 25–50% for incomplete cross-tolerance — approximately '
   },
   cs: {
-    tag: 'Ostatní', title: 'Konverze opioidů (MME)', subtitle: 'Převod celkové denní perorální dávky opioidu na morfinový ekvivalent (MME) dle konverzních faktorů CDC.',
-    opioid_extra_note: ' Konverzní faktory MME jsou určeny pro analytické/vzdělávací účely, nikoli jako přímý pokyn ke klinickému dávkování. Skutečná rotace opioidů musí zohlednit neúplnou zkříženou toleranci (obvykle snížení vypočtené ekvivalentní dávky o 25–50 %) a vždy vyžaduje úsudek ošetřujícího lékaře. Metadon a fentanyl jsou zde záměrně vynechány — oba vyžadují nelineární, specialistou vedenou konverzi a nelze je bezpečně vyjádřit jednoduchým násobícím faktorem.',
-    calc_heading: 'Výpočet', drug_label: 'Opioid',
-    d_morphine: 'Morfin, perorálně (referenční)', d_codeine: 'Kodein, perorálně', d_dihydrocodeine: 'Dihydrokodein, perorálně',
+    tag: 'Ostatní', title: 'Konverze opioidů', subtitle: 'Převod dávky opioidu na orální morfinový ekvivalent (OME) a na ekvivalentní úvodní dávku jiného opioidu, dle konverzních faktorů CDC.',
+    opioid_extra_note: ' Konverzní faktory jsou určeny pro analytické/vzdělávací účely, nikoli jako přímý pokyn ke klinickému dávkování. Skutečná rotace opioidů musí zohlednit neúplnou zkříženou toleranci a vždy vyžaduje úsudek ošetřujícího lékaře. Metadon je zde záměrně vynechán — vyžaduje nelineární, specialistou vedenou konverzi.',
+    calc_heading: 'Výpočet', from_label: 'Stávající opioid',
+    d_morphine: 'Morfin, perorálně', d_codeine: 'Kodein, perorálně', d_dihydrocodeine: 'Dihydrokodein, perorálně',
     d_hydrocodone: 'Hydrokodon, perorálně', d_hydromorphone: 'Hydromorfon, perorálně', d_oxycodone: 'Oxykodon, perorálně',
     d_oxymorphone: 'Oxymorfon, perorálně', d_tapentadol: 'Tapentadol, perorálně', d_tramadol: 'Tramadol, perorálně',
-    dose_label: 'Celková denní dávka (mg)', dose_ph: 'např. 60', calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platnou dávku.',
-    mme_label: 'MME/den: ', risk_low: 'Pod 50 MME/den.', risk_mod: '50–90 MME/den — střední rozmezí; mnohé postupy doporučují nad touto hranicí opatrnost.',
-    risk_high: 'Nad 90 MME/den — vyšší rozmezí; v odborné literatuře obvykle spojováno se zvýšeným rizikem předávkování.'
+    d_fentanyl: 'Fentanyl, transdermální náplast (µg/h)',
+    dose_label: 'Aktuální denní dávka (mg, u fentanylu µg/h)', dose_ph: 'např. 60',
+    to_label: 'Převést na', calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platnou dávku.',
+    ome_label: 'Orální morfinový ekvivalent (OME) ≈ ', target_label: 'Ekvivalentní dávka cílového opioidu ≈ ',
+    cross_tol_note: 'Při rotaci opioidů zvážit snížení o 25–50 % pro neúplnou zkříženou toleranci — orientačně '
   },
   fr: {
-    tag: 'Autre', title: "Conversion des opioïdes (MME)", subtitle: "Convertit une dose quotidienne d'opioïde oral en son équivalent morphine (MME), selon les facteurs de conversion du CDC.",
-    opioid_extra_note: " Les facteurs de conversion MME sont destinés à des fins analytiques/éducatives, et non comme instructions directes de dosage clinique. La rotation réelle des opioïdes doit tenir compte d'une tolérance croisée incomplète (réduction généralement de 25 à 50 % de l'équivalent calculé) et requiert toujours le jugement d'un prescripteur habilité. La méthadone et le fentanyl sont volontairement exclus ici — les deux nécessitent une conversion non linéaire encadrée par un spécialiste et ne peuvent être représentés en toute sécurité par un simple facteur multiplicatif.",
-    calc_heading: 'Calculer', drug_label: 'Opioïde',
-    d_morphine: 'Morphine, orale (référence)', d_codeine: 'Codéine, orale', d_dihydrocodeine: 'Dihydrocodéine, orale',
+    tag: 'Autre', title: 'Conversion des opioïdes', subtitle: "Convertit une dose d'opioïde en équivalent morphine orale (OME), et en dose de départ équivalente d'un autre opioïde, selon les facteurs de conversion du CDC.",
+    opioid_extra_note: " Ces facteurs de conversion sont destinés à des fins analytiques/éducatives, non comme instructions directes de dosage clinique. La rotation réelle des opioïdes doit tenir compte d'une tolérance croisée incomplète et requiert toujours le jugement d'un prescripteur habilité. La méthadone est volontairement exclue — elle nécessite une conversion non linéaire encadrée par un spécialiste.",
+    calc_heading: 'Calculer', from_label: 'Opioïde actuel',
+    d_morphine: 'Morphine, orale', d_codeine: 'Codéine, orale', d_dihydrocodeine: 'Dihydrocodéine, orale',
     d_hydrocodone: 'Hydrocodone, orale', d_hydromorphone: 'Hydromorphone, orale', d_oxycodone: 'Oxycodone, orale',
     d_oxymorphone: 'Oxymorphone, orale', d_tapentadol: 'Tapentadol, oral', d_tramadol: 'Tramadol, oral',
-    dose_label: 'Dose quotidienne totale (mg)', dose_ph: 'p. ex. 60', calc_btn: 'Calculer', err_invalid: 'Veuillez saisir une dose valide.',
-    mme_label: 'MME/jour : ', risk_low: 'Moins de 50 MME/jour.', risk_mod: '50–90 MME/jour — plage modérée ; de nombreuses recommandations suggèrent la prudence au-delà de ce niveau.',
-    risk_high: "Plus de 90 MME/jour — plage plus élevée ; généralement associée à un risque accru de surdose dans la littérature des recommandations."
+    d_fentanyl: 'Fentanyl, patch transdermique (µg/h)',
+    dose_label: 'Dose quotidienne actuelle (mg — ou µg/h pour le fentanyl)', dose_ph: 'p. ex. 60',
+    to_label: 'Convertir en', calc_btn: 'Calculer', err_invalid: 'Veuillez saisir une dose valide.',
+    ome_label: 'Équivalent morphine orale (OME) ≈ ', target_label: "Dose équivalente de l'opioïde cible ≈ ",
+    cross_tol_note: "Pour une rotation d'opioïdes, envisager une réduction de 25 à 50 % pour tolérance croisée incomplète — environ "
   },
   de: {
-    tag: 'Sonstiges', title: 'Opioid-MME-Umrechnung', subtitle: 'Rechnet eine tägliche orale Opioiddosis in ihr Morphin-Milligramm-Äquivalent (MME) um, nach CDC-Umrechnungsfaktoren.',
-    opioid_extra_note: ' MME-Umrechnungsfaktoren dienen analytischen/edukativen Zwecken, nicht als direkte klinische Dosierungsanweisung. Eine tatsächliche Opioid-Rotation muss unvollständige Kreuztoleranz berücksichtigen (üblicherweise Reduktion des berechneten Äquivalents um 25–50 %) und erfordert stets die Beurteilung eines verordnungsberechtigten Arztes. Methadon und Fentanyl sind hier bewusst ausgeschlossen — beide erfordern eine nichtlineare, fachärztlich begleitete Umrechnung und lassen sich nicht sicher durch einen einfachen Multiplikationsfaktor abbilden.',
-    calc_heading: 'Berechnen', drug_label: 'Opioid',
-    d_morphine: 'Morphin, oral (Referenz)', d_codeine: 'Codein, oral', d_dihydrocodeine: 'Dihydrocodein, oral',
+    tag: 'Sonstiges', title: 'Opioid-Umrechnung', subtitle: 'Rechnet eine Opioiddosis in ihr orales Morphin-Äquivalent (OME) um sowie in eine äquivalente Startdosis eines anderen Opioids, nach CDC-Umrechnungsfaktoren.',
+    opioid_extra_note: ' Diese Umrechnungsfaktoren dienen analytischen/edukativen Zwecken, nicht als direkte klinische Dosierungsanweisung. Eine tatsächliche Opioid-Rotation muss unvollständige Kreuztoleranz berücksichtigen und erfordert stets die Beurteilung eines verordnungsberechtigten Arztes. Methadon ist bewusst ausgeschlossen — es erfordert eine nichtlineare, fachärztlich begleitete Umrechnung.',
+    calc_heading: 'Berechnen', from_label: 'Aktuelles Opioid',
+    d_morphine: 'Morphin, oral', d_codeine: 'Codein, oral', d_dihydrocodeine: 'Dihydrocodein, oral',
     d_hydrocodone: 'Hydrocodon, oral', d_hydromorphone: 'Hydromorphon, oral', d_oxycodone: 'Oxycodon, oral',
     d_oxymorphone: 'Oxymorphon, oral', d_tapentadol: 'Tapentadol, oral', d_tramadol: 'Tramadol, oral',
-    dose_label: 'Gesamttagesdosis (mg)', dose_ph: 'z. B. 60', calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Dosis eingeben.',
-    mme_label: 'MME/Tag: ', risk_low: 'Unter 50 MME/Tag.', risk_mod: '50–90 MME/Tag — mittlerer Bereich; viele Leitlinien empfehlen darüber Vorsicht.',
-    risk_high: 'Über 90 MME/Tag — höherer Bereich; in der Leitlinienliteratur üblicherweise mit erhöhtem Überdosierungsrisiko assoziiert.'
+    d_fentanyl: 'Fentanyl, transdermales Pflaster (µg/h)',
+    dose_label: 'Aktuelle Tagesdosis (mg — bei Fentanyl µg/h)', dose_ph: 'z. B. 60',
+    to_label: 'Umrechnen in', calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Dosis eingeben.',
+    ome_label: 'Orales Morphin-Äquivalent (OME) ≈ ', target_label: 'Äquivalente Dosis des Zielopioids ≈ ',
+    cross_tol_note: 'Bei Opioid-Rotation Reduktion um 25–50 % wegen unvollständiger Kreuztoleranz erwägen — etwa '
   },
   pl: {
-    tag: 'Inne', title: 'Konwersja opioidów (MME)', subtitle: 'Przelicza całkowitą dobową dawkę doustnego opioidu na ekwiwalent morfiny (MME), według współczynników konwersji CDC.',
-    opioid_extra_note: ' Współczynniki konwersji MME są przeznaczone do celów analitycznych/edukacyjnych, a nie jako bezpośrednie instrukcje dawkowania klinicznego. Rzeczywista rotacja opioidów musi uwzględniać niepełną tolerancję krzyżową (zwykle zmniejszenie obliczonego ekwiwalentu o 25–50%) i zawsze wymaga oceny uprawnionego lekarza. Metadon i fentanyl są tutaj celowo wyłączone — oba wymagają nieliniowej, prowadzonej przez specjalistę konwersji i nie mogą być bezpiecznie odwzorowane prostym współczynnikiem mnożenia.',
-    calc_heading: 'Oblicz', drug_label: 'Opioid',
-    d_morphine: 'Morfina, doustnie (referencyjna)', d_codeine: 'Kodeina, doustnie', d_dihydrocodeine: 'Dihydrokodeina, doustnie',
+    tag: 'Inne', title: 'Konwersja opioidów', subtitle: 'Przelicza dawkę opioidu na doustny ekwiwalent morfiny (OME) oraz na równoważną dawkę początkową innego opioidu, według współczynników konwersji CDC.',
+    opioid_extra_note: ' Te współczynniki konwersji są przeznaczone do celów analitycznych/edukacyjnych, a nie jako bezpośrednie instrukcje dawkowania klinicznego. Rzeczywista rotacja opioidów musi uwzględniać niepełną tolerancję krzyżową i zawsze wymaga oceny uprawnionego lekarza. Metadon jest celowo wyłączony — wymaga nieliniowej, prowadzonej przez specjalistę konwersji.',
+    calc_heading: 'Oblicz', from_label: 'Obecny opioid',
+    d_morphine: 'Morfina, doustnie', d_codeine: 'Kodeina, doustnie', d_dihydrocodeine: 'Dihydrokodeina, doustnie',
     d_hydrocodone: 'Hydrokodon, doustnie', d_hydromorphone: 'Hydromorfon, doustnie', d_oxycodone: 'Oksykodon, doustnie',
     d_oxymorphone: 'Oksymorfon, doustnie', d_tapentadol: 'Tapentadol, doustnie', d_tramadol: 'Tramadol, doustnie',
-    dose_label: 'Całkowita dawka dobowa (mg)', dose_ph: 'np. 60', calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłową dawkę.',
-    mme_label: 'MME/dobę: ', risk_low: 'Poniżej 50 MME/dobę.', risk_mod: '50–90 MME/dobę — zakres umiarkowany; wiele wytycznych zaleca ostrożność powyżej tego poziomu.',
-    risk_high: 'Powyżej 90 MME/dobę — zakres wyższy; w literaturze wytycznych zwykle wiązany ze zwiększonym ryzykiem przedawkowania.'
+    d_fentanyl: 'Fentanyl, plaster przezskórny (µg/h)',
+    dose_label: 'Obecna dawka dobowa (mg — dla fentanylu µg/h)', dose_ph: 'np. 60',
+    to_label: 'Przelicz na', calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłową dawkę.',
+    ome_label: 'Doustny ekwiwalent morfiny (OME) ≈ ', target_label: 'Równoważna dawka docelowego opioidu ≈ ',
+    cross_tol_note: 'Przy rotacji opioidów rozważ zmniejszenie o 25–50% z powodu niepełnej tolerancji krzyżowej — orientacyjnie '
   }
 };
 
-var _lastMME = null;
+var _lastConversion = null;
 
-function calcMME() {
-  var factor = parseFloat(document.getElementById('drug').value);
+function calcConversion() {
+  var fromVal = document.getElementById('from').value;
   var dose = parseFloat(document.getElementById('dose').value);
+  var toFactor = parseFloat(document.getElementById('to').value);
   if (!dose || dose <= 0) { alert(ucmT('err_invalid')); return; }
-  _lastMME = dose * factor;
+  // Fentanyl patch (mcg/hr) uses a distinct, well-established conversion
+  // to oral morphine equivalent rather than a simple same-unit multiplier.
+  var ome = fromVal === 'fentanyl' ? dose * 2.4 : dose * parseFloat(fromVal);
+  var targetDose = ome / toFactor;
+  _lastConversion = { ome: ome, targetDose: targetDose };
   renderResult();
 }
 
 function renderResult() {
-  if (_lastMME === null) return;
-  var mme = _lastMME;
-  var interp = mme < 50 ? ucmT('risk_low') : (mme <= 90 ? ucmT('risk_mod') : ucmT('risk_high'));
-  document.getElementById('resultScore').textContent = ucmT('mme_label') + mme.toFixed(1) + ' mg';
-  document.getElementById('resultInterp').innerHTML = interp;
+  if (_lastConversion === null) return;
+  var d = _lastConversion;
+  var reducedLow = d.targetDose * 0.5, reducedHigh = d.targetDose * 0.75;
+  document.getElementById('resultScore').textContent = ucmT('ome_label') + d.ome.toFixed(0) + ' mg/day';
+  document.getElementById('resultInterp').innerHTML =
+    ucmT('target_label') + '<strong>' + d.targetDose.toFixed(0) + ' mg/day</strong><br>' +
+    ucmT('cross_tol_note') + reducedLow.toFixed(0) + '–' + reducedHigh.toFixed(0) + ' mg/day.';
   document.getElementById('result').classList.add('show');
 }
 

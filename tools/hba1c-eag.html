@@ -18,11 +18,12 @@
 <div class="container">
   <span class="category-tag" data-i18n="tag">Endocrinology &amp; metabolic</span>
   <h1 class="page-title" data-i18n="title">HbA1c ↔ eAG</h1>
-  <p class="page-subtitle" data-i18n="subtitle">Converts glycated haemoglobin (HbA1c) to estimated average glucose (eAG).</p>
+  <p class="page-subtitle" data-i18n="subtitle">Converts glycated haemoglobin (HbA1c) to estimated average glucose (eAG). Enter either unit — the other is calculated automatically.</p>
 
   <div class="card">
     <h2 data-i18n="calc_heading">Calculate</h2>
-    <div class="field"><label data-i18n="hba1c_label" for="hba1c">HbA1c (%)</label><input type="number" id="hba1c" min="3" max="20" step="0.1" data-i18n-placeholder="hba1c_ph" placeholder="e.g. 7.0"></div>
+    <div class="field"><label data-i18n="hba1c_pct_label" for="hba1cPct">HbA1c (% NGSP)</label><input type="number" id="hba1cPct" min="3" max="20" step="0.1" data-i18n-placeholder="hba1c_pct_ph" placeholder="e.g. 7.0"></div>
+    <div class="field"><label data-i18n="hba1c_mmol_label" for="hba1cMmol">or HbA1c (mmol/mol IFCC)</label><input type="number" id="hba1cMmol" min="9" max="195" step="1" data-i18n-placeholder="hba1c_mmol_ph" placeholder="e.g. 53"></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcEAG()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
@@ -48,52 +49,69 @@
 <script>
 var UCM_I18N_PAGE = {
   en: {
-    tag: 'Endocrinology & metabolic', title: 'HbA1c ↔ eAG', subtitle: 'Converts glycated haemoglobin (HbA1c) to estimated average glucose (eAG).',
-    calc_heading: 'Calculate', hba1c_label: 'HbA1c (%)', hba1c_ph: 'e.g. 7.0', calc_btn: 'Calculate',
-    err_invalid: 'Please enter a valid HbA1c value.', formula_label: 'Formula:', formula_text: 'eAG (mg/dL) = 28.7 × HbA1c (%) − 46.7'
+    tag: 'Endocrinology & metabolic', title: 'HbA1c ↔ eAG', subtitle: 'Converts glycated haemoglobin (HbA1c) to estimated average glucose (eAG). Enter either unit — the other is calculated automatically.',
+    calc_heading: 'Calculate', hba1c_pct_label: 'HbA1c (% NGSP)', hba1c_pct_ph: 'e.g. 7.0',
+    hba1c_mmol_label: 'or HbA1c (mmol/mol IFCC)', hba1c_mmol_ph: 'e.g. 53',
+    calc_btn: 'Calculate', err_invalid: 'Please enter a value in one of the two fields.',
+    result_label: 'HbA1c = '
   },
   cs: {
-    tag: 'Endokrinologie a metabolismus', title: 'HbA1c ↔ eAG', subtitle: 'Převod glykovaného hemoglobinu (HbA1c) na odhadovanou průměrnou glykémii (eAG).',
-    calc_heading: 'Výpočet', hba1c_label: 'HbA1c (%)', hba1c_ph: 'např. 7,0', calc_btn: 'Vypočítat',
-    err_invalid: 'Zadejte prosím platnou hodnotu HbA1c.', formula_label: 'Vzorec:', formula_text: 'eAG (mg/dl) = 28,7 × HbA1c (%) − 46,7'
+    tag: 'Endokrinologie a metabolismus', title: 'HbA1c ↔ eAG', subtitle: 'Převod glykovaného hemoglobinu (HbA1c) na odhadovanou průměrnou glykémii (eAG). Zadejte kteroukoliv jednotku — druhá se dopočítá automaticky.',
+    calc_heading: 'Výpočet', hba1c_pct_label: 'HbA1c (% NGSP)', hba1c_pct_ph: 'např. 7,0',
+    hba1c_mmol_label: 'nebo HbA1c (mmol/mol IFCC)', hba1c_mmol_ph: 'např. 53',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím hodnotu do jednoho ze dvou polí.',
+    result_label: 'HbA1c = '
   },
   fr: {
-    tag: 'Endocrinologie et métabolisme', title: 'HbA1c ↔ eAG', subtitle: "Convertit l'hémoglobine glyquée (HbA1c) en glycémie moyenne estimée (eAG).",
-    calc_heading: 'Calculer', hba1c_label: 'HbA1c (%)', hba1c_ph: 'p. ex. 7,0', calc_btn: 'Calculer',
-    err_invalid: 'Veuillez saisir une valeur HbA1c valide.', formula_label: 'Formule :', formula_text: 'eAG (mg/dL) = 28,7 × HbA1c (%) − 46,7'
+    tag: 'Endocrinologie et métabolisme', title: 'HbA1c ↔ eAG', subtitle: "Convertit l'hémoglobine glyquée (HbA1c) en glycémie moyenne estimée (eAG). Saisissez l'une ou l'autre unité — l'autre est calculée automatiquement.",
+    calc_heading: 'Calculer', hba1c_pct_label: 'HbA1c (% NGSP)', hba1c_pct_ph: 'p. ex. 7,0',
+    hba1c_mmol_label: 'ou HbA1c (mmol/mol IFCC)', hba1c_mmol_ph: 'p. ex. 53',
+    calc_btn: 'Calculer', err_invalid: "Veuillez saisir une valeur dans l'un des deux champs.",
+    result_label: 'HbA1c = '
   },
   de: {
-    tag: 'Endokrinologie & Stoffwechsel', title: 'HbA1c ↔ eAG', subtitle: 'Umrechnung des glykierten Hämoglobins (HbA1c) in den geschätzten durchschnittlichen Blutzucker (eAG).',
-    calc_heading: 'Berechnen', hba1c_label: 'HbA1c (%)', hba1c_ph: 'z. B. 7,0', calc_btn: 'Berechnen',
-    err_invalid: 'Bitte gültigen HbA1c-Wert eingeben.', formula_label: 'Formel:', formula_text: 'eAG (mg/dl) = 28,7 × HbA1c (%) − 46,7'
+    tag: 'Endokrinologie & Stoffwechsel', title: 'HbA1c ↔ eAG', subtitle: 'Umrechnung des glykierten Hämoglobins (HbA1c) in den geschätzten durchschnittlichen Blutzucker (eAG). Geben Sie eine der beiden Einheiten ein — die andere wird automatisch berechnet.',
+    calc_heading: 'Berechnen', hba1c_pct_label: 'HbA1c (% NGSP)', hba1c_pct_ph: 'z. B. 7,0',
+    hba1c_mmol_label: 'oder HbA1c (mmol/mol IFCC)', hba1c_mmol_ph: 'z. B. 53',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte geben Sie einen Wert in eines der beiden Felder ein.',
+    result_label: 'HbA1c = '
   },
   pl: {
-    tag: 'Endokrynologia i metabolizm', title: 'HbA1c ↔ eAG', subtitle: 'Przelicza hemoglobinę glikowaną (HbA1c) na szacowaną średnią glikemię (eAG).',
-    calc_heading: 'Oblicz', hba1c_label: 'HbA1c (%)', hba1c_ph: 'np. 7,0', calc_btn: 'Oblicz',
-    err_invalid: 'Proszę podać prawidłową wartość HbA1c.', formula_label: 'Wzór:', formula_text: 'eAG (mg/dl) = 28,7 × HbA1c (%) − 46,7'
+    tag: 'Endokrynologia i metabolizm', title: 'HbA1c ↔ eAG', subtitle: 'Przelicza hemoglobinę glikowaną (HbA1c) na szacowaną średnią glikemię (eAG). Wpisz dowolną jednostkę — druga zostanie obliczona automatycznie.',
+    calc_heading: 'Oblicz', hba1c_pct_label: 'HbA1c (% NGSP)', hba1c_pct_ph: 'np. 7,0',
+    hba1c_mmol_label: 'lub HbA1c (mmol/mol IFCC)', hba1c_mmol_ph: 'np. 53',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać wartość w jednym z dwóch pól.',
+    result_label: 'HbA1c = '
   }
 };
 
 var _lastHbA1c = null;
 
 function calcEAG() {
-  var hba1c = parseFloat(document.getElementById('hba1c').value);
-  if (!hba1c || hba1c <= 0) { alert(ucmT('err_invalid')); return; }
-  _lastHbA1c = hba1c;
-  renderEAGResult();
+  var pctEl = document.getElementById('hba1cPct');
+  var mmolEl = document.getElementById('hba1cMmol');
+  var pct = parseFloat(pctEl.value);
+  var mmol = parseFloat(mmolEl.value);
+  if (!pct && !mmol) { alert(ucmT('err_invalid')); return; }
+  // Master equation (IFCC-NGSP), matching dashboard.html exactly:
+  // pct = 0.0915*mmol + 2.15  <->  mmol = (pct - 2.15) / 0.0915
+  if (mmol && !pct) { pct = 0.0915 * mmol + 2.15; pctEl.value = pct.toFixed(1); }
+  else if (pct && !mmol) { mmol = (pct - 2.15) / 0.0915; mmolEl.value = mmol.toFixed(0); }
+  var eagMmol = 1.59 * pct - 2.59; // matches dashboard.html's eAG formula exactly
+  var eagMgDl = eagMmol * 18;
+  _lastHbA1c = { pct: pct, mmol: mmol, eagMmol: eagMmol, eagMgDl: eagMgDl };
+  renderResult();
 }
 
-function renderEAGResult() {
+function renderResult() {
   if (_lastHbA1c === null) return;
-  var hba1c = _lastHbA1c;
-  var eagMgDl = 28.7 * hba1c - 46.7;
-  var eagMmol = eagMgDl / 18;
-  document.getElementById('resultScore').textContent = eagMgDl.toFixed(0) + ' mg/dL (' + eagMmol.toFixed(1) + ' mmol/L)';
-  document.getElementById('resultInterp').innerHTML = '<strong>' + ucmT('formula_label') + '</strong> ' + ucmT('formula_text');
+  var d = _lastHbA1c;
+  document.getElementById('resultScore').textContent = ucmT('result_label') + d.pct.toFixed(1) + '% (' + d.mmol.toFixed(0) + ' mmol/mol)';
+  document.getElementById('resultInterp').innerHTML = 'eAG ≈ <strong>' + d.eagMmol.toFixed(1) + ' mmol/L</strong> (' + d.eagMgDl.toFixed(0) + ' mg/dL)';
   document.getElementById('result').classList.add('show');
 }
 
-window.ucmOnLangChange = function() { renderEAGResult(); };
+window.ucmOnLangChange = function() { renderResult(); };
 </script>
 <script src="../assets/i18n.js"></script>
 </body>

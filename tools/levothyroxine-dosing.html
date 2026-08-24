@@ -23,10 +23,11 @@
   <div class="card">
     <h2 data-i18n="calc_heading">Calculate</h2>
     <div class="field"><label data-i18n="weight_label" for="weight">Weight (kg)</label><input type="number" id="weight" min="20" max="250" step="0.1" data-i18n-placeholder="weight_ph" placeholder="e.g. 70"></div>
-    <div class="field"><label data-i18n="risk_label">Age / cardiac risk category</label>
+    <div class="field"><label data-i18n="risk_label">Patient group</label>
       <select id="risk">
         <option value="full" data-i18n="risk_full">Younger, no known cardiac disease — full starting dose reasonable</option>
-        <option value="cautious" data-i18n="risk_cautious">Older adult, or known/suspected cardiac disease — start low, titrate slowly</option>
+        <option value="cv" data-i18n="risk_cv">Older adult, or known/suspected cardiac disease — start low, titrate slowly</option>
+        <option value="subclinical" data-i18n="risk_subclinical">Subclinical hypothyroidism</option>
       </select>
     </div>
     <button class="btn" data-i18n="calc_btn" onclick="calcLevo()">Calculate</button>
@@ -58,46 +59,46 @@ var UCM_I18N_PAGE = {
     tag: 'Endocrinology & metabolic', title: 'Levothyroxine Dosing', subtitle: 'Estimates a starting dose for levothyroxine replacement in hypothyroidism.',
     calc_heading: 'Calculate', weight_label: 'Weight (kg)', weight_ph: 'e.g. 70', risk_label: 'Age / cardiac risk category',
     risk_full: 'Younger, no known cardiac disease — full starting dose reasonable',
-    risk_cautious: 'Older adult, or known/suspected cardiac disease — start low, titrate slowly',
+    risk_cv: 'Older adult, or known/suspected cardiac disease — start low, titrate slowly', risk_subclinical: 'Subclinical hypothyroidism',
     calc_btn: 'Calculate', err_invalid: 'Please enter a valid weight.',
-    levo_extra_note: ' This is a general starting-dose estimate only. Actual dosing must be individualised and titrated against TSH response, typically rechecked 4–6 weeks after any dose change.',
-    full_result: 'Full replacement dose (~1.6 mcg/kg/day): approximately ', cautious_result: 'Cautious starting dose (independent of weight, low and slow): typically 25–50 mcg/day, titrated upward gradually.'
+    levo_extra_note: ' This is a general starting-dose estimate only. Actual dosing must be individualised and titrated against TSH response, typically rechecked 6–8 weeks after any dose change.',
+    full_result: 'Full replacement dose (~1.6 mcg/kg/day, rounded to the nearest 25 mcg): approximately ', cv_result: 'Start 25–50 mcg/day, titrate against TSH every 6–8 weeks — slower titration in older adults or cardiac disease.', subclinical_result: 'Subclinical hypothyroidism — consider a lower starting dose (25–50 mcg/day), titrated against TSH.'
   },
   cs: {
     tag: 'Endokrinologie a metabolismus', title: 'Dávkování levothyroxinu', subtitle: 'Odhad úvodní dávky levothyroxinu při substituci hypotyreózy.',
     calc_heading: 'Výpočet', weight_label: 'Hmotnost (kg)', weight_ph: 'např. 70', risk_label: 'Věková / kardiální riziková kategorie',
     risk_full: 'Mladší pacient, bez známého kardiálního onemocnění — plná úvodní dávka je rozumná',
-    risk_cautious: 'Starší pacient, nebo známé/suspektní kardiální onemocnění — začít nízkou dávkou, pomalu titrovat',
+    risk_cv: 'Starší pacient, nebo známé/suspektní kardiální onemocnění — začít nízkou dávkou, pomalu titrovat', risk_subclinical: 'Subklinická hypotyreóza',
     calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platnou hmotnost.',
-    levo_extra_note: ' Jde pouze o obecný odhad úvodní dávky. Skutečné dávkování musí být individualizováno a titrováno dle odpovědi TSH, obvykle přeměřováno 4–6 týdnů po jakékoli změně dávky.',
-    full_result: 'Plná substituční dávka (~1,6 mcg/kg/den): přibližně ', cautious_result: 'Opatrná úvodní dávka (nezávisle na hmotnosti, nízká a pomalá titrace): obvykle 25–50 mcg/den, postupně navyšovat.'
+    levo_extra_note: ' Jde pouze o obecný odhad úvodní dávky. Skutečné dávkování musí být individualizováno a titrováno dle odpovědi TSH, obvykle přeměřováno 6–8 týdnů po jakékoli změně dávky.',
+    full_result: 'Plná substituční dávka (~1,6 mcg/kg/den, zaokrouhleno na 25 mcg): přibližně ', cv_result: 'Zahájit 25–50 mcg/den, titrovat dle TSH každých 6–8 týdnů — pomalejší titrace u seniorů nebo kardiálního onemocnění.', subclinical_result: 'Subklinická hypotyreóza — zvážit nižší úvodní dávku (25–50 mcg/den), titrovanou dle TSH.'
   },
   fr: {
     tag: 'Endocrinologie et métabolisme', title: 'Dosage de la lévothyroxine', subtitle: "Estime une dose initiale de lévothyroxine pour le traitement substitutif de l'hypothyroïdie.",
     calc_heading: 'Calculer', weight_label: 'Poids (kg)', weight_ph: 'p. ex. 70', risk_label: 'Catégorie de risque liée à l\u2019âge / cardiaque',
     risk_full: 'Plus jeune, sans cardiopathie connue — dose initiale complète raisonnable',
-    risk_cautious: 'Personne âgée, ou cardiopathie connue/suspectée — commencer bas, titrer lentement',
+    risk_cv: 'Personne âgée, ou cardiopathie connue/suspectée — commencer bas, titrer lentement', risk_subclinical: 'Hypothyroïdie infraclinique',
     calc_btn: 'Calculer', err_invalid: 'Veuillez saisir un poids valide.',
-    levo_extra_note: " Il s'agit uniquement d'une estimation générale de la dose initiale. Le dosage réel doit être individualisé et titré selon la réponse de la TSH, généralement recontrôlée 4 à 6 semaines après tout changement de dose.",
-    full_result: 'Dose de remplacement complète (~1,6 mcg/kg/jour) : environ ', cautious_result: "Dose initiale prudente (indépendante du poids, faible et progressive) : généralement 25 à 50 mcg/jour, augmentée progressivement."
+    levo_extra_note: " Il s'agit uniquement d'une estimation générale de la dose initiale. Le dosage réel doit être individualisé et titré selon la réponse de la TSH, généralement recontrôlée 6 à 8 semaines après tout changement de dose.",
+    full_result: 'Dose de remplacement complète (~1,6 mcg/kg/jour, arrondie aux 25 mcg les plus proches) : environ ', cv_result: 'Commencer à 25–50 mcg/jour, titrer selon la TSH toutes les 6 à 8 semaines — titration plus lente chez les personnes âgées ou en cas de cardiopathie.', subclinical_result: "Hypothyroïdie infraclinique — envisager une dose initiale plus faible (25–50 mcg/jour), titrée selon la TSH."
   },
   de: {
     tag: 'Endokrinologie & Stoffwechsel', title: 'Levothyroxin-Dosierung', subtitle: 'Schätzt eine Startdosis für die Levothyroxin-Substitution bei Hypothyreose.',
     calc_heading: 'Berechnen', weight_label: 'Gewicht (kg)', weight_ph: 'z. B. 70', risk_label: 'Alters-/kardiale Risikokategorie',
     risk_full: 'Jünger, keine bekannte Herzerkrankung — volle Startdosis vertretbar',
-    risk_cautious: 'Älterer Erwachsener oder bekannte/vermutete Herzerkrankung — niedrig beginnen, langsam titrieren',
+    risk_cv: 'Älterer Erwachsener oder bekannte/vermutete Herzerkrankung — niedrig beginnen, langsam titrieren', risk_subclinical: 'Subklinische Hypothyreose',
     calc_btn: 'Berechnen', err_invalid: 'Bitte gültiges Gewicht eingeben.',
-    levo_extra_note: ' Dies ist nur eine allgemeine Schätzung der Startdosis. Die tatsächliche Dosierung muss individualisiert und anhand des TSH-Ansprechens titriert werden, üblicherweise 4–6 Wochen nach jeder Dosisänderung erneut kontrolliert.',
-    full_result: 'Volle Substitutionsdosis (~1,6 µg/kg/Tag): ungefähr ', cautious_result: 'Vorsichtige Startdosis (unabhängig vom Gewicht, niedrig und langsam): typischerweise 25–50 µg/Tag, schrittweise gesteigert.'
+    levo_extra_note: ' Dies ist nur eine allgemeine Schätzung der Startdosis. Die tatsächliche Dosierung muss individualisiert und anhand des TSH-Ansprechens titriert werden, üblicherweise 6–8 Wochen nach jeder Dosisänderung erneut kontrolliert.',
+    full_result: 'Volle Substitutionsdosis (~1,6 µg/kg/Tag, auf 25 µg gerundet): ungefähr ', cv_result: 'Mit 25–50 µg/Tag beginnen, alle 6–8 Wochen anhand des TSH-Werts titrieren — langsamere Titration bei älteren Patienten oder Herzerkrankung.', subclinical_result: 'Subklinische Hypothyreose — niedrigere Startdosis erwägen (25–50 µg/Tag), anhand des TSH-Werts titriert.'
   },
   pl: {
     tag: 'Endokrynologia i metabolizm', title: 'Dawkowanie lewotyroksyny', subtitle: 'Szacuje dawkę początkową lewotyroksyny w leczeniu substytucyjnym niedoczynności tarczycy.',
     calc_heading: 'Oblicz', weight_label: 'Waga (kg)', weight_ph: 'np. 70', risk_label: 'Kategoria ryzyka wiekowego / sercowego',
     risk_full: 'Młodszy pacjent, bez znanej choroby serca — pełna dawka początkowa uzasadniona',
-    risk_cautious: 'Starszy pacjent lub znana/podejrzewana choroba serca — zacząć od niskiej dawki, powoli miareczkować',
+    risk_cv: 'Starszy pacjent lub znana/podejrzewana choroba serca — zacząć od niskiej dawki, powoli miareczkować', risk_subclinical: 'Subkliniczna niedoczynność tarczycy',
     calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłową wagę.',
-    levo_extra_note: ' To tylko ogólne oszacowanie dawki początkowej. Rzeczywiste dawkowanie musi być zindywidualizowane i miareczkowane zgodnie z odpowiedzią TSH, zwykle kontrolowaną ponownie 4–6 tygodni po każdej zmianie dawki.',
-    full_result: 'Pełna dawka substytucyjna (~1,6 mcg/kg/dobę): około ', cautious_result: 'Ostrożna dawka początkowa (niezależna od wagi, niska i powolna): zwykle 25–50 mcg/dobę, stopniowo zwiększana.'
+    levo_extra_note: ' To tylko ogólne oszacowanie dawki początkowej. Rzeczywiste dawkowanie musi być zindywidualizowane i miareczkowane zgodnie z odpowiedzią TSH, zwykle kontrolowaną ponownie 6–8 tygodni po każdej zmianie dawki.',
+    full_result: 'Pełna dawka substytucyjna (~1,6 mcg/kg/dobę, zaokrąglona do 25 mcg): około ', cv_result: 'Rozpocznij od 25–50 mcg/dobę, miareczkuj wg TSH co 6–8 tygodni — wolniejsze miareczkowanie u osób starszych lub z chorobą serca.', subclinical_result: 'Subkliniczna niedoczynność tarczycy — rozważ niższą dawkę początkową (25–50 mcg/dobę), miareczkowaną wg TSH.'
   }
 };
 
@@ -115,12 +116,16 @@ function renderResult() {
   if (_lastLevo === null) return;
   var d = _lastLevo;
   if (d.risk === 'full') {
-    var dose = d.weight * 1.6;
-    document.getElementById('resultScore').textContent = dose.toFixed(0) + ' mcg/day';
+    // Rounded to the nearest 25 mcg, matching standard tablet increments.
+    var dose = Math.round((d.weight * 1.6) / 25) * 25;
+    document.getElementById('resultScore').textContent = '≈ ' + dose.toFixed(0) + ' mcg/day';
     document.getElementById('resultInterp').innerHTML = ucmT('full_result') + dose.toFixed(0) + ' mcg/day.';
+  } else if (d.risk === 'subclinical') {
+    document.getElementById('resultScore').textContent = '25–50 mcg/day';
+    document.getElementById('resultInterp').innerHTML = ucmT('subclinical_result');
   } else {
     document.getElementById('resultScore').textContent = '25–50 mcg/day';
-    document.getElementById('resultInterp').innerHTML = ucmT('cautious_result');
+    document.getElementById('resultInterp').innerHTML = ucmT('cv_result');
   }
   document.getElementById('result').classList.add('show');
 }

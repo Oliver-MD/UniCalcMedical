@@ -18,19 +18,13 @@
 <div class="container">
   <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
   <h1 class="page-title" data-i18n="title">Corrected QT (QTc)</h1>
-  <p class="page-subtitle" data-i18n="subtitle">Corrects the measured QT interval for heart rate, using either the Bazett or Fridericia formula.</p>
+  <p class="page-subtitle" data-i18n="subtitle">Corrects the measured QT interval for heart rate, shown by both the Bazett and Fridericia formulas, with sex-specific interpretation.</p>
 
   <div class="card">
     <h2 data-i18n="calc_heading">Calculate</h2>
     <div class="field"><label data-i18n="qt_label" for="qt">QT interval (ms)</label><input type="number" id="qt" min="200" max="800" step="1" data-i18n-placeholder="qt_ph" placeholder="e.g. 400"></div>
-    <div class="field"><label data-i18n="rr_label" for="rr">RR interval (ms) — or enter heart rate below</label><input type="number" id="rr" min="300" max="2000" step="1" data-i18n-placeholder="rr_ph" placeholder="e.g. 800"></div>
-    <div class="field"><label data-i18n="hr_label" for="hr">Heart rate (bpm) — alternative to RR interval</label><input type="number" id="hr" min="20" max="300" step="1" data-i18n-placeholder="hr_ph" placeholder="e.g. 75"></div>
-    <div class="field"><label data-i18n="formula_select_label">Correction formula</label>
-      <select id="formula">
-        <option value="bazett" data-i18n="opt_bazett">Bazett</option>
-        <option value="fridericia" data-i18n="opt_fridericia">Fridericia</option>
-      </select>
-    </div>
+    <div class="field"><label data-i18n="hr_label" for="hr">Heart rate (bpm)</label><input type="number" id="hr" min="20" max="300" step="1" data-i18n-placeholder="hr_ph" placeholder="e.g. 75"></div>
+    <div class="field"><label data-i18n="sex_label">Sex</label><select id="sex"><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcQTc()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
@@ -56,49 +50,49 @@
 <script>
 var UCM_I18N_PAGE = {
   en: {
-    tag: 'Cardiology & thromboembolism', title: 'Corrected QT (QTc)', subtitle: 'Corrects the measured QT interval for heart rate, using either the Bazett or Fridericia formula.',
-    calc_heading: 'Calculate', qt_label: 'QT interval (ms)', qt_ph: 'e.g. 400',
-    rr_label: 'RR interval (ms) — or enter heart rate below', rr_ph: 'e.g. 800',
-    hr_label: 'Heart rate (bpm) — alternative to RR interval', hr_ph: 'e.g. 75',
-    formula_select_label: 'Correction formula', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
-    calc_btn: 'Calculate', err_invalid: 'Please enter a valid QT interval, and either an RR interval or heart rate.',
-    interp_normal: 'Within typically cited normal range.', interp_borderline: 'Borderline prolongation.', interp_prolonged: 'Prolonged QTc.'
+    tag: 'Cardiology & thromboembolism', title: 'Corrected QT (QTc)', subtitle: 'Corrects the measured QT interval for heart rate, shown by both the Bazett and Fridericia formulas, with sex-specific interpretation.',
+    calc_heading: 'Calculate', qt_label: 'QT interval (ms)', qt_ph: 'e.g. 400', hr_label: 'Heart rate (bpm)', hr_ph: 'e.g. 75',
+    sex_label: 'Sex', opt_female: 'Female', opt_male: 'Male',
+    calc_btn: 'Calculate', err_invalid: 'Please enter a valid QT interval and heart rate.',
+    bazett_label: 'QTc (Bazett) = ', fridericia_label: 'QTc (Fridericia) = ',
+    norm_note: 'Normal range: men ≤450 ms, women ≤470 ms.',
+    interp_normal: 'Normal.', interp_prolonged: 'Prolonged QTc.', interp_highrisk: 'High risk of torsades de pointes (>500 ms).'
   },
   cs: {
-    tag: 'Kardiologie a tromboembolie', title: 'Korigovaný QT (QTc)', subtitle: 'Korekce naměřeného intervalu QT na tepovou frekvenci, dle Bazettova nebo Fridericiova vzorce.',
-    calc_heading: 'Výpočet', qt_label: 'Interval QT (ms)', qt_ph: 'např. 400',
-    rr_label: 'Interval RR (ms) — nebo zadejte tepovou frekvenci níže', rr_ph: 'např. 800',
-    hr_label: 'Tepová frekvence (/min) — alternativa k intervalu RR', hr_ph: 'např. 75',
-    formula_select_label: 'Korekční vzorec', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
-    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platný interval QT a buď interval RR, nebo tepovou frekvenci.',
-    interp_normal: 'V obvykle uváděném normálním rozmezí.', interp_borderline: 'Hraniční prodloužení.', interp_prolonged: 'Prodloužený QTc.'
+    tag: 'Kardiologie a tromboembolie', title: 'Korigovaný QT (QTc)', subtitle: 'Korekce naměřeného intervalu QT na tepovou frekvenci, dle Bazettova i Fridericiova vzorce současně, s interpretací dle pohlaví.',
+    calc_heading: 'Výpočet', qt_label: 'Interval QT (ms)', qt_ph: 'např. 400', hr_label: 'Tepová frekvence (/min)', hr_ph: 'např. 75',
+    sex_label: 'Pohlaví', opt_female: 'Žena', opt_male: 'Muž',
+    calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platný interval QT a tepovou frekvenci.',
+    bazett_label: 'QTc (Bazett) = ', fridericia_label: 'QTc (Fridericia) = ',
+    norm_note: 'Norma: muži ≤450 ms, ženy ≤470 ms.',
+    interp_normal: 'Normální.', interp_prolonged: 'Prodloužené QTc.', interp_highrisk: 'Vysoké riziko torsades de pointes (>500 ms).'
   },
   fr: {
-    tag: 'Cardiologie et thromboembolie', title: 'QT corrigé (QTc)', subtitle: "Corrige l'intervalle QT mesuré en fonction de la fréquence cardiaque, selon la formule de Bazett ou de Fridericia.",
-    calc_heading: 'Calculer', qt_label: 'Intervalle QT (ms)', qt_ph: 'p. ex. 400',
-    rr_label: 'Intervalle RR (ms) — ou saisissez la fréquence cardiaque ci-dessous', rr_ph: 'p. ex. 800',
-    hr_label: 'Fréquence cardiaque (bpm) — alternative à l\u2019intervalle RR', hr_ph: 'p. ex. 75',
-    formula_select_label: 'Formule de correction', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
-    calc_btn: 'Calculer', err_invalid: "Veuillez saisir un intervalle QT valide, ainsi qu'un intervalle RR ou une fréquence cardiaque.",
-    interp_normal: 'Dans la plage normale généralement citée.', interp_borderline: 'Allongement limite.', interp_prolonged: 'QTc allongé.'
+    tag: 'Cardiologie et thromboembolie', title: 'QT corrigé (QTc)', subtitle: "Corrige l'intervalle QT mesuré en fonction de la fréquence cardiaque, selon les formules de Bazett et de Fridericia simultanément, avec interprétation selon le sexe.",
+    calc_heading: 'Calculer', qt_label: 'Intervalle QT (ms)', qt_ph: 'p. ex. 400', hr_label: 'Fréquence cardiaque (bpm)', hr_ph: 'p. ex. 75',
+    sex_label: 'Sexe', opt_female: 'Féminin', opt_male: 'Masculin',
+    calc_btn: 'Calculer', err_invalid: 'Veuillez saisir un intervalle QT et une fréquence cardiaque valides.',
+    bazett_label: 'QTc (Bazett) = ', fridericia_label: 'QTc (Fridericia) = ',
+    norm_note: 'Plage normale : hommes ≤450 ms, femmes ≤470 ms.',
+    interp_normal: 'Normal.', interp_prolonged: 'QTc allongé.', interp_highrisk: 'Risque élevé de torsades de pointes (>500 ms).'
   },
   de: {
-    tag: 'Kardiologie & Thromboembolie', title: 'Korrigiertes QT (QTc)', subtitle: 'Korrigiert das gemessene QT-Intervall für die Herzfrequenz, nach der Bazett- oder Fridericia-Formel.',
-    calc_heading: 'Berechnen', qt_label: 'QT-Intervall (ms)', qt_ph: 'z. B. 400',
-    rr_label: 'RR-Intervall (ms) — oder Herzfrequenz unten eingeben', rr_ph: 'z. B. 800',
-    hr_label: 'Herzfrequenz (Schläge/min) — Alternative zum RR-Intervall', hr_ph: 'z. B. 75',
-    formula_select_label: 'Korrekturformel', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
-    calc_btn: 'Berechnen', err_invalid: 'Bitte gültiges QT-Intervall sowie entweder RR-Intervall oder Herzfrequenz eingeben.',
-    interp_normal: 'Im üblicherweise angegebenen Normbereich.', interp_borderline: 'Grenzwertige Verlängerung.', interp_prolonged: 'Verlängertes QTc.'
+    tag: 'Kardiologie & Thromboembolie', title: 'Korrigiertes QT (QTc)', subtitle: 'Korrigiert das gemessene QT-Intervall für die Herzfrequenz, nach der Bazett- und der Fridericia-Formel gleichzeitig, mit geschlechtsspezifischer Interpretation.',
+    calc_heading: 'Berechnen', qt_label: 'QT-Intervall (ms)', qt_ph: 'z. B. 400', hr_label: 'Herzfrequenz (Schläge/min)', hr_ph: 'z. B. 75',
+    sex_label: 'Geschlecht', opt_female: 'Weiblich', opt_male: 'Männlich',
+    calc_btn: 'Berechnen', err_invalid: 'Bitte gültiges QT-Intervall und gültige Herzfrequenz eingeben.',
+    bazett_label: 'QTc (Bazett) = ', fridericia_label: 'QTc (Fridericia) = ',
+    norm_note: 'Normbereich: Männer ≤450 ms, Frauen ≤470 ms.',
+    interp_normal: 'Normal.', interp_prolonged: 'Verlängertes QTc.', interp_highrisk: 'Hohes Risiko für Torsade de pointes (>500 ms).'
   },
   pl: {
-    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'Skorygowane QT (QTc)', subtitle: 'Koryguje zmierzony odstęp QT względem częstości akcji serca, według wzoru Bazetta lub Fridericii.',
-    calc_heading: 'Oblicz', qt_label: 'Odstęp QT (ms)', qt_ph: 'np. 400',
-    rr_label: 'Odstęp RR (ms) — lub podaj częstość akcji serca poniżej', rr_ph: 'np. 800',
-    hr_label: 'Częstość akcji serca (/min) — alternatywa dla odstępu RR', hr_ph: 'np. 75',
-    formula_select_label: 'Wzór korekcyjny', opt_bazett: 'Bazett', opt_fridericia: 'Fridericia',
-    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowy odstęp QT oraz odstęp RR lub częstość akcji serca.',
-    interp_normal: 'W typowo podawanym zakresie prawidłowym.', interp_borderline: 'Wydłużenie graniczne.', interp_prolonged: 'Wydłużone QTc.'
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa', title: 'Skorygowane QT (QTc)', subtitle: 'Koryguje zmierzony odstęp QT względem częstości akcji serca, jednocześnie wg wzoru Bazetta i Fridericii, z interpretacją zależną od płci.',
+    calc_heading: 'Oblicz', qt_label: 'Odstęp QT (ms)', qt_ph: 'np. 400', hr_label: 'Częstość akcji serca (/min)', hr_ph: 'np. 75',
+    sex_label: 'Płeć', opt_female: 'Kobieta', opt_male: 'Mężczyzna',
+    calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowy odstęp QT i częstość akcji serca.',
+    bazett_label: 'QTc (Bazett) = ', fridericia_label: 'QTc (Fridericia) = ',
+    norm_note: 'Zakres prawidłowy: mężczyźni ≤450 ms, kobiety ≤470 ms.',
+    interp_normal: 'Prawidłowe.', interp_prolonged: 'Wydłużone QTc.', interp_highrisk: 'Wysokie ryzyko torsade de pointes (>500 ms).'
   }
 };
 
@@ -106,26 +100,28 @@ var _lastQTc = null;
 
 function calcQTc() {
   var qt = parseFloat(document.getElementById('qt').value);
-  var rr = parseFloat(document.getElementById('rr').value);
   var hr = parseFloat(document.getElementById('hr').value);
-  if (!rr && hr) rr = 60000 / hr;
-  if (!qt || !rr || qt <= 0 || rr <= 0) { alert(ucmT('err_invalid')); return; }
-  var rrSec = rr / 1000;
-  var formula = document.getElementById('formula').value;
-  var qtc = formula === 'bazett' ? qt / Math.sqrt(rrSec) : qt / Math.cbrt(rrSec);
-  _lastQTc = { qtc: qtc, formula: formula };
+  var sex = document.getElementById('sex').value;
+  if (!qt || !hr || qt <= 0 || hr <= 0) { alert(ucmT('err_invalid')); return; }
+  var rr = 60 / hr; // in seconds, matching dashboard.html's rr = 60/hr
+  var bazett = qt / Math.sqrt(rr);
+  var fridericia = qt / Math.pow(rr, 1 / 3);
+  _lastQTc = { bazett: bazett, fridericia: fridericia, sex: sex };
   renderResult();
 }
 
 function renderResult() {
   if (_lastQTc === null) return;
-  var qtc = _lastQTc.qtc;
+  var d = _lastQTc;
+  var limit = d.sex === 'f' ? 470 : 450;
   var interp;
-  if (qtc < 450) interp = ucmT('interp_normal');
-  else if (qtc < 480) interp = ucmT('interp_borderline');
-  else interp = ucmT('interp_prolonged');
-  document.getElementById('resultScore').textContent = 'QTc = ' + qtc.toFixed(0) + ' ms';
-  document.getElementById('resultInterp').innerHTML = interp;
+  if (d.bazett > 500) interp = ucmT('interp_highrisk');
+  else if (d.bazett > limit) interp = ucmT('interp_prolonged');
+  else interp = ucmT('interp_normal');
+  document.getElementById('resultScore').textContent = ucmT('bazett_label') + d.bazett.toFixed(0) + ' ms';
+  document.getElementById('resultInterp').innerHTML =
+    ucmT('fridericia_label') + d.fridericia.toFixed(0) + ' ms<br>' +
+    ucmT('norm_note') + '<br><strong>' + interp + '</strong>';
   document.getElementById('result').classList.add('show');
 }
 

@@ -29,8 +29,7 @@
     <div class="field"><label data-i18n="c_bleed">Prior major bleeding or predisposition to bleeding</label><select id="c_bleed"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <div class="field"><label data-i18n="c_inr">Labile INR (unstable/high, or time in therapeutic range &lt; 60%)</label><select id="c_inr"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <div class="field"><label data-i18n="c_age">Age &gt; 65 years</label><select id="c_age"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
-    <div class="field"><label data-i18n="c_drugs">Concomitant drugs predisposing to bleeding (antiplatelets, NSAIDs)</label><select id="c_drugs"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
-    <div class="field"><label data-i18n="c_alcohol">Alcohol use (≥8 drinks/week)</label><select id="c_alcohol"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_drugs">Drugs predisposing to bleeding (antiplatelets, NSAIDs) or alcohol use (≥8 drinks/week)</label><select id="c_drugs"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcHASBLED()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
@@ -61,9 +60,9 @@ var UCM_I18N_PAGE = {
     c_hyp: 'Hypertension (uncontrolled, systolic > 160 mmHg)', c_renal: 'Abnormal renal function (dialysis, transplant, creatinine > 200 µmol/L)',
     c_liver: 'Abnormal liver function (cirrhosis, bilirubin > 2× normal, AST/ALT/ALP > 3× normal)', c_stroke: 'Prior stroke',
     c_bleed: 'Prior major bleeding or predisposition to bleeding', c_inr: 'Labile INR (unstable/high, or time in therapeutic range < 60%)',
-    c_age: 'Age > 65 years', c_drugs: 'Concomitant drugs predisposing to bleeding (antiplatelets, NSAIDs)', c_alcohol: 'Alcohol use (≥8 drinks/week)',
+    c_age: 'Age > 65 years', c_drugs: 'Drugs predisposing to bleeding (antiplatelets, NSAIDs) or alcohol use (≥8 drinks/week)',
     calc_btn: 'Calculate', opt_no: 'No', opt_yes1: 'Yes (+1)',
-    score_label: 'Score = ', of9: ' / 9',
+    score_label: 'Score = ', of8: ' / 8',
     interp_low: 'Low bleeding risk.', interp_mod: 'Moderate bleeding risk.', interp_high: 'High bleeding risk — score ≥3 suggests caution and regular review; this alone should not automatically preclude anticoagulation, which is often still indicated.'
   },
   cs: {
@@ -72,9 +71,9 @@ var UCM_I18N_PAGE = {
     c_hyp: 'Hypertenze (nekontrolovaná, systolický TK > 160 mmHg)', c_renal: 'Porucha renálních funkcí (dialýza, transplantace, kreatinin > 200 µmol/l)',
     c_liver: 'Porucha jaterních funkcí (cirhóza, bilirubin > 2× norma, AST/ALT/ALP > 3× norma)', c_stroke: 'Prodělaná cévní mozková příhoda',
     c_bleed: 'Předchozí velké krvácení nebo predispozice ke krvácení', c_inr: 'Nestabilní INR (kolísavé/vysoké, nebo čas v terapeutickém rozmezí < 60 %)',
-    c_age: 'Věk > 65 let', c_drugs: 'Souběžná léčiva predisponující ke krvácení (antiagregancia, NSAID)', c_alcohol: 'Konzumace alkoholu (≥8 dávek týdně)',
+    c_age: 'Věk > 65 let', c_drugs: 'Léky predisponující ke krvácení (antiagregancia, NSAID) nebo konzumace alkoholu (≥8 dávek týdně)',
     calc_btn: 'Vypočítat', opt_no: 'Ne', opt_yes1: 'Ano (+1)',
-    score_label: 'Skóre = ', of9: ' / 9',
+    score_label: 'Skóre = ', of8: ' / 8',
     interp_low: 'Nízké riziko krvácení.', interp_mod: 'Střední riziko krvácení.', interp_high: 'Vysoké riziko krvácení — skóre ≥3 znamená opatrnost a pravidelné přehodnocování; samo o sobě by nemělo automaticky vylučovat antikoagulační léčbu, která je často stále indikována.'
   },
   fr: {
@@ -83,9 +82,9 @@ var UCM_I18N_PAGE = {
     c_hyp: 'Hypertension (non contrôlée, systolique > 160 mmHg)', c_renal: 'Fonction rénale anormale (dialyse, greffe, créatinine > 200 µmol/L)',
     c_liver: 'Fonction hépatique anormale (cirrhose, bilirubine > 2× la normale, AST/ALT/ALP > 3× la normale)', c_stroke: 'Antécédent d\u2019AVC',
     c_bleed: 'Antécédent d\u2019hémorragie majeure ou prédisposition hémorragique', c_inr: 'INR labile (instable/élevé, ou temps dans la zone thérapeutique < 60 %)',
-    c_age: 'Âge > 65 ans', c_drugs: 'Médicaments concomitants prédisposant aux saignements (antiplaquettaires, AINS)', c_alcohol: 'Consommation d\u2019alcool (≥8 verres/semaine)',
+    c_age: 'Âge > 65 ans', c_drugs: 'Médicaments prédisposant aux saignements (antiplaquettaires, AINS) ou consommation d\u2019alcool (≥8 verres/semaine)',
     calc_btn: 'Calculer', opt_no: 'Non', opt_yes1: 'Oui (+1)',
-    score_label: 'Score = ', of9: ' / 9',
+    score_label: 'Score = ', of8: ' / 8',
     interp_low: 'Risque hémorragique faible.', interp_mod: 'Risque hémorragique modéré.', interp_high: "Risque hémorragique élevé — un score ≥3 justifie prudence et suivi régulier ; cela ne devrait pas, à lui seul, exclure automatiquement l'anticoagulation, souvent toujours indiquée."
   },
   de: {
@@ -94,9 +93,9 @@ var UCM_I18N_PAGE = {
     c_hyp: 'Hypertonie (unkontrolliert, systolisch > 160 mmHg)', c_renal: 'Eingeschränkte Nierenfunktion (Dialyse, Transplantation, Kreatinin > 200 µmol/L)',
     c_liver: 'Eingeschränkte Leberfunktion (Zirrhose, Bilirubin > 2-fach der Norm, AST/ALT/ALP > 3-fach der Norm)', c_stroke: 'Früherer Schlaganfall',
     c_bleed: 'Frühere schwere Blutung oder Blutungsneigung', c_inr: 'Labile INR (instabil/hoch, oder Zeit im therapeutischen Bereich < 60 %)',
-    c_age: 'Alter > 65 Jahre', c_drugs: 'Begleitmedikation mit Blutungsneigung (Thrombozytenaggregationshemmer, NSAR)', c_alcohol: 'Alkoholkonsum (≥8 Getränke/Woche)',
+    c_age: 'Alter > 65 Jahre', c_drugs: 'Medikamente mit Blutungsneigung (Thrombozytenaggregationshemmer, NSAR) oder Alkoholkonsum (≥8 Getränke/Woche)',
     calc_btn: 'Berechnen', opt_no: 'Nein', opt_yes1: 'Ja (+1)',
-    score_label: 'Score = ', of9: ' / 9',
+    score_label: 'Score = ', of8: ' / 8',
     interp_low: 'Geringes Blutungsrisiko.', interp_mod: 'Mittleres Blutungsrisiko.', interp_high: 'Hohes Blutungsrisiko — ein Score ≥3 spricht für Vorsicht und regelmäßige Überprüfung; dies allein sollte eine Antikoagulation, die oft weiterhin indiziert ist, nicht automatisch ausschließen.'
   },
   pl: {
@@ -105,9 +104,9 @@ var UCM_I18N_PAGE = {
     c_hyp: 'Nadciśnienie tętnicze (niekontrolowane, skurczowe > 160 mmHg)', c_renal: 'Nieprawidłowa czynność nerek (dializa, przeszczep, kreatynina > 200 µmol/l)',
     c_liver: 'Nieprawidłowa czynność wątroby (marskość, bilirubina > 2× norma, AST/ALT/ALP > 3× norma)', c_stroke: 'Przebyty udar mózgu',
     c_bleed: 'Przebyte poważne krwawienie lub skłonność do krwawień', c_inr: 'Niestabilne INR (chwiejne/wysokie lub czas w zakresie terapeutycznym < 60%)',
-    c_age: 'Wiek > 65 lat', c_drugs: 'Jednoczesne przyjmowanie leków sprzyjających krwawieniu (leki przeciwpłytkowe, NLPZ)', c_alcohol: 'Spożycie alkoholu (≥8 porcji/tydzień)',
+    c_age: 'Wiek > 65 lat', c_drugs: 'Leki sprzyjające krwawieniu (leki przeciwpłytkowe, NLPZ) lub spożycie alkoholu (≥8 porcji/tydzień)',
     calc_btn: 'Oblicz', opt_no: 'Nie', opt_yes1: 'Tak (+1)',
-    score_label: 'Wynik = ', of9: ' / 9',
+    score_label: 'Wynik = ', of8: ' / 8',
     interp_low: 'Niskie ryzyko krwawienia.', interp_mod: 'Umiarkowane ryzyko krwawienia.', interp_high: 'Wysokie ryzyko krwawienia — wynik ≥3 wskazuje na potrzebę ostrożności i regularnej kontroli; sam w sobie nie powinien automatycznie wykluczać leczenia przeciwkrzepliwego, które często nadal jest wskazane.'
   }
 };
@@ -115,7 +114,7 @@ var UCM_I18N_PAGE = {
 var _lastHASBLED = null;
 
 function calcHASBLED() {
-  var ids = ['c_hyp','c_renal','c_liver','c_stroke','c_bleed','c_inr','c_age','c_drugs','c_alcohol'];
+  var ids = ['c_hyp','c_renal','c_liver','c_stroke','c_bleed','c_inr','c_age','c_drugs'];
   var total = 0;
   ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
   _lastHASBLED = total;
@@ -126,7 +125,7 @@ function renderHASBLEDResult() {
   if (_lastHASBLED === null) return;
   var total = _lastHASBLED;
   var interp = total <= 1 ? ucmT('interp_low') : (total === 2 ? ucmT('interp_mod') : ucmT('interp_high'));
-  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of9');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of8');
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }

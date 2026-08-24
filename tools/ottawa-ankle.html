@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ottawa Ankle Rules — UniCalcMedical</title>
+<title>Ottawa Ankle &amp; Foot Rules — UniCalcMedical</title>
 <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
@@ -17,15 +17,17 @@
 
 <div class="container">
   <span class="category-tag" data-i18n="tag">Musculoskeletal &amp; trauma</span>
-  <h1 class="page-title" data-i18n="title">Ottawa Ankle Rules</h1>
-  <p class="page-subtitle" data-i18n="subtitle">Decision rule for when ankle X-rays are indicated after an acute injury.</p>
+  <h1 class="page-title" data-i18n="title">Ottawa Ankle &amp; Foot Rules</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Decision rule for when ankle and/or foot X-rays are indicated after an acute injury. The two are evaluated separately, since either or both zones may be involved.</p>
 
   <div class="card">
-    <h2 data-i18n="criteria_heading">X-ray indicated if any of the following are present</h2>
-    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n="c1">Bone tenderness at the posterior edge or tip of the lateral malleolus (distal 6 cm)</label></div>
-    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n="c2">Bone tenderness at the posterior edge or tip of the medial malleolus (distal 6 cm)</label></div>
-    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n="c3">Inability to bear weight, both immediately after injury and in the assessment (4 steps)</label></div>
-    <button class="btn" data-i18n="calc_btn" onclick="calcOttawaAnkle()">Check result</button>
+    <h2 data-i18n="criteria_heading">Assessment</h2>
+    <div class="field"><label data-i18n="c1">Pain in the malleolar zone (ankle)</label><select id="c1"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <div class="field"><label data-i18n="c2">Bone tenderness at the posterior edge or tip of the lateral or medial malleolus (distal 6 cm)</label><select id="c2"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <div class="field"><label data-i18n="c3">Pain in the midfoot zone</label><select id="c3"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <div class="field"><label data-i18n="c4">Bone tenderness at the base of the 5th metatarsal or the navicular</label><select id="c4"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <div class="field"><label data-i18n="c5">Inability to bear weight, both immediately after injury and during the assessment (4 steps)</label><select id="c5"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcOttawa()">Check result</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
       <div class="interp" id="resultInterp"></div>
@@ -38,7 +40,7 @@
   </div>
 
   <div class="source-block">
-    <strong data-i18n="reference_label">Reference:</strong> Stiell IG, Greenberg GH, McKnight RD, et al. A study to develop clinical decision rules for the use of radiography in acute ankle injuries. Ann Emerg Med. 1992;21(4):384–390.<br>
+    <strong data-i18n="reference_label">Reference:</strong> Stiell IG, Greenberg GH, McKnight RD, et al. A study to develop clinical decision rules for the use of radiography in acute ankle injuries. Ann Emerg Med. 1992;21(4):384–390. (Foot component: Stiell IG, McKnight RD, Greenberg GH, et al. Implementation of the Ottawa ankle rules. JAMA. 1994;271(11):827–832.)<br>
     <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/1249/ottawa-ankle-rule" target="_blank" rel="noopener">MDCalc — Ottawa Ankle Rule</a>
   </div>
 </div>
@@ -50,65 +52,73 @@
 <script>
 var UCM_I18N_PAGE = {
   en: {
-    tag: 'Musculoskeletal & trauma', title: 'Ottawa Ankle Rules', subtitle: 'Decision rule for when ankle X-rays are indicated after an acute injury.',
-    criteria_heading: 'X-ray indicated if any of the following are present',
-    c1: 'Bone tenderness at the posterior edge or tip of the lateral malleolus (distal 6 cm)',
-    c2: 'Bone tenderness at the posterior edge or tip of the medial malleolus (distal 6 cm)',
-    c3: 'Inability to bear weight, both immediately after injury and in the assessment (4 steps)',
-    calc_btn: 'Check result',
-    interp_yes: 'X-ray series indicated.', interp_no: 'X-ray series not indicated based on these criteria.'
+    tag: 'Musculoskeletal & trauma', title: 'Ottawa Ankle & Foot Rules', subtitle: 'Decision rule for when ankle and/or foot X-rays are indicated after an acute injury. The two are evaluated separately, since either or both zones may be involved.',
+    criteria_heading: 'Assessment',
+    c1: 'Pain in the malleolar zone (ankle)', c2: 'Bone tenderness at the posterior edge or tip of the lateral or medial malleolus (distal 6 cm)',
+    c3: 'Pain in the midfoot zone', c4: 'Bone tenderness at the base of the 5th metatarsal or the navicular',
+    c5: 'Inability to bear weight, both immediately after injury and during the assessment (4 steps)',
+    opt_no: 'No', opt_yes: 'Yes', calc_btn: 'Check result',
+    ankle_label: 'Ankle X-ray: ', foot_label: 'Foot X-ray: ', indicated: 'indicated', not_indicated: 'not indicated'
   },
   cs: {
-    tag: 'Pohybový aparát a trauma', title: 'Ottawská pravidla kotníku', subtitle: 'Rozhodovací pravidlo pro indikaci RTG kotníku po akutním úrazu.',
-    criteria_heading: 'RTG je indikováno, pokud je přítomno alespoň jedno z následujícího',
-    c1: 'Bolestivost kosti při palpaci zadního okraje nebo hrotu laterálního kotníku (distálních 6 cm)',
-    c2: 'Bolestivost kosti při palpaci zadního okraje nebo hrotu mediálního kotníku (distálních 6 cm)',
-    c3: 'Neschopnost zatížit končetinu, a to jak bezprostředně po úrazu, tak při vyšetření (4 kroky)',
-    calc_btn: 'Zobrazit výsledek',
-    interp_yes: 'RTG vyšetření je indikováno.', interp_no: 'Na základě těchto kritérií není RTG indikováno.'
+    tag: 'Pohybový aparát a trauma', title: 'Ottawská pravidla kotníku a nohy', subtitle: 'Rozhodovací pravidlo pro indikaci RTG kotníku a/nebo nohy po akutním úrazu. Obě oblasti se hodnotí samostatně, protože může být postižena jedna nebo obě zóny.',
+    criteria_heading: 'Vyšetření',
+    c1: 'Bolest v oblasti kotníku (malleolární zóna)', c2: 'Bolestivost kosti při palpaci zadního okraje nebo hrotu laterálního či mediálního kotníku (distálních 6 cm)',
+    c3: 'Bolest ve středonoží', c4: 'Bolestivost kosti při palpaci báze 5. metatarzu nebo os naviculare',
+    c5: 'Neschopnost zatížit končetinu, a to jak bezprostředně po úrazu, tak při vyšetření (4 kroky)',
+    opt_no: 'Ne', opt_yes: 'Ano', calc_btn: 'Zobrazit výsledek',
+    ankle_label: 'RTG kotníku: ', foot_label: 'RTG nohy: ', indicated: 'indikováno', not_indicated: 'není nutné'
   },
   fr: {
-    tag: 'Musculo-squelettique et traumatologie', title: 'Règles d\u2019Ottawa pour la cheville', subtitle: "Règle de décision pour l'indication d'une radiographie de la cheville après un traumatisme aigu.",
-    criteria_heading: "Radiographie indiquée si l'un des éléments suivants est présent",
-    c1: "Douleur osseuse au bord postérieur ou à la pointe de la malléole latérale (6 cm distaux)",
-    c2: "Douleur osseuse au bord postérieur ou à la pointe de la malléole médiale (6 cm distaux)",
-    c3: "Incapacité à porter du poids, à la fois immédiatement après le traumatisme et lors de l'évaluation (4 pas)",
-    calc_btn: 'Voir le résultat',
-    interp_yes: 'Radiographie indiquée.', interp_no: "Radiographie non indiquée sur la base de ces critères."
+    tag: 'Musculo-squelettique et traumatologie', title: 'Règles d\u2019Ottawa pour la cheville et le pied', subtitle: "Règle de décision pour l'indication d'une radiographie de la cheville et/ou du pied après un traumatisme aigu. Les deux zones sont évaluées séparément, l'une ou les deux pouvant être concernées.",
+    criteria_heading: 'Évaluation',
+    c1: 'Douleur dans la zone malléolaire (cheville)', c2: 'Douleur osseuse au bord postérieur ou à la pointe de la malléole latérale ou médiale (6 cm distaux)',
+    c3: 'Douleur dans la zone médio-tarsienne', c4: 'Douleur osseuse à la base du 5e métatarsien ou du naviculaire',
+    c5: "Incapacité à porter du poids, à la fois immédiatement après le traumatisme et lors de l'évaluation (4 pas)",
+    opt_no: 'Non', opt_yes: 'Oui', calc_btn: 'Voir le résultat',
+    ankle_label: 'Radiographie de la cheville : ', foot_label: 'Radiographie du pied : ', indicated: 'indiquée', not_indicated: 'non indiquée'
   },
   de: {
-    tag: 'Bewegungsapparat & Trauma', title: 'Ottawa Ankle Rules', subtitle: 'Entscheidungsregel für die Indikation einer Röntgenaufnahme des Sprunggelenks nach akuter Verletzung.',
-    criteria_heading: 'Röntgen indiziert, wenn eines der folgenden Kriterien zutrifft',
-    c1: 'Knochendruckschmerz am Hinterrand oder an der Spitze des Außenknöchels (distale 6 cm)',
-    c2: 'Knochendruckschmerz am Hinterrand oder an der Spitze des Innenknöchels (distale 6 cm)',
-    c3: 'Unfähigkeit zur Belastung, sowohl unmittelbar nach der Verletzung als auch bei der Untersuchung (4 Schritte)',
-    calc_btn: 'Ergebnis anzeigen',
-    interp_yes: 'Röntgenaufnahme indiziert.', interp_no: 'Röntgenaufnahme anhand dieser Kriterien nicht indiziert.'
+    tag: 'Bewegungsapparat & Trauma', title: 'Ottawa Ankle & Foot Rules', subtitle: 'Entscheidungsregel für die Indikation einer Röntgenaufnahme des Sprunggelenks und/oder des Fußes nach akuter Verletzung. Beide Bereiche werden getrennt beurteilt, da eine oder beide Zonen betroffen sein können.',
+    criteria_heading: 'Untersuchung',
+    c1: 'Schmerz in der malleolären Zone (Sprunggelenk)', c2: 'Knochendruckschmerz am Hinterrand oder an der Spitze des Außen- oder Innenknöchels (distale 6 cm)',
+    c3: 'Schmerz in der Mittelfußzone', c4: 'Knochendruckschmerz an der Basis des 5. Mittelfußknochens oder am Os naviculare',
+    c5: 'Unfähigkeit zur Belastung, sowohl unmittelbar nach der Verletzung als auch bei der Untersuchung (4 Schritte)',
+    opt_no: 'Nein', opt_yes: 'Ja', calc_btn: 'Ergebnis anzeigen',
+    ankle_label: 'Röntgen Sprunggelenk: ', foot_label: 'Röntgen Fuß: ', indicated: 'indiziert', not_indicated: 'nicht indiziert'
   },
   pl: {
-    tag: 'Układ mięśniowo-szkieletowy i urazy', title: 'Reguły ottawskie dla stawu skokowego', subtitle: 'Reguła decyzyjna dotycząca wskazań do RTG stawu skokowego po ostrym urazie.',
-    criteria_heading: 'RTG jest wskazane, jeśli występuje którekolwiek z poniższych',
-    c1: 'Bolesność kostna tylnej krawędzi lub szczytu kostki bocznej (dystalne 6 cm)',
-    c2: 'Bolesność kostna tylnej krawędzi lub szczytu kostki przyśrodkowej (dystalne 6 cm)',
-    c3: 'Niemożność obciążenia kończyny, zarówno bezpośrednio po urazie, jak i podczas badania (4 kroki)',
-    calc_btn: 'Pokaż wynik',
-    interp_yes: 'RTG jest wskazane.', interp_no: 'Na podstawie tych kryteriów RTG nie jest wskazane.'
+    tag: 'Układ mięśniowo-szkieletowy i urazy', title: 'Reguły ottawskie dla stawu skokowego i stopy', subtitle: 'Reguła decyzyjna dotycząca wskazań do RTG stawu skokowego i/lub stopy po ostrym urazie. Obie strefy oceniane są osobno, ponieważ może być zajęta jedna lub obie.',
+    criteria_heading: 'Badanie',
+    c1: 'Ból w strefie kostki (staw skokowy)', c2: 'Bolesność kostna tylnej krawędzi lub szczytu kostki bocznej lub przyśrodkowej (dystalne 6 cm)',
+    c3: 'Ból w strefie środstopia', c4: 'Bolesność kostna u podstawy V kości śródstopia lub kości łódkowatej',
+    c5: 'Niemożność obciążenia kończyny, zarówno bezpośrednio po urazie, jak i podczas badania (4 kroki)',
+    opt_no: 'Nie', opt_yes: 'Tak', calc_btn: 'Pokaż wynik',
+    ankle_label: 'RTG stawu skokowego: ', foot_label: 'RTG stopy: ', indicated: 'wskazane', not_indicated: 'niewskazane'
   }
 };
 
 var _lastResult = null;
 
-function calcOttawaAnkle() {
-  var any = ['c1','c2','c3'].some(function(id){ return document.getElementById(id).checked; });
-  _lastResult = any;
+function calcOttawa() {
+  var ankleZone = parseInt(document.getElementById('c1').value, 10);
+  var malleolus = parseInt(document.getElementById('c2').value, 10);
+  var midfoot = parseInt(document.getElementById('c3').value, 10);
+  var footpoint = parseInt(document.getElementById('c4').value, 10);
+  var weight = parseInt(document.getElementById('c5').value, 10);
+  var ankleXray = ankleZone === 1 && (malleolus === 1 || weight === 1);
+  var footXray = midfoot === 1 && (footpoint === 1 || weight === 1);
+  _lastResult = { ankle: ankleXray, foot: footXray };
   renderResult();
 }
 
 function renderResult() {
   if (_lastResult === null) return;
-  var yes = _lastResult;
-  document.getElementById('resultScore').textContent = yes ? '⚠' : '✓';
-  document.getElementById('resultInterp').innerHTML = yes ? ucmT('interp_yes') : ucmT('interp_no');
+  var d = _lastResult;
+  document.getElementById('resultScore').textContent = (d.ankle || d.foot) ? '⚠' : '✓';
+  var html = '<strong>' + ucmT('ankle_label') + (d.ankle ? ucmT('indicated') : ucmT('not_indicated')) + '</strong><br>';
+  html += ucmT('foot_label') + (d.foot ? ucmT('indicated') : ucmT('not_indicated'));
+  document.getElementById('resultInterp').innerHTML = html;
   document.getElementById('result').classList.add('show');
 }
 

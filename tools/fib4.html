@@ -56,7 +56,7 @@ var UCM_I18N_PAGE = {
     alt_label: 'ALT (U/L)', alt_ph: 'e.g. 35', plt_label: 'Platelet count (×10⁹/L)', plt_ph: 'e.g. 220',
     calc_btn: 'Calculate', err_invalid: 'Please enter valid values for all fields.',
     formula_label: 'Formula:', formula_text: 'FIB-4 = (Age × AST) / (Platelets × √ALT)',
-    interp_low: '< 1.30 — low probability of advanced fibrosis.', interp_mid: '1.30–2.67 — indeterminate; further evaluation may be warranted.', interp_high: '> 2.67 — high probability of advanced fibrosis.'
+    interp_low: '< 1.30 — low probability of advanced fibrosis.', interp_mid: 'Indeterminate; further evaluation may be warranted.', interp_high: 'High probability of advanced fibrosis.', age_note: '(For patients over 65, the upper cut-off is adjusted to 2.0 instead of 2.67.)'
   },
   cs: {
     tag: 'Renální a jaterní funkce', title: 'FIB-4 index', subtitle: 'Neinvazivní odhad jaterní fibrózy z věku, transamináz a počtu trombocytů.',
@@ -64,7 +64,7 @@ var UCM_I18N_PAGE = {
     alt_label: 'ALT (U/l)', alt_ph: 'např. 35', plt_label: 'Počet trombocytů (×10⁹/l)', plt_ph: 'např. 220',
     calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platné hodnoty do všech polí.',
     formula_label: 'Vzorec:', formula_text: 'FIB-4 = (Věk × AST) / (Trombocyty × √ALT)',
-    interp_low: '< 1,30 — nízká pravděpodobnost pokročilé fibrózy.', interp_mid: '1,30–2,67 — neurčitý výsledek; může být vhodné další vyšetření.', interp_high: '> 2,67 — vysoká pravděpodobnost pokročilé fibrózy.'
+    interp_low: '< 1,30 — nízká pravděpodobnost pokročilé fibrózy.', interp_mid: 'Neurčitý výsledek; může být vhodné další vyšetření.', interp_high: 'Vysoká pravděpodobnost pokročilé fibrózy.', age_note: '(U pacientů nad 65 let je horní práh upraven na 2,0 místo 2,67.)'
   },
   fr: {
     tag: 'Fonction rénale et hépatique', title: 'Indice FIB-4', subtitle: "Estimation non invasive de la fibrose hépatique à partir de l'âge, des transaminases et de la numération plaquettaire.",
@@ -72,7 +72,7 @@ var UCM_I18N_PAGE = {
     alt_label: 'ALAT (U/L)', alt_ph: 'p. ex. 35', plt_label: 'Numération plaquettaire (×10⁹/L)', plt_ph: 'p. ex. 220',
     calc_btn: 'Calculer', err_invalid: 'Veuillez saisir des valeurs valides pour tous les champs.',
     formula_label: 'Formule :', formula_text: 'FIB-4 = (Âge × ASAT) / (Plaquettes × √ALAT)',
-    interp_low: "< 1,30 — faible probabilité de fibrose avancée.", interp_mid: '1,30–2,67 — indéterminé ; une évaluation complémentaire peut être justifiée.', interp_high: '> 2,67 — probabilité élevée de fibrose avancée.'
+    interp_low: "< 1,30 — faible probabilité de fibrose avancée.", interp_mid: 'Indéterminé ; une évaluation complémentaire peut être justifiée.', interp_high: 'Probabilité élevée de fibrose avancée.', age_note: '(Chez les patients de plus de 65 ans, le seuil supérieur est ajusté à 2,0 au lieu de 2,67.)'
   },
   de: {
     tag: 'Nieren- & Leberfunktion', title: 'FIB-4-Index', subtitle: 'Nicht-invasive Abschätzung der Leberfibrose anhand von Alter, Transaminasen und Thrombozytenzahl.',
@@ -80,7 +80,7 @@ var UCM_I18N_PAGE = {
     alt_label: 'ALT (U/L)', alt_ph: 'z. B. 35', plt_label: 'Thrombozytenzahl (×10⁹/L)', plt_ph: 'z. B. 220',
     calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Werte für alle Felder eingeben.',
     formula_label: 'Formel:', formula_text: 'FIB-4 = (Alter × AST) / (Thrombozyten × √ALT)',
-    interp_low: '< 1,30 — geringe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', interp_mid: '1,30–2,67 — unbestimmt; weitere Abklärung kann sinnvoll sein.', interp_high: '> 2,67 — hohe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.'
+    interp_low: '< 1,30 — geringe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', interp_mid: 'Unbestimmt; weitere Abklärung kann sinnvoll sein.', interp_high: 'Hohe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', age_note: '(Bei Patienten über 65 Jahren wird der obere Grenzwert auf 2,0 statt 2,67 angepasst.)'
   },
   pl: {
     tag: 'Czynność nerek i wątroby', title: 'Indeks FIB-4', subtitle: 'Nieinwazyjna ocena włóknienia wątroby na podstawie wieku, transaminaz i liczby płytek krwi.',
@@ -88,7 +88,7 @@ var UCM_I18N_PAGE = {
     alt_label: 'ALT (U/l)', alt_ph: 'np. 35', plt_label: 'Liczba płytek krwi (×10⁹/l)', plt_ph: 'np. 220',
     calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowe wartości we wszystkich polach.',
     formula_label: 'Wzór:', formula_text: 'FIB-4 = (Wiek × AST) / (Płytki × √ALT)',
-    interp_low: '< 1,30 — niskie prawdopodobieństwo zaawansowanego włóknienia.', interp_mid: '1,30–2,67 — wynik niejednoznaczny; dalsza ocena może być wskazana.', interp_high: '> 2,67 — wysokie prawdopodobieństwo zaawansowanego włóknienia.'
+    interp_low: '< 1,30 — niskie prawdopodobieństwo zaawansowanego włóknienia.', interp_mid: 'Wynik niejednoznaczny; dalsza ocena może być wskazana.', interp_high: 'Wysokie prawdopodobieństwo zaawansowanego włóknienia.', age_note: '(U pacjentów powyżej 65 lat górny próg jest dostosowany do 2,0 zamiast 2,67.)'
   }
 };
 
@@ -100,14 +100,19 @@ function calcFIB4() {
   var alt = parseFloat(document.getElementById('alt').value);
   var plt = parseFloat(document.getElementById('plt').value);
   if (!age || !ast || !alt || !plt || age <= 0 || ast <= 0 || alt <= 0 || plt <= 0) { alert(ucmT('err_invalid')); return; }
-  _lastFIB4 = (age * ast) / (plt * Math.sqrt(alt));
+  var val = (age * ast) / (plt * Math.sqrt(alt));
+  _lastFIB4 = { val: val, age: age };
   renderFIB4Result();
 }
 
 function renderFIB4Result() {
   if (_lastFIB4 === null) return;
-  var val = _lastFIB4;
-  var interp = val < 1.30 ? ucmT('interp_low') : (val <= 2.67 ? ucmT('interp_mid') : ucmT('interp_high'));
+  var val = _lastFIB4.val, age = _lastFIB4.age;
+  // Upper cut-off is age-adjusted: 2.0 for patients over 65, 2.67 otherwise —
+  // FIB-4 is known to have reduced specificity in older patients.
+  var highCutoff = age > 65 ? 2.0 : 2.67;
+  var interp = val < 1.30 ? ucmT('interp_low') : (val <= highCutoff ? ucmT('interp_mid') : ucmT('interp_high'));
+  if (age > 65) interp += ' ' + ucmT('age_note');
   document.getElementById('resultScore').textContent = 'FIB-4 = ' + val.toFixed(2);
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
