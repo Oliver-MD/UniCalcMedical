@@ -1,6 +1,6 @@
 /* UniCalcMedical i18n
    Language detection order: ?lang= URL parameter (highest priority — this
-   is what lets an outbound link, e.g. from LuceoLearn, force Czech) →
+   lets any linking site force a specific starting language) →
    previously saved choice (localStorage) → browser default 'en'.
 
    Each page defines its own UCM_I18N_PAGE dictionary (page-specific
