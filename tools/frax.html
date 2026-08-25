@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FRAX — UniCalcMedical</title>
 <link rel="stylesheet" href="../assets/style.css">
+<style>
+  .frax-factors { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0 4px; }
+  @media (max-width: 640px) { .frax-factors { grid-template-columns: 1fr; } }
+  .frax-factor { display: flex; gap: 10px; align-items: flex-start; padding: 11px 13px; background: var(--paper-2); border: 1px solid var(--rule); border-radius: 3px; }
+  .frax-factor-num { font-family: var(--font-serif); font-weight: 700; font-size: 13px; color: var(--accent-dark); flex-shrink: 0; width: 20px; }
+  .frax-factor-body { font-size: 13px; line-height: 1.4; }
+  .frax-factor-name { font-weight: 700; display: block; margin-bottom: 1px; }
+  .frax-factor-desc { color: var(--ink-soft); font-size: 12.5px; }
+  .frax-cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+</style>
 </head>
 <body>
 
@@ -18,17 +28,38 @@
 <div class="container">
   <span class="category-tag" data-i18n="tag">Other</span>
   <h1 class="page-title" data-i18n="title">FRAX</h1>
-  <p class="page-subtitle" data-i18n="subtitle">10-year probability of osteoporotic fracture.</p>
+  <p class="page-subtitle" data-i18n="subtitle">10-year probability of a major osteoporotic or hip fracture, integrating clinical risk factors with optional femoral neck bone mineral density.</p>
 
-  <div class="disclaimer">
-    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
-    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  <div class="card">
+    <h2 data-i18n="factors_heading">The clinical inputs FRAX uses</h2>
+    <p class="page-subtitle" style="margin-bottom:4px;" data-i18n="factors_intro">FRAX combines twelve inputs into its risk estimate. Having these ready before opening the official calculator makes the assessment quicker — the calculation itself still has to run on Sheffield's own tool, since the country-specific coefficients behind it were never published (see below).</p>
+    <div class="frax-factors">
+      <div class="frax-factor"><span class="frax-factor-num">1</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f1n">Age</span><span class="frax-factor-desc" data-i18n="f1d">40–90 years</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">2</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f2n">Sex</span><span class="frax-factor-desc" data-i18n="f2d">Separate models for men and women</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">3</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f3n">Weight</span><span class="frax-factor-desc" data-i18n="f3d">kg</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">4</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f4n">Height</span><span class="frax-factor-desc" data-i18n="f4d">cm</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">5</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f5n">Previous fracture</span><span class="frax-factor-desc" data-i18n="f5d">A fracture after age 40, occurring spontaneously or from trauma that wouldn't fracture a healthy bone</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">6</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f6n">Parent fractured hip</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">7</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f7n">Current smoking</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">8</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f8n">Glucocorticoids</span><span class="frax-factor-desc" data-i18n="f8d">Current or past exposure to oral glucocorticoids for &gt; 3 months</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">9</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f9n">Rheumatoid arthritis</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">10</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f10n">Secondary osteoporosis</span><span class="frax-factor-desc" data-i18n="f10d">A disorder strongly associated with osteoporosis (e.g. type 1 diabetes, untreated hyperthyroidism)</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">11</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f11n">Alcohol</span><span class="frax-factor-desc" data-i18n="f11d">3 or more units per day</span></span></div>
+      <div class="frax-factor"><span class="frax-factor-num">12</span><span class="frax-factor-body"><span class="frax-factor-name" data-i18n="f12n">Femoral neck BMD</span><span class="frax-factor-desc" data-i18n="f12d">Optional — g/cm² or T-score, by scanner make if known</span></span></div>
+    </div>
   </div>
 
   <div class="card">
     <h2 data-i18n="why_heading">Why this links out instead of calculating directly</h2>
     <p data-i18n="why_body">FRAX's underlying statistical model uses country-specific coefficients that the University of Sheffield has not published. Any independent implementation would necessarily be an approximation rather than the validated tool. Rather than offer an unverified substitute, this page links directly to the official calculator.</p>
-    <a class="btn" style="display:inline-block;text-decoration:none;" href="https://www.sheffield.ac.uk/FRAX/" target="_blank" rel="noopener" data-i18n="go_btn">Open the official FRAX calculator →</a>
+    <div class="frax-cta-row">
+      <a class="btn" style="display:inline-block;text-decoration:none;" href="https://www.sheffield.ac.uk/FRAX/" target="_blank" rel="noopener" data-i18n="go_btn">Open the official FRAX calculator →</a>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
   </div>
 
   <div class="source-block">
@@ -43,23 +74,78 @@
 
 <script>
 var UCM_I18N_PAGE = {
-  en: { tag: 'Other', title: 'FRAX', subtitle: '10-year probability of osteoporotic fracture.',
+  en: { tag: 'Other', title: 'FRAX', subtitle: '10-year probability of a major osteoporotic or hip fracture, integrating clinical risk factors with optional femoral neck bone mineral density.',
+    factors_heading: 'The clinical inputs FRAX uses',
+    factors_intro: "FRAX combines twelve inputs into its risk estimate. Having these ready before opening the official calculator makes the assessment quicker — the calculation itself still has to run on Sheffield's own tool, since the country-specific coefficients behind it were never published (see below).",
+    f1n: 'Age', f1d: '40–90 years', f2n: 'Sex', f2d: 'Separate models for men and women',
+    f3n: 'Weight', f3d: 'kg', f4n: 'Height', f4d: 'cm',
+    f5n: 'Previous fracture', f5d: "A fracture after age 40, occurring spontaneously or from trauma that wouldn't fracture a healthy bone",
+    f6n: 'Parent fractured hip', f7n: 'Current smoking',
+    f8n: 'Glucocorticoids', f8d: 'Current or past exposure to oral glucocorticoids for > 3 months',
+    f9n: 'Rheumatoid arthritis',
+    f10n: 'Secondary osteoporosis', f10d: 'A disorder strongly associated with osteoporosis (e.g. type 1 diabetes, untreated hyperthyroidism)',
+    f11n: 'Alcohol', f11d: '3 or more units per day',
+    f12n: 'Femoral neck BMD', f12d: 'Optional — g/cm² or T-score, by scanner make if known',
     why_heading: 'Why this links out instead of calculating directly',
     why_body: "FRAX's underlying statistical model uses country-specific coefficients that the University of Sheffield has not published. Any independent implementation would necessarily be an approximation rather than the validated tool. Rather than offer an unverified substitute, this page links directly to the official calculator.",
     go_btn: 'Open the official FRAX calculator →' },
-  cs: { tag: 'Ostatní', title: 'FRAX', subtitle: '10leté riziko osteoporotické zlomeniny.',
+  cs: { tag: 'Ostatní', title: 'FRAX', subtitle: '10leté riziko závažné osteoporotické nebo kyčelní zlomeniny, kombinující klinické rizikové faktory s volitelnou kostní denzitou krčku femuru.',
+    factors_heading: 'Klinické vstupy, které FRAX používá',
+    factors_intro: 'FRAX kombinuje dvanáct vstupů do odhadu rizika. Mít je připravené předem urychlí vyplnění oficiálního kalkulátoru — samotný výpočet ale musí proběhnout na nástroji Sheffieldské univerzity, protože koeficienty specifické pro danou zemi nebyly nikdy zveřejněny (viz níže).',
+    f1n: 'Věk', f1d: '40–90 let', f2n: 'Pohlaví', f2d: 'Samostatné modely pro muže a ženy',
+    f3n: 'Hmotnost', f3d: 'kg', f4n: 'Výška', f4d: 'cm',
+    f5n: 'Předchozí zlomenina', f5d: 'Zlomenina po 40. roce věku, vzniklá spontánně nebo při traumatu, které by u zdravé kosti zlomeninu nezpůsobilo',
+    f6n: 'Zlomenina kyčle u rodiče', f7n: 'Aktuální kouření',
+    f8n: 'Glukokortikoidy', f8d: 'Současná nebo dřívější léčba perorálními glukokortikoidy déle než 3 měsíce',
+    f9n: 'Revmatoidní artritida',
+    f10n: 'Sekundární osteoporóza', f10d: 'Onemocnění silně asociované s osteoporózou (např. diabetes 1. typu, neléčená hypertyreóza)',
+    f11n: 'Alkohol', f11d: '3 a více jednotek denně',
+    f12n: 'BMD krčku femuru', f12d: 'Volitelné — g/cm² nebo T-skóre, dle výrobce přístroje je-li znám',
     why_heading: 'Proč zde odkazujeme místo vlastního výpočtu',
     why_body: 'Statistický model FRAX používá koeficienty specifické pro danou zemi, které University of Sheffield nepublikovala. Jakákoli nezávislá implementace by nutně byla pouhou aproximací, ne validovaným nástrojem. Namísto neověřené náhrady tato stránka odkazuje přímo na oficiální kalkulátor.',
     go_btn: 'Otevřít oficiální kalkulátor FRAX →' },
-  fr: { tag: 'Autre', title: 'FRAX', subtitle: 'Probabilité à 10 ans de fracture ostéoporotique.',
+  fr: { tag: 'Autre', title: 'FRAX', subtitle: 'Probabilité à 10 ans de fracture ostéoporotique majeure ou de la hanche, intégrant des facteurs de risque cliniques avec la densité minérale osseuse fémorale en option.',
+    factors_heading: 'Les données cliniques utilisées par FRAX',
+    factors_intro: "FRAX combine douze données pour estimer le risque. Les avoir prêtes avant d'ouvrir le calculateur officiel accélère l'évaluation — le calcul lui-même doit toujours s'exécuter sur l'outil de Sheffield, les coefficients propres à chaque pays n'ayant jamais été publiés (voir ci-dessous).",
+    f1n: 'Âge', f1d: '40 à 90 ans', f2n: 'Sexe', f2d: 'Modèles distincts pour les hommes et les femmes',
+    f3n: 'Poids', f3d: 'kg', f4n: 'Taille', f4d: 'cm',
+    f5n: 'Fracture antérieure', f5d: "Fracture après 40 ans, survenue spontanément ou lors d'un traumatisme qui ne fracturerait pas un os sain",
+    f6n: 'Fracture de la hanche chez un parent', f7n: 'Tabagisme actuel',
+    f8n: 'Glucocorticoïdes', f8d: 'Exposition actuelle ou passée aux glucocorticoïdes oraux pendant plus de 3 mois',
+    f9n: 'Polyarthrite rhumatoïde',
+    f10n: "Ostéoporose secondaire", f10d: "Trouble fortement associé à l'ostéoporose (p. ex. diabète de type 1, hyperthyroïdie non traitée)",
+    f11n: 'Alcool', f11d: '3 unités ou plus par jour',
+    f12n: 'DMO du col fémoral', f12d: 'Facultatif — g/cm² ou T-score, selon la marque de l\u2019appareil si connue',
     why_heading: 'Pourquoi un lien externe plutôt qu\u2019un calcul direct',
     why_body: "Le modèle statistique sous-jacent de FRAX utilise des coefficients propres à chaque pays que l'Université de Sheffield n'a pas publiés. Toute implémentation indépendante serait nécessairement une approximation plutôt que l'outil validé. Plutôt que de proposer un substitut non vérifié, cette page renvoie directement vers le calculateur officiel.",
     go_btn: 'Ouvrir le calculateur FRAX officiel →' },
-  de: { tag: 'Sonstiges', title: 'FRAX', subtitle: '10-Jahres-Wahrscheinlichkeit einer osteoporotischen Fraktur.',
+  de: { tag: 'Sonstiges', title: 'FRAX', subtitle: '10-Jahres-Wahrscheinlichkeit einer schweren osteoporotischen oder Hüftfraktur, unter Einbeziehung klinischer Risikofaktoren mit optionaler Knochendichte des Schenkelhalses.',
+    factors_heading: 'Die klinischen Eingaben, die FRAX verwendet',
+    factors_intro: 'FRAX kombiniert zwölf Eingaben zu einer Risikoschätzung. Diese vor dem Öffnen des offiziellen Rechners bereitzuhalten, beschleunigt die Beurteilung — die eigentliche Berechnung muss weiterhin auf Sheffields eigenem Tool laufen, da die länderspezifischen Koeffizienten dahinter nie veröffentlicht wurden (siehe unten).',
+    f1n: 'Alter', f1d: '40–90 Jahre', f2n: 'Geschlecht', f2d: 'Getrennte Modelle für Männer und Frauen',
+    f3n: 'Gewicht', f3d: 'kg', f4n: 'Größe', f4d: 'cm',
+    f5n: 'Frühere Fraktur', f5d: 'Eine Fraktur nach dem 40. Lebensjahr, spontan oder durch ein Trauma, das bei gesundem Knochen keine Fraktur verursachen würde',
+    f6n: 'Hüftfraktur eines Elternteils', f7n: 'Aktuelles Rauchen',
+    f8n: 'Glukokortikoide', f8d: 'Aktuelle oder frühere orale Glukokortikoid-Einnahme über mehr als 3 Monate',
+    f9n: 'Rheumatoide Arthritis',
+    f10n: 'Sekundäre Osteoporose', f10d: 'Eine stark mit Osteoporose assoziierte Erkrankung (z. B. Typ-1-Diabetes, unbehandelte Hyperthyreose)',
+    f11n: 'Alkohol', f11d: '3 oder mehr Einheiten pro Tag',
+    f12n: 'Schenkelhals-BMD', f12d: 'Optional — g/cm² oder T-Wert, nach Gerätehersteller falls bekannt',
     why_heading: 'Warum hier ein externer Link statt direkter Berechnung',
     why_body: 'Das zugrunde liegende statistische Modell von FRAX verwendet länderspezifische Koeffizienten, die die University of Sheffield nicht veröffentlicht hat. Jede unabhängige Umsetzung wäre zwangsläufig nur eine Annäherung und nicht das validierte Tool. Anstelle eines nicht verifizierten Ersatzes verlinkt diese Seite direkt auf den offiziellen Rechner.',
     go_btn: 'Offiziellen FRAX-Rechner öffnen →' },
-  pl: { tag: 'Inne', title: 'FRAX', subtitle: '10-letnie prawdopodobieństwo złamania osteoporotycznego.',
+  pl: { tag: 'Inne', title: 'FRAX', subtitle: '10-letnie prawdopodobieństwo poważnego złamania osteoporotycznego lub złamania biodra, łączące kliniczne czynniki ryzyka z opcjonalną gęstością mineralną kości szyjki kości udowej.',
+    factors_heading: 'Dane kliniczne wykorzystywane przez FRAX',
+    factors_intro: 'FRAX łączy dwanaście danych wejściowych w oszacowaniu ryzyka. Przygotowanie ich przed otwarciem oficjalnego kalkulatora przyspiesza ocenę — samo obliczenie nadal musi zostać wykonane na narzędziu Uniwersytetu w Sheffield, ponieważ współczynniki specyficzne dla danego kraju nigdy nie zostały opublikowane (patrz poniżej).',
+    f1n: 'Wiek', f1d: '40–90 lat', f2n: 'Płeć', f2d: 'Osobne modele dla mężczyzn i kobiet',
+    f3n: 'Waga', f3d: 'kg', f4n: 'Wzrost', f4d: 'cm',
+    f5n: 'Wcześniejsze złamanie', f5d: 'Złamanie po 40. roku życia, powstałe samoistnie lub w wyniku urazu, który nie złamałby zdrowej kości',
+    f6n: 'Złamanie biodra u rodzica', f7n: 'Obecne palenie tytoniu',
+    f8n: 'Glikokortykosteroidy', f8d: 'Obecne lub przebyte stosowanie doustnych glikokortykosteroidów przez ponad 3 miesiące',
+    f9n: 'Reumatoidalne zapalenie stawów',
+    f10n: 'Wtórna osteoporoza', f10d: 'Choroba silnie związana z osteoporozą (np. cukrzyca typu 1, nieleczona nadczynność tarczycy)',
+    f11n: 'Alkohol', f11d: '3 lub więcej jednostek dziennie',
+    f12n: 'BMD szyjki kości udowej', f12d: 'Opcjonalnie — g/cm² lub T-score, wg producenta aparatu jeśli znany',
     why_heading: 'Dlaczego tu jest link zewnętrzny, a nie bezpośrednie obliczenia',
     why_body: 'Model statystyczny FRAX wykorzystuje współczynniki specyficzne dla danego kraju, których Uniwersytet w Sheffield nie opublikował. Każda niezależna implementacja byłaby jedynie przybliżeniem, a nie zwalidowanym narzędziem. Zamiast oferować niezweryfikowany zamiennik, ta strona prowadzi bezpośrednio do oficjalnego kalkulatora.',
     go_btn: 'Otwórz oficjalny kalkulator FRAX →' }
