@@ -90,8 +90,10 @@ function ucmDetectLang() {
     var params = new URLSearchParams(window.location.search);
     var fromUrl = params.get('lang');
     if (fromUrl && UCM_SUPPORTED_LANGS.indexOf(fromUrl) !== -1) {
-      localStorage.setItem('ucm_lang', fromUrl); // URL param also updates the saved preference,
-      return fromUrl;                            // so it "sticks" as the person browses further pages
+      // URL param also updates the saved preference, so it "sticks" as the person browses further pages. Saving may be
+      // impossible (a sandboxed frame, private mode, blocked storage): that must never cancel the language the URL asked for.
+      try { localStorage.setItem('ucm_lang', fromUrl); } catch (e) {}
+      return fromUrl;
     }
   } catch (e) {}
   try {
@@ -160,3 +162,17 @@ function ucmInitLangSwitcher() {
 }
 
 document.addEventListener('DOMContentLoaded', ucmInitLangSwitcher);
+
+/* When a calculator is shown inside another site's frame, a link that would replace the calculator (for example the logo, which leads
+   to the project home page) opens in a new tab instead, so the frame keeps showing the calculator. This only makes the experience
+   nicer: the site that shows the frame enforces the real limit with its own policy. */
+(function () {
+  try {
+    if (window.top === window.self) return;                       // not framed: links behave normally
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a || a.getAttribute('target') || /^(#|javascript:)/i.test(a.getAttribute('href'))) return;
+      a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener noreferrer');
+    }, true);
+  } catch (e) {}
+})();
