@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCORE2 cardiovascular risk — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Cardiology &amp; thromboembolism</span>
+  <h1 class="page-title" data-i18n="title">SCORE2 cardiovascular risk</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Independent implementation of the published SCORE2, SCORE2-OP and SCORE2-Diabetes equations — estimates the 10-year risk of fatal and non-fatal cardiovascular disease.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="scope_title">Educational and reference tool.</strong>
+    <span data-i18n="scope_body">Reproduces published equations for teaching and reference. It is not a medical device, must not be used to make decisions about an individual patient, and gives no treatment recommendations. This is an independent implementation: it is not a product of, approved by, or affiliated with the European Society of Cardiology (ESC). Calculation runs entirely in your browser — nothing is sent or stored.</span>
+  </div>
+  <div class="disclaimer">
+    <strong data-i18n="excl_title">Do not use for:</strong>
+    <span data-i18n="excl_body">established atherosclerotic cardiovascular disease · familial hypercholesterolaemia · chronic kidney disease · pregnancy · type 1 diabetes · people under 40 years · (in type 2 diabetes) severe target-organ damage. These patients are already at high or very high risk, and this score would underestimate it.</span>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="inputs_heading">Risk factors</h2>
+
+    <div class="field"><label data-i18n="l_region" for="region">Risk region (patient's country)</label>
+      <select id="region">
+        <option value="low" data-i18n="region_low">Low risk</option>
+        <option value="moderate" data-i18n="region_moderate">Moderate risk</option>
+        <option value="high" data-i18n="region_high" selected>High risk</option>
+        <option value="very_high" data-i18n="region_very_high">Very high risk</option>
+      </select>
+      <div class="help" data-i18n="region_help">Calibration region defined by national cardiovascular mortality (WHO). Default: high risk (e.g. Czech Republic).</div>
+      <div class="help" id="regionList"></div>
+    </div>
+
+    <div class="field"><label data-i18n="l_sex" for="sex">Sex</label>
+      <select id="sex"><option value="female" data-i18n="opt_female">Female</option><option value="male" data-i18n="opt_male">Male</option></select>
+    </div>
+
+    <div class="field"><label data-i18n="l_age" for="age">Age (years)</label>
+      <input type="number" id="age" min="40" max="89" step="1" autocomplete="off" data-i18n-placeholder="ph_age" placeholder="e.g. 55">
+      <div class="help" data-i18n="help_age">Age 40–69: SCORE2 (or SCORE2-Diabetes). Age 70–89: SCORE2-OP.</div>
+    </div>
+
+    <div class="field"><label data-i18n="l_smoker" for="smoker">Current smoker</label>
+      <select id="smoker"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+    </div>
+
+    <div class="field"><label data-i18n="l_sbp" for="sbp">Systolic blood pressure (mmHg)</label>
+      <input type="number" id="sbp" min="70" max="260" step="1" autocomplete="off" data-i18n-placeholder="ph_sbp" placeholder="e.g. 130">
+    </div>
+
+    <div class="field"><label data-i18n="l_tc" for="tc">Total cholesterol (mmol/L)</label>
+      <input type="number" id="tc" min="2" max="15" step="0.1" autocomplete="off" data-i18n-placeholder="ph_tc" placeholder="e.g. 5.5">
+    </div>
+
+    <div class="field"><label data-i18n="l_hdl" for="hdl">HDL cholesterol (mmol/L)</label>
+      <input type="number" id="hdl" min="0.3" max="4" step="0.1" autocomplete="off" data-i18n-placeholder="ph_hdl" placeholder="e.g. 1.3">
+      <div class="help" data-i18n="lipid_help">If your laboratory reports mg/dL, divide by 38.67 to get mmol/L.</div>
+    </div>
+
+    <div class="field"><label data-i18n="l_dm" for="dm">Type 2 diabetes mellitus</label>
+      <select id="dm"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+      <div class="help" id="dmOldNote" style="display:none;" data-i18n="dm_old_note">From age 70 the SCORE2-OP model is used, with diabetes as a yes/no factor — the diabetes-specific data below are not needed.</div>
+    </div>
+
+    <div id="dmBlock" style="display:none;">
+      <div class="section-label" style="margin:4px 0 14px;" data-i18n="dm_details">Diabetes-specific data (SCORE2-Diabetes)</div>
+      <div class="field"><label data-i18n="l_dmage" for="dmage">Age at diabetes diagnosis (years)</label>
+        <input type="number" id="dmage" min="18" max="89" step="1" autocomplete="off" data-i18n-placeholder="ph_dmage" placeholder="e.g. 50">
+      </div>
+      <div class="field"><label data-i18n="l_hba1c" for="hba1c">HbA1c (mmol/mol, IFCC)</label>
+        <input type="number" id="hba1c" min="20" max="150" step="1" autocomplete="off" data-i18n-placeholder="ph_hba1c" placeholder="e.g. 55">
+        <div class="help" data-i18n="hba1c_help">IFCC units, not %. Conversion from %: mmol/mol = (% − 2.15) × 10.93.</div>
+      </div>
+      <div class="field"><label data-i18n="l_egfr" for="egfr">eGFR (mL/min/1.73 m²)</label>
+        <input type="number" id="egfr" min="5" max="200" step="1" autocomplete="off" data-i18n-placeholder="ph_egfr" placeholder="e.g. 85">
+        <div class="help" data-i18n-html="egfr_help_html">CKD-EPI. You can calculate it with the <a href="egfr.html">eGFR tool</a>. If the result is reported in mL/s/1.73 m², multiply by 60.</div>
+      </div>
+    </div>
+
+    <button class="btn" data-i18n="calc_btn" onclick="calcSCORE2()">Calculate</button>
+    <div class="result" id="result" aria-live="polite">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="ref_models">Models:</strong>
+    SCORE2 working group and ESC Cardiovascular risk collaboration. SCORE2 risk prediction algorithms: new models to estimate 10-year risk of cardiovascular disease in Europe. Eur Heart J. 2021;42(25):2439–2454. <a href="https://doi.org/10.1093/eurheartj/ehab309" target="_blank" rel="noopener">doi:10.1093/eurheartj/ehab309</a><br>
+    SCORE2-OP working group and ESC Cardiovascular risk collaboration. SCORE2-OP risk prediction algorithms: estimating incident cardiovascular event risk in older persons in four geographical risk regions. Eur Heart J. 2021;42(25):2455–2467. <a href="https://doi.org/10.1093/eurheartj/ehab312" target="_blank" rel="noopener">doi:10.1093/eurheartj/ehab312</a><br>
+    SCORE2-Diabetes working group and ESC Cardiovascular risk collaboration. SCORE2-Diabetes: 10-year cardiovascular risk estimation in type 2 diabetes in Europe. Eur Heart J. 2023;44(28):2544–2556. <a href="https://doi.org/10.1093/eurheartj/ehad260" target="_blank" rel="noopener">doi:10.1093/eurheartj/ehad260</a><br>
+    <strong data-i18n="ref_categories">Risk categories:</strong>
+    Visseren FLJ, Mach F, Smulders YM, et al. 2021 ESC Guidelines on cardiovascular disease prevention in clinical practice. Eur Heart J. 2021;42(34):3227–3337. <a href="https://doi.org/10.1093/eurheartj/ehab484" target="_blank" rel="noopener">doi:10.1093/eurheartj/ehab484</a> ·
+    Marx N, Federici M, Schütt K, et al. 2023 ESC Guidelines for the management of cardiovascular disease in patients with diabetes. Eur Heart J. 2023;44(39):4043–4140. <a href="https://doi.org/10.1093/eurheartj/ehad192" target="_blank" rel="noopener">doi:10.1093/eurheartj/ehad192</a><br>
+    <strong data-i18n="impl_label">Implementation:</strong> <span data-i18n="impl_note">Independent implementation of the published equations; the ESC did not create, review or endorse this page. No risk charts, region map or logos from the publications are reproduced. The names of the algorithms are used only to identify the published models.</span><br>
+    <span data-i18n="verify_against">Verify against:</span>
+    <a href="https://www.escardio.org/guidelines/practice-tools/cvd-prevention-toolbox/esc-cvd-risk-calculation-app/" target="_blank" rel="noopener" data-i18n="verify_esc">ESC CVD Risk Calculation App (official ESC tool)</a> ·
+    <a href="https://www.mdcalc.com/calc/10499/systematic-coronary-risk-evaluation-score2" target="_blank" rel="noopener">MDCalc — SCORE2</a> ·
+    <a href="https://www.mdcalc.com/calc/10510/score2-diabetes" target="_blank" rel="noopener">MDCalc — SCORE2-Diabetes</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Cardiology & thromboembolism',
+    title: 'SCORE2 cardiovascular risk',
+    subtitle: 'Independent implementation of the published SCORE2, SCORE2-OP and SCORE2-Diabetes equations — estimates the 10-year risk of fatal and non-fatal cardiovascular disease.',
+    scope_title: 'Educational and reference tool.',
+    scope_body: 'Reproduces published equations for teaching and reference. It is not a medical device, must not be used to make decisions about an individual patient, and gives no treatment recommendations. This is an independent implementation: it is not a product of, approved by, or affiliated with the European Society of Cardiology (ESC). Calculation runs entirely in your browser — nothing is sent or stored.',
+    excl_title: 'Do not use for:',
+    excl_body: 'established atherosclerotic cardiovascular disease · familial hypercholesterolaemia · chronic kidney disease · pregnancy · type 1 diabetes · people under 40 years · (in type 2 diabetes) severe target-organ damage. These patients are already at high or very high risk, and this score would underestimate it.',
+    inputs_heading: 'Risk factors',
+    l_region: 'Risk region (patient\'s country)',
+    region_low: 'Low risk',
+    region_moderate: 'Moderate risk',
+    region_high: 'High risk',
+    region_very_high: 'Very high risk',
+    region_help: 'Calibration region defined by national cardiovascular mortality (WHO). Default: high risk (e.g. Czech Republic).',
+    region_countries: 'Countries in this region:',
+    l_sex: 'Sex',
+    opt_female: 'Female',
+    opt_male: 'Male',
+    l_age: 'Age (years)',
+    ph_age: 'e.g. 55',
+    help_age: 'Age 40–69: SCORE2 (or SCORE2-Diabetes). Age 70–89: SCORE2-OP.',
+    l_smoker: 'Current smoker',
+    opt_no: 'No',
+    opt_yes: 'Yes',
+    l_sbp: 'Systolic blood pressure (mmHg)',
+    ph_sbp: 'e.g. 130',
+    l_tc: 'Total cholesterol (mmol/L)',
+    ph_tc: 'e.g. 5.5',
+    l_hdl: 'HDL cholesterol (mmol/L)',
+    ph_hdl: 'e.g. 1.3',
+    lipid_help: 'If your laboratory reports mg/dL, divide by 38.67 to get mmol/L.',
+    l_dm: 'Type 2 diabetes mellitus',
+    dm_details: 'Diabetes-specific data (SCORE2-Diabetes)',
+    l_dmage: 'Age at diabetes diagnosis (years)',
+    ph_dmage: 'e.g. 50',
+    l_hba1c: 'HbA1c (mmol/mol, IFCC)',
+    ph_hba1c: 'e.g. 55',
+    hba1c_help: 'IFCC units, not %. Conversion from %: mmol/mol = (% − 2.15) × 10.93.',
+    l_egfr: 'eGFR (mL/min/1.73 m²)',
+    ph_egfr: 'e.g. 85',
+    egfr_help_html: 'CKD-EPI. You can calculate it with the <a href="egfr.html">eGFR tool</a>. If the result is reported in mL/s/1.73 m², multiply by 60.',
+    dm_old_note: 'From age 70 the SCORE2-OP model is used, with diabetes as a yes/no factor — the diabetes-specific data below are not needed.',
+    calc_btn: 'Calculate',
+    err_intro: 'Please check these values:',
+    err_age: 'Age: 40–89 years (the models do not cover other ages).',
+    err_sbp: 'Systolic blood pressure: 70–260 mmHg.',
+    err_tc: 'Total cholesterol: 2–15 mmol/L (a value in mg/dL must be divided by 38.67).',
+    err_hdl: 'HDL cholesterol: 0.3–4 mmol/L (a value in mg/dL must be divided by 38.67).',
+    err_hdl_gt_tc: 'HDL cholesterol cannot be higher than total cholesterol.',
+    err_dmage: 'Age at diagnosis: from 18 years up to the current age.',
+    err_hba1c: 'HbA1c: 20–150 mmol/mol (IFCC). A value in % must be converted: (% − 2.15) × 10.93.',
+    err_egfr: 'eGFR: 5–200 mL/min/1.73 m² (a value in mL/s must be multiplied by 60).',
+    pct: '%',
+    res_caption: '10-year risk of fatal and non-fatal cardiovascular disease (myocardial infarction, stroke, cardiovascular death).',
+    res_model_label: 'Model:',
+    res_region_label: 'Region:',
+    res_cat_label: 'ESC risk category:',
+    model_s2: 'SCORE2 (age 40–69, no diabetes)',
+    model_op: 'SCORE2-OP (age 70–89)',
+    model_dm: 'SCORE2-Diabetes (type 2 diabetes, age 40–69)',
+    model_op_dm: 'SCORE2-OP with diabetes as a predictor (age 70–89)',
+    cat_lowmod: 'Low-to-moderate risk',
+    cat_high: 'High risk',
+    cat_veryhigh: 'Very high risk',
+    cat_low: 'Low risk',
+    cat_moderate: 'Moderate risk',
+    thr_lt50: 'Thresholds for age under 50 (ESC 2021): low-to-moderate <2.5%, high 2.5 to <7.5%, very high ≥7.5%.',
+    thr_50_69: 'Thresholds for age 50–69 (ESC 2021): low-to-moderate <5%, high 5 to <10%, very high ≥10%.',
+    thr_ge70: 'Thresholds for age 70 and over (ESC 2021): low-to-moderate <7.5%, high 7.5 to <15%, very high ≥15%.',
+    thr_dm: 'Thresholds in type 2 diabetes (ESC 2023): low <5%, moderate 5 to <10%, high 10 to <20%, very high ≥20%.',
+    note_prefix: 'Note:',
+    warn_dm70: 'Type 2 diabetes at age 70 or over: there is no dedicated validated model. SCORE2-OP treats diabetes only as a yes/no factor, so accuracy is limited and no risk category is assigned.',
+    warn_tod: 'An eGFR below 45 mL/min/1.73 m² is severe target-organ damage in the 2023 ESC diabetes guidelines. SCORE2-Diabetes is not intended for these patients, who belong to the very high risk group regardless of the score — no category is assigned here.',
+    warn_egfr_mid: 'An eGFR of 45–59 mL/min/1.73 m² together with microalbuminuria also counts as severe target-organ damage, for which SCORE2-Diabetes is not intended. Albuminuria is not part of this calculation.',
+    note_boundary: 'Around age 70 the result can change slightly, because SCORE2 and SCORE2-OP are two separately derived models.',
+    note_scope: 'The estimate covers only the listed risk factors. It does not account for other risk modifiers and is not a treatment recommendation.',
+    ref_models: 'Models:',
+    ref_categories: 'Risk categories:',
+    impl_label: 'Implementation:',
+    impl_note: 'Independent implementation of the published equations; the ESC did not create, review or endorse this page. No risk charts, region map or logos from the publications are reproduced. The names of the algorithms are used only to identify the published models.',
+    verify_esc: 'ESC CVD Risk Calculation App (official ESC tool)'
+  },
+  cs: {
+    tag: 'Kardiologie a tromboembolie',
+    title: 'SCORE2 – kardiovaskulární riziko',
+    subtitle: 'Nezávislá implementace publikovaných rovnic SCORE2, SCORE2-OP a SCORE2-Diabetes — odhad 10letého rizika fatálního i nefatálního kardiovaskulárního onemocnění.',
+    scope_title: 'Vzdělávací a referenční nástroj.',
+    scope_body: 'Reprodukuje publikované rovnice pro výuku a jako reference. Není zdravotnickým prostředkem, nesmí se používat k rozhodování o konkrétním pacientovi a neposkytuje doporučení k léčbě. Jde o nezávislou implementaci: není produktem Evropské kardiologické společnosti (ESC), není jí schválena ani s ní nijak spojena. Výpočet probíhá výhradně ve vašem prohlížeči — nic se neodesílá ani neukládá.',
+    excl_title: 'Nepoužívejte u:',
+    excl_body: 'manifestního aterosklerotického kardiovaskulárního onemocnění · familiární hypercholesterolémie · chronického onemocnění ledvin · těhotenství · diabetu 1. typu · osob mladších 40 let · (u diabetu 2. typu) těžkého orgánového postižení. Tito pacienti jsou již ve vysokém nebo velmi vysokém riziku a toto skóre by riziko podhodnotilo.',
+    inputs_heading: 'Rizikové faktory',
+    l_region: 'Rizikový region (země pacienta)',
+    region_low: 'Nízké riziko',
+    region_moderate: 'Střední riziko',
+    region_high: 'Vysoké riziko',
+    region_very_high: 'Velmi vysoké riziko',
+    region_help: 'Kalibrační region podle národní kardiovaskulární mortality (WHO). Výchozí: vysoké riziko (např. Česká republika).',
+    region_countries: 'Země v tomto regionu:',
+    l_sex: 'Pohlaví',
+    opt_female: 'Žena',
+    opt_male: 'Muž',
+    l_age: 'Věk (roky)',
+    ph_age: 'např. 55',
+    help_age: 'Věk 40–69 let: SCORE2 (nebo SCORE2-Diabetes). Věk 70–89 let: SCORE2-OP.',
+    l_smoker: 'Současný kuřák',
+    opt_no: 'Ne',
+    opt_yes: 'Ano',
+    l_sbp: 'Systolický krevní tlak (mmHg)',
+    ph_sbp: 'např. 130',
+    l_tc: 'Celkový cholesterol (mmol/l)',
+    ph_tc: 'např. 5,5',
+    l_hdl: 'HDL-cholesterol (mmol/l)',
+    ph_hdl: 'např. 1,3',
+    lipid_help: 'Pokud laboratoř uvádí mg/dl, vydělte hodnotu číslem 38,67.',
+    l_dm: 'Diabetes mellitus 2. typu',
+    dm_details: 'Údaje specifické pro diabetes (SCORE2-Diabetes)',
+    l_dmage: 'Věk při stanovení diagnózy diabetu (roky)',
+    ph_dmage: 'např. 50',
+    l_hba1c: 'HbA1c (mmol/mol, IFCC)',
+    ph_hba1c: 'např. 55',
+    hba1c_help: 'Jednotky IFCC, nikoli %. Přepočet z %: mmol/mol = (% − 2,15) × 10,93.',
+    l_egfr: 'eGFR (ml/min/1,73 m²)',
+    ph_egfr: 'např. 85',
+    egfr_help_html: 'CKD-EPI. Vypočítat ho můžete pomocí <a href="egfr.html">nástroje eGFR</a>. Pokud laboratoř uvádí výsledek v ml/s/1,73 m², vynásobte ho 60.',
+    dm_old_note: 'Od věku 70 let se používá model SCORE2-OP, který zohledňuje diabetes jako proměnnou ano/ne — údaje specifické pro diabetes níže nejsou potřeba.',
+    calc_btn: 'Vypočítat',
+    err_intro: 'Zkontrolujte prosím tyto hodnoty:',
+    err_age: 'Věk: 40–89 let (jiné věkové skupiny modely nepokrývají).',
+    err_sbp: 'Systolický krevní tlak: 70–260 mmHg.',
+    err_tc: 'Celkový cholesterol: 2–15 mmol/l (hodnotu v mg/dl vydělte číslem 38,67).',
+    err_hdl: 'HDL-cholesterol: 0,3–4 mmol/l (hodnotu v mg/dl vydělte číslem 38,67).',
+    err_hdl_gt_tc: 'HDL-cholesterol nemůže být vyšší než celkový cholesterol.',
+    err_dmage: 'Věk při diagnóze: od 18 let do současného věku.',
+    err_hba1c: 'HbA1c: 20–150 mmol/mol (IFCC). Hodnotu v % je nutné přepočítat: (% − 2,15) × 10,93.',
+    err_egfr: 'eGFR: 5–200 ml/min/1,73 m² (hodnotu v ml/s vynásobte 60).',
+    pct: ' %',
+    res_caption: '10leté riziko fatálního i nefatálního kardiovaskulárního onemocnění (infarkt myokardu, cévní mozková příhoda, kardiovaskulární úmrtí).',
+    res_model_label: 'Model:',
+    res_region_label: 'Region:',
+    res_cat_label: 'Kategorie rizika dle ESC:',
+    model_s2: 'SCORE2 (věk 40–69 let, bez diabetu)',
+    model_op: 'SCORE2-OP (věk 70–89 let)',
+    model_dm: 'SCORE2-Diabetes (diabetes 2. typu, věk 40–69 let)',
+    model_op_dm: 'SCORE2-OP s diabetem jako prediktorem (věk 70–89 let)',
+    cat_lowmod: 'Nízké až středně vysoké riziko',
+    cat_high: 'Vysoké riziko',
+    cat_veryhigh: 'Velmi vysoké riziko',
+    cat_low: 'Nízké riziko',
+    cat_moderate: 'Střední riziko',
+    thr_lt50: 'Prahy pro věk pod 50 let (ESC 2021): nízké až středně vysoké <2,5 %, vysoké 2,5 až <7,5 %, velmi vysoké ≥7,5 %.',
+    thr_50_69: 'Prahy pro věk 50–69 let (ESC 2021): nízké až středně vysoké <5 %, vysoké 5 až <10 %, velmi vysoké ≥10 %.',
+    thr_ge70: 'Prahy pro věk od 70 let (ESC 2021): nízké až středně vysoké <7,5 %, vysoké 7,5 až <15 %, velmi vysoké ≥15 %.',
+    thr_dm: 'Prahy u diabetu 2. typu (ESC 2023): nízké <5 %, střední 5 až <10 %, vysoké 10 až <20 %, velmi vysoké ≥20 %.',
+    note_prefix: 'Poznámka:',
+    warn_dm70: 'Diabetes 2. typu ve věku od 70 let: neexistuje samostatný validovaný model. SCORE2-OP zohledňuje diabetes pouze jako proměnnou ano/ne, přesnost je proto omezená a kategorie rizika se nepřiřazuje.',
+    warn_tod: 'eGFR pod 45 ml/min/1,73 m² je podle doporučení ESC pro diabetes z roku 2023 těžké orgánové postižení. SCORE2-Diabetes pro tyto pacienty není určen, patří bez ohledu na skóre do skupiny velmi vysokého rizika — kategorie se zde proto nepřiřazuje.',
+    warn_egfr_mid: 'eGFR 45–59 ml/min/1,73 m² spolu s mikroalbuminurií je rovněž těžké orgánové postižení, pro které SCORE2-Diabetes není určen. Albuminurie není součástí tohoto výpočtu.',
+    note_boundary: 'Kolem věku 70 let se výsledek může mírně změnit, protože SCORE2 a SCORE2-OP jsou dva samostatně odvozené modely.',
+    note_scope: 'Odhad zohledňuje pouze uvedené rizikové faktory. Nezahrnuje další modifikátory rizika a není doporučením k léčbě.',
+    ref_models: 'Modely:',
+    ref_categories: 'Kategorie rizika:',
+    impl_label: 'Implementace:',
+    impl_note: 'Nezávislá implementace publikovaných rovnic; ESC tuto stránku nevytvořila, neposuzovala ani neschválila. Rizikové tabulky, mapa regionů ani loga z publikací nejsou reprodukovány. Názvy algoritmů slouží pouze k označení publikovaných modelů.',
+    verify_esc: 'ESC CVD Risk Calculation App (oficiální nástroj ESC)'
+  },
+  fr: {
+    tag: 'Cardiologie et thromboembolie',
+    title: 'Risque cardiovasculaire SCORE2',
+    subtitle: 'Implémentation indépendante des équations publiées SCORE2, SCORE2-OP et SCORE2-Diabetes — estime le risque à 10 ans de maladie cardiovasculaire fatale et non fatale.',
+    scope_title: 'Outil pédagogique et de référence.',
+    scope_body: 'Reproduit des équations publiées à des fins d\'enseignement et de référence. Ce n\'est pas un dispositif médical, il ne doit pas servir à prendre des décisions concernant un patient donné et ne fournit aucune recommandation thérapeutique. Il s\'agit d\'une implémentation indépendante : elle n\'est ni un produit de la Société européenne de cardiologie (ESC), ni approuvée par elle, ni affiliée à elle. Le calcul s\'effectue entièrement dans votre navigateur — rien n\'est envoyé ni enregistré.',
+    excl_title: 'Ne pas utiliser en cas de :',
+    excl_body: 'maladie cardiovasculaire athéroscléreuse avérée · hypercholestérolémie familiale · maladie rénale chronique · grossesse · diabète de type 1 · âge inférieur à 40 ans · (en cas de diabète de type 2) atteinte sévère d\'organe cible. Ces patients sont déjà à risque élevé ou très élevé, et ce score le sous-estimerait.',
+    inputs_heading: 'Facteurs de risque',
+    l_region: 'Région de risque (pays du patient)',
+    region_low: 'Risque faible',
+    region_moderate: 'Risque modéré',
+    region_high: 'Risque élevé',
+    region_very_high: 'Risque très élevé',
+    region_help: 'Région de calibration définie par la mortalité cardiovasculaire nationale (OMS). Par défaut : risque élevé (p. ex. République tchèque).',
+    region_countries: 'Pays de cette région :',
+    l_sex: 'Sexe',
+    opt_female: 'Féminin',
+    opt_male: 'Masculin',
+    l_age: 'Âge (ans)',
+    ph_age: 'p. ex. 55',
+    help_age: '40–69 ans : SCORE2 (ou SCORE2-Diabetes). 70–89 ans : SCORE2-OP.',
+    l_smoker: 'Fumeur actuel',
+    opt_no: 'Non',
+    opt_yes: 'Oui',
+    l_sbp: 'Pression artérielle systolique (mmHg)',
+    ph_sbp: 'p. ex. 130',
+    l_tc: 'Cholestérol total (mmol/L)',
+    ph_tc: 'p. ex. 5,5',
+    l_hdl: 'Cholestérol HDL (mmol/L)',
+    ph_hdl: 'p. ex. 1,3',
+    lipid_help: 'Si le laboratoire indique des mg/dL, divisez par 38,67 pour obtenir des mmol/L (g/L × 2,586).',
+    l_dm: 'Diabète de type 2',
+    dm_details: 'Données spécifiques au diabète (SCORE2-Diabetes)',
+    l_dmage: 'Âge au diagnostic du diabète (ans)',
+    ph_dmage: 'p. ex. 50',
+    l_hba1c: 'HbA1c (mmol/mol, IFCC)',
+    ph_hba1c: 'p. ex. 55',
+    hba1c_help: 'Unités IFCC, pas en %. Conversion depuis % : mmol/mol = (% − 2,15) × 10,93.',
+    l_egfr: 'DFGe (mL/min/1,73 m²)',
+    ph_egfr: 'p. ex. 85',
+    egfr_help_html: 'CKD-EPI. Vous pouvez le calculer avec l\'<a href="egfr.html">outil DFGe</a>. Si le résultat est exprimé en mL/s/1,73 m², multipliez par 60.',
+    dm_old_note: 'À partir de 70 ans, le modèle SCORE2-OP est utilisé, avec le diabète comme facteur oui/non — les données spécifiques au diabète ci-dessous ne sont pas nécessaires.',
+    calc_btn: 'Calculer',
+    err_intro: 'Veuillez vérifier ces valeurs :',
+    err_age: 'Âge : 40–89 ans (les modèles ne couvrent pas les autres âges).',
+    err_sbp: 'Pression artérielle systolique : 70–260 mmHg.',
+    err_tc: 'Cholestérol total : 2–15 mmol/L (une valeur en mg/dL doit être divisée par 38,67).',
+    err_hdl: 'Cholestérol HDL : 0,3–4 mmol/L (une valeur en mg/dL doit être divisée par 38,67).',
+    err_hdl_gt_tc: 'Le cholestérol HDL ne peut pas dépasser le cholestérol total.',
+    err_dmage: 'Âge au diagnostic : de 18 ans jusqu\'à l\'âge actuel.',
+    err_hba1c: 'HbA1c : 20–150 mmol/mol (IFCC). Une valeur en % doit être convertie : (% − 2,15) × 10,93.',
+    err_egfr: 'DFGe : 5–200 mL/min/1,73 m² (une valeur en mL/s doit être multipliée par 60).',
+    pct: ' %',
+    res_caption: 'Risque à 10 ans de maladie cardiovasculaire fatale et non fatale (infarctus du myocarde, AVC, décès cardiovasculaire).',
+    res_model_label: 'Modèle :',
+    res_region_label: 'Région :',
+    res_cat_label: 'Catégorie de risque ESC :',
+    model_s2: 'SCORE2 (âge 40–69 ans, sans diabète)',
+    model_op: 'SCORE2-OP (âge 70–89 ans)',
+    model_dm: 'SCORE2-Diabetes (diabète de type 2, âge 40–69 ans)',
+    model_op_dm: 'SCORE2-OP avec le diabète comme prédicteur (âge 70–89 ans)',
+    cat_lowmod: 'Risque faible à modéré',
+    cat_high: 'Risque élevé',
+    cat_veryhigh: 'Risque très élevé',
+    cat_low: 'Risque faible',
+    cat_moderate: 'Risque modéré',
+    thr_lt50: 'Seuils pour l\'âge < 50 ans (ESC 2021) : faible à modéré < 2,5 %, élevé 2,5 à < 7,5 %, très élevé ≥ 7,5 %.',
+    thr_50_69: 'Seuils pour l\'âge 50–69 ans (ESC 2021) : faible à modéré < 5 %, élevé 5 à < 10 %, très élevé ≥ 10 %.',
+    thr_ge70: 'Seuils pour l\'âge ≥ 70 ans (ESC 2021) : faible à modéré < 7,5 %, élevé 7,5 à < 15 %, très élevé ≥ 15 %.',
+    thr_dm: 'Seuils dans le diabète de type 2 (ESC 2023) : faible < 5 %, modéré 5 à < 10 %, élevé 10 à < 20 %, très élevé ≥ 20 %.',
+    note_prefix: 'Remarque :',
+    warn_dm70: 'Diabète de type 2 à partir de 70 ans : il n\'existe pas de modèle validé dédié. SCORE2-OP ne prend en compte le diabète que comme facteur oui/non ; la précision est limitée et aucune catégorie de risque n\'est attribuée.',
+    warn_tod: 'Un DFGe inférieur à 45 mL/min/1,73 m² correspond, dans les recommandations ESC 2023 sur le diabète, à une atteinte sévère d\'organe cible. SCORE2-Diabetes n\'est pas destiné à ces patients, qui relèvent du groupe à risque très élevé quel que soit le score — aucune catégorie n\'est donc attribuée ici.',
+    warn_egfr_mid: 'Un DFGe de 45–59 mL/min/1,73 m² associé à une microalbuminurie constitue aussi une atteinte sévère d\'organe cible, pour laquelle SCORE2-Diabetes n\'est pas destiné. L\'albuminurie ne fait pas partie de ce calcul.',
+    note_boundary: 'Autour de 70 ans, le résultat peut varier légèrement, car SCORE2 et SCORE2-OP sont deux modèles dérivés séparément.',
+    note_scope: 'L\'estimation ne repose que sur les facteurs de risque listés. Elle ne tient pas compte d\'autres modificateurs de risque et n\'est pas une recommandation thérapeutique.',
+    ref_models: 'Modèles :',
+    ref_categories: 'Catégories de risque :',
+    impl_label: 'Implémentation :',
+    impl_note: 'Implémentation indépendante des équations publiées ; l\'ESC n\'a ni créé, ni relu, ni approuvé cette page. Les tables de risque, la carte des régions et les logos des publications ne sont pas reproduits. Les noms des algorithmes servent uniquement à désigner les modèles publiés.',
+    verify_esc: 'ESC CVD Risk Calculation App (outil officiel de l\'ESC)'
+  },
+  de: {
+    tag: 'Kardiologie & Thromboembolie',
+    title: 'SCORE2 – kardiovaskuläres Risiko',
+    subtitle: 'Unabhängige Implementierung der veröffentlichten Gleichungen SCORE2, SCORE2-OP und SCORE2-Diabetes — schätzt das 10-Jahres-Risiko für tödliche und nicht tödliche kardiovaskuläre Erkrankungen.',
+    scope_title: 'Lehr- und Referenzwerkzeug.',
+    scope_body: 'Bildet veröffentlichte Gleichungen für Lehre und Nachschlagezwecke nach. Es ist kein Medizinprodukt, darf nicht für Entscheidungen im Einzelfall verwendet werden und gibt keine Therapieempfehlungen. Es ist eine unabhängige Implementierung: kein Produkt der Europäischen Gesellschaft für Kardiologie (ESC), von dieser nicht genehmigt und ohne Verbindung zu ihr. Die Berechnung läuft vollständig in Ihrem Browser — es wird nichts gesendet oder gespeichert.',
+    excl_title: 'Nicht anwenden bei:',
+    excl_body: 'manifester atherosklerotischer kardiovaskulärer Erkrankung · familiärer Hypercholesterinämie · chronischer Nierenerkrankung · Schwangerschaft · Typ-1-Diabetes · Personen unter 40 Jahren · (bei Typ-2-Diabetes) schwerem Endorganschaden. Diese Patienten haben bereits ein hohes oder sehr hohes Risiko, das dieser Score unterschätzen würde.',
+    inputs_heading: 'Risikofaktoren',
+    l_region: 'Risikoregion (Land des Patienten)',
+    region_low: 'Niedriges Risiko',
+    region_moderate: 'Mittleres Risiko',
+    region_high: 'Hohes Risiko',
+    region_very_high: 'Sehr hohes Risiko',
+    region_help: 'Kalibrierungsregion nach der nationalen kardiovaskulären Mortalität (WHO). Standard: hohes Risiko (z. B. Tschechien).',
+    region_countries: 'Länder in dieser Region:',
+    l_sex: 'Geschlecht',
+    opt_female: 'Weiblich',
+    opt_male: 'Männlich',
+    l_age: 'Alter (Jahre)',
+    ph_age: 'z. B. 55',
+    help_age: 'Alter 40–69: SCORE2 (bzw. SCORE2-Diabetes). Alter 70–89: SCORE2-OP.',
+    l_smoker: 'Aktueller Raucher',
+    opt_no: 'Nein',
+    opt_yes: 'Ja',
+    l_sbp: 'Systolischer Blutdruck (mmHg)',
+    ph_sbp: 'z. B. 130',
+    l_tc: 'Gesamtcholesterin (mmol/l)',
+    ph_tc: 'z. B. 5,5',
+    l_hdl: 'HDL-Cholesterin (mmol/l)',
+    ph_hdl: 'z. B. 1,3',
+    lipid_help: 'Meldet das Labor mg/dl, durch 38,67 teilen, um mmol/l zu erhalten.',
+    l_dm: 'Diabetes mellitus Typ 2',
+    dm_details: 'Diabetesspezifische Angaben (SCORE2-Diabetes)',
+    l_dmage: 'Alter bei Diabetesdiagnose (Jahre)',
+    ph_dmage: 'z. B. 50',
+    l_hba1c: 'HbA1c (mmol/mol, IFCC)',
+    ph_hba1c: 'z. B. 55',
+    hba1c_help: 'IFCC-Einheiten, nicht in %. Umrechnung aus %: mmol/mol = (% − 2,15) × 10,93.',
+    l_egfr: 'eGFR (ml/min/1,73 m²)',
+    ph_egfr: 'z. B. 85',
+    egfr_help_html: 'CKD-EPI. Berechnung mit dem <a href="egfr.html">eGFR-Rechner</a>. Wird das Ergebnis in ml/s/1,73 m² angegeben, mit 60 multiplizieren.',
+    dm_old_note: 'Ab 70 Jahren wird das Modell SCORE2-OP verwendet (Diabetes als Ja/Nein-Faktor) — die diabetesspezifischen Angaben werden nicht benötigt.',
+    calc_btn: 'Berechnen',
+    err_intro: 'Bitte diese Werte prüfen:',
+    err_age: 'Alter: 40–89 Jahre (andere Altersgruppen decken die Modelle nicht ab).',
+    err_sbp: 'Systolischer Blutdruck: 70–260 mmHg.',
+    err_tc: 'Gesamtcholesterin: 2–15 mmol/l (Werte in mg/dl durch 38,67 teilen).',
+    err_hdl: 'HDL-Cholesterin: 0,3–4 mmol/l (Werte in mg/dl durch 38,67 teilen).',
+    err_hdl_gt_tc: 'Das HDL-Cholesterin kann nicht höher sein als das Gesamtcholesterin.',
+    err_dmage: 'Alter bei Diagnose: ab 18 Jahren bis zum aktuellen Alter.',
+    err_hba1c: 'HbA1c: 20–150 mmol/mol (IFCC). Werte in % müssen umgerechnet werden: (% − 2,15) × 10,93.',
+    err_egfr: 'eGFR: 5–200 ml/min/1,73 m² (Werte in ml/s mit 60 multiplizieren).',
+    pct: ' %',
+    res_caption: '10-Jahres-Risiko für tödliche und nicht tödliche kardiovaskuläre Erkrankungen (Herzinfarkt, Schlaganfall, kardiovaskulärer Tod).',
+    res_model_label: 'Modell:',
+    res_region_label: 'Region:',
+    res_cat_label: 'ESC-Risikokategorie:',
+    model_s2: 'SCORE2 (Alter 40–69, kein Diabetes)',
+    model_op: 'SCORE2-OP (Alter 70–89)',
+    model_dm: 'SCORE2-Diabetes (Typ-2-Diabetes, Alter 40–69)',
+    model_op_dm: 'SCORE2-OP mit Diabetes als Prädiktor (Alter 70–89)',
+    cat_lowmod: 'Niedriges bis mittleres Risiko',
+    cat_high: 'Hohes Risiko',
+    cat_veryhigh: 'Sehr hohes Risiko',
+    cat_low: 'Niedriges Risiko',
+    cat_moderate: 'Mittleres Risiko',
+    thr_lt50: 'Schwellen unter 50 Jahren (ESC 2021): niedrig bis mittel <2,5 %, hoch 2,5 bis <7,5 %, sehr hoch ≥7,5 %.',
+    thr_50_69: 'Schwellen 50–69 Jahre (ESC 2021): niedrig bis mittel <5 %, hoch 5 bis <10 %, sehr hoch ≥10 %.',
+    thr_ge70: 'Schwellen ab 70 Jahren (ESC 2021): niedrig bis mittel <7,5 %, hoch 7,5 bis <15 %, sehr hoch ≥15 %.',
+    thr_dm: 'Schwellen bei Typ-2-Diabetes (ESC 2023): niedrig <5 %, mittel 5 bis <10 %, hoch 10 bis <20 %, sehr hoch ≥20 %.',
+    note_prefix: 'Hinweis:',
+    warn_dm70: 'Typ-2-Diabetes ab 70 Jahren: Es gibt kein eigenes validiertes Modell. SCORE2-OP berücksichtigt Diabetes nur als Ja/Nein-Faktor; die Genauigkeit ist begrenzt, eine Risikokategorie wird nicht vergeben.',
+    warn_tod: 'Eine eGFR unter 45 ml/min/1,73 m² gilt in den ESC-Diabetes-Leitlinien 2023 als schwerer Endorganschaden. SCORE2-Diabetes ist für diese Patienten nicht vorgesehen; sie gehören unabhängig vom Score zur Gruppe mit sehr hohem Risiko — hier wird deshalb keine Kategorie vergeben.',
+    warn_egfr_mid: 'Eine eGFR von 45–59 ml/min/1,73 m² zusammen mit Mikroalbuminurie gilt ebenfalls als schwerer Endorganschaden, für den SCORE2-Diabetes nicht vorgesehen ist. Die Albuminurie ist nicht Teil dieser Berechnung.',
+    note_boundary: 'Um das Alter von 70 Jahren kann sich das Ergebnis leicht ändern, da SCORE2 und SCORE2-OP zwei getrennt entwickelte Modelle sind.',
+    note_scope: 'Die Schätzung berücksichtigt nur die genannten Risikofaktoren. Andere Risikomodifikatoren sind nicht enthalten; sie ist keine Therapieempfehlung.',
+    ref_models: 'Modelle:',
+    ref_categories: 'Risikokategorien:',
+    impl_label: 'Umsetzung:',
+    impl_note: 'Unabhängige Implementierung der veröffentlichten Gleichungen; die ESC hat diese Seite weder erstellt noch geprüft noch gebilligt. Risikotabellen, Regionenkarte und Logos aus den Publikationen werden nicht wiedergegeben. Die Namen der Algorithmen dienen nur zur Bezeichnung der veröffentlichten Modelle.',
+    verify_esc: 'ESC CVD Risk Calculation App (offizielles ESC-Tool)'
+  },
+  pl: {
+    tag: 'Kardiologia i choroba zakrzepowo-zatorowa',
+    title: 'SCORE2 – ryzyko sercowo-naczyniowe',
+    subtitle: 'Niezależna implementacja opublikowanych równań SCORE2, SCORE2-OP i SCORE2-Diabetes — szacuje 10-letnie ryzyko incydentów sercowo-naczyniowych zakończonych i niezakończonych zgonem.',
+    scope_title: 'Narzędzie edukacyjne i referencyjne.',
+    scope_body: 'Odtwarza opublikowane równania w celach dydaktycznych i referencyjnych. Nie jest wyrobem medycznym, nie wolno go stosować do podejmowania decyzji dotyczących konkretnego pacjenta i nie zawiera zaleceń terapeutycznych. Jest to niezależna implementacja: nie jest produktem Europejskiego Towarzystwa Kardiologicznego (ESC), nie została przez nie zatwierdzona i nie jest z nim powiązana. Obliczenia odbywają się w całości w Twojej przeglądarce — nic nie jest wysyłane ani zapisywane.',
+    excl_title: 'Nie stosować u osób z:',
+    excl_body: 'rozpoznaną miażdżycową chorobą układu sercowo-naczyniowego · hipercholesterolemią rodzinną · przewlekłą chorobą nerek · ciążą · cukrzycą typu 1 · wiekiem poniżej 40 lat · (w cukrzycy typu 2) ciężkim uszkodzeniem narządowym. Ci pacjenci są już w grupie wysokiego lub bardzo wysokiego ryzyka, a ten wynik by je niedoszacował.',
+    inputs_heading: 'Czynniki ryzyka',
+    l_region: 'Region ryzyka (kraj pacjenta)',
+    region_low: 'Niskie ryzyko',
+    region_moderate: 'Umiarkowane ryzyko',
+    region_high: 'Wysokie ryzyko',
+    region_very_high: 'Bardzo wysokie ryzyko',
+    region_help: 'Region kalibracyjny określony na podstawie krajowej śmiertelności sercowo-naczyniowej (WHO). Domyślnie: wysokie ryzyko (np. Czechy).',
+    region_countries: 'Kraje w tym regionie:',
+    l_sex: 'Płeć',
+    opt_female: 'Kobieta',
+    opt_male: 'Mężczyzna',
+    l_age: 'Wiek (lata)',
+    ph_age: 'np. 55',
+    help_age: 'Wiek 40–69 lat: SCORE2 (lub SCORE2-Diabetes). Wiek 70–89 lat: SCORE2-OP.',
+    l_smoker: 'Aktualnie pali papierosy',
+    opt_no: 'Nie',
+    opt_yes: 'Tak',
+    l_sbp: 'Ciśnienie skurczowe (mmHg)',
+    ph_sbp: 'np. 130',
+    l_tc: 'Cholesterol całkowity (mmol/l)',
+    ph_tc: 'np. 5,5',
+    l_hdl: 'Cholesterol HDL (mmol/l)',
+    ph_hdl: 'np. 1,3',
+    lipid_help: 'Jeśli laboratorium podaje mg/dl, podziel przez 38,67, aby otrzymać mmol/l.',
+    l_dm: 'Cukrzyca typu 2',
+    dm_details: 'Dane swoiste dla cukrzycy (SCORE2-Diabetes)',
+    l_dmage: 'Wiek w momencie rozpoznania cukrzycy (lata)',
+    ph_dmage: 'np. 50',
+    l_hba1c: 'HbA1c (mmol/mol, IFCC)',
+    ph_hba1c: 'np. 55',
+    hba1c_help: 'Jednostki IFCC, nie %. Przeliczenie z %: mmol/mol = (% − 2,15) × 10,93.',
+    l_egfr: 'eGFR (ml/min/1,73 m²)',
+    ph_egfr: 'np. 85',
+    egfr_help_html: 'CKD-EPI. Możesz je obliczyć w <a href="egfr.html">kalkulatorze eGFR</a>. Jeśli wynik podano w ml/s/1,73 m², pomnóż przez 60.',
+    dm_old_note: 'Od 70. roku życia stosowany jest model SCORE2-OP (cukrzyca jako czynnik tak/nie) — dane swoiste dla cukrzycy nie są potrzebne.',
+    calc_btn: 'Oblicz',
+    err_intro: 'Sprawdź te wartości:',
+    err_age: 'Wiek: 40–89 lat (modele nie obejmują innych grup wiekowych).',
+    err_sbp: 'Ciśnienie skurczowe: 70–260 mmHg.',
+    err_tc: 'Cholesterol całkowity: 2–15 mmol/l (wartość w mg/dl podziel przez 38,67).',
+    err_hdl: 'Cholesterol HDL: 0,3–4 mmol/l (wartość w mg/dl podziel przez 38,67).',
+    err_hdl_gt_tc: 'Cholesterol HDL nie może być wyższy niż cholesterol całkowity.',
+    err_dmage: 'Wiek w momencie rozpoznania: od 18 lat do obecnego wieku.',
+    err_hba1c: 'HbA1c: 20–150 mmol/mol (IFCC). Wartość w % należy przeliczyć: (% − 2,15) × 10,93.',
+    err_egfr: 'eGFR: 5–200 ml/min/1,73 m² (wartość w ml/s pomnóż przez 60).',
+    pct: '%',
+    res_caption: '10-letnie ryzyko incydentów sercowo-naczyniowych zakończonych i niezakończonych zgonem (zawał serca, udar mózgu, zgon z przyczyn sercowo-naczyniowych).',
+    res_model_label: 'Model:',
+    res_region_label: 'Region:',
+    res_cat_label: 'Kategoria ryzyka wg ESC:',
+    model_s2: 'SCORE2 (wiek 40–69 lat, bez cukrzycy)',
+    model_op: 'SCORE2-OP (wiek 70–89 lat)',
+    model_dm: 'SCORE2-Diabetes (cukrzyca typu 2, wiek 40–69 lat)',
+    model_op_dm: 'SCORE2-OP z cukrzycą jako predyktorem (wiek 70–89 lat)',
+    cat_lowmod: 'Ryzyko niskie do umiarkowanego',
+    cat_high: 'Wysokie ryzyko',
+    cat_veryhigh: 'Bardzo wysokie ryzyko',
+    cat_low: 'Niskie ryzyko',
+    cat_moderate: 'Umiarkowane ryzyko',
+    thr_lt50: 'Progi dla wieku poniżej 50 lat (ESC 2021): niskie do umiarkowanego <2,5%, wysokie 2,5 do <7,5%, bardzo wysokie ≥7,5%.',
+    thr_50_69: 'Progi dla wieku 50–69 lat (ESC 2021): niskie do umiarkowanego <5%, wysokie 5 do <10%, bardzo wysokie ≥10%.',
+    thr_ge70: 'Progi dla wieku od 70 lat (ESC 2021): niskie do umiarkowanego <7,5%, wysokie 7,5 do <15%, bardzo wysokie ≥15%.',
+    thr_dm: 'Progi w cukrzycy typu 2 (ESC 2023): niskie <5%, umiarkowane 5 do <10%, wysokie 10 do <20%, bardzo wysokie ≥20%.',
+    note_prefix: 'Uwaga:',
+    warn_dm70: 'Cukrzyca typu 2 w wieku od 70 lat: nie istnieje osobny zwalidowany model. SCORE2-OP uwzględnia cukrzycę tylko jako czynnik tak/nie, więc dokładność jest ograniczona i nie przypisuje się kategorii ryzyka.',
+    warn_tod: 'eGFR poniżej 45 ml/min/1,73 m² oznacza w wytycznych ESC dotyczących cukrzycy z 2023 r. ciężkie uszkodzenie narządowe. SCORE2-Diabetes nie jest przeznaczony dla tych pacjentów, którzy niezależnie od wyniku należą do grupy bardzo wysokiego ryzyka — dlatego nie przypisuje się tu kategorii.',
+    warn_egfr_mid: 'eGFR 45–59 ml/min/1,73 m² wraz z mikroalbuminurią również oznacza ciężkie uszkodzenie narządowe, dla którego SCORE2-Diabetes nie jest przeznaczony. Albuminuria nie jest uwzględniana w tym obliczeniu.',
+    note_boundary: 'W okolicy 70. roku życia wynik może się nieznacznie zmienić, ponieważ SCORE2 i SCORE2-OP to dwa osobno opracowane modele.',
+    note_scope: 'Oszacowanie uwzględnia wyłącznie wymienione czynniki ryzyka. Nie uwzględnia innych modyfikatorów ryzyka i nie jest zaleceniem terapeutycznym.',
+    ref_models: 'Modele:',
+    ref_categories: 'Kategorie ryzyka:',
+    impl_label: 'Implementacja:',
+    impl_note: 'Niezależna implementacja opublikowanych równań; ESC nie stworzyło, nie sprawdziło ani nie zatwierdziło tej strony. Nie odtwarzamy tablic ryzyka, mapy regionów ani logotypów z publikacji. Nazwy algorytmów służą wyłącznie do wskazania opublikowanych modeli.',
+    verify_esc: 'ESC CVD Risk Calculation App (oficjalne narzędzie ESC)'
+  }
+};
+
+/* SCORE2-ENGINE-BEGIN
+   Pure calculation code, no DOM access. tests/score2.test.js extracts and runs exactly this block.
+   Independent implementation of the published equations:
+     SCORE2            Eur Heart J 2021;42(25):2439-2454   doi:10.1093/eurheartj/ehab309
+     SCORE2-OP         Eur Heart J 2021;42(25):2455-2467   doi:10.1093/eurheartj/ehab312
+     SCORE2-Diabetes   Eur Heart J 2023;44(28):2544-2556   doi:10.1093/eurheartj/ehad260
+   Units: sbp mmHg | tchol, hdl mmol/L | hba1c mmol/mol (IFCC) | egfr mL/min/1.73 m2 | ages in years.
+   region: low | moderate | high | very_high      sex: male | female                                     */
+var SCORE2ENGINE = (function () {
+
+  // Regional recalibration [scale1, scale2] by region and sex.
+  // SCORE2 and SCORE2-Diabetes use one table (the SCORE2-Diabetes authors applied the same recalibration factors).
+  var SCALE_S2 = {
+    low:       { male: [-0.5699, 0.7476], female: [-0.7380, 0.7019] },
+    moderate:  { male: [-0.1565, 0.8009], female: [-0.3143, 0.7701] },
+    high:      { male: [ 0.3207, 0.9360], female: [ 0.5710, 0.9369] },
+    very_high: { male: [ 0.5836, 0.8294], female: [ 0.9412, 0.8329] }
+  };
+  var SCALE_OP = {
+    low:       { male: [-0.34, 1.19], female: [-0.52, 1.01] },
+    moderate:  { male: [ 0.01, 1.25], female: [-0.10, 1.10] },
+    high:      { male: [ 0.08, 1.15], female: [ 0.38, 1.09] },
+    very_high: { male: [ 0.05, 0.70], female: [ 0.38, 0.69] }
+  };
+
+  // Plausibility limits for the inputs (this page's own safety net, not values from the publications).
+  var LIMITS = { age: [40, 89], sbp: [70, 260], tchol: [2, 15], hdl: [0.3, 4], hba1c: [20, 150], egfr: [5, 200], dmAgeMin: 18 };
+
+  // Second step of every model: regional recalibration on the complementary log-log scale.
+  function calibrate(uncalibrated, s1, s2) {
+    return 1 - Math.exp(-Math.exp(s1 + s2 * Math.log(-Math.log(1 - uncalibrated))));
+  }
+
+  // SCORE2: age 40-69, no diabetes. (The published model has a diabetes term; it is always 0 in this population.)
+  function score2(p) {
+    var a = (p.age - 60) / 5, s = (p.sbp - 120) / 20, t = p.tchol - 6, h = (p.hdl - 1.3) / 0.5;
+    var k = p.smoker ? 1 : 0, lp, base;
+    if (p.sex === 'male') {
+      lp = 0.3742 * a + 0.6012 * k + 0.2777 * s + 0.1458 * t - 0.2698 * h
+         - 0.0755 * a * k - 0.0255 * a * s - 0.0281 * a * t + 0.0426 * a * h;
+      base = 0.9605;
+    } else {
+      lp = 0.4648 * a + 0.7744 * k + 0.3131 * s + 0.1002 * t - 0.2606 * h
+         - 0.1088 * a * k - 0.0277 * a * s - 0.0226 * a * t + 0.0613 * a * h;
+      base = 0.9776;
+    }
+    var sc = SCALE_S2[p.region][p.sex];
+    return calibrate(1 - Math.pow(base, Math.exp(lp)), sc[0], sc[1]) * 100;
+  }
+
+  // SCORE2-OP: age 70 and over; diabetes is a yes/no predictor. Subtracts the mean linear predictor of the derivation cohort.
+  function score2op(p) {
+    var a = p.age - 73, s = p.sbp - 150, t = p.tchol - 6, h = p.hdl - 1.4;
+    var k = p.smoker ? 1 : 0, d = p.diabetes ? 1 : 0, lp, base, mean;
+    if (p.sex === 'male') {
+      lp = 0.0634 * a + 0.4245 * d + 0.3524 * k + 0.0094 * s + 0.0850 * t - 0.3564 * h
+         - 0.0174 * a * d - 0.0247 * a * k - 0.0005 * a * s + 0.0073 * a * t + 0.0091 * a * h;
+      base = 0.7576; mean = 0.0929;
+    } else {
+      lp = 0.0789 * a + 0.6010 * d + 0.4921 * k + 0.0102 * s + 0.0605 * t - 0.3040 * h
+         - 0.0107 * a * d - 0.0255 * a * k - 0.0004 * a * s - 0.0009 * a * t + 0.0154 * a * h;
+      base = 0.8082; mean = 0.2290;
+    }
+    var sc = SCALE_OP[p.region][p.sex];
+    return calibrate(1 - Math.pow(base, Math.exp(lp - mean)), sc[0], sc[1]) * 100;
+  }
+
+  // SCORE2-Diabetes: type 2 diabetes, age 40-69. Coefficients are the final ones (SCORE2 term + diabetes correction).
+  // Baseline survival is the SCORE2 value: it reproduces the published worked examples (see tests/README.md).
+  function score2diabetes(p) {
+    var a = (p.age - 60) / 5, s = (p.sbp - 120) / 20, t = p.tchol - 6, h = (p.hdl - 1.3) / 0.5;
+    var d = (p.dmAge - 50) / 5, b = (p.hba1c - 31) / 9.34, g = (Math.log(p.egfr) - 4.5) / 0.15;
+    var k = p.smoker ? 1 : 0, lp, base;
+    if (p.sex === 'male') {
+      lp = 0.5368 * a + 0.4774 * k + 0.1322 * s + 0.6457 + 0.1102 * t - 0.1087 * h
+         - 0.0672 * a * k - 0.0268 * a * s - 0.0983 * a - 0.0181 * a * t + 0.0095 * a * h
+         - 0.0998 * d + 0.0955 * b - 0.0591 * g + 0.0058 * g * g - 0.0134 * b * a + 0.0115 * g * a;
+      base = 0.9605;
+    } else {
+      lp = 0.6624 * a + 0.6139 * k + 0.1421 * s + 0.8096 + 0.1127 * t - 0.1568 * h
+         - 0.1122 * a * k - 0.0167 * a * s - 0.1272 * a - 0.0200 * a * t + 0.0186 * a * h
+         - 0.1180 * d + 0.1173 * b - 0.0640 * g + 0.0062 * g * g - 0.0196 * b * a + 0.0169 * g * a;
+      base = 0.9776;
+    }
+    var sc = SCALE_S2[p.region][p.sex];
+    return calibrate(1 - Math.pow(base, Math.exp(lp)), sc[0], sc[1]) * 100;
+  }
+
+  // Which model applies. Diabetes below 70 -> SCORE2-Diabetes; 70 and over -> SCORE2-OP (diabetes as a yes/no predictor).
+  function estimate(p) {
+    if (p.diabetes && p.age < 70) return { model: 'dm', risk: score2diabetes(p) };
+    if (p.age >= 70) return { model: p.diabetes ? 'op_dm' : 'op', risk: score2op(p) };
+    return { model: 's2', risk: score2(p) };
+  }
+
+  // Round half up to one decimal, the way the result is displayed (the epsilon guards against 5.05 -> 5.0).
+  function roundRisk(r) { return Math.floor(r * 10 + 0.5 + 1.5e-8) / 10; }
+
+  // ESC risk category from the DISPLAYED (rounded) risk, so the shown number and the category never disagree.
+  // Apparently healthy (ESC 2021): thresholds depend on age.  Type 2 diabetes (ESC 2023): fixed thresholds.
+  // No category for diabetes at 70+ (no validated dedicated model).
+  function category(model, rounded, age) {
+    if (model === 'op_dm') return null;
+    if (model === 'dm') return rounded < 5 ? 'low' : rounded < 10 ? 'moderate' : rounded < 20 ? 'high' : 'veryhigh';
+    var t = age < 50 ? [2.5, 7.5] : age < 70 ? [5, 10] : [7.5, 15];
+    return rounded < t[0] ? 'lowmod' : rounded < t[1] ? 'high' : 'veryhigh';
+  }
+
+  function thresholdKey(model, age) {
+    if (model === 'dm') return 'thr_dm';
+    return age < 50 ? 'thr_lt50' : age < 70 ? 'thr_50_69' : 'thr_ge70';
+  }
+
+  function inRange(v, r) { return typeof v === 'number' && isFinite(v) && v >= r[0] && v <= r[1]; }
+
+  // Returns a list of dictionary keys describing invalid inputs (empty list = OK).
+  function validate(p) {
+    var e = [];
+    if (!inRange(p.age, LIMITS.age)) e.push('err_age');
+    if (!inRange(p.sbp, LIMITS.sbp)) e.push('err_sbp');
+    var tcOk = inRange(p.tchol, LIMITS.tchol), hdlOk = inRange(p.hdl, LIMITS.hdl);
+    if (!tcOk) e.push('err_tc');
+    if (!hdlOk) e.push('err_hdl');
+    if (tcOk && hdlOk && p.hdl > p.tchol) e.push('err_hdl_gt_tc');
+    if (p.diabetes && p.age < 70) {                       // diabetes details are only used by SCORE2-Diabetes
+      if (!(typeof p.dmAge === 'number' && isFinite(p.dmAge) && p.dmAge >= LIMITS.dmAgeMin && p.dmAge <= p.age)) e.push('err_dmage');
+      if (!inRange(p.hba1c, LIMITS.hba1c)) e.push('err_hba1c');
+      if (!inRange(p.egfr, LIMITS.egfr)) e.push('err_egfr');
+    }
+    return e;
+  }
+
+  return { score2: score2, score2op: score2op, score2diabetes: score2diabetes, estimate: estimate, roundRisk: roundRisk,
+           category: category, thresholdKey: thresholdKey, validate: validate, LIMITS: LIMITS };
+})();
+/* SCORE2-ENGINE-END */
+
+// Countries per calibration region as ISO 3166-1 codes; names are rendered in the reader's language by the browser.
+var REGION_COUNTRIES = {
+  low:       ['BE','DK','FR','IL','LU','NL','NO','ES','CH','GB'],
+  moderate:  ['FI','IE','IS','IT','CY','MT','DE','PT','AT','GR','SM','SI','SE'],
+  high:      ['CZ','AL','BA','HR','EE','KZ','HU','PL','SK','TR'],
+  very_high: ['DZ','AM','AZ','BY','BG','ME','EG','GE','KG','LB','LY','LT','LV','MA','MD','RO','RU','MK','RS','SY','TN','UA','UZ']
+};
+// English fallback for browsers without Intl.DisplayNames.
+var COUNTRY_EN = { BE:'Belgium', DK:'Denmark', FR:'France', IL:'Israel', LU:'Luxembourg', NL:'Netherlands', NO:'Norway', ES:'Spain', CH:'Switzerland', GB:'United Kingdom',
+  FI:'Finland', IE:'Ireland', IS:'Iceland', IT:'Italy', CY:'Cyprus', MT:'Malta', DE:'Germany', PT:'Portugal', AT:'Austria', GR:'Greece', SM:'San Marino', SI:'Slovenia', SE:'Sweden',
+  CZ:'Czech Republic', AL:'Albania', BA:'Bosnia and Herzegovina', HR:'Croatia', EE:'Estonia', KZ:'Kazakhstan', HU:'Hungary', PL:'Poland', SK:'Slovakia', TR:'Turkey',
+  DZ:'Algeria', AM:'Armenia', AZ:'Azerbaijan', BY:'Belarus', BG:'Bulgaria', ME:'Montenegro', EG:'Egypt', GE:'Georgia', KG:'Kyrgyzstan', LB:'Lebanon', LY:'Libya', LT:'Lithuania',
+  LV:'Latvia', MA:'Morocco', MD:'Moldova', RO:'Romania', RU:'Russia', MK:'North Macedonia', RS:'Serbia', SY:'Syria', TN:'Tunisia', UA:'Ukraine', UZ:'Uzbekistan' };
+
+var _lastSCORE2 = null;
+
+function s2el(id) { return document.getElementById(id); }
+function s2num(id) { var v = s2el(id).value; return v === '' ? NaN : parseFloat(v); }
+
+function readSCORE2Inputs() {
+  return {
+    region: s2el('region').value, sex: s2el('sex').value, age: s2num('age'), smoker: s2el('smoker').value === '1',
+    sbp: s2num('sbp'), tchol: s2num('tc'), hdl: s2num('hdl'), diabetes: s2el('dm').value === '1',
+    dmAge: s2num('dmage'), hba1c: s2num('hba1c'), egfr: s2num('egfr')
+  };
+}
+
+// Diabetes details are only needed below age 70 (SCORE2-Diabetes); from 70 the SCORE2-OP model is used.
+function updateDmUi() {
+  var dm = s2el('dm').value === '1', age = s2num('age'), old = dm && age >= 70;
+  s2el('dmBlock').style.display = (dm && !old) ? 'block' : 'none';
+  s2el('dmOldNote').style.display = old ? 'block' : 'none';
+}
+
+function renderRegionList() {
+  var region = s2el('region').value, lang = window._ucmCurrentLang || 'en', dn = null;
+  try { dn = new Intl.DisplayNames([lang], { type: 'region' }); } catch (e) { dn = null; }
+  var names = REGION_COUNTRIES[region].map(function (c) {
+    var n = null; try { n = dn ? dn.of(c) : null; } catch (e) { n = null; }
+    return n || COUNTRY_EN[c] || c;
+  });
+  names.sort(function (a, b) { return a.localeCompare(b, lang); });
+  s2el('regionList').textContent = ucmT('region_countries') + ' ' + names.join(', ');
+}
+
+function calcSCORE2() {
+  var p = readSCORE2Inputs();
+  var errors = SCORE2ENGINE.validate(p);
+  if (errors.length) { alert(ucmT('err_intro') + '\n\n• ' + errors.map(function (k) { return ucmT(k); }).join('\n• ')); return; }
+  _lastSCORE2 = { p: p, est: SCORE2ENGINE.estimate(p) };
+  renderSCORE2Result();
+}
+
+// Only trusted dictionary strings and numbers are placed into innerHTML here - never raw user input.
+function renderSCORE2Result() {
+  if (!_lastSCORE2) return;
+  var p = _lastSCORE2.p, est = _lastSCORE2.est;
+  var risk = SCORE2ENGINE.roundRisk(est.risk);
+  var severeTod = (est.model === 'dm' && p.egfr < 45);
+  var cat = severeTod ? null : SCORE2ENGINE.category(est.model, risk, p.age);
+  var soft = ' style="color:var(--ink-soft);font-size:12.5px;"', gap = ' style="margin-top:8px;"';
+  var h = '<div>' + ucmT('res_caption') + '</div>';
+  h += '<div' + gap + '><strong>' + ucmT('res_model_label') + '</strong> ' + ucmT('model_' + est.model) +
+       '<br><strong>' + ucmT('res_region_label') + '</strong> ' + ucmT('region_' + p.region) + '</div>';
+  if (cat) {
+    h += '<div' + gap + '><strong>' + ucmT('res_cat_label') + '</strong> ' + ucmT('cat_' + cat) +
+         '<br><span' + soft + '>' + ucmT(SCORE2ENGINE.thresholdKey(est.model, p.age)) + '</span></div>';
+  }
+  var notes = [];
+  if (est.model === 'op_dm') notes.push('warn_dm70');
+  if (severeTod) notes.push('warn_tod');
+  if (est.model === 'dm' && p.egfr >= 45 && p.egfr < 60) notes.push('warn_egfr_mid');
+  if (p.age >= 69 && p.age <= 71) notes.push('note_boundary');
+  notes.push('note_scope');
+  notes.forEach(function (k) { h += '<div' + gap + '><strong>' + ucmT('note_prefix') + '</strong> ' + ucmT(k) + '</div>'; });
+  s2el('resultScore').textContent = risk.toFixed(1) + ucmT('pct');
+  s2el('resultInterp').innerHTML = h;
+  s2el('result').classList.add('show');
+}
+
+s2el('dm').addEventListener('change', updateDmUi);
+s2el('age').addEventListener('input', updateDmUi);
+s2el('region').addEventListener('change', renderRegionList);
+updateDmUi();
+
+window.ucmOnLangChange = function () { renderRegionList(); renderSCORE2Result(); };
+
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
