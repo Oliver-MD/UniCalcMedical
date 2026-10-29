@@ -1,381 +1,463 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MedInter · Léky a lékové interakce</title>
-<meta name="description" content="Registrované léčivé přípravky (SÚKL) pro lékaře a farmaceuty: stručná shrnutí SPC (indikace, dávkování, kontraindikace, interakce) s plným zněním a kontrola lékových interakcí."/>
-<meta name="robots" content="noindex, nofollow"/>
-<!-- Bezpečnost: skripty jen z vlastní domény (+ otisk vloženého skriptu níže), žádné cizí skripty, formuláře ani pluginy.
-     Při úpravě vloženého skriptu v <head> je nutné přepočítat jeho sha256 otisk. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-e5zfE+epSaZsG6Y0pKAobUMVxNScvHJzaaXQVT7lDkA='; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src https:; base-uri 'none'; form-action 'none'; object-src 'none'"/>
-<script>
-  // před vykreslením: motiv (?theme= od vkládající stránky, jinak uložený) a režim vložení (iframe)
-  try {
-    var d = document.documentElement, t = new URLSearchParams(location.search).get('theme') || localStorage.getItem('medinter-theme');
-    if (t === 'light' || t === 'dark') d.setAttribute('data-theme', t);
-    if (window.top !== window.self) d.classList.add('embedded');
-  } catch (e) { document.documentElement.classList.add('embedded'); }
-</script>
-<style>
-/* Inter (SIL OFL 1.1) – hostováno lokálně */
-@font-face{ font-family:"Inter Variable"; font-style:normal; font-display:swap; font-weight:100 900;
-  src:url(assets/fonts/inter-latin-ext-wght-normal.woff2) format("woff2-variations"), url(assets/fonts/inter-latin-ext-wght-normal.woff2) format("woff2");
-  unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF; }
-@font-face{ font-family:"Inter Variable"; font-style:normal; font-display:swap; font-weight:100 900;
-  src:url(assets/fonts/inter-latin-wght-normal.woff2) format("woff2-variations"), url(assets/fonts/inter-latin-wght-normal.woff2) format("woff2");
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
-*{ box-sizing:border-box; margin:0; padding:0; }
-:root{
-  --font:"Inter Variable","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
-  --bg:#F5F3EE; --bg-glow:#FDFDFC;
-  --surface:#FCFCFB; --surface-solid:#FFFFFF; --surface-2:#F7F6F2; --surface-3:#F1EFEA;
-  --border:#ECE9E3; --border-2:#E0DCD4;
-  --text:#1A1A1A; --text-2:#3F4644; --muted:#777C7A; --faint:#A8ACAA;
-  --mint:#E1F5EE; --mint-2:#D3EFE5; --mint-border:#BCE5D6; --teal:#1D9E75; --teal-600:#17875F; --teal-ink:#0F6E56;
-  --focus:rgba(29,158,117,.30);
-  --shadow:0 1px 2px rgba(20,24,22,.035), 0 8px 28px rgba(20,24,22,.045);
-  --shadow-pop:0 12px 40px rgba(20,24,22,.14);
-  --r-card:18px; --r:12px; --r-sm:9px;
-  /* category colours (bubbles) */
-  --ind-bg:#E1F5EE; --ind-fg:#0F6E56;
-  --dose-bg:#E7EFFA; --dose-fg:#2C5C99;
-  --ki-bg:#FDECEC; --ki-fg:#B42318;
-  --warn-bg:#FCF2DF; --warn-fg:#8F5B00;
-  --ix-bg:#EEEBFA; --ix-fg:#5844AE;
-  --preg-bg:#FBE9F2; --preg-fg:#9E3569;
-  --drive-bg:#ECF0F3; --drive-fg:#45555F;
-  --ae-bg:#FFEFE4; --ae-fg:#AC4A14;
-  --od-bg:#F0EEE8; --od-fg:#5B574F;
-  /* severity */
-  --x-bg:#FDE7E7; --x-fg:#B42318; --d-bg:#FFEADF; --d-fg:#B8430E; --c-bg:#FCF2DF; --c-fg:#8F5B00; --b-bg:#E7EFFA; --b-fg:#2C5C99; --i-bg:#EFEEEA; --i-fg:#5E6662;
-  --red:#E24B4A;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#101312; --bg-glow:#151918;
-    --surface:#171B19; --surface-solid:#1B201E; --surface-2:#1E2321; --surface-3:#232927;
-    --border:#272D2A; --border-2:#333A37;
-    --text:#ECEFED; --text-2:#C8CFCB; --muted:#97A19C; --faint:#6E7874;
-    --mint:#14342A; --mint-2:#1A4033; --mint-border:#235343; --teal:#3CC79A; --teal-600:#35B58B; --teal-ink:#8FE3C4;
-    --focus:rgba(60,199,154,.35);
-    --shadow:0 1px 2px rgba(0,0,0,.25), 0 8px 28px rgba(0,0,0,.25); --shadow-pop:0 12px 40px rgba(0,0,0,.5);
-    --ind-bg:#14342A; --ind-fg:#8FE3C4; --dose-bg:#172638; --dose-fg:#9EC3F0; --ki-bg:#3A1A1A; --ki-fg:#F4A3A0; --warn-bg:#352812; --warn-fg:#F0C77A;
-    --ix-bg:#241F3D; --ix-fg:#B9ADF2; --preg-bg:#381A2A; --preg-fg:#F0A6CB; --drive-bg:#1E262B; --drive-fg:#B5C4CE; --ae-bg:#3A2213; --ae-fg:#F5B48C; --od-bg:#25231F; --od-fg:#CFC8BC;
-    --x-bg:#3A1A1A; --x-fg:#F4A3A0; --d-bg:#3B2215; --d-fg:#F6B38E; --c-bg:#352812; --c-fg:#F0C77A; --b-bg:#172638; --b-fg:#9EC3F0; --i-bg:#232927; --i-fg:#B5BDB9;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#101312; --bg-glow:#151918;
-  --surface:#171B19; --surface-solid:#1B201E; --surface-2:#1E2321; --surface-3:#232927;
-  --border:#272D2A; --border-2:#333A37;
-  --text:#ECEFED; --text-2:#C8CFCB; --muted:#97A19C; --faint:#6E7874;
-  --mint:#14342A; --mint-2:#1A4033; --mint-border:#235343; --teal:#3CC79A; --teal-600:#35B58B; --teal-ink:#8FE3C4;
-  --focus:rgba(60,199,154,.35);
-  --shadow:0 1px 2px rgba(0,0,0,.25), 0 8px 28px rgba(0,0,0,.25); --shadow-pop:0 12px 40px rgba(0,0,0,.5);
-  --ind-bg:#14342A; --ind-fg:#8FE3C4; --dose-bg:#172638; --dose-fg:#9EC3F0; --ki-bg:#3A1A1A; --ki-fg:#F4A3A0; --warn-bg:#352812; --warn-fg:#F0C77A;
-  --ix-bg:#241F3D; --ix-fg:#B9ADF2; --preg-bg:#381A2A; --preg-fg:#F0A6CB; --drive-bg:#1E262B; --drive-fg:#B5C4CE; --ae-bg:#3A2213; --ae-fg:#F5B48C; --od-bg:#25231F; --od-fg:#CFC8BC;
-  --x-bg:#3A1A1A; --x-fg:#F4A3A0; --d-bg:#3B2215; --d-fg:#F6B38E; --c-bg:#352812; --c-fg:#F0C77A; --b-bg:#172638; --b-fg:#9EC3F0; --i-bg:#232927; --i-fg:#B5BDB9;
-}
-html{ -webkit-text-size-adjust:100%; }
-body{
-  font-family:var(--font); font-size:14px; line-height:1.5; color:var(--text);
-  background:var(--bg);
-  background-image:radial-gradient(1200px 520px at 8% -8%, var(--bg-glow), transparent 60%), radial-gradient(1000px 600px at 105% 0%, var(--bg-glow), transparent 55%);
-  background-repeat:no-repeat; min-height:100vh;
-}
-a{ color:var(--teal-ink); text-decoration:none; }
-a:hover{ text-decoration:underline; }
-button{ font-family:inherit; font-size:inherit; color:inherit; }
-svg.i{ width:18px; height:18px; flex:0 0 auto; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-svg.i.sm{ width:15px; height:15px; } svg.i.xs{ width:13px; height:13px; } svg.i.lg{ width:22px; height:22px; }
-:focus-visible{ outline:2px solid var(--teal); outline-offset:2px; border-radius:6px; }
-
-/* ── TOP BAR ───────────────────────────────────────── */
-.topbar{ position:sticky; top:0; z-index:50; display:grid; grid-template-columns:1fr minmax(0,480px) 1fr; align-items:center; gap:16px;
-  padding:14px 24px; background:var(--bg); border-bottom:1px solid transparent; }
-.topbar.scrolled{ border-bottom-color:var(--border); box-shadow:0 4px 18px rgba(20,24,22,.05); }
-.brand{ display:flex; align-items:center; gap:6px; font-weight:600; font-size:17px; letter-spacing:-.3px; color:var(--text); text-decoration:none; white-space:nowrap; }
-@media (max-width:980px){ .brand small{ display:none; } }
-.brand:hover{ text-decoration:none; }
-.brand-mark{ width:28px; height:28px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; background:var(--mint); color:var(--teal-ink); }
-.brand-mark svg.i{ width:17px; height:17px; }
-.brand small{ font-weight:500; font-size:12px; color:var(--muted); margin-left:8px; padding-left:10px; border-left:1px solid var(--border-2); }
-.gsearch{ position:relative; }
-.gsearch .field{ display:flex; align-items:center; gap:9px; height:42px; padding:0 12px 0 14px; background:var(--surface-solid); border:1px solid var(--mint-border); border-radius:12px; box-shadow:0 1px 2px rgba(20,24,22,.03); }
-.gsearch .field:focus-within{ border-color:var(--teal); box-shadow:0 0 0 4px var(--focus); }
-.gsearch .field svg{ color:var(--teal); }
-.gsearch input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font:inherit; font-size:14px; color:var(--text); }
-.gsearch input::placeholder{ color:var(--muted); }
-.kbd{ font-size:10.5px; font-weight:600; color:var(--faint); border:1px solid var(--border-2); border-radius:6px; padding:1px 6px; white-space:nowrap; }
-.top-right{ display:flex; justify-content:flex-end; gap:8px; }
-.icon-btn{ width:42px; height:42px; display:inline-flex; align-items:center; justify-content:center; background:var(--surface-solid); border:1px solid var(--border); border-radius:12px; cursor:pointer; color:var(--text-2); box-shadow:0 1px 2px rgba(20,24,22,.03); }
-.icon-btn:hover{ border-color:var(--border-2); color:var(--text); }
-.dropdown{ position:absolute; left:0; right:0; top:calc(100% + 6px); background:var(--surface-solid); border:1px solid var(--border); border-radius:14px; box-shadow:var(--shadow-pop); padding:6px; display:none; max-height:420px; overflow:auto; z-index:60; }
-.dropdown.open{ display:block; }
-.dd-sec{ font-size:10.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); padding:8px 10px 4px; }
-.dd-item{ display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:10px; cursor:pointer; }
-.dd-item:hover, .dd-item.active{ background:var(--surface-2); }
-.dd-item .t{ font-weight:500; } .dd-item .s{ font-size:12px; color:var(--muted); }
-.dd-foot{ font-size:12px; color:var(--muted); padding:8px 10px 4px; border-top:1px solid var(--border); margin-top:4px; }
-
-/* ── LAYOUT ────────────────────────────────────────── */
-.page{ max-width:1200px; margin:0 auto; padding:8px 24px 64px; }
-.head{ margin:14px 0 16px; }
-.head h1{ font-size:24px; font-weight:700; letter-spacing:-.3px; line-height:1.2; }
-.head p{ color:var(--muted); font-size:13px; margin-top:4px; }
-.tabs{ display:flex; gap:6px; flex-wrap:wrap; margin:4px 0 0; padding-bottom:12px; border-bottom:1px solid var(--border); }
-.tab{ display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 14px; border-radius:11px; border:1px solid transparent; color:var(--text-2); font-weight:500; text-decoration:none; background:transparent; cursor:pointer; }
-.tab:hover{ background:var(--surface-2); text-decoration:none; color:var(--text); }
-.tab.active{ background:var(--mint); border-color:var(--mint-border); color:var(--teal-ink); }
-.tab .n{ font-size:11.5px; font-weight:600; color:var(--faint); }
-.tab.active .n{ color:var(--teal); }
-.card{ min-width:0; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-card); box-shadow:var(--shadow); padding:22px 24px; margin-bottom:16px; }
-.card-h{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px; }
-.card-h h2, .card-h h3{ font-size:14.5px; font-weight:600; letter-spacing:-.1px; display:flex; align-items:center; gap:8px; }
-.card-h .count{ font-size:12px; color:var(--muted); font-weight:500; }
-.sq{ width:38px; height:38px; border-radius:11px; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; background:var(--mint); color:var(--teal-ink); }
-.sq.sm{ width:34px; height:34px; border-radius:10px; }
-.sq.lg{ width:52px; height:52px; border-radius:14px; }
-.muted{ color:var(--muted); } .small{ font-size:12px; color:var(--muted); }
-
-/* ── CONTROLS ──────────────────────────────────────── */
-.btn{ display:inline-flex; align-items:center; gap:7px; height:38px; padding:0 14px; border-radius:11px; border:1px solid var(--border-2); background:var(--surface-solid); font-weight:600; font-size:13px; color:var(--text); cursor:pointer; text-decoration:none; white-space:nowrap; }
-.btn:hover{ border-color:var(--faint); text-decoration:none; }
-.btn.primary{ background:var(--teal); border-color:var(--teal); color:#fff; }
-.btn.primary:hover{ background:var(--teal-600); }
-.btn.mint{ background:var(--mint); border-color:var(--mint-border); color:var(--teal-ink); }
-.btn.sm{ height:32px; padding:0 11px; font-size:12.5px; border-radius:9px; }
-.btn.link{ border:none; background:none; padding:0; height:auto; color:var(--teal-ink); font-weight:600; }
-.seg{ display:inline-flex; padding:3px; background:var(--surface-2); border:1px solid var(--border); border-radius:11px; gap:2px; }
-.seg button{ border:none; background:transparent; height:30px; padding:0 12px; border-radius:8px; font-size:12.5px; font-weight:600; color:var(--muted); cursor:pointer; }
-.seg button[aria-pressed="true"]{ background:var(--surface-solid); color:var(--text); box-shadow:0 1px 3px rgba(20,24,22,.08); }
-.chip{ display:inline-flex; align-items:center; gap:6px; height:30px; padding:0 11px; border-radius:999px; border:1px solid var(--border-2); background:var(--surface-solid); font-size:12.5px; font-weight:500; color:var(--text-2); cursor:pointer; white-space:nowrap; text-decoration:none; }
-.chip:hover{ border-color:var(--faint); text-decoration:none; }
-.chip[aria-pressed="true"]{ background:var(--mint); border-color:var(--mint-border); color:var(--teal-ink); }
-.select{ height:34px; border-radius:10px; border:1px solid var(--border-2); background:var(--surface-solid); color:var(--text); font:inherit; font-size:12.5px; padding:0 30px 0 10px; appearance:none; -webkit-appearance:none; cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23777C7A' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; max-width:100%; }
-.filters{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
-.badge{ display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 7px; border-radius:6px; font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; white-space:nowrap; background:var(--surface-3); color:var(--muted); }
-.badge.mint{ background:var(--mint); color:var(--teal-ink); }
-.badge.blue{ background:var(--dose-bg); color:var(--dose-fg); }
-.badge.violet{ background:var(--ix-bg); color:var(--ix-fg); }
-.badge.amber{ background:var(--warn-bg); color:var(--warn-fg); }
-.badge.gray{ background:var(--surface-3); color:var(--muted); }
-
-/* ── LIST ROWS ── */
-.rows{ display:flex; flex-direction:column; }
-.row{ display:flex; align-items:center; gap:14px; padding:11px 8px; border-bottom:1px solid var(--border); color:inherit; text-decoration:none; border-radius:10px; }
-.row:last-child{ border-bottom:none; }
-.row:hover{ background:var(--surface-2); text-decoration:none; }
-.row .main{ flex:1; min-width:0; }
-.row .t{ font-weight:500; font-size:14px; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.row .t small{ font-weight:400; color:var(--muted); font-size:12.5px; margin-left:6px; }
-.row .s{ font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); margin-top:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.row .r{ display:flex; gap:5px; align-items:center; flex:0 0 auto; }
-.row .chev{ color:var(--faint); }
-.empty{ text-align:center; color:var(--muted); padding:36px 16px; }
-.empty .sq{ display:flex; margin:0 auto 12px; }
-.pager{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:16px; }
-.pager .pos{ font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; }
-
-/* ── DETAIL ───────────────────────────────────────── */
-.crumbs{ display:flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); margin:14px 0 14px; }
-.crumbs a{ color:var(--muted); } .crumbs a:hover{ color:var(--text); }
-.hero{ display:flex; gap:18px; align-items:flex-start; flex-wrap:wrap; }
-.hero .main{ flex:1 1 360px; min-width:0; }
-.hero h1{ font-size:26px; font-weight:700; letter-spacing:-.4px; line-height:1.15; }
-.hero .subs{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:8px; }
-.hero .actions{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
-.facts{ display:grid; grid-template-columns:repeat(auto-fit, minmax(145px, 1fr)); gap:10px; margin-top:18px; }
-.fact{ display:flex; gap:10px; align-items:flex-start; background:var(--surface-2); border:1px solid var(--border); border-radius:13px; padding:10px 12px; }
-.fact .k{ font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600; }
-.fact .v{ font-size:13px; color:var(--text); font-weight:500; line-height:1.35; }
-.fact svg{ color:var(--teal); margin-top:2px; }
-.sumbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:6px 0 12px; }
-.sumbar h2{ font-size:17px; font-weight:700; letter-spacing:-.2px; display:flex; align-items:center; gap:10px; }
-.src-note{ display:flex; gap:8px; align-items:flex-start; font-size:12.5px; color:var(--muted); background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:9px 12px; margin-bottom:14px; }
-.src-note svg{ color:var(--teal); margin-top:1px; }
-.bubbles{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; margin-bottom:16px; }
-@media (max-width:900px){ .bubbles{ grid-template-columns:minmax(0,1fr); } }
-.bubble{ background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px 18px 12px; display:flex; flex-direction:column; min-width:0; }
-.bubble.wide, .bubble.open.long{ grid-column:1 / -1; }
-.bubble .bh{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-.bubble .bh .sq{ width:32px; height:32px; border-radius:10px; }
-.bubble .bh h3{ font-size:14.5px; font-weight:600; flex:1; min-width:0; }
-.bubble .bh .tag{ font-size:10.5px; font-weight:600; color:var(--faint); letter-spacing:.04em; }
-.bubble .bb{ flex:1; font-size:13.5px; color:var(--text-2); }
-.bubble .bf{ display:flex; justify-content:space-between; align-items:center; gap:8px; margin-top:12px; padding-top:10px; border-top:1px dashed var(--border-2); }
-.toggle-full{ display:inline-flex; align-items:center; gap:6px; border:none; background:none; color:var(--teal-ink); font-weight:600; font-size:12.5px; cursor:pointer; padding:2px 0; }
-.toggle-full svg{ transition:transform .18s; }
-.bubble.open .toggle-full svg{ transform:rotate(180deg); }
-.fulltext{ display:none; margin-top:10px; background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; font-size:13px; color:var(--text-2); line-height:1.6; max-height:620px; overflow:auto; }
-.bubble.open .fulltext{ display:block; }
-.fulltext p{ margin:0 0 7px; } .fulltext h4{ font-size:12.5px; font-weight:700; color:var(--text); margin:10px 0 4px; }
-.fulltext ul{ margin:0 0 7px 18px; } .fulltext li{ margin-bottom:3px; }
-ul.lst{ list-style:none; display:flex; flex-direction:column; gap:7px; }
-ul.lst li{ display:flex; gap:9px; align-items:flex-start; line-height:1.45; }
-ul.lst li .dot{ width:7px; height:7px; border-radius:50%; flex:0 0 auto; margin-top:7px; background:currentColor; opacity:.55; }
-ul.lst li svg{ margin-top:2px; }
-.c-ind .sq{ background:var(--ind-bg); color:var(--ind-fg); } .c-ind ul.lst svg{ color:var(--ind-fg); }
-.c-dose .sq{ background:var(--dose-bg); color:var(--dose-fg); }
-.c-ki .sq{ background:var(--ki-bg); color:var(--ki-fg); } .c-ki ul.lst svg{ color:var(--ki-fg); }
-.c-warn .sq{ background:var(--warn-bg); color:var(--warn-fg); } .c-warn ul.lst .dot{ background:var(--warn-fg); opacity:.9; }
-.c-ix .sq{ background:var(--ix-bg); color:var(--ix-fg); } .c-ix ul.lst .dot{ background:var(--ix-fg); opacity:.9; }
-.c-preg .sq{ background:var(--preg-bg); color:var(--preg-fg); }
-.c-drive .sq{ background:var(--drive-bg); color:var(--drive-fg); }
-.c-ae .sq{ background:var(--ae-bg); color:var(--ae-fg); }
-.c-od .sq{ background:var(--od-bg); color:var(--od-fg); }
-.dose{ display:flex; flex-direction:column; gap:8px; }
-.dose-row{ display:grid; grid-template-columns:minmax(110px, 30%) 1fr; gap:10px; align-items:start; }
-@media (max-width:560px){ .dose-row{ grid-template-columns:minmax(0,1fr); gap:2px; } }
-.dose-g{ font-size:11.5px; font-weight:600; color:var(--dose-fg); background:var(--dose-bg); border-radius:7px; padding:3px 8px; line-height:1.35; }
-.dose-t{ line-height:1.45; }
-.admin{ display:flex; gap:8px; align-items:flex-start; margin-top:10px; font-size:12.5px; color:var(--muted); }
-.status{ display:flex; flex-direction:column; gap:10px; }
-.st-row{ display:flex; gap:10px; align-items:flex-start; }
-.st-row .lab{ font-size:11.5px; font-weight:600; color:var(--muted); width:86px; flex:0 0 auto; padding-top:3px; }
-.lvl{ display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 9px; border-radius:999px; font-size:12px; font-weight:600; white-space:nowrap; }
-.lvl::before{ content:""; width:7px; height:7px; border-radius:50%; background:currentColor; }
-.lvl.ok, .lvl.none{ background:var(--ind-bg); color:var(--ind-fg); }
-.lvl.caution, .lvl.minor{ background:var(--c-bg); color:var(--c-fg); }
-.lvl.avoid, .lvl.moderate{ background:var(--d-bg); color:var(--d-fg); }
-.lvl.ci, .lvl.major{ background:var(--x-bg); color:var(--x-fg); }
-.lvl.na{ background:var(--i-bg); color:var(--i-fg); }
-.st-text{ font-size:13px; color:var(--text-2); margin-top:4px; line-height:1.45; }
-.ae-grp{ margin-bottom:8px; } .ae-grp .lab{ font-size:11.5px; font-weight:600; color:var(--muted); margin-bottom:5px; }
-.tags{ display:flex; flex-wrap:wrap; gap:5px; }
-.tagc{ display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); font-size:12px; color:var(--text-2); text-decoration:none; }
-a.tagc:hover{ border-color:var(--ix-fg); color:var(--ix-fg); text-decoration:none; }
-.tagc.ae{ background:var(--ae-bg); border-color:transparent; color:var(--ae-fg); }
-.tagc.cls{ background:var(--ix-bg); border-color:transparent; color:var(--ix-fg); }
-.mx-h{ font-size:11.5px; font-weight:600; color:var(--muted); margin:12px 0 6px; }
-.nothing{ font-size:12.5px; color:var(--muted); font-style:italic; }
-.flags{ display:flex; flex-wrap:wrap; gap:6px; }
-.block-sel{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
-table.vars{ width:100%; border-collapse:collapse; font-size:12.5px; }
-table.vars th{ text-align:left; font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); font-weight:600; padding:8px 8px; border-bottom:1px solid var(--border); }
-table.vars td{ padding:8px; border-bottom:1px solid var(--border); vertical-align:top; color:var(--text-2); }
-table.vars tr.na td{ color:var(--faint); }
-table.vars td.code{ font-variant-numeric:tabular-nums; white-space:nowrap; font-weight:600; color:var(--text); }
-.table-wrap{ overflow-x:auto; }
-details.card > summary{ list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:600; font-size:14.5px; }
-details.card > summary::-webkit-details-marker{ display:none; }
-details.card[open] > summary{ margin-bottom:12px; }
-details.card > summary svg.chv{ transition:transform .18s; color:var(--muted); }
-details.card[open] > summary svg.chv{ transform:rotate(180deg); }
-
-/* ── INTERACTIONS ─────────────────────────────────── */
-.ix-grid{ display:grid; grid-template-columns:minmax(300px, 380px) minmax(0,1fr); gap:16px; align-items:start; }
-@media (max-width:900px){ .ix-grid{ grid-template-columns:minmax(0,1fr); } }
-.ix-search{ position:relative; }
-.ix-search .field{ display:flex; align-items:center; gap:9px; height:42px; padding:0 12px; background:var(--surface-solid); border:1px solid var(--border-2); border-radius:12px; }
-.ix-search .field:focus-within{ border-color:var(--teal); box-shadow:0 0 0 4px var(--focus); }
-.ix-search input{ flex:1; min-width:0; border:none; outline:none; background:transparent; font:inherit; color:var(--text); }
-.ix-search .field svg{ color:var(--muted); }
-.sel-list{ display:flex; flex-direction:column; margin-top:10px; }
-.sel-row{ display:flex; align-items:center; gap:12px; padding:9px 4px; border-bottom:1px solid var(--border); }
-.sel-row:last-child{ border-bottom:none; }
-.sel-row .main{ flex:1; min-width:0; } .sel-row .t{ font-weight:500; } .sel-row .s{ font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted); }
-.x-btn{ border:none; background:transparent; color:var(--faint); cursor:pointer; border-radius:8px; width:30px; height:30px; display:inline-flex; align-items:center; justify-content:center; }
-.x-btn:hover{ background:var(--surface-2); color:var(--text); }
-.switches{ display:flex; flex-direction:column; gap:2px; margin-top:12px; border-top:1px solid var(--border); padding-top:10px; }
-.switch{ display:flex; align-items:center; gap:10px; padding:7px 2px; cursor:pointer; font-size:13px; color:var(--text-2); }
-.switch input{ position:absolute; opacity:0; pointer-events:none; }
-.switch .tr{ width:34px; height:20px; border-radius:999px; background:var(--border-2); position:relative; flex:0 0 auto; transition:background .15s; }
-.switch .tr::after{ content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.2); transition:left .15s; }
-.switch input:checked + .tr{ background:var(--teal); }
-.switch input:checked + .tr::after{ left:16px; }
-.switch input:focus-visible + .tr{ box-shadow:0 0 0 4px var(--focus); }
-.sev{ display:inline-flex; align-items:center; justify-content:center; gap:6px; height:24px; padding:0 9px; border-radius:7px; font-size:11px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; white-space:nowrap; }
-.sev.X{ background:var(--x-bg); color:var(--x-fg); } .sev.D{ background:var(--d-bg); color:var(--d-fg); } .sev.C{ background:var(--c-bg); color:var(--c-fg); } .sev.B{ background:var(--b-bg); color:var(--b-fg); } .sev.I{ background:var(--i-bg); color:var(--i-fg); }
-.pair{ border:1px solid var(--border); border-radius:14px; background:var(--surface-solid); margin-bottom:10px; overflow:hidden; }
-.pair-h{ display:flex; align-items:center; gap:12px; padding:12px 14px; cursor:pointer; }
-.pair-h:hover{ background:var(--surface-2); }
-.pair-h .main{ flex:1; min-width:0; }
-.pair-h .t{ font-weight:600; } .pair-h .t small{ color:var(--faint); font-weight:500; margin:0 4px; }
-.pair-h .s{ font-size:12px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.pair-h .chv{ color:var(--faint); transition:transform .18s; }
-.pair.open .pair-h .chv{ transform:rotate(180deg); }
-.pair-b{ display:none; padding:4px 16px 14px; border-top:1px solid var(--border); }
-.pair.open .pair-b{ display:block; }
-.find{ padding:12px 0; border-bottom:1px dashed var(--border-2); }
-.find:last-child{ border-bottom:none; }
-.find-h{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
-.find-h b{ font-weight:600; } .find-h .src{ font-size:11.5px; color:var(--muted); }
-.find .lab{ font-size:10.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin:8px 0 2px; }
-.find p{ font-size:13px; color:var(--text-2); line-height:1.5; }
-.find .ev{ font-size:11.5px; color:var(--muted); margin-top:8px; line-height:1.5; }
-.quote{ background:var(--surface-2); border-left:3px solid var(--ix-fg); border-radius:0 10px 10px 0; padding:7px 11px; margin:6px 0; font-size:13px; color:var(--text-2); }
-.quote mark{ background:var(--ix-bg); color:var(--ix-fg); border-radius:4px; padding:0 3px; }
-.legend{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
-.about h3{ font-size:15px; font-weight:600; margin:18px 0 6px; }
-.about h3:first-child{ margin-top:0; }
-.about p, .about li{ font-size:13.5px; color:var(--text-2); line-height:1.65; }
-.about ul{ margin:4px 0 8px 20px; }
-.loading{ display:flex; align-items:center; justify-content:center; gap:10px; color:var(--muted); padding:48px 0; }
-.spin{ width:18px; height:18px; border-radius:50%; border:2px solid var(--border-2); border-top-color:var(--teal); animation:sp .8s linear infinite; }
-@keyframes sp{ to{ transform:rotate(360deg); } }
-.foot{ font-size:12px; color:var(--muted); line-height:1.6; max-width:1200px; margin:0 auto; padding:0 24px 40px; }
-@media (max-width:760px){
-  .tabs{ flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; margin-left:-2px; padding-left:2px; }
-  .tabs::-webkit-scrollbar{ display:none; }
-  .tab{ flex:0 0 auto; padding:0 12px; }
-  .topbar{ grid-template-columns:1fr auto; padding:10px 14px; gap:10px; }
-  .topbar .gsearch{ grid-column:1 / -1; grid-row:2; }
-  .brand small{ display:none; }
-  .page{ padding:4px 14px 48px; }
-  .card{ padding:16px; border-radius:16px; }
-  .hero h1{ font-size:22px; }
-  .row .r .badge:not(.keep){ display:none; }
-  .kbd{ display:none; }
-  .filters .select{ flex:1 1 100%; width:100%; }
-  .fact{ padding:8px 10px; } .fact svg{ display:none; }
-  .foot{ padding:0 14px 32px; }
-}
-@media print{ .topbar, .tabs, .hero .actions, .toggle-full, .pager{ display:none !important; } .bubble .fulltext{ display:block; max-height:none; } body{ background:#fff; } }
-
-/* ── VLOŽENÍ DO JINÉ STRÁNKY A ZAMČENÁ OBRAZOVKA ──────── */
-html.embedded .brand{ display:none; }                 /* ve vložené podobě se název nezobrazuje */
-html.embedded .topbar .gsearch{ grid-column:2; grid-row:1; }
-html.embedded .topbar .top-right{ grid-column:3; grid-row:1; }
-@media (max-width:760px){
-  html.embedded .topbar{ grid-template-columns:minmax(0,1fr) auto; }
-  html.embedded .topbar .gsearch{ grid-column:1; grid-row:1; }
-  html.embedded .topbar .top-right{ grid-column:2; grid-row:1; }
-}
-html.embedded body{ background-image:none; }
-html.theme-follow #themeBtn{ display:none; }          /* motiv řídí vkládající stránka */
-html.locked .gsearch, html.locked #themeBtn{ visibility:hidden; }
-.card.lock{ max-width:520px; margin:56px auto; text-align:center; padding:36px 32px; }
-.card.lock .sq{ width:48px; height:48px; border-radius:14px; margin:0 auto 16px; }
-.card.lock h1{ font-size:20px; font-weight:600; letter-spacing:-.2px; margin-bottom:8px; }
-.card.lock p{ color:var(--text-2); margin-bottom:20px; }
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UniCalcMedical — Medical calculators and screening questionnaires</title>
+<meta name="description" content="Open-source implementations of widely used medical calculators and screening questionnaires, maintained by current and former medical students.">
+<link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-<header class="topbar">
-  <a class="brand" href="#/leky" aria-label="MedInter – léky a lékové interakce">
-    <span class="brand-mark" aria-hidden="true"><svg class="i" viewBox="0 0 24 24"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></span>
-    <span>MedInter</span>
-    <small>Léky a interakce</small>
-  </a>
-  <div class="gsearch" id="gsearch">
-    <div class="field">
-      <svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="gq" type="search" placeholder="Hledat lék, látku nebo ATC…" autocomplete="off" aria-label="Hledat lék"/>
-      <span class="kbd">Ctrl K</span>
-    </div>
-    <div class="dropdown" id="gdd" role="listbox"></div>
-  </div>
-  <div class="top-right">
-    <button class="icon-btn" id="themeBtn" title="Přepnout světlý / tmavý režim" aria-label="Přepnout světlý / tmavý režim"></button>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav>
+      <select id="lang-select" class="lang-select"></select>
+    </nav>
   </div>
 </header>
-<main class="page" id="view"><div class="loading"><span class="spin"></span>Načítám databázi léků…</div></main>
-<footer class="foot">
-  Zdroj dat: Státní ústav pro kontrolu léčiv (SÚKL) – otevřená data (Databáze léčivých přípravků, texty SPC); Evropská agentura pro léčivé přípravky (EMA) – informace o přípravku u centrálně registrovaných LP. Shrnutí SPC jsou interpretací MedInter; pro celé znění a úplnost informací se řiďte oficiálním SPC na <a href="https://opendata.sukl.cz" target="_blank" rel="noopener">opendata.sukl.cz</a>. Nástroj slouží ke vzdělávání a jako pomůcka, nenahrazuje klinický úsudek.<br>Data SÚKL jsou užita v souladu s <a href="https://opendata.sukl.cz/?q=podminky-uziti-otevrenych-dat" target="_blank" rel="noopener">Podmínkami užití otevřených dat SÚKL</a>; SÚKL ani EMA tento nástroj neschvalují ani nepodporují. Informace o přípravcích EMA: © European Medicines Agency, reprodukováno s uvedením zdroje. Klasifikace ATC: WHO Collaborating Centre for Drug Statistics Methodology.
+
+<div class="container">
+  <h1 class="page-title" data-i18n="page_title">Medical calculators &amp; screening questionnaires</h1>
+  <p class="page-subtitle" data-i18n="page_subtitle">Open-source, independently implemented, with a cited source for every tool. Maintained by current and former students of UCL, King's College London, and Université Claude Bernard Lyon 1.</p>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="search-wrap">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input type="text" id="tool-search" data-i18n-placeholder="search_placeholder" placeholder="Search calculators and questionnaires…" autocomplete="off">
+  </div>
+  <div class="search-empty" id="search-empty" data-i18n="search_empty">No tools match your search.</div>
+
+  <div class="section-label" data-i18n="cat_cognition">Cognition &amp; frailty</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/slums.html"><div class="name" data-i18n="card_slums_n">SLUMS</div><div class="use" data-i18n="card_slums_u">Cognitive impairment screening</div></a>
+    <a class="tool-card" href="tools/prisma7.html"><div class="name" data-i18n="card_prisma7_n">PRISMA-7</div><div class="use" data-i18n="card_prisma7_u">Frailty screening</div></a>
+    <a class="tool-card" href="tools/frail-scale.html"><div class="name" data-i18n="card_frail_scale_n">FRAIL scale</div><div class="use" data-i18n="card_frail_scale_u">Frailty screening</div></a>
+    <a class="tool-card" href="tools/fried-phenotype.html"><div class="name" data-i18n="card_fried_phenotype_n">Fried Frailty Phenotype</div><div class="use" data-i18n="card_fried_phenotype_u">Frailty phenotype classification</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_respiratory">Respiratory</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/curb65.html"><div class="name" data-i18n="card_curb65_n">CURB-65 / CRB-65</div><div class="use" data-i18n="card_curb65_u">Community-acquired pneumonia severity</div></a>
+    <a class="tool-card" href="tools/mmrc.html"><div class="name" data-i18n="card_mmrc_n">mMRC Dyspnoea Scale</div><div class="use" data-i18n="card_mmrc_u">Breathlessness grade (0–4)</div></a>
+    <a class="tool-card" href="tools/mmrc-copd.html"><div class="name" data-i18n="card_mmrc_copd_n">mMRC + exacerbation history</div><div class="use" data-i18n="card_mmrc_copd_u">Dyspnoea grade &amp; GOLD group</div></a>
+    <a class="tool-card" href="tools/nosas.html"><div class="name" data-i18n="card_nosas_n">NoSAS score</div><div class="use" data-i18n="card_nosas_u">Obstructive sleep apnoea screening</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_cardiology">Cardiology &amp; thromboembolism</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/wells-score.html"><div class="name" data-i18n="card_wells_score_n">Wells score (DVT &amp; PE)</div><div class="use" data-i18n="card_wells_score_u">Thromboembolism probability</div></a>
+    <a class="tool-card" href="tools/cha2ds2-va.html"><div class="name" data-i18n="card_cha2ds2_va_n">CHA₂DS₂-VA</div><div class="use" data-i18n="card_cha2ds2_va_u">Stroke risk in atrial fibrillation</div></a>
+    <a class="tool-card" href="tools/has-bled.html"><div class="name" data-i18n="card_has_bled_n">HAS-BLED</div><div class="use" data-i18n="card_has_bled_u">Bleeding risk on anticoagulation</div></a>
+    <a class="tool-card" href="tools/heart-score.html"><div class="name" data-i18n="card_heart_score_n">HEART score</div><div class="use" data-i18n="card_heart_score_u">Chest pain risk stratification</div></a>
+    <a class="tool-card" href="tools/nyha.html"><div class="name" data-i18n="card_nyha_n">NYHA classification</div><div class="use" data-i18n="card_nyha_u">Heart failure functional class</div></a>
+    <a class="tool-card" href="tools/qtc.html"><div class="name" data-i18n="card_qtc_n">Corrected QT (QTc)</div><div class="use" data-i18n="card_qtc_u">Heart-rate corrected QT interval</div></a>
+    <a class="tool-card" href="tools/framingham.html"><div class="name" data-i18n="card_framingham_n">Framingham criteria</div><div class="use" data-i18n="card_framingham_u">Heart failure diagnostic criteria</div></a>
+    <a class="tool-card" href="tools/score2.html"><div class="name" data-i18n="card_score2_n">SCORE2 cardiovascular risk</div><div class="use" data-i18n="card_score2_u">10-year CVD risk (SCORE2, -OP, -Diabetes)</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_neurology">Neurology</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/gcs.html"><div class="name" data-i18n="card_gcs_n">Glasgow Coma Scale</div><div class="use" data-i18n="card_gcs_u">Level of consciousness</div></a>
+    <a class="tool-card" href="tools/nihss.html"><div class="name" data-i18n="card_nihss_n">NIHSS</div><div class="use" data-i18n="card_nihss_u">Stroke severity</div></a>
+    <a class="tool-card" href="tools/abcd2.html"><div class="name" data-i18n="card_abcd2_n">ABCD²</div><div class="use" data-i18n="card_abcd2_u">Stroke risk after TIA</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_renal">Renal &amp; hepatic function</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/egfr.html"><div class="name" data-i18n="card_egfr_n">eGFR (CKD-EPI 2021, MDRD)</div><div class="use" data-i18n="card_egfr_u">Estimated glomerular filtration rate</div></a>
+    <a class="tool-card" href="tools/cockcroft-gault.html"><div class="name" data-i18n="card_cockcroft_gault_n">Cockcroft-Gault</div><div class="use" data-i18n="card_cockcroft_gault_u">Creatinine clearance for dosing</div></a>
+    <a class="tool-card" href="tools/fib4.html"><div class="name" data-i18n="card_fib4_n">FIB-4</div><div class="use" data-i18n="card_fib4_u">Liver fibrosis estimate</div></a>
+    <a class="tool-card" href="tools/child-pugh.html"><div class="name" data-i18n="card_child_pugh_n">Child-Pugh</div><div class="use" data-i18n="card_child_pugh_u">Cirrhosis severity</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_endo">Endocrinology &amp; metabolic</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/bmi.html"><div class="name" data-i18n="card_bmi_n">BMI calculator</div><div class="use" data-i18n="card_bmi_u">Body mass index</div></a>
+    <a class="tool-card" href="tools/bsa.html"><div class="name" data-i18n="card_bsa_n">BSA + ideal/adjusted weight</div><div class="use" data-i18n="card_bsa_u">Body surface area &amp; dosing weight</div></a>
+    <a class="tool-card" href="tools/hba1c-eag.html"><div class="name" data-i18n="card_hba1c_eag_n">HbA1c ↔ eAG</div><div class="use" data-i18n="card_hba1c_eag_u">Average glucose conversion</div></a>
+    <a class="tool-card" href="tools/findrisc.html"><div class="name" data-i18n="card_findrisc_n">FINDRISC</div><div class="use" data-i18n="card_findrisc_u">Type 2 diabetes risk</div></a>
+    <a class="tool-card" href="tools/levothyroxine-dosing.html"><div class="name" data-i18n="card_levothyroxine_dosing_n">Levothyroxine dosing</div><div class="use" data-i18n="card_levothyroxine_dosing_u">Starting &amp; maintenance dose</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_infection">Infection &amp; antimicrobials</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/centor-mcisaac.html"><div class="name" data-i18n="card_centor_mcisaac_n">Centor / McIsaac</div><div class="use" data-i18n="card_centor_mcisaac_u">Streptococcal pharyngitis probability</div></a>
+    <a class="tool-card" href="tools/qsofa.html"><div class="name" data-i18n="card_qsofa_n">qSOFA</div><div class="use" data-i18n="card_qsofa_u">Rapid sepsis screening</div></a>
+    <a class="tool-card" href="tools/who-aware.html"><div class="name" data-i18n="card_who_aware_n">WHO AWaRe classification</div><div class="use" data-i18n="card_who_aware_u">Antibiotic category lookup</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_nutrition">Nutrition</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/mst.html"><div class="name" data-i18n="card_mst_n">MST</div><div class="use" data-i18n="card_mst_u">Malnutrition screening</div></a>
+    <a class="tool-card" href="tools/mna-sf.html"><div class="name" data-i18n="card_mna_sf_n">MNA-SF</div><div class="use" data-i18n="card_mna_sf_u">Malnutrition screening in older adults</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_mental">Mental health &amp; substance use</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/phq9.html"><div class="name" data-i18n="card_phq9_n">PHQ-9</div><div class="use" data-i18n="card_phq9_u">Depression screening &amp; severity</div></a>
+    <a class="tool-card" href="tools/gad7.html"><div class="name" data-i18n="card_gad7_n">GAD-7</div><div class="use" data-i18n="card_gad7_u">Anxiety screening</div></a>
+    <a class="tool-card" href="tools/gds15.html"><div class="name" data-i18n="card_gds15_n">GDS-15</div><div class="use" data-i18n="card_gds15_u">Depression screening in older adults</div></a>
+    <a class="tool-card" href="tools/audit-c.html"><div class="name" data-i18n="card_audit_c_n">AUDIT-C</div><div class="use" data-i18n="card_audit_c_u">Hazardous alcohol use screening</div></a>
+    <a class="tool-card" href="tools/fagerstrom.html"><div class="name" data-i18n="card_fagerstrom_n">Fagerström test (FTND)</div><div class="use" data-i18n="card_fagerstrom_u">Nicotine dependence</div></a>
+    <a class="tool-card" href="tools/scoff.html"><div class="name" data-i18n="card_scoff_n">SCOFF questionnaire</div><div class="use" data-i18n="card_scoff_u">Eating disorder screening</div></a>
+    <a class="tool-card" href="tools/taps.html"><div class="name" data-i18n="card_taps_n">TAPS Tool</div><div class="use" data-i18n="card_taps_u">Substance use screening</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_geriatrics">Geriatrics &amp; functional status</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/timed-up-and-go.html"><div class="name" data-i18n="card_timed_up_and_go_n">Timed Up and Go</div><div class="use" data-i18n="card_timed_up_and_go_u">Mobility &amp; fall risk</div></a>
+    <a class="tool-card" href="tools/adl-barthel.html"><div class="name" data-i18n="card_adl_barthel_n">ADL (Barthel Index)</div><div class="use" data-i18n="card_adl_barthel_u">Basic activities of daily living</div></a>
+    <a class="tool-card" href="tools/iadl-lawton.html"><div class="name" data-i18n="card_iadl_lawton_n">IADL (Lawton)</div><div class="use" data-i18n="card_iadl_lawton_u">Instrumental activities of daily living</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_msk">Musculoskeletal &amp; trauma</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/ottawa-ankle.html"><div class="name" data-i18n="card_ottawa_ankle_n">Ottawa Ankle &amp; Foot Rules</div><div class="use" data-i18n="card_ottawa_ankle_u">X-ray indication after ankle/foot injury</div></a>
+    <a class="tool-card" href="tools/ottawa-knee.html"><div class="name" data-i18n="card_ottawa_knee_n">Ottawa Knee Rules</div><div class="use" data-i18n="card_ottawa_knee_u">X-ray indication after knee injury</div></a>
+  </div>
+
+  <div class="section-label" data-i18n="cat_other">Other</div>
+  <div class="tool-grid">
+    <a class="tool-card" href="tools/frax.html"><div class="name" data-i18n="card_frax_n">FRAX</div><div class="use" data-i18n="card_frax_u">10-year fracture risk (links to official calculator)</div></a>
+    <a class="tool-card" href="tools/d-dimer-age.html"><div class="name" data-i18n="card_d_dimer_age_n">D-dimer age-adjusted cut-off</div><div class="use" data-i18n="card_d_dimer_age_u">Thromboembolism exclusion in older adults</div></a>
+    <a class="tool-card" href="tools/opioid-conversion.html"><div class="name" data-i18n="card_opioid_conversion_n">Opioid Conversion</div><div class="use" data-i18n="card_opioid_conversion_u">Convert between opioids (OME-based)</div></a>
+    <a class="tool-card" href="tools/corticosteroid-equivalence.html"><div class="name" data-i18n="card_corticosteroid_equivalence_n">Corticosteroid equivalence</div><div class="use" data-i18n="card_corticosteroid_equivalence_u">Corticosteroid dose conversion</div></a>
+    <a class="tool-card" href="tools/hanifin-rajka.html"><div class="name" data-i18n="card_hanifin_rajka_n">Hanifin-Rajka criteria</div><div class="use" data-i18n="card_hanifin_rajka_u">Atopic dermatitis diagnostic criteria</div></a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <span data-i18n="footer_note">UniCalcMedical is an open-source, community-maintained project. Not a medical device.
+  Every calculator lists its primary source — see individual tool pages for full citations.</span>
+  <br><a href="https://github.com/Oliver-MD/UniCalcMedical" target="_blank" rel="noopener" data-i18n="footer_source">View source on GitHub</a>
 </footer>
-<script src="app.js?v=1.0.1"></script>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    page_title: "Medical calculators & screening questionnaires",
+    page_subtitle: "Open-source, independently implemented, with a cited source for every tool. Maintained by current and former students of UCL, King's College London, and Université Claude Bernard Lyon 1.",
+    cat_cognition: 'Cognition & frailty', cat_respiratory: 'Respiratory', cat_cardiology: 'Cardiology & thromboembolism',
+    cat_neurology: 'Neurology', cat_renal: 'Renal & hepatic function', cat_endo: 'Endocrinology & metabolic',
+    cat_infection: 'Infection & antimicrobials', cat_nutrition: 'Nutrition', cat_mental: 'Mental health & substance use',
+    cat_geriatrics: 'Geriatrics & functional status', cat_msk: 'Musculoskeletal & trauma', cat_other: 'Other',
+    search_placeholder: 'Search calculators and questionnaires…', search_empty: 'No tools match your search.',
+    card_slums_n: 'SLUMS', card_slums_u: 'Cognitive impairment screening',
+    card_prisma7_n: 'PRISMA-7', card_prisma7_u: 'Frailty screening',
+    card_frail_scale_n: 'FRAIL Scale', card_frail_scale_u: 'Frailty screening',
+    card_fried_phenotype_n: 'Fried Frailty Phenotype', card_fried_phenotype_u: 'Frailty phenotype classification',
+    card_curb65_n: 'CURB-65 / CRB-65', card_curb65_u: 'Community-acquired pneumonia severity',
+    card_mmrc_n: 'mMRC Dyspnoea Scale', card_mmrc_u: 'Breathlessness grade (0–4)', card_mmrc_copd_n: 'mMRC + Exacerbation History', card_mmrc_copd_u: 'Dyspnoea grade &amp; GOLD group',
+    card_nosas_n: 'NoSAS Score', card_nosas_u: 'Obstructive sleep apnoea screening',
+    card_wells_score_n: 'Wells Score', card_wells_score_u: 'Thromboembolism probability',
+    card_cha2ds2_va_n: 'CHA₂DS₂-VA', card_cha2ds2_va_u: 'Stroke risk in atrial fibrillation',
+    card_has_bled_n: 'HAS-BLED', card_has_bled_u: 'Bleeding risk on anticoagulation',
+    card_heart_score_n: 'HEART Score', card_heart_score_u: 'Chest pain risk stratification',
+    card_nyha_n: 'NYHA Classification', card_nyha_u: 'Heart failure functional class',
+    card_qtc_n: 'Corrected QT (QTc)', card_qtc_u: 'Heart-rate corrected QT interval',
+    card_framingham_n: 'Framingham Criteria', card_framingham_u: 'Heart failure diagnostic criteria',
+    card_score2_n: 'SCORE2 cardiovascular risk', card_score2_u: '10-year CVD risk (SCORE2, -OP, -Diabetes)',
+    card_gcs_n: 'Glasgow Coma Scale', card_gcs_u: 'Level of consciousness',
+    card_nihss_n: 'NIHSS', card_nihss_u: 'Stroke severity',
+    card_abcd2_n: 'ABCD² Score', card_abcd2_u: 'Stroke risk after TIA',
+    card_egfr_n: 'eGFR (CKD-EPI 2021)', card_egfr_u: 'Estimated glomerular filtration rate',
+    card_cockcroft_gault_n: 'Cockcroft-Gault Equation', card_cockcroft_gault_u: 'Creatinine clearance for dosing',
+    card_fib4_n: 'FIB-4 Index', card_fib4_u: 'Liver fibrosis estimate',
+    card_child_pugh_n: 'Child-Pugh Score', card_child_pugh_u: 'Cirrhosis severity',
+    card_bmi_n: 'BMI Calculator', card_bmi_u: 'Body mass index',
+    card_bsa_n: 'BSA + Ideal/Adjusted Weight', card_bsa_u: 'Body surface area &amp; dosing weight',
+    card_hba1c_eag_n: 'HbA1c ↔ eAG', card_hba1c_eag_u: 'Average glucose conversion',
+    card_levothyroxine_dosing_n: 'Levothyroxine Dosing', card_levothyroxine_dosing_u: 'Starting &amp; maintenance dose',
+    card_centor_mcisaac_n: 'Centor / McIsaac Score', card_centor_mcisaac_u: 'Streptococcal pharyngitis probability',
+    card_qsofa_n: 'qSOFA', card_qsofa_u: 'Rapid sepsis screening',
+    card_who_aware_n: 'WHO AWaRe Classification', card_who_aware_u: '116 antibiotics by class — Access/Watch/Reserve',
+    card_mst_n: 'MST', card_mst_u: 'Malnutrition screening',
+    card_phq9_n: 'PHQ-9', card_phq9_u: 'Depression screening &amp; severity',
+    card_gad7_n: 'GAD-7', card_gad7_u: 'Anxiety screening',
+    card_gds15_n: 'GDS-15', card_gds15_u: 'Depression screening in older adults',
+    card_audit_c_n: 'AUDIT-C', card_audit_c_u: 'Hazardous alcohol use screening',
+    card_fagerstrom_n: 'Fagerström Test (FTND)', card_fagerstrom_u: 'Nicotine dependence',
+    card_scoff_n: 'SCOFF Questionnaire', card_scoff_u: 'Eating disorder screening',
+    card_taps_n: 'TAPS Tool', card_taps_u: 'Substance use screening',
+    card_timed_up_and_go_n: 'Timed Up and Go (TUG)', card_timed_up_and_go_u: 'Mobility &amp; fall risk',
+    card_adl_barthel_n: 'ADL (Barthel Index)', card_adl_barthel_u: 'Basic activities of daily living',
+    card_iadl_lawton_n: 'IADL (Lawton)', card_iadl_lawton_u: 'Instrumental activities of daily living',
+    card_ottawa_ankle_n: 'Ottawa Ankle & Foot Rules', card_ottawa_ankle_u: 'X-ray indication after ankle/foot injury',
+    card_ottawa_knee_n: 'Ottawa Knee Rules', card_ottawa_knee_u: 'X-ray indication after knee injury',
+    card_d_dimer_age_n: 'D-dimer Age-Adjusted Cut-off', card_d_dimer_age_u: 'Thromboembolism exclusion in older adults',
+    card_opioid_conversion_n: 'Opioid Conversion', card_opioid_conversion_u: 'Convert between opioids (OME-based)',
+    card_corticosteroid_equivalence_n: 'Corticosteroid Equivalence', card_corticosteroid_equivalence_u: 'Corticosteroid dose conversion',
+    card_hanifin_rajka_n: 'Hanifin-Rajka Criteria', card_hanifin_rajka_u: 'Atopic dermatitis diagnostic criteria',
+    card_findrisc_n: 'FINDRISC', card_findrisc_u: 'Type 2 diabetes risk',
+    card_mna_sf_n: 'MNA-SF', card_mna_sf_u: 'Malnutrition screening in older adults',
+    card_frax_n: 'FRAX', card_frax_u: '10-year fracture risk (links to official calculator)'
+  },
+  cs: {
+    page_title: "Lékařské kalkulátory a screeningové dotazníky",
+    page_subtitle: "Open-source, nezávisle implementované, s uvedeným zdrojem u každého nástroje. Spravováno současnými a bývalými studenty UCL, King's College London a Université Claude Bernard Lyon 1.",
+    cat_cognition: 'Kognice a křehkost', cat_respiratory: 'Respirační systém', cat_cardiology: 'Kardiologie a tromboembolie',
+    cat_neurology: 'Neurologie', cat_renal: 'Renální a jaterní funkce', cat_endo: 'Endokrinologie a metabolismus',
+    cat_infection: 'Infekce a antimikrobiální léčba', cat_nutrition: 'Výživa', cat_mental: 'Duševní zdraví a návykové látky',
+    cat_geriatrics: 'Geriatrie a funkční stav', cat_msk: 'Pohybový aparát a trauma', cat_other: 'Ostatní',
+    search_placeholder: 'Hledat kalkulátory a dotazníky…', search_empty: 'Žádné nástroje neodpovídají hledání.',
+    card_slums_n: 'SLUMS', card_slums_u: 'Screening kognitivní poruchy',
+    card_prisma7_n: 'PRISMA-7', card_prisma7_u: 'Screening křehkosti',
+    card_frail_scale_n: 'Škála FRAIL', card_frail_scale_u: 'Screening křehkosti',
+    card_fried_phenotype_n: 'Friedův fenotyp křehkosti', card_fried_phenotype_u: 'Klasifikace fenotypu křehkosti',
+    card_curb65_n: 'CURB-65 / CRB-65', card_curb65_u: 'Závažnost komunitní pneumonie',
+    card_mmrc_n: 'Škála dušnosti mMRC', card_mmrc_u: 'Stupeň dušnosti (0–4)', card_mmrc_copd_n: 'mMRC + anamnéza exacerbací', card_mmrc_copd_u: 'Stupeň dušnosti a skupina GOLD',
+    card_nosas_n: 'NoSAS skóre', card_nosas_u: 'Screening obstrukční spánkové apnoe',
+    card_wells_score_n: 'Wellsovo skóre', card_wells_score_u: 'Pravděpodobnost tromboembolie',
+    card_cha2ds2_va_n: 'CHA₂DS₂-VA', card_cha2ds2_va_u: 'Riziko CMP při fibrilaci síní',
+    card_has_bled_n: 'HAS-BLED', card_has_bled_u: 'Riziko krvácení při antikoagulaci',
+    card_heart_score_n: 'HEART skóre', card_heart_score_u: 'Stratifikace rizika u bolesti na hrudi',
+    card_nyha_n: 'Klasifikace NYHA', card_nyha_u: 'Funkční třída srdečního selhání',
+    card_qtc_n: 'Korigovaný QT (QTc)', card_qtc_u: 'QT interval korigovaný na tepovou frekvenci',
+    card_framingham_n: 'Framinghamská kritéria', card_framingham_u: 'Diagnostická kritéria srdečního selhání',
+    card_score2_n: 'SCORE2 – kardiovaskulární riziko', card_score2_u: '10leté KV riziko (SCORE2, -OP, -Diabetes)',
+    card_gcs_n: 'Glasgow Coma Scale', card_gcs_u: 'Úroveň vědomí',
+    card_nihss_n: 'NIHSS', card_nihss_u: 'Závažnost cévní mozkové příhody',
+    card_abcd2_n: 'ABCD² skóre', card_abcd2_u: 'Riziko CMP po TIA',
+    card_egfr_n: 'eGFR (CKD-EPI 2021)', card_egfr_u: 'Odhad glomerulární filtrace',
+    card_cockcroft_gault_n: 'Cockcroft-Gaultova rovnice', card_cockcroft_gault_u: 'Clearance kreatininu pro dávkování',
+    card_fib4_n: 'FIB-4 index', card_fib4_u: 'Odhad jaterní fibrózy',
+    card_child_pugh_n: 'Child-Pugh skóre', card_child_pugh_u: 'Závažnost jaterní cirhózy',
+    card_bmi_n: 'Kalkulátor BMI', card_bmi_u: 'Index tělesné hmotnosti',
+    card_bsa_n: 'BSA + ideální/upravená hmotnost', card_bsa_u: 'Povrch těla a dávkovací hmotnost',
+    card_hba1c_eag_n: 'HbA1c ↔ eAG', card_hba1c_eag_u: 'Převod na průměrnou glykémii',
+    card_levothyroxine_dosing_n: 'Dávkování levothyroxinu', card_levothyroxine_dosing_u: 'Úvodní a udržovací dávka',
+    card_centor_mcisaac_n: 'Centor / McIsaac skóre', card_centor_mcisaac_u: 'Pravděpodobnost streptokokové faryngitidy',
+    card_qsofa_n: 'qSOFA', card_qsofa_u: 'Rychlý screening sepse',
+    card_who_aware_n: 'Klasifikace WHO AWaRe', card_who_aware_u: '116 antibiotik dle skupin — Access/Watch/Reserve',
+    card_mst_n: 'MST', card_mst_u: 'Screening malnutrice',
+    card_phq9_n: 'PHQ-9', card_phq9_u: 'Screening a závažnost deprese',
+    card_gad7_n: 'GAD-7', card_gad7_u: 'Screening úzkosti',
+    card_gds15_n: 'GDS-15', card_gds15_u: 'Screening deprese u seniorů',
+    card_audit_c_n: 'AUDIT-C', card_audit_c_u: 'Screening rizikového pití alkoholu',
+    card_fagerstrom_n: 'Fagerströmův test (FTND)', card_fagerstrom_u: 'Závislost na nikotinu',
+    card_scoff_n: 'Dotazník SCOFF', card_scoff_u: 'Screening poruch příjmu potravy',
+    card_taps_n: 'Nástroj TAPS', card_taps_u: 'Screening užívání návykových látek',
+    card_timed_up_and_go_n: 'Timed Up and Go (TUG)', card_timed_up_and_go_u: 'Mobilita a riziko pádu',
+    card_adl_barthel_n: 'ADL (Barthelové index)', card_adl_barthel_u: 'Základní všední denní aktivity',
+    card_iadl_lawton_n: 'IADL (Lawton)', card_iadl_lawton_u: 'Instrumentální všední denní aktivity',
+    card_ottawa_ankle_n: 'Ottawská pravidla kotníku a nohy', card_ottawa_ankle_u: 'Indikace RTG po úrazu kotníku/nohy',
+    card_ottawa_knee_n: 'Ottawská pravidla kolena', card_ottawa_knee_u: 'Indikace RTG po úrazu kolena',
+    card_d_dimer_age_n: 'Věkově upravený cut-off D-dimeru', card_d_dimer_age_u: 'Vyloučení tromboembolie u seniorů',
+    card_opioid_conversion_n: 'Konverze opioidů', card_opioid_conversion_u: 'Převod mezi opioidy (dle OME)',
+    card_corticosteroid_equivalence_n: 'Ekvivalence kortikoidů', card_corticosteroid_equivalence_u: 'Konverze dávek kortikoidů',
+    card_hanifin_rajka_n: 'Kritéria Hanifin-Rajka', card_hanifin_rajka_u: 'Diagnostická kritéria atopické dermatitidy',
+    card_findrisc_n: 'FINDRISC', card_findrisc_u: 'Riziko diabetu 2. typu',
+    card_mna_sf_n: 'MNA-SF', card_mna_sf_u: 'Screening malnutrice u seniorů',
+    card_frax_n: 'FRAX', card_frax_u: '10leté riziko zlomeniny (odkaz na oficiální kalkulátor)'
+  },
+  fr: {
+    page_title: "Calculateurs médicaux et questionnaires de dépistage",
+    page_subtitle: "Open-source, implémentés de manière indépendante, avec une source citée pour chaque outil. Maintenu par des étudiants actuels et anciens de l'UCL, King's College London, et l'Université Claude Bernard Lyon 1.",
+    cat_cognition: 'Cognition et fragilité', cat_respiratory: 'Respiratoire', cat_cardiology: 'Cardiologie et thromboembolie',
+    cat_neurology: 'Neurologie', cat_renal: 'Fonction rénale et hépatique', cat_endo: 'Endocrinologie et métabolisme',
+    cat_infection: 'Infection et antimicrobiens', cat_nutrition: 'Nutrition', cat_mental: 'Santé mentale et addictions',
+    cat_geriatrics: 'Gériatrie et statut fonctionnel', cat_msk: 'Musculo-squelettique et traumatologie', cat_other: 'Autre',
+    search_placeholder: 'Rechercher des calculateurs et questionnaires…', search_empty: 'Aucun outil ne correspond à votre recherche.',
+    card_slums_n: 'SLUMS', card_slums_u: 'Dépistage des troubles cognitifs',
+    card_prisma7_n: 'PRISMA-7', card_prisma7_u: 'Dépistage de la fragilité',
+    card_frail_scale_n: 'Échelle FRAIL', card_frail_scale_u: 'Dépistage de la fragilité',
+    card_fried_phenotype_n: 'Phénotype de fragilité de Fried', card_fried_phenotype_u: 'Classification du phénotype de fragilité',
+    card_curb65_n: 'CURB-65 / CRB-65', card_curb65_u: 'Sévérité de la pneumonie communautaire',
+    card_mmrc_n: 'Échelle de dyspnée mMRC', card_mmrc_u: 'Grade d’essoufflement (0–4)', card_mmrc_copd_n: 'mMRC + Antécédents d’exacerbations', card_mmrc_copd_u: 'Grade de dyspnée et groupe GOLD',
+    card_nosas_n: 'Score NoSAS', card_nosas_u: 'Dépistage de l\'apnée obstructive du sommeil',
+    card_wells_score_n: 'Score de Wells', card_wells_score_u: 'Probabilité de thromboembolie',
+    card_cha2ds2_va_n: 'CHA₂DS₂-VA', card_cha2ds2_va_u: 'Risque d\'AVC en cas de fibrillation auriculaire',
+    card_has_bled_n: 'HAS-BLED', card_has_bled_u: 'Risque hémorragique sous anticoagulation',
+    card_heart_score_n: 'Score HEART', card_heart_score_u: 'Stratification du risque pour douleur thoracique',
+    card_nyha_n: 'Classification NYHA', card_nyha_u: 'Classe fonctionnelle de l\'insuffisance cardiaque',
+    card_qtc_n: 'QT corrigé (QTc)', card_qtc_u: 'Intervalle QT corrigé pour la fréquence cardiaque',
+    card_framingham_n: 'Critères de Framingham', card_framingham_u: 'Critères diagnostiques de l\'insuffisance cardiaque',
+    card_score2_n: 'Risque cardiovasculaire SCORE2', card_score2_u: 'Risque CV à 10 ans (SCORE2, -OP, -Diabetes)',
+    card_gcs_n: 'Échelle de Glasgow', card_gcs_u: 'Niveau de conscience',
+    card_nihss_n: 'NIHSS', card_nihss_u: 'Sévérité de l\'AVC',
+    card_abcd2_n: 'Score ABCD²', card_abcd2_u: 'Risque d\'AVC après un AIT',
+    card_egfr_n: 'DFGe (CKD-EPI 2021)', card_egfr_u: 'Débit de filtration glomérulaire estimé',
+    card_cockcroft_gault_n: 'Équation de Cockcroft-Gault', card_cockcroft_gault_u: 'Clairance de la créatinine pour le dosage',
+    card_fib4_n: 'Indice FIB-4', card_fib4_u: 'Estimation de la fibrose hépatique',
+    card_child_pugh_n: 'Score de Child-Pugh', card_child_pugh_u: 'Sévérité de la cirrhose',
+    card_bmi_n: 'Calculateur IMC', card_bmi_u: 'Indice de masse corporelle',
+    card_bsa_n: 'Surface corporelle + poids idéal/ajusté', card_bsa_u: 'Surface corporelle et poids pour le dosage',
+    card_hba1c_eag_n: 'HbA1c ↔ eAG', card_hba1c_eag_u: 'Conversion en glycémie moyenne',
+    card_levothyroxine_dosing_n: 'Dosage de la lévothyroxine', card_levothyroxine_dosing_u: 'Dose initiale et d\'entretien',
+    card_centor_mcisaac_n: 'Score de Centor / McIsaac', card_centor_mcisaac_u: 'Probabilité de pharyngite streptococcique',
+    card_qsofa_n: 'qSOFA', card_qsofa_u: 'Dépistage rapide du sepsis',
+    card_who_aware_n: 'Classification OMS AWaRe', card_who_aware_u: '116 antibiotiques par classe — Access/Watch/Reserve',
+    card_mst_n: 'MST', card_mst_u: 'Dépistage de la malnutrition',
+    card_phq9_n: 'PHQ-9', card_phq9_u: 'Dépistage et sévérité de la dépression',
+    card_gad7_n: 'GAD-7', card_gad7_u: 'Dépistage de l\'anxiété',
+    card_gds15_n: 'GDS-15', card_gds15_u: 'Dépistage de la dépression chez les personnes âgées',
+    card_audit_c_n: 'AUDIT-C', card_audit_c_u: 'Dépistage d\'une consommation d\'alcool à risque',
+    card_fagerstrom_n: 'Test de Fagerström (FTND)', card_fagerstrom_u: 'Dépendance à la nicotine',
+    card_scoff_n: 'Questionnaire SCOFF', card_scoff_u: 'Dépistage des troubles du comportement alimentaire',
+    card_taps_n: 'Outil TAPS', card_taps_u: 'Dépistage de la consommation de substances',
+    card_timed_up_and_go_n: 'Timed Up and Go (TUG)', card_timed_up_and_go_u: 'Mobilité et risque de chute',
+    card_adl_barthel_n: 'ADL (Indice de Barthel)', card_adl_barthel_u: 'Activités de base de la vie quotidienne',
+    card_iadl_lawton_n: 'IADL (Lawton)', card_iadl_lawton_u: 'Activités instrumentales de la vie quotidienne',
+    card_ottawa_ankle_n: 'Règles d\u2019Ottawa pour la cheville et le pied', card_ottawa_ankle_u: 'Indication radiographique après une blessure à la cheville/au pied',
+    card_ottawa_knee_n: 'Règles d\u2019Ottawa pour le genou', card_ottawa_knee_u: 'Indication radiographique après une blessure au genou',
+    card_d_dimer_age_n: 'D-dimères — seuil ajusté à l\u2019âge', card_d_dimer_age_u: 'Exclusion de la thromboembolie chez les personnes âgées',
+    card_opioid_conversion_n: 'Conversion des opioïdes', card_opioid_conversion_u: 'Conversion entre opioïdes (basée sur l\'OME)',
+    card_corticosteroid_equivalence_n: 'Équivalence des corticoïdes', card_corticosteroid_equivalence_u: 'Conversion de dose de corticoïde',
+    card_hanifin_rajka_n: 'Critères de Hanifin-Rajka', card_hanifin_rajka_u: 'Critères diagnostiques de la dermatite atopique',
+    card_findrisc_n: 'FINDRISC', card_findrisc_u: 'Risque de diabète de type 2',
+    card_mna_sf_n: 'MNA-SF', card_mna_sf_u: 'Dépistage de la malnutrition chez les personnes âgées',
+    card_frax_n: 'FRAX', card_frax_u: 'Risque de fracture à 10 ans (lien vers le calculateur officiel)'
+  },
+  de: {
+    page_title: "Medizinische Rechner und Screening-Fragebögen",
+    page_subtitle: "Open Source, unabhängig implementiert, mit angegebener Quelle für jedes Tool. Gepflegt von aktuellen und ehemaligen Studierenden des UCL, King's College London und der Université Claude Bernard Lyon 1.",
+    cat_cognition: 'Kognition & Gebrechlichkeit', cat_respiratory: 'Atemwege', cat_cardiology: 'Kardiologie & Thromboembolie',
+    cat_neurology: 'Neurologie', cat_renal: 'Nieren- & Leberfunktion', cat_endo: 'Endokrinologie & Stoffwechsel',
+    cat_infection: 'Infektion & Antibiotika', cat_nutrition: 'Ernährung', cat_mental: 'Psychische Gesundheit & Substanzgebrauch',
+    cat_geriatrics: 'Geriatrie & Funktionsstatus', cat_msk: 'Bewegungsapparat & Trauma', cat_other: 'Sonstiges',
+    search_placeholder: 'Rechner und Fragebögen durchsuchen…', search_empty: 'Keine Tools entsprechen Ihrer Suche.',
+    card_slums_n: 'SLUMS', card_slums_u: 'Screening auf kognitive Beeinträchtigung',
+    card_prisma7_n: 'PRISMA-7', card_prisma7_u: 'Gebrechlichkeits-Screening',
+    card_frail_scale_n: 'FRAIL-Skala', card_frail_scale_u: 'Gebrechlichkeits-Screening',
+    card_fried_phenotype_n: 'Fried-Gebrechlichkeitsphänotyp', card_fried_phenotype_u: 'Klassifikation des Gebrechlichkeitsphänotyps',
+    card_curb65_n: 'CURB-65 / CRB-65', card_curb65_u: 'Schweregrad der ambulant erworbenen Pneumonie',
+    card_mmrc_n: 'mMRC-Dyspnoeskala', card_mmrc_u: 'Atemnotgrad (0–4)', card_mmrc_copd_n: 'mMRC + Exazerbationsanamnese', card_mmrc_copd_u: 'Dyspnoegrad und GOLD-Gruppe',
+    card_nosas_n: 'NoSAS-Score', card_nosas_u: 'Screening auf obstruktive Schlafapnoe',
+    card_wells_score_n: 'Wells-Score', card_wells_score_u: 'Thromboembolie-Wahrscheinlichkeit',
+    card_cha2ds2_va_n: 'CHA₂DS₂-VA', card_cha2ds2_va_u: 'Schlaganfallrisiko bei Vorhofflimmern',
+    card_has_bled_n: 'HAS-BLED', card_has_bled_u: 'Blutungsrisiko unter Antikoagulation',
+    card_heart_score_n: 'HEART-Score', card_heart_score_u: 'Risikostratifizierung bei Brustschmerzen',
+    card_nyha_n: 'NYHA-Klassifikation', card_nyha_u: 'Funktionsklasse der Herzinsuffizienz',
+    card_qtc_n: 'Korrigiertes QT (QTc)', card_qtc_u: 'Herzfrequenzkorrigiertes QT-Intervall',
+    card_framingham_n: 'Framingham-Kriterien', card_framingham_u: 'Diagnosekriterien der Herzinsuffizienz',
+    card_score2_n: 'SCORE2 – kardiovaskuläres Risiko', card_score2_u: '10-Jahres-Risiko (SCORE2, -OP, -Diabetes)',
+    card_gcs_n: 'Glasgow Coma Scale', card_gcs_u: 'Bewusstseinsgrad',
+    card_nihss_n: 'NIHSS', card_nihss_u: 'Schweregrad des Schlaganfalls',
+    card_abcd2_n: 'ABCD²-Score', card_abcd2_u: 'Schlaganfallrisiko nach TIA',
+    card_egfr_n: 'eGFR (CKD-EPI 2021)', card_egfr_u: 'Geschätzte glomeruläre Filtrationsrate',
+    card_cockcroft_gault_n: 'Cockcroft-Gault-Gleichung', card_cockcroft_gault_u: 'Kreatinin-Clearance zur Dosierung',
+    card_fib4_n: 'FIB-4-Index', card_fib4_u: 'Schätzung der Leberfibrose',
+    card_child_pugh_n: 'Child-Pugh-Score', card_child_pugh_u: 'Schweregrad der Leberzirrhose',
+    card_bmi_n: 'BMI-Rechner', card_bmi_u: 'Body-Mass-Index',
+    card_bsa_n: 'KOF + Ideal-/angepasstes Gewicht', card_bsa_u: 'Körperoberfläche und Dosierungsgewicht',
+    card_hba1c_eag_n: 'HbA1c ↔ eAG', card_hba1c_eag_u: 'Umrechnung in durchschnittliche Glukose',
+    card_levothyroxine_dosing_n: 'Levothyroxin-Dosierung', card_levothyroxine_dosing_u: 'Start- und Erhaltungsdosis',
+    card_centor_mcisaac_n: 'Centor- / McIsaac-Score', card_centor_mcisaac_u: 'Wahrscheinlichkeit einer Streptokokken-Pharyngitis',
+    card_qsofa_n: 'qSOFA', card_qsofa_u: 'Schnelles Sepsis-Screening',
+    card_who_aware_n: 'WHO-AWaRe-Klassifikation', card_who_aware_u: '116 Antibiotika nach Klasse — Access/Watch/Reserve',
+    card_mst_n: 'MST', card_mst_u: 'Mangelernährungs-Screening',
+    card_phq9_n: 'PHQ-9', card_phq9_u: 'Depressions-Screening und Schweregrad',
+    card_gad7_n: 'GAD-7', card_gad7_u: 'Angst-Screening',
+    card_gds15_n: 'GDS-15', card_gds15_u: 'Depressions-Screening bei älteren Erwachsenen',
+    card_audit_c_n: 'AUDIT-C', card_audit_c_u: 'Screening auf riskanten Alkoholkonsum',
+    card_fagerstrom_n: 'Fagerström-Test (FTND)', card_fagerstrom_u: 'Nikotinabhängigkeit',
+    card_scoff_n: 'SCOFF-Fragebogen', card_scoff_u: 'Screening auf Essstörungen',
+    card_taps_n: 'TAPS-Tool', card_taps_u: 'Screening auf Substanzkonsum',
+    card_timed_up_and_go_n: 'Timed Up and Go (TUG)', card_timed_up_and_go_u: 'Mobilität und Sturzrisiko',
+    card_adl_barthel_n: 'ADL (Barthel-Index)', card_adl_barthel_u: 'Grundlegende Aktivitäten des täglichen Lebens',
+    card_iadl_lawton_n: 'IADL (Lawton)', card_iadl_lawton_u: 'Instrumentelle Aktivitäten des täglichen Lebens',
+    card_ottawa_ankle_n: 'Ottawa Ankle & Foot Rules', card_ottawa_ankle_u: 'Röntgenindikation nach Sprunggelenk-/Fußverletzung',
+    card_ottawa_knee_n: 'Ottawa Knee Rules', card_ottawa_knee_u: 'Röntgenindikation nach Knieverletzung',
+    card_d_dimer_age_n: 'Altersadjustierter D-Dimer-Grenzwert', card_d_dimer_age_u: 'Thromboembolie-Ausschluss bei älteren Erwachsenen',
+    card_opioid_conversion_n: 'Opioid-Umrechnung', card_opioid_conversion_u: 'Umrechnung zwischen Opioiden (auf OME-Basis)',
+    card_corticosteroid_equivalence_n: 'Kortikosteroid-Äquivalenz', card_corticosteroid_equivalence_u: 'Kortikosteroid-Dosisumrechnung',
+    card_hanifin_rajka_n: 'Hanifin-Rajka-Kriterien', card_hanifin_rajka_u: 'Diagnosekriterien für atopische Dermatitis',
+    card_findrisc_n: 'FINDRISC', card_findrisc_u: 'Typ-2-Diabetes-Risiko',
+    card_mna_sf_n: 'MNA-SF', card_mna_sf_u: 'Mangelernährungs-Screening bei älteren Erwachsenen',
+    card_frax_n: 'FRAX', card_frax_u: '10-Jahres-Frakturrisiko (Link zum offiziellen Rechner)'
+  },
+  pl: {
+    page_title: "Kalkulatory medyczne i kwestionariusze przesiewowe",
+    page_subtitle: "Open source, niezależnie zaimplementowane, z podanym źródłem dla każdego narzędzia. Utrzymywane przez obecnych i byłych studentów UCL, King's College London oraz Université Claude Bernard Lyon 1.",
+    cat_cognition: 'Funkcje poznawcze i zespół kruchości', cat_respiratory: 'Układ oddechowy', cat_cardiology: 'Kardiologia i choroba zakrzepowo-zatorowa',
+    cat_neurology: 'Neurologia', cat_renal: 'Czynność nerek i wątroby', cat_endo: 'Endokrynologia i metabolizm',
+    cat_infection: 'Infekcje i leki przeciwdrobnoustrojowe', cat_nutrition: 'Odżywianie', cat_mental: 'Zdrowie psychiczne i uzależnienia',
+    cat_geriatrics: 'Geriatria i stan funkcjonalny', cat_msk: 'Układ mięśniowo-szkieletowy i urazy', cat_other: 'Inne',
+    search_placeholder: 'Szukaj kalkulatorów i kwestionariuszy…', search_empty: 'Żadne narzędzia nie pasują do wyszukiwania.',
+    card_slums_n: 'SLUMS', card_slums_u: 'Przesiewowa ocena zaburzeń poznawczych',
+    card_prisma7_n: 'PRISMA-7', card_prisma7_u: 'Przesiew w kierunku kruchości',
+    card_frail_scale_n: 'Skala FRAIL', card_frail_scale_u: 'Przesiew w kierunku kruchości',
+    card_fried_phenotype_n: 'Fenotyp kruchości Fried', card_fried_phenotype_u: 'Klasyfikacja fenotypu kruchości',
+    card_curb65_n: 'CURB-65 / CRB-65', card_curb65_u: 'Ciężkość pozaszpitalnego zapalenia płuc',
+    card_mmrc_n: 'Skala duszności mMRC', card_mmrc_u: 'Stopień duszności (0–4)', card_mmrc_copd_n: 'mMRC + historia zaostrzeń', card_mmrc_copd_u: 'Stopień duszności i grupa GOLD',
+    card_nosas_n: 'Skala NoSAS', card_nosas_u: 'Przesiew w kierunku obturacyjnego bezdechu sennego',
+    card_wells_score_n: 'Skala Wellsa', card_wells_score_u: 'Prawdopodobieństwo choroby zakrzepowo-zatorowej',
+    card_cha2ds2_va_n: 'CHA₂DS₂-VA', card_cha2ds2_va_u: 'Ryzyko udaru w migotaniu przedsionków',
+    card_has_bled_n: 'HAS-BLED', card_has_bled_u: 'Ryzyko krwawienia podczas leczenia przeciwkrzepliwego',
+    card_heart_score_n: 'Skala HEART', card_heart_score_u: 'Stratyfikacja ryzyka bólu w klatce piersiowej',
+    card_nyha_n: 'Klasyfikacja NYHA', card_nyha_u: 'Klasa czynnościowa niewydolności serca',
+    card_qtc_n: 'Skorygowane QT (QTc)', card_qtc_u: 'Odstęp QT skorygowany względem częstości akcji serca',
+    card_framingham_n: 'Kryteria Framingham', card_framingham_u: 'Kryteria diagnostyczne niewydolności serca',
+    card_score2_n: 'SCORE2 – ryzyko sercowo-naczyniowe', card_score2_u: '10-letnie ryzyko CVD (SCORE2, -OP, -Diabetes)',
+    card_gcs_n: 'Skala Glasgow (GCS)', card_gcs_u: 'Poziom świadomości',
+    card_nihss_n: 'NIHSS', card_nihss_u: 'Ciężkość udaru',
+    card_abcd2_n: 'Skala ABCD²', card_abcd2_u: 'Ryzyko udaru po TIA',
+    card_egfr_n: 'eGFR (CKD-EPI 2021)', card_egfr_u: 'Szacowany współczynnik filtracji kłębuszkowej',
+    card_cockcroft_gault_n: 'Równanie Cockcrofta-Gaulta', card_cockcroft_gault_u: 'Klirens kreatyniny do dawkowania',
+    card_fib4_n: 'Indeks FIB-4', card_fib4_u: 'Oszacowanie włóknienia wątroby',
+    card_child_pugh_n: 'Skala Child-Pugh', card_child_pugh_u: 'Ciężkość marskości wątroby',
+    card_bmi_n: 'Kalkulator BMI', card_bmi_u: 'Wskaźnik masy ciała',
+    card_bsa_n: 'BSA + masa idealna/skorygowana', card_bsa_u: 'Powierzchnia ciała i masa do dawkowania',
+    card_hba1c_eag_n: 'HbA1c ↔ eAG', card_hba1c_eag_u: 'Przeliczenie na średnią glikemię',
+    card_levothyroxine_dosing_n: 'Dawkowanie lewotyroksyny', card_levothyroxine_dosing_u: 'Dawka początkowa i podtrzymująca',
+    card_centor_mcisaac_n: 'Skala Centora / McIsaaca', card_centor_mcisaac_u: 'Prawdopodobieństwo paciorkowcowego zapalenia gardła',
+    card_qsofa_n: 'qSOFA', card_qsofa_u: 'Szybki przesiew w kierunku sepsy',
+    card_who_aware_n: 'Klasyfikacja WHO AWaRe', card_who_aware_u: '116 antybiotyków wg klas — Access/Watch/Reserve',
+    card_mst_n: 'MST', card_mst_u: 'Przesiew w kierunku niedożywienia',
+    card_phq9_n: 'PHQ-9', card_phq9_u: 'Przesiew i nasilenie depresji',
+    card_gad7_n: 'GAD-7', card_gad7_u: 'Przesiew w kierunku lęku',
+    card_gds15_n: 'GDS-15', card_gds15_u: 'Przesiew w kierunku depresji u osób starszych',
+    card_audit_c_n: 'AUDIT-C', card_audit_c_u: 'Przesiew w kierunku ryzykownego picia alkoholu',
+    card_fagerstrom_n: 'Test Fagerströma (FTND)', card_fagerstrom_u: 'Uzależnienie od nikotyny',
+    card_scoff_n: 'Kwestionariusz SCOFF', card_scoff_u: 'Przesiew w kierunku zaburzeń odżywiania',
+    card_taps_n: 'Narzędzie TAPS', card_taps_u: 'Przesiew w kierunku używania substancji',
+    card_timed_up_and_go_n: 'Timed Up and Go (TUG)', card_timed_up_and_go_u: 'Mobilność i ryzyko upadku',
+    card_adl_barthel_n: 'ADL (Skala Barthel)', card_adl_barthel_u: 'Podstawowe czynności dnia codziennego',
+    card_iadl_lawton_n: 'IADL (Lawton)', card_iadl_lawton_u: 'Złożone czynności dnia codziennego',
+    card_ottawa_ankle_n: 'Reguły ottawskie dla stawu skokowego i stopy', card_ottawa_ankle_u: 'Wskazanie do RTG po urazie stawu skokowego/stopy',
+    card_ottawa_knee_n: 'Reguły ottawskie dla kolana', card_ottawa_knee_u: 'Wskazanie do RTG po urazie kolana',
+    card_d_dimer_age_n: 'D-dimer — próg skorygowany wiekiem', card_d_dimer_age_u: 'Wykluczenie choroby zakrzepowo-zatorowej u osób starszych',
+    card_opioid_conversion_n: 'Konwersja opioidów', card_opioid_conversion_u: 'Konwersja między opioidami (na podstawie OME)',
+    card_corticosteroid_equivalence_n: 'Równoważność kortykosteroidów', card_corticosteroid_equivalence_u: 'Konwersja dawek kortykosteroidów',
+    card_hanifin_rajka_n: 'Kryteria Hanifina-Rajki', card_hanifin_rajka_u: 'Kryteria diagnostyczne atopowego zapalenia skóry',
+    card_findrisc_n: 'FINDRISC', card_findrisc_u: 'Ryzyko cukrzycy typu 2',
+    card_mna_sf_n: 'MNA-SF', card_mna_sf_u: 'Przesiew w kierunku niedożywienia u osób starszych',
+    card_frax_n: 'FRAX', card_frax_u: '10-letnie ryzyko złamania (link do oficjalnego kalkulatora)'
+  }
+};
+</script>
+<script src="assets/i18n.js"></script>
+<script>
+  // Live filter across all tool cards — pure client-side text match on
+  // name + use, no network request, no external dependency.
+  var searchInput = document.getElementById('tool-search');
+  var searchEmpty = document.getElementById('search-empty');
+  searchInput.addEventListener('input', function() {
+    var q = searchInput.value.trim().toLowerCase();
+    var anyVisible = false;
+    document.querySelectorAll('.section-label').forEach(function(label) {
+      var grid = label.nextElementSibling;
+      if (!grid || !grid.classList.contains('tool-grid')) return;
+      var groupHasMatch = false;
+      grid.querySelectorAll('.tool-card').forEach(function(card) {
+        var text = (card.querySelector('.name').textContent + ' ' + card.querySelector('.use').textContent).toLowerCase();
+        var match = !q || text.indexOf(q) !== -1;
+        card.classList.toggle('hidden', !match);
+        if (match) { groupHasMatch = true; anyVisible = true; }
+      });
+      label.classList.toggle('hidden', !groupHasMatch);
+      grid.classList.toggle('hidden', !groupHasMatch);
+    });
+    searchEmpty.classList.toggle('show', !anyVisible);
+  });
+</script>
+
 </body>
 </html>

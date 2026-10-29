@@ -40,7 +40,8 @@
 
   <div class="source-block">
     <strong data-i18n="reference_label">Reference:</strong> Sterling RK, Lissen E, Clumeck N, et al. Development of a simple noninvasive index to predict significant fibrosis in patients with HIV/HCV coinfection. Hepatology. 2006;43(6):1317–1325.<br>
-    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/2200/fibrosis-4-fib-4-index-liver-fibrosis" target="_blank" rel="noopener">MDCalc — FIB-4</a>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/2200/fibrosis-4-fib-4-index-liver-fibrosis" target="_blank" rel="noopener">MDCalc — FIB-4</a><br>
+    <span data-i18n="ref_age_label">Age-adjusted cut-off (≥ 65 years):</span> McPherson S, Hardy T, Dufour JF, et al. Age as a confounding factor for the accurate non-invasive diagnosis of advanced NAFLD fibrosis. Am J Gastroenterol. 2017;112(5):740–751.
   </div>
 </div>
 
@@ -52,43 +53,53 @@
 var UCM_I18N_PAGE = {
   en: {
     tag: 'Renal & hepatic function', title: 'FIB-4 Index', subtitle: 'Non-invasive estimate of liver fibrosis from age, transaminases, and platelet count.',
+    ref_age_label: 'Age-adjusted cut-off (≥ 65 years):',
     calc_heading: 'Calculate', age_label: 'Age (years)', age_ph: 'e.g. 55', ast_label: 'AST (U/L)', ast_ph: 'e.g. 40',
     alt_label: 'ALT (U/L)', alt_ph: 'e.g. 35', plt_label: 'Platelet count (×10⁹/L)', plt_ph: 'e.g. 220',
     calc_btn: 'Calculate', err_invalid: 'Please enter valid values for all fields.',
     formula_label: 'Formula:', formula_text: 'FIB-4 = (Age × AST) / (Platelets × √ALT)',
-    interp_low: '< 1.30 — low probability of advanced fibrosis.', interp_mid: 'Indeterminate; further evaluation may be warranted.', interp_high: 'High probability of advanced fibrosis.', age_note: '(For patients over 65, the upper cut-off is adjusted to 2.0 instead of 2.67.)'
+    interp_low: 'FIB-4 < {low} — low probability of advanced fibrosis.', interp_mid: 'FIB-4 {low}–2.67 — indeterminate; further evaluation may be warranted.', interp_high: 'FIB-4 > 2.67 — high probability of advanced fibrosis.', age_note: 'Age ≥ 65 years: the lower cut-off is 2.0 instead of 1.30 (McPherson 2017); the upper cut-off of 2.67 is unchanged.',
+    young_note: 'FIB-4 is less reliable below 35 years of age (McPherson 2017).'
   },
   cs: {
     tag: 'Renální a jaterní funkce', title: 'FIB-4 index', subtitle: 'Neinvazivní odhad jaterní fibrózy z věku, transamináz a počtu trombocytů.',
+    ref_age_label: 'Věkově upravená hranice (≥ 65 let):',
     calc_heading: 'Výpočet', age_label: 'Věk (roky)', age_ph: 'např. 55', ast_label: 'AST (U/l)', ast_ph: 'např. 40',
     alt_label: 'ALT (U/l)', alt_ph: 'např. 35', plt_label: 'Počet trombocytů (×10⁹/l)', plt_ph: 'např. 220',
     calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platné hodnoty do všech polí.',
     formula_label: 'Vzorec:', formula_text: 'FIB-4 = (Věk × AST) / (Trombocyty × √ALT)',
-    interp_low: '< 1,30 — nízká pravděpodobnost pokročilé fibrózy.', interp_mid: 'Neurčitý výsledek; může být vhodné další vyšetření.', interp_high: 'Vysoká pravděpodobnost pokročilé fibrózy.', age_note: '(U pacientů nad 65 let je horní práh upraven na 2,0 místo 2,67.)'
+    interp_low: 'FIB-4 < {low} — nízká pravděpodobnost pokročilé fibrózy.', interp_mid: 'FIB-4 {low}–2,67 — neurčitý výsledek; může být vhodné další vyšetření.', interp_high: 'FIB-4 > 2,67 — vysoká pravděpodobnost pokročilé fibrózy.', age_note: 'Věk ≥ 65 let: dolní hranice je 2,0 místo 1,30 (McPherson 2017); horní hranice 2,67 se nemění.',
+    young_note: 'U osob mladších 35 let je FIB-4 méně spolehlivý (McPherson 2017).'
   },
   fr: {
     tag: 'Fonction rénale et hépatique', title: 'Indice FIB-4', subtitle: "Estimation non invasive de la fibrose hépatique à partir de l'âge, des transaminases et de la numération plaquettaire.",
+    ref_age_label: 'Seuil ajusté à l\u2019âge (≥ 65 ans) :',
     calc_heading: 'Calculer', age_label: 'Âge (ans)', age_ph: 'p. ex. 55', ast_label: 'ASAT (U/L)', ast_ph: 'p. ex. 40',
     alt_label: 'ALAT (U/L)', alt_ph: 'p. ex. 35', plt_label: 'Numération plaquettaire (×10⁹/L)', plt_ph: 'p. ex. 220',
     calc_btn: 'Calculer', err_invalid: 'Veuillez saisir des valeurs valides pour tous les champs.',
     formula_label: 'Formule :', formula_text: 'FIB-4 = (Âge × ASAT) / (Plaquettes × √ALAT)',
-    interp_low: "< 1,30 — faible probabilité de fibrose avancée.", interp_mid: 'Indéterminé ; une évaluation complémentaire peut être justifiée.', interp_high: 'Probabilité élevée de fibrose avancée.', age_note: '(Chez les patients de plus de 65 ans, le seuil supérieur est ajusté à 2,0 au lieu de 2,67.)'
+    interp_low: 'FIB-4 < {low} — faible probabilité de fibrose avancée.', interp_mid: 'FIB-4 {low}–2,67 — indéterminé ; une évaluation complémentaire peut être justifiée.', interp_high: 'FIB-4 > 2,67 — probabilité élevée de fibrose avancée.', age_note: 'Âge ≥ 65 ans : le seuil inférieur est de 2,0 au lieu de 1,30 (McPherson 2017) ; le seuil supérieur de 2,67 est inchangé.',
+    young_note: 'Le FIB-4 est moins fiable avant 35 ans (McPherson 2017).'
   },
   de: {
     tag: 'Nieren- & Leberfunktion', title: 'FIB-4-Index', subtitle: 'Nicht-invasive Abschätzung der Leberfibrose anhand von Alter, Transaminasen und Thrombozytenzahl.',
+    ref_age_label: 'Altersangepasster Grenzwert (≥ 65 Jahre):',
     calc_heading: 'Berechnen', age_label: 'Alter (Jahre)', age_ph: 'z. B. 55', ast_label: 'AST (U/L)', ast_ph: 'z. B. 40',
     alt_label: 'ALT (U/L)', alt_ph: 'z. B. 35', plt_label: 'Thrombozytenzahl (×10⁹/L)', plt_ph: 'z. B. 220',
     calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Werte für alle Felder eingeben.',
     formula_label: 'Formel:', formula_text: 'FIB-4 = (Alter × AST) / (Thrombozyten × √ALT)',
-    interp_low: '< 1,30 — geringe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', interp_mid: 'Unbestimmt; weitere Abklärung kann sinnvoll sein.', interp_high: 'Hohe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', age_note: '(Bei Patienten über 65 Jahren wird der obere Grenzwert auf 2,0 statt 2,67 angepasst.)'
+    interp_low: 'FIB-4 < {low} — geringe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', interp_mid: 'FIB-4 {low}–2,67 — unbestimmt; weitere Abklärung kann sinnvoll sein.', interp_high: 'FIB-4 > 2,67 — hohe Wahrscheinlichkeit einer fortgeschrittenen Fibrose.', age_note: 'Alter ≥ 65 Jahre: Der untere Grenzwert beträgt 2,0 statt 1,30 (McPherson 2017); der obere Grenzwert von 2,67 bleibt unverändert.',
+    young_note: 'Unter 35 Jahren ist der FIB-4 weniger zuverlässig (McPherson 2017).'
   },
   pl: {
     tag: 'Czynność nerek i wątroby', title: 'Indeks FIB-4', subtitle: 'Nieinwazyjna ocena włóknienia wątroby na podstawie wieku, transaminaz i liczby płytek krwi.',
+    ref_age_label: 'Próg skorygowany o wiek (≥ 65 lat):',
     calc_heading: 'Oblicz', age_label: 'Wiek (lata)', age_ph: 'np. 55', ast_label: 'AST (U/l)', ast_ph: 'np. 40',
     alt_label: 'ALT (U/l)', alt_ph: 'np. 35', plt_label: 'Liczba płytek krwi (×10⁹/l)', plt_ph: 'np. 220',
     calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłowe wartości we wszystkich polach.',
     formula_label: 'Wzór:', formula_text: 'FIB-4 = (Wiek × AST) / (Płytki × √ALT)',
-    interp_low: '< 1,30 — niskie prawdopodobieństwo zaawansowanego włóknienia.', interp_mid: 'Wynik niejednoznaczny; dalsza ocena może być wskazana.', interp_high: 'Wysokie prawdopodobieństwo zaawansowanego włóknienia.', age_note: '(U pacjentów powyżej 65 lat górny próg jest dostosowany do 2,0 zamiast 2,67.)'
+    interp_low: 'FIB-4 < {low} — niskie prawdopodobieństwo zaawansowanego włóknienia.', interp_mid: 'FIB-4 {low}–2,67 — wynik niejednoznaczny; dalsza ocena może być wskazana.', interp_high: 'FIB-4 > 2,67 — wysokie prawdopodobieństwo zaawansowanego włóknienia.', age_note: 'Wiek ≥ 65 lat: dolny próg wynosi 2,0 zamiast 1,30 (McPherson 2017); górny próg 2,67 pozostaje bez zmian.',
+    young_note: 'Poniżej 35. roku życia FIB-4 jest mniej wiarygodny (McPherson 2017).'
   }
 };
 
@@ -99,7 +110,7 @@ function calcFIB4() {
   var ast = parseFloat(document.getElementById('ast').value);
   var alt = parseFloat(document.getElementById('alt').value);
   var plt = parseFloat(document.getElementById('plt').value);
-  if (!age || !ast || !alt || !plt || age <= 0 || ast <= 0 || alt <= 0 || plt <= 0) { alert(ucmT('err_invalid')); return; }
+  if (!age || !ast || !alt || !plt || age <= 0 || ast <= 0 || alt <= 0 || plt <= 0) { ucmShowError(ucmT('err_invalid')); return; }
   var val = (age * ast) / (plt * Math.sqrt(alt));
   _lastFIB4 = { val: val, age: age };
   renderFIB4Result();
@@ -108,12 +119,17 @@ function calcFIB4() {
 function renderFIB4Result() {
   if (_lastFIB4 === null) return;
   var val = _lastFIB4.val, age = _lastFIB4.age;
-  // Upper cut-off is age-adjusted: 2.0 for patients over 65, 2.67 otherwise —
-  // FIB-4 is known to have reduced specificity in older patients.
-  var highCutoff = age > 65 ? 2.0 : 2.67;
-  var interp = val < 1.30 ? ucmT('interp_low') : (val <= highCutoff ? ucmT('interp_mid') : ucmT('interp_high'));
-  if (age > 65) interp += ' ' + ucmT('age_note');
-  document.getElementById('resultScore').textContent = 'FIB-4 = ' + val.toFixed(2);
+  // Age-adjusted LOWER cut-off (McPherson et al., Am J Gastroenterol 2017): from age 65 the rule-out threshold is
+  // 2.0 instead of 1.30, because FIB-4 rises with age and loses specificity. The upper cut-off stays 2.67.
+  var older = age >= 65;
+  var lowCutoff = older ? 2.0 : 1.30;
+  var shown = Math.round(val * 100) / 100; // classify the value exactly as it is displayed (2 decimals)
+  var lowTxt = ucmFmt(lowCutoff, older ? 1 : 2);
+  var interp = shown < lowCutoff ? ucmTf('interp_low', { low: lowTxt })
+             : (shown <= 2.67 ? ucmTf('interp_mid', { low: lowTxt }) : ucmT('interp_high'));
+  if (older) interp += '<br>' + ucmT('age_note');
+  if (age < 35) interp += '<br>' + ucmT('young_note');
+  document.getElementById('resultScore').textContent = 'FIB-4 = ' + ucmFmt(val, 2);
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }

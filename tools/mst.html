@@ -24,6 +24,7 @@
     <h2 data-i18n="items_heading">Questions</h2>
     <div class="field"><label data-i18n="q0">Have you recently lost weight without trying?</label>
       <select id="q0">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="q0_no">No</option>
         <option value="2" data-i18n="q0_unsure">Unsure</option>
         <option value="yes" data-i18n="q0_yes">Yes</option>
@@ -32,6 +33,7 @@
     <div class="field" id="amountField" style="display:none;">
       <label data-i18n="q0b">If yes, how much weight (kg) have you lost?</label>
       <select id="q0b">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="1" data-i18n="amt1">1–5 kg</option>
         <option value="2" data-i18n="amt2">6–10 kg</option>
         <option value="3" data-i18n="amt3">11–15 kg</option>
@@ -40,7 +42,7 @@
       </select>
     </div>
     <div class="field"><label data-i18n="q1">Have you been eating poorly because of a decreased appetite?</label>
-      <select id="q1"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+      <select id="q1"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
     </div>
     <button class="btn" data-i18n="calc_btn" onclick="calcMST()">Calculate</button>
     <div class="result" id="result">
@@ -72,7 +74,7 @@ var UCM_I18N_PAGE = {
     q0: 'Have you recently lost weight without trying?', q0_no: 'No', q0_unsure: 'Unsure', q0_yes: 'Yes',
     q0b: 'If yes, how much weight (kg) have you lost?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Unsure',
     q1: 'Have you been eating poorly because of a decreased appetite?', opt_no: 'No', opt_yes: 'Yes',
-    calc_btn: 'Calculate', score_label: 'Score = ', of7: ' / 7',
+    calc_btn: 'Calculate', score_label: 'Score = ', of5: ' / 5',
     interp_low: 'Score 0–1 — low risk of malnutrition.', interp_high: 'Score ≥2 — at risk of malnutrition; further nutritional assessment recommended.'
   },
   cs: {
@@ -81,7 +83,7 @@ var UCM_I18N_PAGE = {
     q0: 'Zhubl(a) jste nedávno neúmyslně?', q0_no: 'Ne', q0_unsure: 'Nejsem si jistý(á)', q0_yes: 'Ano',
     q0b: 'Pokud ano, kolik kg jste zhubl(a)?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Nejsem si jistý(á)',
     q1: 'Jedl(a) jste málo kvůli sníženému apetitu?', opt_no: 'Ne', opt_yes: 'Ano',
-    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of7: ' / 7',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of5: ' / 5',
     interp_low: 'Skóre 0–1 — nízké riziko malnutrice.', interp_high: 'Skóre ≥2 — riziko malnutrice; doporučeno další nutriční vyšetření.'
   },
   fr: {
@@ -90,7 +92,7 @@ var UCM_I18N_PAGE = {
     q0: 'Avez-vous récemment perdu du poids sans le vouloir ?', q0_no: 'Non', q0_unsure: 'Incertain(e)', q0_yes: 'Oui',
     q0b: 'Si oui, combien de kg avez-vous perdu ?', amt1: '1 à 5 kg', amt2: '6 à 10 kg', amt3: '11 à 15 kg', amt4: '> 15 kg', amt_unsure: 'Incertain(e)',
     q1: "Avez-vous mal mangé en raison d'une diminution de l'appétit ?", opt_no: 'Non', opt_yes: 'Oui',
-    calc_btn: 'Calculer', score_label: 'Score = ', of7: ' / 7',
+    calc_btn: 'Calculer', score_label: 'Score = ', of5: ' / 5',
     interp_low: 'Score 0–1 — faible risque de malnutrition.', interp_high: 'Score ≥2 — à risque de malnutrition ; une évaluation nutritionnelle complémentaire est recommandée.'
   },
   de: {
@@ -99,7 +101,7 @@ var UCM_I18N_PAGE = {
     q0: 'Haben Sie kürzlich ungewollt Gewicht verloren?', q0_no: 'Nein', q0_unsure: 'Unsicher', q0_yes: 'Ja',
     q0b: 'Wenn ja, wie viel Gewicht (kg) haben Sie verloren?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Unsicher',
     q1: 'Haben Sie aufgrund verminderten Appetits schlecht gegessen?', opt_no: 'Nein', opt_yes: 'Ja',
-    calc_btn: 'Berechnen', score_label: 'Score = ', of7: ' / 7',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of5: ' / 5',
     interp_low: 'Score 0–1 — geringes Risiko für Mangelernährung.', interp_high: 'Score ≥2 — Risiko für Mangelernährung; weitere Ernährungsabklärung empfohlen.'
   },
   pl: {
@@ -108,18 +110,23 @@ var UCM_I18N_PAGE = {
     q0: 'Czy niedawno schudł(a) Pan/Pani niezamierzenie?', q0_no: 'Nie', q0_unsure: 'Nie jestem pewien/pewna', q0_yes: 'Tak',
     q0b: 'Jeśli tak, ile kg Pan/Pani schudł(a)?', amt1: '1–5 kg', amt2: '6–10 kg', amt3: '11–15 kg', amt4: '> 15 kg', amt_unsure: 'Nie jestem pewien/pewna',
     q1: 'Czy jadł(a) Pan/Pani mało z powodu zmniejszonego apetytu?', opt_no: 'Nie', opt_yes: 'Tak',
-    calc_btn: 'Oblicz', score_label: 'Wynik = ', of7: ' / 7',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of5: ' / 5',
     interp_low: 'Wynik 0–1 — niskie ryzyko niedożywienia.', interp_high: 'Wynik ≥2 — ryzyko niedożywienia; zalecana dalsza ocena żywieniowa.'
   }
 };
 
 var q0el = null;
 
+// The amount question is shown only when weight loss = "yes". Also applied on load and when the browser restores a
+// previously filled form (back/forward), so a restored "yes" never leaves the amount question hidden and unanswered.
+function syncAmountField() {
+  document.getElementById('amountField').style.display = document.getElementById('q0').value === 'yes' ? 'block' : 'none';
+}
 function initQ0Listener() {
   q0el = document.getElementById('q0');
-  q0el.addEventListener('change', function() {
-    document.getElementById('amountField').style.display = q0el.value === 'yes' ? 'block' : 'none';
-  });
+  q0el.addEventListener('change', syncAmountField);
+  window.addEventListener('pageshow', syncAmountField);
+  syncAmountField();
 }
 initQ0Listener();
 
@@ -137,7 +144,7 @@ function renderResult() {
   if (_lastMST === null) return;
   var total = _lastMST;
   var interp = total >= 2 ? ucmT('interp_high') : ucmT('interp_low');
-  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of7');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of5');
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }

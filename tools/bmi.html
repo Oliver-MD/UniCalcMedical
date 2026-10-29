@@ -114,7 +114,7 @@ var _lastBMI = null;
 function calcBMI() {
   var h = parseFloat(document.getElementById('height').value);
   var w = parseFloat(document.getElementById('weight').value);
-  if (!h || !w || h <= 0 || w <= 0) { alert(ucmT('err_invalid')); return; }
+  if (!h || !w || h <= 0 || w <= 0) { ucmShowError(ucmT('err_invalid')); return; }
   _lastBMI = { h: h, w: w };
   renderBMIResult();
 }
@@ -122,13 +122,13 @@ function calcBMI() {
 function renderBMIResult() {
   if (!_lastBMI) return;
   var m = _lastBMI.h / 100;
-  var bmi = _lastBMI.w / (m * m);
+  var bmi = Math.round(_lastBMI.w / (m * m) * 10) / 10; // classify the value as displayed (1 decimal): 24.96 shows 25.0 → overweight
   var cat, color;
   if (bmi < 18.5) { cat = ucmT('cat_underweight'); color = '#B8860B'; }
   else if (bmi < 25) { cat = ucmT('cat_normal'); color = '#2E7D32'; }
   else if (bmi < 30) { cat = ucmT('cat_overweight'); color = '#B8860B'; }
   else { cat = ucmT('cat_obese'); color = '#B71C1C'; }
-  document.getElementById('resultScore').textContent = bmi.toFixed(1) + ' kg/m²';
+  document.getElementById('resultScore').textContent = ucmFmt(bmi, 1) + ' kg/m²';
   document.getElementById('resultInterp').innerHTML = ucmT('result_category') + ' <strong style="color:' + color + '">' + cat + '</strong> ' + ucmT('result_who');
   document.getElementById('result').classList.add('show');
 }

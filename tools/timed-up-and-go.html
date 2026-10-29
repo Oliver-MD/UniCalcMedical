@@ -105,7 +105,7 @@ function toggleStopwatch() {
     var start = Date.now() - swElapsed;
     swInterval = setInterval(function() {
       swElapsed = Date.now() - start;
-      document.getElementById('stopwatchDisplay').textContent = (swElapsed / 1000).toFixed(1) + ' s';
+      document.getElementById('stopwatchDisplay').textContent = ucmFmt(swElapsed / 1000, 1) + ' s';
     }, 100);
     btn.textContent = ucmT('stop_btn');
   } else {
@@ -120,7 +120,7 @@ function resetStopwatch() {
   swRunning = false;
   clearInterval(swInterval);
   swElapsed = 0;
-  document.getElementById('stopwatchDisplay').textContent = '0.0 s';
+  document.getElementById('stopwatchDisplay').textContent = ucmFmt(0, 1) + ' s';
   document.getElementById('stopwatchBtn').textContent = ucmT('start_btn');
 }
 
@@ -128,7 +128,7 @@ var _lastTUG = null;
 
 function calcTUG() {
   var t = parseFloat(document.getElementById('time').value);
-  if (isNaN(t) || t < 0) { alert(ucmT('err_invalid')); return; }
+  if (isNaN(t) || t < 0) { ucmShowError(ucmT('err_invalid')); return; }
   _lastTUG = t;
   renderResult();
 }
@@ -141,13 +141,14 @@ function renderResult() {
   else if (t < 20) interp = ucmT('interp_mostly');
   else if (t < 30) interp = ucmT('interp_variable');
   else interp = ucmT('interp_impaired');
-  document.getElementById('resultScore').textContent = t.toFixed(1) + ' s';
+  document.getElementById('resultScore').textContent = ucmFmt(t, 1) + ' s';
   document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }
 
 window.ucmOnLangChange = function() {
   if (!swRunning) document.getElementById('stopwatchBtn').textContent = ucmT('start_btn');
+  if (!swRunning) document.getElementById('stopwatchDisplay').textContent = ucmFmt(swElapsed / 1000, 1) + ' s';
   renderResult();
 };
 </script>

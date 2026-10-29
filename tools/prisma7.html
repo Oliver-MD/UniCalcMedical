@@ -22,13 +22,13 @@
 
   <div class="card">
     <h2 data-i18n="items_heading">Questions (answer as they apply)</h2>
-    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n="c0">Are you older than 85 years?</label></div>
-    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n="c1">Male?</label></div>
-    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n="c2">In general, do you have any health problems that require you to limit your activities?</label></div>
-    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n="c3">Do you need someone to help you on a regular basis?</label></div>
-    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n="c4">In general, do you have any health problems that require you to stay at home?</label></div>
-    <div class="check-row"><input type="checkbox" id="c5"><label for="c5" data-i18n="c5">If you need help, can you count on someone close to you?</label></div>
-    <div class="check-row"><input type="checkbox" id="c6"><label for="c6" data-i18n="c6">Do you regularly use a cane, walker, or wheelchair to move about?</label></div>
+    <div class="field"><label for="c0" data-i18n="c0">Are you older than 85 years?</label><select id="c0"><option value="" data-i18n="opt_select">Select…</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option><option value="0" data-i18n="opt_no0">No (0)</option></select></div>
+    <div class="field"><label for="c1" data-i18n="c1">Male?</label><select id="c1"><option value="" data-i18n="opt_select">Select…</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option><option value="0" data-i18n="opt_no0">No (0)</option></select></div>
+    <div class="field"><label for="c2" data-i18n="c2">In general, do you have any health problems that require you to limit your activities?</label><select id="c2"><option value="" data-i18n="opt_select">Select…</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option><option value="0" data-i18n="opt_no0">No (0)</option></select></div>
+    <div class="field"><label for="c3" data-i18n="c3">Do you need someone to help you on a regular basis?</label><select id="c3"><option value="" data-i18n="opt_select">Select…</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option><option value="0" data-i18n="opt_no0">No (0)</option></select></div>
+    <div class="field"><label for="c4" data-i18n="c4">In general, do you have any health problems that require you to stay at home?</label><select id="c4"><option value="" data-i18n="opt_select">Select…</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option><option value="0" data-i18n="opt_no0">No (0)</option></select></div>
+    <div class="field"><label for="c5" data-i18n="c5">If you need help, can you count on someone close to you?</label><select id="c5"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_yes0">Yes (0)</option><option value="1" data-i18n="opt_no1">No (+1)</option></select><div class="help" data-i18n="c5_help">Scored for the answer NO — a person without someone to rely on gets the point.</div></div>
+    <div class="field"><label for="c6" data-i18n="c6">Do you regularly use a cane, walker, or wheelchair to move about?</label><select id="c6"><option value="" data-i18n="opt_select">Select…</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option><option value="0" data-i18n="opt_no0">No (0)</option></select></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcPRISMA7()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
@@ -58,6 +58,7 @@ var UCM_I18N_PAGE = {
     c0: 'Are you older than 85 years?', c1: 'Male?', c2: 'In general, do you have any health problems that require you to limit your activities?',
     c3: 'Do you need someone to help you on a regular basis?', c4: 'In general, do you have any health problems that require you to stay at home?',
     c5: 'If you need help, can you count on someone close to you?', c6: 'Do you regularly use a cane, walker, or wheelchair to move about?',
+    opt_yes1: 'Yes (+1)', opt_no0: 'No (0)', opt_yes0: 'Yes (0)', opt_no1: 'No (+1)', c5_help: 'Scored for the answer NO — a person without someone to rely on gets the point.',
     calc_btn: 'Calculate', score_label: 'Score = ', of7: ' / 7',
     interp_low: 'Score 0–2 — low likelihood of frailty/disability on this screen.',
     interp_high: 'Score ≥3 — suggests possible frailty or disability; further assessment recommended.'
@@ -68,6 +69,7 @@ var UCM_I18N_PAGE = {
     c0: 'Je vám více než 85 let?', c1: 'Jste muž?', c2: 'Máte celkově nějaké zdravotní potíže, kvůli kterým musíte omezovat své aktivity?',
     c3: 'Potřebujete pravidelně pomoc jiné osoby?', c4: 'Máte celkově nějaké zdravotní potíže, kvůli kterým musíte zůstávat doma?',
     c5: 'Pokud potřebujete pomoc, můžete se spolehnout na někoho blízkého?', c6: 'Používáte pravidelně hůl, chodítko nebo invalidní vozík k pohybu?',
+    opt_yes1: 'Ano (+1)', opt_no0: 'Ne (0)', opt_yes0: 'Ano (0)', opt_no1: 'Ne (+1)', c5_help: 'Boduje se odpověď NE — bod dostává ten, kdo se nemá na koho spolehnout.',
     calc_btn: 'Vypočítat', score_label: 'Skóre = ', of7: ' / 7',
     interp_low: 'Skóre 0–2 — nízká pravděpodobnost křehkosti/disability dle tohoto screeningu.',
     interp_high: 'Skóre ≥3 — naznačuje možnou křehkost nebo disabilitu; doporučeno další vyšetření.'
@@ -78,6 +80,7 @@ var UCM_I18N_PAGE = {
     c0: 'Avez-vous plus de 85 ans ?', c1: 'Êtes-vous un homme ?', c2: "En général, avez-vous des problèmes de santé qui vous obligent à limiter vos activités ?",
     c3: "Avez-vous besoin de quelqu'un de façon régulière pour vous aider ?", c4: "En général, avez-vous des problèmes de santé qui vous obligent à rester à la maison ?",
     c5: "Si vous avez besoin d'aide, pouvez-vous compter sur quelqu'un de proche ?", c6: 'Utilisez-vous régulièrement une canne, un déambulateur ou un fauteuil roulant pour vous déplacer ?',
+    opt_yes1: 'Oui (+1)', opt_no0: 'Non (0)', opt_yes0: 'Oui (0)', opt_no1: 'Non (+1)', c5_help: "Le point est attribué pour la réponse NON — la personne qui n'a personne sur qui compter obtient le point.",
     calc_btn: 'Calculer', score_label: 'Score = ', of7: ' / 7',
     interp_low: 'Score 0–2 — faible probabilité de fragilité/handicap selon ce dépistage.',
     interp_high: "Score ≥3 — évoque une possible fragilité ou un handicap ; une évaluation complémentaire est recommandée."
@@ -88,6 +91,7 @@ var UCM_I18N_PAGE = {
     c0: 'Sind Sie älter als 85 Jahre?', c1: 'Männlich?', c2: 'Haben Sie im Allgemeinen gesundheitliche Probleme, die Sie zwingen, Ihre Aktivitäten einzuschränken?',
     c3: 'Benötigen Sie regelmäßig Hilfe von jemandem?', c4: 'Haben Sie im Allgemeinen gesundheitliche Probleme, die Sie zwingen, zu Hause zu bleiben?',
     c5: 'Können Sie, falls Sie Hilfe benötigen, auf jemanden aus Ihrem Umfeld zählen?', c6: 'Benutzen Sie regelmäßig einen Gehstock, Rollator oder Rollstuhl, um sich fortzubewegen?',
+    opt_yes1: 'Ja (+1)', opt_no0: 'Nein (0)', opt_yes0: 'Ja (0)', opt_no1: 'Nein (+1)', c5_help: 'Gewertet wird die Antwort NEIN — wer niemanden hat, auf den er zählen kann, erhält den Punkt.',
     calc_btn: 'Berechnen', score_label: 'Score = ', of7: ' / 7',
     interp_low: 'Score 0–2 — geringe Wahrscheinlichkeit von Gebrechlichkeit/Behinderung nach diesem Screening.',
     interp_high: 'Score ≥3 — weist auf mögliche Gebrechlichkeit oder Behinderung hin; weitere Abklärung empfohlen.'
@@ -98,6 +102,7 @@ var UCM_I18N_PAGE = {
     c0: 'Czy ma Pan/Pani więcej niż 85 lat?', c1: 'Czy jest Pan mężczyzną?', c2: 'Czy ogólnie ma Pan/Pani problemy zdrowotne, które zmuszają do ograniczenia aktywności?',
     c3: 'Czy potrzebuje Pan/Pani regularnej pomocy innej osoby?', c4: 'Czy ogólnie ma Pan/Pani problemy zdrowotne, które zmuszają do pozostawania w domu?',
     c5: 'Czy jeśli potrzebuje Pan/Pani pomocy, może liczyć na kogoś bliskiego?', c6: 'Czy regularnie korzysta Pan/Pani z laski, balkonika lub wózka inwalidzkiego do poruszania się?',
+    opt_yes1: 'Tak (+1)', opt_no0: 'Nie (0)', opt_yes0: 'Tak (0)', opt_no1: 'Nie (+1)', c5_help: 'Punkt przyznaje się za odpowiedź NIE — otrzymuje go osoba, która nie ma na kogo liczyć.',
     calc_btn: 'Oblicz', score_label: 'Wynik = ', of7: ' / 7',
     interp_low: 'Wynik 0–2 — niskie prawdopodobieństwo kruchości/niepełnosprawności wg tego przesiewu.',
     interp_high: 'Wynik ≥3 — sugeruje możliwą kruchość lub niepełnosprawność; zalecana dalsza ocena.'
@@ -107,8 +112,11 @@ var UCM_I18N_PAGE = {
 var _lastPRISMA = null;
 
 function calcPRISMA7() {
+  // Each answer's option value is its points: 1 for YES on questions 1–5 and 7, 1 for NO on question 6
+  // ("If you need help, can you count on someone close to you?"), per Raîche et al. 2008.
   var ids = ['c0','c1','c2','c3','c4','c5','c6'];
-  var total = ids.filter(function(id){ return document.getElementById(id).checked; }).length;
+  var total = 0;
+  ids.forEach(function(id){ total += parseInt(document.getElementById(id).value, 10); });
   _lastPRISMA = total;
   renderResult();
 }

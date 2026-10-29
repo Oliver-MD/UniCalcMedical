@@ -22,10 +22,11 @@
 
   <div class="card">
     <h2 data-i18n="criteria_heading">Criteria</h2>
-    <div class="field"><label data-i18n="l_age">Age ≥ 60 years</label><select id="c_age"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
-    <div class="field"><label data-i18n="l_bp">Blood pressure ≥ 140/90 mmHg at first assessment</label><select id="c_bp"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="l_age">Age ≥ 60 years</label><select id="c_age"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="l_bp">Blood pressure ≥ 140/90 mmHg at first assessment</label><select id="c_bp"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <div class="field"><label data-i18n="l_clinical">Clinical features</label>
       <select id="c_clinical">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="clinical0">Other symptoms (+0)</option>
         <option value="1" data-i18n="clinical1">Speech disturbance without weakness (+1)</option>
         <option value="2" data-i18n="clinical2">Unilateral weakness (+2)</option>
@@ -33,12 +34,13 @@
     </div>
     <div class="field"><label data-i18n="l_duration">Duration of symptoms</label>
       <select id="c_duration">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="duration0">&lt; 10 minutes (+0)</option>
         <option value="1" data-i18n="duration1">10–59 minutes (+1)</option>
         <option value="2" data-i18n="duration2">≥ 60 minutes (+2)</option>
       </select>
     </div>
-    <div class="field"><label data-i18n="l_diabetes">Diabetes</label><select id="c_diabetes"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="l_diabetes">Diabetes</label><select id="c_diabetes"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcABCD2()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>

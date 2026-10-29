@@ -60,7 +60,8 @@ var UCM_I18N_PAGE = {
     q5: 'Becoming easily annoyed or irritable',
     q6: 'Feeling afraid as if something awful might happen',
     opt0: '0 — Not at all', opt1: '1 — Several days', opt2: '2 — More than half the days', opt3: '3 — Nearly every day',
-    sev_minimal: 'Minimal anxiety.', sev_mild: 'Mild anxiety.', sev_moderate: 'Moderate anxiety.', sev_severe: 'Severe anxiety.'
+    sev_minimal: 'Minimal anxiety.', sev_mild: 'Mild anxiety.', sev_moderate: 'Moderate anxiety.', sev_severe: 'Severe anxiety.',
+    public_domain_note: 'GAD-7 is in the public domain — no permission required for reproduction, translation, display, or distribution (Pfizer Inc., 2010).'
   },
   cs: {
     tag: 'Duševní zdraví a návykové látky', title: 'GAD-7', subtitle: 'Škála generalizované úzkostné poruchy — screening a závažnost.',
@@ -74,7 +75,8 @@ var UCM_I18N_PAGE = {
     q5: 'Snadná podrážděnost',
     q6: 'Pocit strachu, jako by se mohlo stát něco hrozného',
     opt0: '0 — Vůbec ne', opt1: '1 — Několik dní', opt2: '2 — Více než polovinu dní', opt3: '3 — Téměř každý den',
-    sev_minimal: 'Minimální úzkost.', sev_mild: 'Mírná úzkost.', sev_moderate: 'Střední úzkost.', sev_severe: 'Těžká úzkost.'
+    sev_minimal: 'Minimální úzkost.', sev_mild: 'Mírná úzkost.', sev_moderate: 'Střední úzkost.', sev_severe: 'Těžká úzkost.',
+    public_domain_note: 'Dotazník GAD-7 je volně dostupný — k jeho kopírování, překladu, zobrazení ani šíření není potřeba povolení (Pfizer Inc., 2010).'
   },
   fr: {
     tag: 'Santé mentale et addictions', title: 'GAD-7', subtitle: "Échelle du trouble anxieux généralisé — dépistage et sévérité.",
@@ -88,7 +90,8 @@ var UCM_I18N_PAGE = {
     q5: 'Irritabilité facile',
     q6: "Peur que quelque chose d'horrible puisse arriver",
     opt0: '0 — Jamais', opt1: '1 — Plusieurs jours', opt2: '2 — Plus de la moitié des jours', opt3: '3 — Presque tous les jours',
-    sev_minimal: 'Anxiété minime.', sev_mild: 'Anxiété légère.', sev_moderate: 'Anxiété modérée.', sev_severe: 'Anxiété sévère.'
+    sev_minimal: 'Anxiété minime.', sev_mild: 'Anxiété légère.', sev_moderate: 'Anxiété modérée.', sev_severe: 'Anxiété sévère.',
+    public_domain_note: 'Le GAD-7 est librement utilisable — aucune autorisation n\u2019est requise pour le reproduire, le traduire, l\u2019afficher ou le diffuser (Pfizer Inc., 2010).'
   },
   de: {
     tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'GAD-7', subtitle: 'Skala für generalisierte Angststörung — Screening und Schweregrad.',
@@ -102,7 +105,8 @@ var UCM_I18N_PAGE = {
     q5: 'Leichte Reizbarkeit',
     q6: 'Angst, dass etwas Schreckliches passieren könnte',
     opt0: '0 — Überhaupt nicht', opt1: '1 — An einzelnen Tagen', opt2: '2 — An mehr als der Hälfte der Tage', opt3: '3 — Beinahe jeden Tag',
-    sev_minimal: 'Minimale Angst.', sev_mild: 'Leichte Angst.', sev_moderate: 'Mittelschwere Angst.', sev_severe: 'Schwere Angst.'
+    sev_minimal: 'Minimale Angst.', sev_mild: 'Leichte Angst.', sev_moderate: 'Mittelschwere Angst.', sev_severe: 'Schwere Angst.',
+    public_domain_note: 'Der GAD-7 ist frei verfügbar — für Vervielfältigung, Übersetzung, Darstellung oder Verbreitung ist keine Genehmigung erforderlich (Pfizer Inc., 2010).'
   },
   pl: {
     tag: 'Zdrowie psychiczne i uzależnienia', title: 'GAD-7', subtitle: 'Skala uogólnionego zaburzenia lękowego — przesiewowa ocena i nasilenie.',
@@ -116,7 +120,8 @@ var UCM_I18N_PAGE = {
     q5: 'Łatwe wpadanie w rozdrażnienie',
     q6: 'Uczucie strachu, jakby miało wydarzyć się coś strasznego',
     opt0: '0 — Wcale', opt1: '1 — Kilka dni', opt2: '2 — Więcej niż połowę dni', opt3: '3 — Niemal codziennie',
-    sev_minimal: 'Minimalny lęk.', sev_mild: 'Łagodny lęk.', sev_moderate: 'Umiarkowany lęk.', sev_severe: 'Ciężki lęk.'
+    sev_minimal: 'Minimalny lęk.', sev_mild: 'Łagodny lęk.', sev_moderate: 'Umiarkowany lęk.', sev_severe: 'Ciężki lęk.',
+    public_domain_note: 'Kwestionariusz GAD-7 jest ogólnodostępny — jego powielanie, tłumaczenie, wyświetlanie i rozpowszechnianie nie wymaga zgody (Pfizer Inc., 2010).'
   }
 };
 
@@ -125,13 +130,13 @@ var QUESTION_KEYS = ['q0','q1','q2','q3','q4','q5','q6'];
 function renderItems() {
   var itemsDiv = document.getElementById('items');
   var existing = QUESTION_KEYS.map(function(k, i){ return document.getElementById('q' + i); });
-  var currentValues = existing.map(function(el){ return el ? el.value : '0'; });
+  var currentValues = existing.map(function(el){ return el ? el.value : ''; });
   itemsDiv.innerHTML = '';
   QUESTION_KEYS.forEach(function(key, i) {
     var wrap = document.createElement('div');
     wrap.className = 'field';
     wrap.innerHTML = '<label>' + (i+1) + '. ' + ucmT(key) + '</label>' +
-      '<select id="q' + i + '">' +
+      '<select id="q' + i + '"><option value="">' + ucmT('opt_select') + '</option>' +
       '<option value="0">' + ucmT('opt0') + '</option>' +
       '<option value="1">' + ucmT('opt1') + '</option>' +
       '<option value="2">' + ucmT('opt2') + '</option>' +
@@ -151,6 +156,8 @@ function calcGAD7() {
 
 function renderGAD7Result() {
   if (!_hasResult) return;
+  // An answer reset to "Select…" after calculating: no score until every question is answered again.
+  if (QUESTION_KEYS.some(function(k, i){ return document.getElementById('q' + i).value === ''; })) { document.getElementById('result').classList.remove('show'); return; }
   var total = 0;
   for (var i = 0; i < QUESTION_KEYS.length; i++) total += parseInt(document.getElementById('q' + i).value, 10);
   var interp;

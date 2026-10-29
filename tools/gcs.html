@@ -23,6 +23,7 @@
   <div class="card">
     <h2 data-i18n="eye_heading">Eye opening</h2>
     <select id="eye">
+      <option value="" data-i18n="opt_select">Select…</option>
       <option value="4" data-i18n="eye4">Spontaneous — 4</option>
       <option value="3" data-i18n="eye3">To speech — 3</option>
       <option value="2" data-i18n="eye2">To pain — 2</option>
@@ -33,6 +34,7 @@
   <div class="card">
     <h2 data-i18n="verbal_heading">Verbal response</h2>
     <select id="verbal">
+      <option value="" data-i18n="opt_select">Select…</option>
       <option value="5" data-i18n="verbal5">Oriented — 5</option>
       <option value="4" data-i18n="verbal4">Confused — 4</option>
       <option value="3" data-i18n="verbal3">Inappropriate words — 3</option>
@@ -44,6 +46,7 @@
   <div class="card">
     <h2 data-i18n="motor_heading">Motor response</h2>
     <select id="motor">
+      <option value="" data-i18n="opt_select">Select…</option>
       <option value="6" data-i18n="motor6">Obeys commands — 6</option>
       <option value="5" data-i18n="motor5">Localises pain — 5</option>
       <option value="4" data-i18n="motor4">Normal flexion (withdrawal) — 4</option>
@@ -81,7 +84,7 @@ var UCM_I18N_PAGE = {
     verbal_heading: 'Verbal response', verbal5: 'Oriented — 5', verbal4: 'Confused — 4', verbal3: 'Inappropriate words — 3', verbal2: 'Incomprehensible sounds — 2', verbal1: 'None — 1',
     motor_heading: 'Motor response', motor6: 'Obeys commands — 6', motor5: 'Localises pain — 5', motor4: 'Normal flexion (withdrawal) — 4', motor3: 'Abnormal flexion (decorticate) — 3', motor2: 'Extension (decerebrate) — 2', motor1: 'None — 1',
     calc_btn: 'Calculate', gcs_label: 'GCS = ', of15: ' / 15',
-    interp_mild: 'Mild impairment.', interp_mod: 'Moderate impairment.',
+    interp_normal: 'Normal level of consciousness (GCS 15).', interp_mild: 'Mild impairment.', interp_mod: 'Moderate impairment.',
     interp_severe: 'Severe impairment (GCS ≤ 8 is generally used as the threshold for airway protection concern).'
   },
   cs: {
@@ -90,7 +93,7 @@ var UCM_I18N_PAGE = {
     verbal_heading: 'Slovní odpověď', verbal5: 'Orientovaná — 5', verbal4: 'Zmatená — 4', verbal3: 'Nepřiléhavá slova — 3', verbal2: 'Nesrozumitelné zvuky — 2', verbal1: 'Žádná — 1',
     motor_heading: 'Motorická odpověď', motor6: 'Vyhoví výzvě — 6', motor5: 'Lokalizuje bolest — 5', motor4: 'Normální flexe (úniková reakce) — 4', motor3: 'Abnormální flexe (dekortikace) — 3', motor2: 'Extenze (decerebrace) — 2', motor1: 'Žádná — 1',
     calc_btn: 'Vypočítat', gcs_label: 'GCS = ', of15: ' / 15',
-    interp_mild: 'Lehká porucha vědomí.', interp_mod: 'Střední porucha vědomí.',
+    interp_normal: 'Normální stav vědomí (GCS 15).', interp_mild: 'Lehká porucha vědomí.', interp_mod: 'Střední porucha vědomí.',
     interp_severe: 'Těžká porucha vědomí (GCS ≤ 8 se obecně považuje za hranici pro ohrožení dýchacích cest).'
   },
   fr: {
@@ -99,7 +102,7 @@ var UCM_I18N_PAGE = {
     verbal_heading: 'Réponse verbale', verbal5: 'Orientée — 5', verbal4: 'Confuse — 4', verbal3: 'Mots inappropriés — 3', verbal2: 'Sons incompréhensibles — 2', verbal1: 'Aucune — 1',
     motor_heading: 'Réponse motrice', motor6: 'Obéit aux ordres — 6', motor5: 'Localise la douleur — 5', motor4: 'Flexion normale (retrait) — 4', motor3: 'Flexion anormale (décortication) — 3', motor2: 'Extension (décérébration) — 2', motor1: 'Aucune — 1',
     calc_btn: 'Calculer', gcs_label: 'GCS = ', of15: ' / 15',
-    interp_mild: 'Atteinte légère.', interp_mod: 'Atteinte modérée.',
+    interp_normal: 'État de conscience normal (GCS 15).', interp_mild: 'Atteinte légère.', interp_mod: 'Atteinte modérée.',
     interp_severe: 'Atteinte sévère (un GCS ≤ 8 est généralement utilisé comme seuil de préoccupation pour la protection des voies aériennes).'
   },
   de: {
@@ -108,7 +111,7 @@ var UCM_I18N_PAGE = {
     verbal_heading: 'Verbale Reaktion', verbal5: 'Orientiert — 5', verbal4: 'Verwirrt — 4', verbal3: 'Unzusammenhängende Worte — 3', verbal2: 'Unverständliche Laute — 2', verbal1: 'Keine — 1',
     motor_heading: 'Motorische Reaktion', motor6: 'Befolgt Aufforderungen — 6', motor5: 'Gezielte Schmerzabwehr — 5', motor4: 'Normale Beugung (Wegziehen) — 4', motor3: 'Abnorme Beugung (Dekortikation) — 3', motor2: 'Streckung (Dezerebration) — 2', motor1: 'Keine — 1',
     calc_btn: 'Berechnen', gcs_label: 'GCS = ', of15: ' / 15',
-    interp_mild: 'Leichte Beeinträchtigung.', interp_mod: 'Mittelschwere Beeinträchtigung.',
+    interp_normal: 'Normale Bewusstseinslage (GCS 15).', interp_mild: 'Leichte Beeinträchtigung.', interp_mod: 'Mittelschwere Beeinträchtigung.',
     interp_severe: 'Schwere Beeinträchtigung (GCS ≤ 8 gilt allgemein als Schwelle für Bedenken hinsichtlich des Atemwegsschutzes).'
   },
   pl: {
@@ -117,7 +120,7 @@ var UCM_I18N_PAGE = {
     verbal_heading: 'Odpowiedź słowna', verbal5: 'Zorientowana — 5', verbal4: 'Splątana — 4', verbal3: 'Niewłaściwe słowa — 3', verbal2: 'Niezrozumiałe dźwięki — 2', verbal1: 'Brak — 1',
     motor_heading: 'Odpowiedź ruchowa', motor6: 'Wykonuje polecenia — 6', motor5: 'Lokalizuje ból — 5', motor4: 'Prawidłowe zgięcie (wycofanie) — 4', motor3: 'Nieprawidłowe zgięcie (odkorowanie) — 3', motor2: 'Wyprost (odmóżdżenie) — 2', motor1: 'Brak — 1',
     calc_btn: 'Oblicz', gcs_label: 'GCS = ', of15: ' / 15',
-    interp_mild: 'Łagodne zaburzenie.', interp_mod: 'Umiarkowane zaburzenie.',
+    interp_normal: 'Prawidłowy stan świadomości (GCS 15).', interp_mild: 'Łagodne zaburzenie.', interp_mod: 'Umiarkowane zaburzenie.',
     interp_severe: 'Ciężkie zaburzenie (GCS ≤ 8 jest zwykle progiem budzącym obawy o drożność dróg oddechowych).'
   }
 };
@@ -137,7 +140,9 @@ function renderGCSResult() {
   var e = _lastGCS.e, v = _lastGCS.v, m = _lastGCS.m;
   var total = e + v + m;
   var interp;
-  if (total >= 13) interp = ucmT('interp_mild');
+  // 15 is normal consciousness; 13–14 mild, 9–12 moderate, 3–8 severe impairment.
+  if (total === 15) interp = ucmT('interp_normal');
+  else if (total >= 13) interp = ucmT('interp_mild');
   else if (total >= 9) interp = ucmT('interp_mod');
   else interp = ucmT('interp_severe');
   document.getElementById('resultScore').textContent = ucmT('gcs_label') + total + ucmT('of15') + ' (E' + e + 'V' + v + 'M' + m + ')';

@@ -32,15 +32,15 @@
     </div>
     <div class="field">
       <label data-i18n="snoring_label">Snoring</label>
-      <select id="snoring"><option value="0" data-i18n="opt_no">No</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select>
+      <select id="snoring"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select>
     </div>
     <div class="field">
       <label data-i18n="age_label">Age &gt; 55 years</label>
-      <select id="age"><option value="0" data-i18n="opt_no">No</option><option value="4" data-i18n="opt_yes4">Yes (+4)</option></select>
+      <select id="age"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="4" data-i18n="opt_yes4">Yes (+4)</option></select>
     </div>
     <div class="field">
       <label data-i18n="sex_label">Sex</label>
-      <select id="sex"><option value="0" data-i18n="opt_female">Female (+0)</option><option value="2" data-i18n="opt_male">Male (+2)</option></select>
+      <select id="sex"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_female">Female (+0)</option><option value="2" data-i18n="opt_male">Male (+2)</option></select>
     </div>
     <button class="btn" data-i18n="calc_btn" onclick="calcNoSAS()">Calculate</button>
     <div class="result" id="result">
@@ -118,7 +118,7 @@ var _lastNoSAS = null;
 function calcNoSAS() {
   var neck = parseFloat(document.getElementById('neck').value);
   var bmi = parseFloat(document.getElementById('bmi').value);
-  if (!neck || !bmi || neck <= 0 || bmi <= 0) { alert(ucmT('err_invalid')); return; }
+  if (!neck || !bmi || neck <= 0 || bmi <= 0) { ucmShowError(ucmT('err_invalid')); return; }
   var neckPts = neck > 40 ? 4 : 0;
   var bmiPts = bmi >= 25 && bmi < 30 ? 3 : (bmi >= 30 ? 5 : 0);
   var snoring = parseInt(document.getElementById('snoring').value, 10);

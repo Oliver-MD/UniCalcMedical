@@ -23,7 +23,7 @@
   <div class="card">
     <h2 data-i18n="calc_heading">Calculate</h2>
     <div class="field"><label data-i18n="age_label" for="age">Age (years)</label><input type="number" id="age" min="18" max="120" step="1" data-i18n-placeholder="age_ph" placeholder="e.g. 60"></div>
-    <div class="field"><label data-i18n="sex_label">Sex</label><select id="sex"><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select></div>
+    <div class="field"><label data-i18n="sex_label">Sex</label><select id="sex"><option value="" data-i18n="opt_select">Select…</option><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select></div>
     <div class="field"><label data-i18n="weight_label" for="weight">Weight (kg)</label><input type="number" id="weight" min="20" max="300" step="0.1" data-i18n-placeholder="weight_ph" placeholder="e.g. 75"></div>
     <div class="field"><label data-i18n="scr_label" for="scr">Serum creatinine (µmol/L)</label><input type="number" id="scr" min="10" max="2000" step="1" data-i18n-placeholder="scr_ph" placeholder="e.g. 90"></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcCG()">Calculate</button>
@@ -94,7 +94,7 @@ function calcCG() {
   var sex = document.getElementById('sex').value;
   var weight = parseFloat(document.getElementById('weight').value);
   var scrUmol = parseFloat(document.getElementById('scr').value);
-  if (!age || !weight || !scrUmol || age <= 0 || weight <= 0 || scrUmol <= 0) { alert(ucmT('err_invalid')); return; }
+  if (!age || !weight || !scrUmol || age <= 0 || weight <= 0 || scrUmol <= 0) { ucmShowError(ucmT('err_invalid')); return; }
   var scr = scrUmol / 88.4; // µmol/L -> mg/dL
   var crcl = ((140 - age) * weight) / (72 * scr);
   if (sex === 'f') crcl *= 0.85;
@@ -104,7 +104,7 @@ function calcCG() {
 
 function renderCGResult() {
   if (_lastCG === null) return;
-  document.getElementById('resultScore').textContent = _lastCG.toFixed(1) + ucmT('of_unit');
+  document.getElementById('resultScore').textContent = ucmFmt(_lastCG, 1) + ucmT('of_unit');
   document.getElementById('resultInterp').innerHTML = ucmT('note');
   document.getElementById('result').classList.add('show');
 }

@@ -121,13 +121,13 @@ var QUESTION_KEYS = ['q0','q1','q2','q3','q4','q5','q6','q7','q8','q9','q10','q1
 function renderItems() {
   var itemsDiv = document.getElementById('items');
   var existing = QUESTION_KEYS.map(function(k, i){ return document.getElementById('q' + i); });
-  var currentValues = existing.map(function(el){ return el ? el.value : '0'; });
+  var currentValues = existing.map(function(el){ return el ? el.value : ''; });
   itemsDiv.innerHTML = '';
   QUESTION_KEYS.forEach(function(key, i) {
     var wrap = document.createElement('div');
     wrap.className = 'field';
     wrap.innerHTML = '<label>' + (i+1) + '. ' + ucmT(key) + '</label>' +
-      '<select id="q' + i + '"><option value="1">' + ucmT('opt_yes') + '</option><option value="0">' + ucmT('opt_no') + '</option></select>';
+      '<select id="q' + i + '"><option value="">' + ucmT('opt_select') + '</option><option value="1">' + ucmT('opt_yes') + '</option><option value="0">' + ucmT('opt_no') + '</option></select>';
     itemsDiv.appendChild(wrap);
     document.getElementById('q' + i).value = currentValues[i];
   });
@@ -139,6 +139,8 @@ function calcGDS15() { _hasResult = true; renderGDS15Result(); }
 
 function renderGDS15Result() {
   if (!_hasResult) return;
+  // An answer reset to "Select…" after calculating: no score until every question is answered again.
+  if (QUESTION_KEYS.some(function(k, i){ return document.getElementById('q' + i).value === ''; })) { document.getElementById('result').classList.remove('show'); return; }
   var total = 0;
   QUESTION_KEYS.forEach(function(key, i) {
     var answeredYes = document.getElementById('q' + i).value === '1';

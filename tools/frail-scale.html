@@ -22,11 +22,25 @@
 
   <div class="card">
     <h2 data-i18n="items_heading">Criteria (1 point each if present)</h2>
-    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n-html="c0"><strong>Fatigue</strong> — Are you fatigued most or all of the time?</label></div>
-    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n-html="c1"><strong>Resistance</strong> — Are you unable to climb one flight of stairs?</label></div>
-    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n-html="c2"><strong>Aerobic</strong> — Are you unable to walk one block (approx. 100 m)?</label></div>
-    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n-html="c3"><strong>Illnesses</strong> — Do you have more than 5 illnesses?</label></div>
-    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n-html="c4"><strong>Loss of weight</strong> — Have you lost more than 5% of your body weight in the past year?</label></div>
+    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n-html="c0"><strong>Fatigue</strong> — During the past 4 weeks, have you felt tired all or most of the time?</label></div>
+    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n-html="c1"><strong>Resistance</strong> — By yourself and without aids, do you have difficulty walking up 10 steps without resting?</label></div>
+    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n-html="c2"><strong>Aerobic</strong> — By yourself and without aids, do you have difficulty walking about 100 m (100 yards) without resting?</label></div>
+    <div class="check-row"><span style="width:13px;flex-shrink:0;"></span><span data-i18n-html="c3"><strong>Illnesses</strong> — Has a doctor ever told you that you have any of these illnesses? (1 point for 5 or more of the 11)</span></div>
+    <div class="sub-checks">
+      <div class="check-row"><input type="checkbox" id="ill0" onchange="updateIllCount()"><label for="ill0" data-i18n="ill0">Hypertension</label></div>
+      <div class="check-row"><input type="checkbox" id="ill1" onchange="updateIllCount()"><label for="ill1" data-i18n="ill1">Diabetes</label></div>
+      <div class="check-row"><input type="checkbox" id="ill2" onchange="updateIllCount()"><label for="ill2" data-i18n="ill2">Cancer (other than a minor skin cancer)</label></div>
+      <div class="check-row"><input type="checkbox" id="ill3" onchange="updateIllCount()"><label for="ill3" data-i18n="ill3">Chronic lung disease</label></div>
+      <div class="check-row"><input type="checkbox" id="ill4" onchange="updateIllCount()"><label for="ill4" data-i18n="ill4">Heart attack</label></div>
+      <div class="check-row"><input type="checkbox" id="ill5" onchange="updateIllCount()"><label for="ill5" data-i18n="ill5">Congestive heart failure</label></div>
+      <div class="check-row"><input type="checkbox" id="ill6" onchange="updateIllCount()"><label for="ill6" data-i18n="ill6">Angina</label></div>
+      <div class="check-row"><input type="checkbox" id="ill7" onchange="updateIllCount()"><label for="ill7" data-i18n="ill7">Asthma</label></div>
+      <div class="check-row"><input type="checkbox" id="ill8" onchange="updateIllCount()"><label for="ill8" data-i18n="ill8">Arthritis</label></div>
+      <div class="check-row"><input type="checkbox" id="ill9" onchange="updateIllCount()"><label for="ill9" data-i18n="ill9">Stroke</label></div>
+      <div class="check-row"><input type="checkbox" id="ill10" onchange="updateIllCount()"><label for="ill10" data-i18n="ill10">Kidney disease</label></div>
+      <div class="sub-count" id="illCount"></div>
+    </div>
+    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n-html="c4"><strong>Loss of weight</strong> — Have you lost 5 % or more of your body weight in the past 12 months?</label></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcFRAIL()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>
@@ -53,65 +67,80 @@ var UCM_I18N_PAGE = {
   en: {
     tag: 'Cognition & frailty', title: 'FRAIL Scale', subtitle: 'Five-item screening tool for frailty in older adults.',
     items_heading: 'Criteria (1 point each if present)',
-    c0: '<strong>Fatigue</strong> — Are you fatigued most or all of the time?',
-    c1: '<strong>Resistance</strong> — Are you unable to climb one flight of stairs?',
-    c2: '<strong>Aerobic</strong> — Are you unable to walk one block (approx. 100 m)?',
-    c3: '<strong>Illnesses</strong> — Do you have more than 5 illnesses?',
-    c4: '<strong>Loss of weight</strong> — Have you lost more than 5% of your body weight in the past year?',
+    c0: '<strong>Fatigue</strong> — During the past 4 weeks, have you felt tired all or most of the time?',
+    c1: '<strong>Resistance</strong> — By yourself and without aids, do you have difficulty walking up 10 steps without resting?',
+    c2: '<strong>Aerobic</strong> — By yourself and without aids, do you have difficulty walking about 100 m (100 yards) without resting?',
+    c3: '<strong>Illnesses</strong> — Has a doctor ever told you that you have any of these illnesses? (1 point for 5 or more of the 11)',
+    c4: '<strong>Loss of weight</strong> — Have you lost 5 % or more of your body weight in the past 12 months?',
+    ill0: 'Hypertension', ill1: 'Diabetes', ill2: 'Cancer (other than a minor skin cancer)', ill3: 'Chronic lung disease', ill4: 'Heart attack', ill5: 'Congestive heart failure', ill6: 'Angina', ill7: 'Asthma', ill8: 'Arthritis', ill9: 'Stroke', ill10: 'Kidney disease',
+    ill_count: '{n} of 11 ticked — 1 point if 5 or more',
     calc_btn: 'Calculate', score_label: 'Score = ', of5: ' / 5',
     interp_robust: 'Robust (0 criteria).', interp_prefrail: 'Pre-frail (1–2 criteria).', interp_frail: 'Frail (3–5 criteria).'
   },
   cs: {
     tag: 'Kognice a křehkost', title: 'Škála FRAIL', subtitle: 'Pětiotázkový screeningový nástroj pro křehkost u starších dospělých.',
     items_heading: 'Kritéria (1 bod za každé přítomné)',
-    c0: '<strong>Únava</strong> — Cítíte se unavený(á) po většinu nebo celou dobu?',
-    c1: '<strong>Odolnost</strong> — Nezvládnete vyjít jedno patro po schodech?',
-    c2: '<strong>Aerobní kapacita</strong> — Nezvládnete ujít jeden blok (přibl. 100 m)?',
-    c3: '<strong>Nemoci</strong> — Máte více než 5 onemocnění?',
-    c4: '<strong>Úbytek hmotnosti</strong> — Zhubl(a) jste za poslední rok o více než 5 % tělesné hmotnosti?',
+    c0: '<strong>Únava</strong> — Cítil(a) jste se za poslední 4 týdny unavený(á) po celou dobu nebo většinu času?',
+    c1: '<strong>Odolnost</strong> — Máte potíže vyjít sám/sama a bez pomůcek 10 schodů bez odpočinku?',
+    c2: '<strong>Aerobní kapacita</strong> — Máte potíže ujít asi 100 m bez odpočinku a bez pomůcek?',
+    c3: '<strong>Nemoci</strong> — Diagnostikoval vám lékař někdy některé z těchto onemocnění? (bod při 5 a více z 11)',
+    c4: '<strong>Úbytek hmotnosti</strong> — Zhubl(a) jste za posledních 12 měsíců o 5 % tělesné hmotnosti nebo více?',
+    ill0: 'Hypertenze', ill1: 'Diabetes', ill2: 'Nádorové onemocnění (kromě drobných kožních nádorů)', ill3: 'Chronické plicní onemocnění', ill4: 'Infarkt myokardu', ill5: 'Srdeční selhání', ill6: 'Angina pectoris', ill7: 'Astma', ill8: 'Artritida', ill9: 'Cévní mozková příhoda', ill10: 'Onemocnění ledvin',
+    ill_count: 'Zaškrtnuto {n} z 11 — bod se přičítá při 5 a více',
     calc_btn: 'Vypočítat', score_label: 'Skóre = ', of5: ' / 5',
     interp_robust: 'Robustní (0 kritérií).', interp_prefrail: 'Prefrailní (1–2 kritéria).', interp_frail: 'Křehký(á) (3–5 kritérií).'
   },
   fr: {
     tag: 'Cognition et fragilité', title: 'Échelle FRAIL', subtitle: 'Outil de dépistage en cinq questions de la fragilité chez les personnes âgées.',
     items_heading: 'Critères (1 point chacun si présent)',
-    c0: '<strong>Fatigue</strong> — Vous sentez-vous fatigué(e) la majeure partie ou la totalité du temps ?',
-    c1: '<strong>Résistance</strong> — Êtes-vous incapable de monter un étage à pied ?',
-    c2: '<strong>Aérobie</strong> — Êtes-vous incapable de marcher un pâté de maisons (environ 100 m) ?',
-    c3: '<strong>Maladies</strong> — Avez-vous plus de 5 maladies ?',
-    c4: '<strong>Perte de poids</strong> — Avez-vous perdu plus de 5 % de votre poids corporel au cours de la dernière année ?',
+    c0: '<strong>Fatigue</strong> — Au cours des 4 dernières semaines, vous êtes-vous senti(e) fatigué(e) tout le temps ou la plupart du temps ?',
+    c1: '<strong>Résistance</strong> — Seul(e) et sans aide technique, avez-vous des difficultés à monter 10 marches sans vous reposer ?',
+    c2: '<strong>Capacité aérobie</strong> — Seul(e) et sans aide technique, avez-vous des difficultés à marcher environ 100 m sans vous reposer ?',
+    c3: '<strong>Maladies</strong> — Un médecin vous a-t-il déjà dit que vous aviez l\u2019une de ces maladies ? (1 point pour 5 ou plus sur 11)',
+    c4: '<strong>Perte de poids</strong> — Avez-vous perdu 5 % ou plus de votre poids au cours des 12 derniers mois ?',
+    ill0: 'Hypertension artérielle', ill1: 'Diabète', ill2: 'Cancer (hors cancer cutané mineur)', ill3: 'Maladie pulmonaire chronique', ill4: 'Infarctus du myocarde', ill5: 'Insuffisance cardiaque', ill6: 'Angine de poitrine', ill7: 'Asthme', ill8: 'Arthrite', ill9: 'Accident vasculaire cérébral', ill10: 'Maladie rénale',
+    ill_count: '{n} sur 11 cochée(s) — 1 point si 5 ou plus',
     calc_btn: 'Calculer', score_label: 'Score = ', of5: ' / 5',
     interp_robust: 'Robuste (0 critère).', interp_prefrail: 'Pré-fragile (1–2 critères).', interp_frail: 'Fragile (3–5 critères).'
   },
   de: {
     tag: 'Kognition & Gebrechlichkeit', title: 'FRAIL-Skala', subtitle: 'Fünf-Fragen-Screening-Instrument für Gebrechlichkeit bei älteren Erwachsenen.',
     items_heading: 'Kriterien (je 1 Punkt, falls zutreffend)',
-    c0: '<strong>Erschöpfung</strong> — Fühlen Sie sich die meiste oder ganze Zeit erschöpft?',
-    c1: '<strong>Kraft</strong> — Können Sie kein Stockwerk Treppen steigen?',
-    c2: '<strong>Ausdauer</strong> — Können Sie keinen Block (ca. 100 m) gehen?',
-    c3: '<strong>Erkrankungen</strong> — Haben Sie mehr als 5 Erkrankungen?',
-    c4: '<strong>Gewichtsverlust</strong> — Haben Sie im letzten Jahr mehr als 5 % Ihres Körpergewichts verloren?',
+    c0: '<strong>Erschöpfung</strong> — Haben Sie sich in den letzten 4 Wochen die ganze oder die meiste Zeit müde gefühlt?',
+    c1: '<strong>Kraft</strong> — Haben Sie Schwierigkeiten, allein und ohne Hilfsmittel 10 Stufen ohne Pause hinaufzusteigen?',
+    c2: '<strong>Ausdauer</strong> — Haben Sie Schwierigkeiten, allein und ohne Hilfsmittel etwa 100 m ohne Pause zu gehen?',
+    c3: '<strong>Erkrankungen</strong> — Hat Ihnen ein Arzt jemals gesagt, dass Sie eine dieser Erkrankungen haben? (1 Punkt bei 5 oder mehr von 11)',
+    c4: '<strong>Gewichtsverlust</strong> — Haben Sie in den letzten 12 Monaten 5 % oder mehr Ihres Körpergewichts verloren?',
+    ill0: 'Bluthochdruck', ill1: 'Diabetes', ill2: 'Krebs (außer kleinem Hautkrebs)', ill3: 'Chronische Lungenerkrankung', ill4: 'Herzinfarkt', ill5: 'Herzinsuffizienz', ill6: 'Angina pectoris', ill7: 'Asthma', ill8: 'Arthritis', ill9: 'Schlaganfall', ill10: 'Nierenerkrankung',
+    ill_count: '{n} von 11 angekreuzt — 1 Punkt bei 5 oder mehr',
     calc_btn: 'Berechnen', score_label: 'Score = ', of5: ' / 5',
     interp_robust: 'Robust (0 Kriterien).', interp_prefrail: 'Prä-gebrechlich (1–2 Kriterien).', interp_frail: 'Gebrechlich (3–5 Kriterien).'
   },
   pl: {
     tag: 'Funkcje poznawcze i zespół kruchości', title: 'Skala FRAIL', subtitle: 'Pięciopytaniowe narzędzie przesiewowe w kierunku zespołu kruchości u osób starszych.',
     items_heading: 'Kryteria (1 punkt za każde obecne)',
-    c0: '<strong>Zmęczenie</strong> — Czy czuje się Pan/Pani zmęczony(a) przez większość lub cały czas?',
-    c1: '<strong>Wytrzymałość</strong> — Czy nie jest Pan/Pani w stanie wejść na jedno piętro schodów?',
-    c2: '<strong>Wydolność</strong> — Czy nie jest Pan/Pani w stanie przejść jednego bloku (ok. 100 m)?',
-    c3: '<strong>Choroby</strong> — Czy ma Pan/Pani więcej niż 5 chorób?',
-    c4: '<strong>Utrata masy ciała</strong> — Czy w ciągu ostatniego roku schudł(a) Pan/Pani ponad 5% masy ciała?',
+    c0: '<strong>Zmęczenie</strong> — Czy w ciągu ostatnich 4 tygodni czuł(a) się Pan/Pani zmęczony(a) cały czas lub przez większość czasu?',
+    c1: '<strong>Wytrzymałość</strong> — Czy ma Pan/Pani trudność z samodzielnym wejściem, bez pomocy sprzętu, na 10 stopni bez odpoczynku?',
+    c2: '<strong>Wydolność</strong> — Czy ma Pan/Pani trudność z samodzielnym przejściem, bez pomocy sprzętu, około 100 m bez odpoczynku?',
+    c3: '<strong>Choroby</strong> — Czy lekarz kiedykolwiek stwierdził u Pana/Pani którąś z tych chorób? (1 punkt przy 5 lub więcej z 11)',
+    c4: '<strong>Utrata masy ciała</strong> — Czy w ciągu ostatnich 12 miesięcy schudł(a) Pan/Pani o 5% masy ciała lub więcej?',
+    ill0: 'Nadciśnienie tętnicze', ill1: 'Cukrzyca', ill2: 'Nowotwór (z wyjątkiem drobnego raka skóry)', ill3: 'Przewlekła choroba płuc', ill4: 'Zawał serca', ill5: 'Niewydolność serca', ill6: 'Dławica piersiowa', ill7: 'Astma', ill8: 'Zapalenie stawów', ill9: 'Udar mózgu', ill10: 'Choroba nerek',
+    ill_count: 'Zaznaczono {n} z 11 — 1 punkt przy 5 lub więcej',
     calc_btn: 'Oblicz', score_label: 'Wynik = ', of5: ' / 5',
     interp_robust: 'Sprawny (0 kryteriów).', interp_prefrail: 'Wstępna kruchość (1–2 kryteria).', interp_frail: 'Zespół kruchości (3–5 kryteriów).'
   }
 };
 
 var _lastFRAIL = null;
+var ILL_IDS = ['ill0','ill1','ill2','ill3','ill4','ill5','ill6','ill7','ill8','ill9','ill10'];
+
+// Illnesses: 1 point for 5 or more of the 11 listed diagnoses (Morley et al. 2012) — "5 or more", not "more than 5".
+function illCount() { return ILL_IDS.filter(function(id){ return document.getElementById(id).checked; }).length; }
+function updateIllCount() { document.getElementById('illCount').textContent = ucmTf('ill_count', { n: illCount() }); }
 
 function calcFRAIL() {
-  var ids = ['c0','c1','c2','c3','c4'];
-  var total = ids.filter(function(id){ return document.getElementById(id).checked; }).length;
+  var total = ['c0','c1','c2','c4'].filter(function(id){ return document.getElementById(id).checked; }).length;
+  if (illCount() >= 5) total += 1;
   _lastFRAIL = total;
   renderResult();
 }
@@ -125,7 +154,7 @@ function renderResult() {
   document.getElementById('result').classList.add('show');
 }
 
-window.ucmOnLangChange = function() { renderResult(); };
+window.ucmOnLangChange = function() { updateIllCount(); renderResult(); };
 </script>
 <script src="../assets/i18n.js"></script>
 </body>

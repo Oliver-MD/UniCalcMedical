@@ -76,8 +76,8 @@
   </div>
 
   <div class="source-block">
-    <strong data-i18n="reference_label">Reference:</strong> World Health Organization. 2023 AWaRe classification of antibiotics for evaluation and monitoring of use.<br>
-    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.who.int/publications/i/item/WHO-MHP-HPS-EML-2023.04" target="_blank" rel="noopener">WHO AWaRe classification</a>
+    <strong data-i18n="reference_label">Reference:</strong> World Health Organization. The selection and use of essential medicines, 2025: WHO AWaRe (Access, Watch, Reserve) classification of antibiotics for evaluation and monitoring of use. Geneva: WHO; 2025 (ref. B09489).<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.who.int/publications/i/item/B09489" target="_blank" rel="noopener">WHO AWaRe classification 2025</a> · <a href="https://aware.essentialmeds.org/list" target="_blank" rel="noopener">WHO AWaRe antibiotic list</a>
   </div>
 </div>
 
@@ -86,50 +86,55 @@
 </footer>
 
 <script>
+// WHO AWaRe classification 2025 (WHO ref. B09489, 5 Sept 2025). Groups are i18n keys (translated below).
+// Corrected against the WHO list: fosfomycin p.o., vancomycin p.o., tobramycin, streptomycin, oxytetracycline and
+// lincomycin are Watch (not Access); ceftaroline, ceftobiprole and aztreonam are Reserve (not Watch);
+// minocycline is Watch orally but Reserve i.v.; colistin is Reserve in both forms.
 var DATA = {
   access: {
     groups: {
-      "Penicillins": ["amoxicillin","amoxicillin/clavulanate","ampicillin","ampicillin/sulbactam (sultamicillin)","benzylpenicillin (penicillin G)","benzathine benzylpenicillin","procaine benzylpenicillin","phenoxymethylpenicillin (penicillin V)","cloxacillin","dicloxacillin","flucloxacillin","oxacillin","nafcillin","pivmecillinam (mecillinam)"],
-      "1st-generation cephalosporins": ["cefadroxil","cefalexin","cefazolin","cefradine"],
-      "Aminoglycosides": ["amikacin","gentamicin","tobramycin","streptomycin"],
-      "Tetracyclines": ["doxycycline","oxytetracycline","tetracycline"],
-      "Amphenicols": ["chloramphenicol","thiamphenicol"],
-      "Lincosamides": ["clindamycin","lincomycin"],
-      "Nitroimidazoles": ["metronidazole","ornidazole","tinidazole"],
-      "Nitrofurans": ["nitrofurantoin","furazidin"],
-      "Sulfonamides and trimethoprim": ["trimethoprim","sulfamethoxazole/trimethoprim (co-trimoxazole)","sulfadiazine","sulfametrole/trimethoprim"],
-      "Other": ["spectinomycin","fosfomycin (oral — trometamol)","vancomycin (oral)"]
+      g_penicillins: ["amoxicillin","amoxicillin/clavulanate","ampicillin","ampicillin/sulbactam (sultamicillin)","benzylpenicillin (penicillin G)","benzathine benzylpenicillin","procaine benzylpenicillin","phenoxymethylpenicillin (penicillin V)","cloxacillin","dicloxacillin","flucloxacillin","oxacillin","nafcillin","pivmecillinam (mecillinam)"],
+      g_ceph1: ["cefadroxil","cefalexin","cefazolin","cefradine"],
+      g_aminoglycosides: ["amikacin","gentamicin"],
+      g_tetracyclines: ["doxycycline","tetracycline"],
+      g_amphenicols: ["chloramphenicol","thiamphenicol"],
+      g_lincosamides: ["clindamycin"],
+      g_nitroimidazoles: ["metronidazole","ornidazole","tinidazole"],
+      g_nitrofurans: ["nitrofurantoin","furazidin"],
+      g_sulfonamides: ["trimethoprim","sulfamethoxazole/trimethoprim (co-trimoxazole)","sulfadiazine","sulfametrole/trimethoprim"],
+      g_other: ["spectinomycin"]
     }
   },
   watch: {
     groups: {
-      "Macrolides": ["azithromycin","clarithromycin","erythromycin","roxithromycin","spiramycin","josamycin","midecamycin","telithromycin"],
-      "2nd-generation cephalosporins": ["cefaclor","cefuroxime","cefprozil","cefotiam"],
-      "3rd-generation cephalosporins": ["cefixime","cefdinir","cefpodoxime","ceftibuten","cefotaxime","ceftriaxone","ceftazidime","cefoperazone"],
-      "4th/5th-generation cephalosporins": ["cefepime","ceftaroline","ceftobiprole"],
-      "Fluoroquinolones": ["ciprofloxacin","levofloxacin","moxifloxacin","ofloxacin","norfloxacin","lomefloxacin","pefloxacin","prulifloxacin","gemifloxacin","rufloxacin"],
-      "Carbapenems": ["imipenem/cilastatin","meropenem","ertapenem","doripenem","biapenem"],
-      "Glycopeptides": ["vancomycin (parenteral)","teicoplanin"],
-      "Antipseudomonal penicillins": ["piperacillin/tazobactam","ticarcillin/clavulanate","ticarcillin","temocillin","mezlocillin","azlocillin"],
-      "Monobactams": ["aztreonam"],
-      "Rifamycins": ["rifampicin","rifabutin","rifaximin"],
-      "Aminoglycosides": ["netilmicin","isepamicin","arbekacin"],
-      "Other": ["fusidic acid","minocycline"]
+      g_macrolides: ["azithromycin","clarithromycin","erythromycin","roxithromycin","spiramycin","josamycin","midecamycin","telithromycin"],
+      g_ceph2: ["cefaclor","cefuroxime","cefprozil","cefotiam"],
+      g_ceph3: ["cefixime","cefdinir","cefpodoxime","ceftibuten","cefotaxime","ceftriaxone","ceftazidime","cefoperazone"],
+      g_ceph4: ["cefepime"],
+      g_fluoroquinolones: ["ciprofloxacin","levofloxacin","moxifloxacin","ofloxacin","norfloxacin","lomefloxacin","pefloxacin","prulifloxacin","gemifloxacin","rufloxacin"],
+      g_carbapenems: ["imipenem/cilastatin","meropenem","ertapenem","doripenem","biapenem"],
+      g_glycopeptides: ["vancomycin (i.v. + p.o.)","teicoplanin"],
+      g_antipseudomonal: ["piperacillin/tazobactam","ticarcillin/clavulanate","ticarcillin","temocillin","mezlocillin","azlocillin"],
+      g_aminoglycosides: ["tobramycin","streptomycin","netilmicin","isepamicin","arbekacin"],
+      g_tetracyclines: ["oxytetracycline","minocycline (p.o.)"],
+      g_lincosamides: ["lincomycin"],
+      g_rifamycins: ["rifampicin","rifabutin","rifaximin"],
+      g_other: ["fosfomycin (p.o., trometamol)","fusidic acid"]
     }
   },
   reserve: {
     groups: {
-      "Cephalosporin + β-lactamase inhibitor": ["cefiderocol","ceftazidime/avibactam","ceftolozane/tazobactam"],
-      "Carbapenem + inhibitor": ["imipenem/cilastatin/relebactam","meropenem/vaborbactam"],
-      "Monobactam + inhibitor": ["aztreonam/avibactam"],
-      "Polymyxins": ["colistin (parenteral)","polymyxin B"],
-      "Fosfomycin (IV)": ["fosfomycin (IV)"],
-      "Aminoglycosides": ["plazomicin"],
-      "Oxazolidinones": ["linezolid","tedizolid"],
-      "Lipopeptides": ["daptomycin"],
-      "Glycylcyclines and new tetracyclines": ["tigecycline","eravacycline","omadacycline"],
-      "Lipoglycopeptides": ["dalbavancin","oritavancin","telavancin"],
-      "Pleuromutilins": ["lefamulin"]
+      g_ceph_reserve: ["ceftaroline","ceftobiprole","cefiderocol","ceftazidime/avibactam","ceftolozane/tazobactam"],
+      g_carb_inh: ["imipenem/cilastatin/relebactam","meropenem/vaborbactam"],
+      g_monobactams: ["aztreonam","aztreonam/avibactam"],
+      g_polymyxins: ["colistin (i.v. + p.o.)","polymyxin B"],
+      g_aminoglycosides: ["plazomicin"],
+      g_oxazolidinones: ["linezolid","tedizolid"],
+      g_lipopeptides: ["daptomycin"],
+      g_tetracyclines_res: ["minocycline (i.v.)","tigecycline","eravacycline","omadacycline"],
+      g_lipoglycopeptides: ["dalbavancin","oritavancin","telavancin"],
+      g_pleuromutilins: ["lefamulin"],
+      g_other: ["fosfomycin (i.v.)"]
     }
   }
 };
@@ -137,6 +142,34 @@ var DATA = {
 var UCM_I18N_PAGE = {
   en: {
     tag: 'Infection & antimicrobials', title: 'WHO AWaRe Classification', subtitle: 'Access, Watch, and Reserve categories for antibiotics, organized by drug class. Drug names are given as standard international non-proprietary names (INN).',
+    g_penicillins: 'Penicillins',
+    g_ceph1: '1st-generation cephalosporins',
+    g_ceph2: '2nd-generation cephalosporins',
+    g_ceph3: '3rd-generation cephalosporins',
+    g_ceph4: '4th-generation cephalosporins',
+    g_ceph_reserve: 'Cephalosporins (5th generation, siderophore, β-lactamase inhibitor combinations)',
+    g_aminoglycosides: 'Aminoglycosides',
+    g_tetracyclines: 'Tetracyclines',
+    g_tetracyclines_res: 'Tetracyclines and glycylcyclines',
+    g_amphenicols: 'Amphenicols',
+    g_lincosamides: 'Lincosamides',
+    g_nitroimidazoles: 'Nitroimidazoles',
+    g_nitrofurans: 'Nitrofurans',
+    g_sulfonamides: 'Sulfonamides and trimethoprim',
+    g_other: 'Other',
+    g_macrolides: 'Macrolides',
+    g_fluoroquinolones: 'Fluoroquinolones',
+    g_carbapenems: 'Carbapenems',
+    g_glycopeptides: 'Glycopeptides',
+    g_antipseudomonal: 'Antipseudomonal penicillins',
+    g_rifamycins: 'Rifamycins',
+    g_carb_inh: 'Carbapenem + β-lactamase inhibitor',
+    g_monobactams: 'Monobactams',
+    g_polymyxins: 'Polymyxins',
+    g_oxazolidinones: 'Oxazolidinones',
+    g_lipopeptides: 'Lipopeptides',
+    g_lipoglycopeptides: 'Lipoglycopeptides',
+    g_pleuromutilins: 'Pleuromutilins',
     aware_note: ' This reflects the WHO\'s global AWaRe list; it excludes the "Not recommended" category (fixed-dose broad-spectrum combinations) and does not indicate which formulations are marketed in any particular country.',
     search_ph: 'Search antibiotics by name…', total_label: 'Total:', total_suffix: 'agents', no_results: 'No antibiotic matches your search.',
     cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
@@ -147,7 +180,35 @@ var UCM_I18N_PAGE = {
   },
   cs: {
     tag: 'Infekce a antimikrobiální léčba', title: 'Klasifikace WHO AWaRe', subtitle: 'Kategorie Access, Watch a Reserve pro antibiotika, uspořádané dle skupin léčiv. Názvy léčiv jsou uvedeny jako standardní mezinárodní nechráněné názvy (INN).',
-    aware_note: ' Odpovídá globálnímu seznamu WHO AWaRe; nezahrnuje kategorii "Not recommended" (fixní širokospektré kombinace) a neuvádí, které lékové formy jsou registrovány v konkrétní zemi.',
+    g_penicillins: 'Peniciliny',
+    g_ceph1: 'Cefalosporiny 1. generace',
+    g_ceph2: 'Cefalosporiny 2. generace',
+    g_ceph3: 'Cefalosporiny 3. generace',
+    g_ceph4: 'Cefalosporiny 4. generace',
+    g_ceph_reserve: 'Cefalosporiny (5. generace, sideroforový cefalosporin, kombinace s inhibitory β-laktamáz)',
+    g_aminoglycosides: 'Aminoglykosidy',
+    g_tetracyclines: 'Tetracykliny',
+    g_tetracyclines_res: 'Tetracykliny a glycylcykliny',
+    g_amphenicols: 'Amfenikoly',
+    g_lincosamides: 'Linkosamidy',
+    g_nitroimidazoles: 'Nitroimidazoly',
+    g_nitrofurans: 'Nitrofurany',
+    g_sulfonamides: 'Sulfonamidy a trimethoprim',
+    g_other: 'Ostatní',
+    g_macrolides: 'Makrolidy',
+    g_fluoroquinolones: 'Fluorochinolony',
+    g_carbapenems: 'Karbapenemy',
+    g_glycopeptides: 'Glykopeptidy',
+    g_antipseudomonal: 'Antipseudomonádové peniciliny',
+    g_rifamycins: 'Rifamyciny',
+    g_carb_inh: 'Karbapenem + inhibitor β-laktamáz',
+    g_monobactams: 'Monobaktamy',
+    g_polymyxins: 'Polymyxiny',
+    g_oxazolidinones: 'Oxazolidinony',
+    g_lipopeptides: 'Lipopeptidy',
+    g_lipoglycopeptides: 'Lipoglykopeptidy',
+    g_pleuromutilins: 'Pleuromutiliny',
+    aware_note: ' Odpovídá globálnímu seznamu WHO AWaRe; nezahrnuje kategorii „Not recommended“ (nedoporučené fixní kombinace se širokým spektrem) a neuvádí, které lékové formy jsou registrovány v konkrétní zemi.',
     search_ph: 'Hledat antibiotikum podle názvu…', total_label: 'Celkem:', total_suffix: 'léčiv', no_results: 'Žádné antibiotikum neodpovídá hledání.',
     cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
     desc_access: 'Úzkospektrá antibiotika 1. volby — preferovat', desc_watch: 'Širší spektrum, vyšší rezistenční potenciál — uvážlivě', desc_reserve: 'Poslední záloha — jen MDR / život ohrožující infekce',
@@ -157,6 +218,34 @@ var UCM_I18N_PAGE = {
   },
   fr: {
     tag: 'Infection et antimicrobiens', title: 'Classification OMS AWaRe', subtitle: "Catégories Access, Watch et Reserve pour les antibiotiques, organisées par classe. Les noms sont donnés en dénomination commune internationale (DCI) standard.",
+    g_penicillins: 'Pénicillines',
+    g_ceph1: 'Céphalosporines de 1re génération',
+    g_ceph2: 'Céphalosporines de 2e génération',
+    g_ceph3: 'Céphalosporines de 3e génération',
+    g_ceph4: 'Céphalosporines de 4e génération',
+    g_ceph_reserve: 'Céphalosporines (5e génération, sidérophore, associations avec un inhibiteur de β-lactamases)',
+    g_aminoglycosides: 'Aminosides',
+    g_tetracyclines: 'Tétracyclines',
+    g_tetracyclines_res: 'Tétracyclines et glycylcyclines',
+    g_amphenicols: 'Phénicolés',
+    g_lincosamides: 'Lincosamides',
+    g_nitroimidazoles: 'Nitro-imidazolés',
+    g_nitrofurans: 'Nitrofuranes',
+    g_sulfonamides: 'Sulfamides et triméthoprime',
+    g_other: 'Autres',
+    g_macrolides: 'Macrolides',
+    g_fluoroquinolones: 'Fluoroquinolones',
+    g_carbapenems: 'Carbapénèmes',
+    g_glycopeptides: 'Glycopeptides',
+    g_antipseudomonal: 'Pénicillines antipyocyaniques',
+    g_rifamycins: 'Rifamycines',
+    g_carb_inh: 'Carbapénème + inhibiteur de β-lactamases',
+    g_monobactams: 'Monobactames',
+    g_polymyxins: 'Polymyxines',
+    g_oxazolidinones: 'Oxazolidinones',
+    g_lipopeptides: 'Lipopeptides',
+    g_lipoglycopeptides: 'Lipoglycopeptides',
+    g_pleuromutilins: 'Pleuromutilines',
     aware_note: " Reflète la liste mondiale AWaRe de l'OMS ; exclut la catégorie « Non recommandé » (associations fixes à large spectre) et n'indique pas quelles formulations sont commercialisées dans un pays donné.",
     search_ph: 'Rechercher un antibiotique par nom…', total_label: 'Total :', total_suffix: 'substances', no_results: 'Aucun antibiotique ne correspond à votre recherche.',
     cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
@@ -167,6 +256,34 @@ var UCM_I18N_PAGE = {
   },
   de: {
     tag: 'Infektion & Antibiotika', title: 'WHO-AWaRe-Klassifikation', subtitle: 'Access-, Watch- und Reserve-Kategorien für Antibiotika, gegliedert nach Wirkstoffklassen. Wirkstoffnamen als internationale Freinamen (INN) angegeben.',
+    g_penicillins: 'Penicilline',
+    g_ceph1: 'Cephalosporine der 1. Generation',
+    g_ceph2: 'Cephalosporine der 2. Generation',
+    g_ceph3: 'Cephalosporine der 3. Generation',
+    g_ceph4: 'Cephalosporine der 4. Generation',
+    g_ceph_reserve: 'Cephalosporine (5. Generation, Siderophor, Kombinationen mit β-Laktamase-Inhibitoren)',
+    g_aminoglycosides: 'Aminoglykoside',
+    g_tetracyclines: 'Tetracycline',
+    g_tetracyclines_res: 'Tetracycline und Glycylcycline',
+    g_amphenicols: 'Amphenicole',
+    g_lincosamides: 'Lincosamide',
+    g_nitroimidazoles: 'Nitroimidazole',
+    g_nitrofurans: 'Nitrofurane',
+    g_sulfonamides: 'Sulfonamide und Trimethoprim',
+    g_other: 'Sonstige',
+    g_macrolides: 'Makrolide',
+    g_fluoroquinolones: 'Fluorchinolone',
+    g_carbapenems: 'Carbapeneme',
+    g_glycopeptides: 'Glykopeptide',
+    g_antipseudomonal: 'Pseudomonas-wirksame Penicilline',
+    g_rifamycins: 'Rifamycine',
+    g_carb_inh: 'Carbapenem + β-Laktamase-Inhibitor',
+    g_monobactams: 'Monobactame',
+    g_polymyxins: 'Polymyxine',
+    g_oxazolidinones: 'Oxazolidinone',
+    g_lipopeptides: 'Lipopeptide',
+    g_lipoglycopeptides: 'Lipoglykopeptide',
+    g_pleuromutilins: 'Pleuromutiline',
     aware_note: ' Entspricht der globalen AWaRe-Liste der WHO; schließt die Kategorie „Not recommended" (fixe Breitspektrum-Kombinationen) aus und gibt nicht an, welche Darreichungsformen in einem bestimmten Land vermarktet werden.',
     search_ph: 'Antibiotikum nach Namen suchen…', total_label: 'Gesamt:', total_suffix: 'Wirkstoffe', no_results: 'Kein Antibiotikum entspricht Ihrer Suche.',
     cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
@@ -177,6 +294,34 @@ var UCM_I18N_PAGE = {
   },
   pl: {
     tag: 'Infekcje i leki przeciwdrobnoustrojowe', title: 'Klasyfikacja WHO AWaRe', subtitle: 'Kategorie Access, Watch i Reserve dla antybiotyków, uporządkowane według klas leków. Nazwy leków podano jako standardowe międzynarodowe nazwy niezastrzeżone (INN).',
+    g_penicillins: 'Penicyliny',
+    g_ceph1: 'Cefalosporyny I generacji',
+    g_ceph2: 'Cefalosporyny II generacji',
+    g_ceph3: 'Cefalosporyny III generacji',
+    g_ceph4: 'Cefalosporyny IV generacji',
+    g_ceph_reserve: 'Cefalosporyny (V generacji, siderofor, połączenia z inhibitorami β-laktamaz)',
+    g_aminoglycosides: 'Aminoglikozydy',
+    g_tetracyclines: 'Tetracykliny',
+    g_tetracyclines_res: 'Tetracykliny i glicylocykliny',
+    g_amphenicols: 'Amfenikole',
+    g_lincosamides: 'Linkozamidy',
+    g_nitroimidazoles: 'Nitroimidazole',
+    g_nitrofurans: 'Nitrofurany',
+    g_sulfonamides: 'Sulfonamidy i trimetoprim',
+    g_other: 'Inne',
+    g_macrolides: 'Makrolidy',
+    g_fluoroquinolones: 'Fluorochinolony',
+    g_carbapenems: 'Karbapenemy',
+    g_glycopeptides: 'Glikopeptydy',
+    g_antipseudomonal: 'Penicyliny przeciwpseudomonasowe',
+    g_rifamycins: 'Ryfamycyny',
+    g_carb_inh: 'Karbapenem + inhibitor β-laktamaz',
+    g_monobactams: 'Monobaktamy',
+    g_polymyxins: 'Polimyksyny',
+    g_oxazolidinones: 'Oksazolidynony',
+    g_lipopeptides: 'Lipopeptydy',
+    g_lipoglycopeptides: 'Lipoglikopeptydy',
+    g_pleuromutilins: 'Pleuromutyliny',
     aware_note: ' Odzwierciedla globalną listę AWaRe WHO; nie obejmuje kategorii „Not recommended" (stałe skojarzenia o szerokim spektrum) i nie wskazuje, które postaci są dostępne w danym kraju.',
     search_ph: 'Szukaj antybiotyku po nazwie…', total_label: 'Łącznie:', total_suffix: 'substancji', no_results: 'Żaden antybiotyk nie pasuje do wyszukiwania.',
     cat_access: 'ACCESS', cat_watch: 'WATCH', cat_reserve: 'RESERVE',
@@ -205,7 +350,7 @@ function buildCats() {
       total += drugs.length;
       catCount += drugs.length;
       var drugsHtml = drugs.map(function(d) { return '<span class="aw-drug" data-name="' + d.toLowerCase() + '">' + d + '</span>'; }).join('');
-      groupsHtml += '<div class="aw-group"><div class="aw-group-name">' + groupName + '</div><div class="aw-drugs">' + drugsHtml + '</div></div>';
+      groupsHtml += '<div class="aw-group"><div class="aw-group-name">' + ucmT(groupName) + '</div><div class="aw-drugs">' + drugsHtml + '</div></div>';
     });
     catEl.innerHTML =
       '<div class="aw-cat-head" onclick="this.closest(\'.aw-cat\').classList.toggle(\'collapsed\')">' +

@@ -24,6 +24,7 @@
     <h2 data-i18n="calc_heading">Calculate</h2>
     <div class="field"><label data-i18n="drug_label">Drug</label>
       <select id="drug">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="20" data-i18n="d_hydrocortisone">Hydrocortisone (reference, 20 mg)</option>
         <option value="25" data-i18n="d_cortisone">Cortisone (25 mg)</option>
         <option value="5" data-i18n="d_prednisone">Prednisone (5 mg)</option>
@@ -70,7 +71,8 @@ var UCM_I18N_PAGE = {
     d_methylprednisolone: 'Methylprednisolone (4 mg)', d_triamcinolone: 'Triamcinolone (4 mg)', d_dexamethasone: 'Dexamethasone (0.75 mg)', d_betamethasone: 'Betamethasone (0.6 mg)',
     dose_label: 'Dose (mg)', dose_ph: 'e.g. 10', calc_btn: 'Calculate', err_invalid: 'Please enter a valid dose.',
     extra_note: ' These are widely cited approximate anti-inflammatory potency equivalences, not exact 1:1 clinical substitutions — mineralocorticoid activity and duration of action differ substantially between agents and matter clinically.',
-    equiv_heading: 'Approximately equivalent doses:'
+    equiv_heading: 'Approximately equivalent doses:',
+    hc_equiv_unit: 'mg hydrocortisone equivalent'
   },
   cs: {
     tag: 'Ostatní', title: 'Ekvivalence kortikoidů', subtitle: 'Převod dávky jednoho kortikoidu na přibližně ekvivalentní glukokortikoidní (protizánětlivou) potenci u ostatních.',
@@ -79,7 +81,8 @@ var UCM_I18N_PAGE = {
     d_methylprednisolone: 'Metylprednisolon (4 mg)', d_triamcinolone: 'Triamcinolon (4 mg)', d_dexamethasone: 'Dexametazon (0,75 mg)', d_betamethasone: 'Betametazon (0,6 mg)',
     dose_label: 'Dávka (mg)', dose_ph: 'např. 10', calc_btn: 'Vypočítat', err_invalid: 'Zadejte prosím platnou dávku.',
     extra_note: ' Jde o obecně uváděné přibližné ekvivalence protizánětlivé potence, nikoliv přesnou 1:1 klinickou záměnu — mineralokortikoidní aktivita a délka účinku se mezi jednotlivými léčivy klinicky významně liší.',
-    equiv_heading: 'Přibližně ekvivalentní dávky:'
+    equiv_heading: 'Přibližně ekvivalentní dávky:',
+    hc_equiv_unit: 'mg ekvivalentu hydrokortizonu'
   },
   fr: {
     tag: 'Autre', title: 'Équivalence des corticoïdes', subtitle: "Convertit la dose d'un corticoïde en sa dose de puissance glucocorticoïde (anti-inflammatoire) approximativement équivalente pour d'autres.",
@@ -88,7 +91,8 @@ var UCM_I18N_PAGE = {
     d_methylprednisolone: 'Méthylprednisolone (4 mg)', d_triamcinolone: 'Triamcinolone (4 mg)', d_dexamethasone: 'Dexaméthasone (0,75 mg)', d_betamethasone: 'Bétaméthasone (0,6 mg)',
     dose_label: 'Dose (mg)', dose_ph: 'p. ex. 10', calc_btn: 'Calculer', err_invalid: 'Veuillez saisir une dose valide.',
     extra_note: " Il s'agit d'équivalences de puissance anti-inflammatoire approximatives largement citées, et non de substitutions cliniques exactes de 1:1 — l'activité minéralocorticoïde et la durée d'action diffèrent substantiellement entre les agents et ont une importance clinique.",
-    equiv_heading: 'Doses approximativement équivalentes :'
+    equiv_heading: 'Doses approximativement équivalentes :',
+    hc_equiv_unit: 'mg d\u2019équivalent hydrocortisone'
   },
   de: {
     tag: 'Sonstiges', title: 'Kortikosteroid-Äquivalenz', subtitle: 'Rechnet die Dosis eines Kortikosteroids in die ungefähr äquivalente glukokortikoide (entzündungshemmende) Wirkstärke anderer um.',
@@ -97,7 +101,8 @@ var UCM_I18N_PAGE = {
     d_methylprednisolone: 'Methylprednisolon (4 mg)', d_triamcinolone: 'Triamcinolon (4 mg)', d_dexamethasone: 'Dexamethason (0,75 mg)', d_betamethasone: 'Betamethason (0,6 mg)',
     dose_label: 'Dosis (mg)', dose_ph: 'z. B. 10', calc_btn: 'Berechnen', err_invalid: 'Bitte gültige Dosis eingeben.',
     extra_note: ' Dies sind weithin zitierte ungefähre entzündungshemmende Wirkstärke-Äquivalenzen, keine exakten 1:1-klinischen Substitutionen — mineralokortikoide Aktivität und Wirkdauer unterscheiden sich zwischen den Substanzen erheblich und sind klinisch relevant.',
-    equiv_heading: 'Ungefähr äquivalente Dosen:'
+    equiv_heading: 'Ungefähr äquivalente Dosen:',
+    hc_equiv_unit: 'mg Hydrocortison-Äquivalent'
   },
   pl: {
     tag: 'Inne', title: 'Równoważność kortykosteroidów', subtitle: 'Przelicza dawkę jednego kortykosteroidu na przybliżoną równoważną siłę glikokortykoidową (przeciwzapalną) innych.',
@@ -106,7 +111,8 @@ var UCM_I18N_PAGE = {
     d_methylprednisolone: 'Metyloprednizolon (4 mg)', d_triamcinolone: 'Triamcynolon (4 mg)', d_dexamethasone: 'Deksametazon (0,75 mg)', d_betamethasone: 'Betametazon (0,6 mg)',
     dose_label: 'Dawka (mg)', dose_ph: 'np. 10', calc_btn: 'Oblicz', err_invalid: 'Proszę podać prawidłową dawkę.',
     extra_note: ' Są to powszechnie cytowane przybliżone równoważności siły przeciwzapalnej, a nie dokładne zamienniki kliniczne 1:1 — aktywność mineralokortykoidowa i czas działania różnią się istotnie między lekami i mają znaczenie kliniczne.',
-    equiv_heading: 'Przybliżone dawki równoważne:'
+    equiv_heading: 'Przybliżone dawki równoważne:',
+    hc_equiv_unit: 'mg ekwiwalentu hydrokortyzonu'
   }
 };
 
@@ -115,7 +121,7 @@ var _lastSteroid = null;
 function calcSteroid() {
   var factor = parseFloat(document.getElementById('drug').value);
   var dose = parseFloat(document.getElementById('dose').value);
-  if (!dose || dose <= 0) { alert(ucmT('err_invalid')); return; }
+  if (!dose || dose <= 0) { ucmShowError(ucmT('err_invalid')); return; }
   var hydrocortisoneEquiv = (dose / factor) * 20;
   _lastSteroid = hydrocortisoneEquiv;
   renderResult();
@@ -127,9 +133,9 @@ function renderResult() {
   var html = '<strong>' + ucmT('equiv_heading') + '</strong><br>';
   DRUG_ORDER.forEach(function(key) {
     var d = hc / 20 * POTENCY[key];
-    html += ucmT('d_' + key).replace(/ \(.*\)$/, '') + ': ' + d.toFixed(2) + ' mg<br>';
+    html += ucmT('d_' + key).replace(/ \(.*\)$/, '') + ': ' + ucmFmt(d, 2) + ' mg<br>';
   });
-  document.getElementById('resultScore').textContent = hc.toFixed(1) + ' mg hydrocortisone-equivalent';
+  document.getElementById('resultScore').textContent = ucmFmt(hc, 1) + ' ' + ucmT('hc_equiv_unit');
   document.getElementById('resultInterp').innerHTML = html;
   document.getElementById('result').classList.add('show');
 }

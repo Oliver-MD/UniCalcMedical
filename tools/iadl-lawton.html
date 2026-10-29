@@ -18,7 +18,7 @@
 <div class="container">
   <span class="category-tag" data-i18n="tag">Geriatrics &amp; functional status</span>
   <h1 class="page-title" data-i18n="title">IADL (Lawton)</h1>
-  <p class="page-subtitle" data-i18n="subtitle">Measures instrumental activities of daily living needed for independent community living.</p>
+  <p class="page-subtitle" data-i18n="subtitle">Measures instrumental activities of daily living needed for independent community living. Three-level Czech version, 0–80 points.</p>
 
   <div class="card">
     <h2 data-i18n="criteria_heading">For each domain, select the level of independence</h2>
@@ -37,7 +37,8 @@
 
   <div class="source-block">
     <strong data-i18n="reference_label">Reference:</strong> Lawton MP, Brody EM. Assessment of older people: self-maintaining and instrumental activities of daily living. Gerontologist. 1969;9(3):179–186.<br>
-    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/3906/lawton-instrumental-activities-daily-living-iadl-scale" target="_blank" rel="noopener">MDCalc — Lawton IADL</a>
+    <span data-i18n="scoring_note">Scoring per the Czech version of the IADL test: each domain 10 (without help) / 5 (with help) / 0 (unable), maximum 80. The original Lawton &amp; Brody scale scores each domain 0–1 (maximum 8), so the two totals are not interchangeable.</span><br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://ose.zshk.cz/media/p5812.pdf" target="_blank" rel="noopener">Test instrumentálních všedních činností (IADL) — Czech form</a>
   </div>
 </div>
 
@@ -48,49 +49,79 @@
 <script>
 var UCM_I18N_PAGE = {
   en: {
-    tag: 'Geriatrics & functional status', title: 'IADL (Lawton)', subtitle: 'Measures instrumental activities of daily living needed for independent community living.',
+    tag: 'Geriatrics & functional status', title: 'IADL (Lawton)', subtitle: 'Measures instrumental activities of daily living needed for independent community living. Three-level Czech version, 0–80 points.',
     criteria_heading: 'For each domain, select the level of independence',
     d0: 'Ability to use telephone', d1: 'Shopping', d2: 'Food preparation', d3: 'Housekeeping',
     d4: 'Laundry', d5: 'Mode of transportation', d6: 'Responsibility for own medications', d7: 'Ability to handle finances',
-    opt_indep: 'Independent (1)', opt_dep: 'Needs assistance / dependent (0)',
-    calc_btn: 'Calculate', score_label: 'Score = ', of8: ' / 8',
-    interp_note: 'Higher scores indicate greater independence. There is no single universal cut-off; scores are generally interpreted alongside clinical context and change over time.'
+    calc_btn: 'Calculate', score_label: 'Score = ',
+    opt_10: 'Independent, without help (10)',
+    opt_5: 'With help (5)',
+    opt_0: 'Unable (0)',
+    of80: ' / 80',
+    interp_indep: '80 — independent in instrumental activities of daily living.',
+    interp_partial: '45–75 — partially dependent in instrumental activities of daily living.',
+    interp_dep: '0–40 — dependent in instrumental activities of daily living.',
+    scoring_note: 'Scoring per the Czech version of the IADL test: each domain 10 (without help) / 5 (with help) / 0 (unable), maximum 80. The original Lawton & Brody scale scores each domain 0–1 (maximum 8), so the two totals are not interchangeable.'
   },
   cs: {
-    tag: 'Geriatrie a funkční stav', title: 'IADL (Lawton)', subtitle: 'Měří instrumentální všední denní aktivity potřebné pro samostatný život v komunitě.',
+    tag: 'Geriatrie a funkční stav', title: 'IADL (Lawton)', subtitle: 'Měří instrumentální všední denní aktivity potřebné pro samostatný život v komunitě. Česká třístupňová verze, 0–80 bodů.',
     criteria_heading: 'U každé oblasti vyberte úroveň soběstačnosti',
     d0: 'Schopnost používat telefon', d1: 'Nakupování', d2: 'Příprava jídla', d3: 'Vedení domácnosti',
     d4: 'Praní prádla', d5: 'Způsob dopravy', d6: 'Zodpovědnost za užívání vlastních léků', d7: 'Schopnost hospodařit s penězi',
-    opt_indep: 'Samostatný(á) (1)', opt_dep: 'Potřebuje pomoc / závislý(á) (0)',
-    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of8: ' / 8',
-    interp_note: 'Vyšší skóre znamená vyšší soběstačnost. Neexistuje jedna univerzální hranice; skóre se obvykle interpretuje v kontextu klinického stavu a jeho vývoje v čase.'
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ',
+    opt_10: 'Samostatně bez pomoci (10)',
+    opt_5: 'S pomocí (5)',
+    opt_0: 'Nezvládne (0)',
+    of80: ' / 80',
+    interp_indep: '80 bodů — nezávislý(á) v instrumentálních všedních činnostech.',
+    interp_partial: '45–75 bodů — částečně závislý(á) v instrumentálních všedních činnostech.',
+    interp_dep: '0–40 bodů — závislý(á) v instrumentálních všedních činnostech.',
+    scoring_note: 'Bodování podle české verze testu IADL: každá oblast 10 (samostatně bez pomoci) / 5 (s pomocí) / 0 (nezvládne), maximum 80 bodů. Původní škála Lawtona a Brodyové boduje každou oblast 0–1 (maximum 8), součty proto nejsou zaměnitelné.'
   },
   fr: {
-    tag: 'Gériatrie et statut fonctionnel', title: 'IADL (Lawton)', subtitle: 'Mesure les activités instrumentales de la vie quotidienne nécessaires à une vie autonome en communauté.',
+    tag: 'Gériatrie et statut fonctionnel', title: 'IADL (Lawton)', subtitle: 'Mesure les activités instrumentales de la vie quotidienne nécessaires à une vie autonome en communauté. Version tchèque en trois niveaux, 0–80 points.',
     criteria_heading: "Pour chaque domaine, sélectionnez le niveau d'autonomie",
     d0: 'Capacité à utiliser le téléphone', d1: 'Faire les courses', d2: 'Préparation des repas', d3: 'Entretien du domicile',
     d4: 'Lessive', d5: 'Moyen de transport', d6: 'Responsabilité de la prise de ses propres médicaments', d7: 'Capacité à gérer ses finances',
-    opt_indep: 'Indépendant(e) (1)', opt_dep: "A besoin d'aide / dépendant(e) (0)",
-    calc_btn: 'Calculer', score_label: 'Score = ', of8: ' / 8',
-    interp_note: "Un score plus élevé indique une plus grande autonomie. Il n'existe pas de seuil universel unique ; les scores sont généralement interprétés dans le contexte clinique et selon leur évolution dans le temps."
+    calc_btn: 'Calculer', score_label: 'Score = ',
+    opt_10: 'Seul(e), sans aide (10)',
+    opt_5: 'Avec aide (5)',
+    opt_0: 'Incapable (0)',
+    of80: ' / 80',
+    interp_indep: '80 — autonome pour les activités instrumentales de la vie quotidienne.',
+    interp_partial: '45–75 — partiellement dépendant(e) pour les activités instrumentales de la vie quotidienne.',
+    interp_dep: '0–40 — dépendant(e) pour les activités instrumentales de la vie quotidienne.',
+    scoring_note: 'Cotation selon la version tchèque du test IADL : chaque domaine 10 (sans aide) / 5 (avec aide) / 0 (incapable), maximum 80. L\u2019échelle originale de Lawton et Brody cote chaque domaine 0–1 (maximum 8) ; les deux totaux ne sont donc pas interchangeables.'
   },
   de: {
-    tag: 'Geriatrie & Funktionsstatus', title: 'IADL (Lawton)', subtitle: 'Misst instrumentelle Aktivitäten des täglichen Lebens, die für ein selbstständiges Leben in der Gemeinschaft nötig sind.',
+    tag: 'Geriatrie & Funktionsstatus', title: 'IADL (Lawton)', subtitle: 'Misst instrumentelle Aktivitäten des täglichen Lebens, die für ein selbstständiges Leben in der Gemeinschaft nötig sind. Dreistufige tschechische Version, 0–80 Punkte.',
     criteria_heading: 'Wählen Sie für jeden Bereich den Grad der Selbstständigkeit',
     d0: 'Fähigkeit zur Telefonnutzung', d1: 'Einkaufen', d2: 'Essenszubereitung', d3: 'Haushaltsführung',
     d4: 'Wäschepflege', d5: 'Fortbewegungsmittel', d6: 'Eigenverantwortung für Medikamenteneinnahme', d7: 'Fähigkeit zur Finanzverwaltung',
-    opt_indep: 'Selbstständig (1)', opt_dep: 'Benötigt Hilfe / abhängig (0)',
-    calc_btn: 'Berechnen', score_label: 'Score = ', of8: ' / 8',
-    interp_note: 'Höhere Werte zeigen eine größere Selbstständigkeit an. Es gibt keinen einzelnen universellen Grenzwert; Werte werden im Allgemeinen im klinischen Kontext und im zeitlichen Verlauf interpretiert.'
+    calc_btn: 'Berechnen', score_label: 'Score = ',
+    opt_10: 'Selbstständig, ohne Hilfe (10)',
+    opt_5: 'Mit Hilfe (5)',
+    opt_0: 'Nicht möglich (0)',
+    of80: ' / 80',
+    interp_indep: '80 — selbstständig bei instrumentellen Aktivitäten des täglichen Lebens.',
+    interp_partial: '45–75 — teilweise abhängig bei instrumentellen Aktivitäten des täglichen Lebens.',
+    interp_dep: '0–40 — abhängig bei instrumentellen Aktivitäten des täglichen Lebens.',
+    scoring_note: 'Wertung nach der tschechischen Version des IADL-Tests: jeder Bereich 10 (ohne Hilfe) / 5 (mit Hilfe) / 0 (nicht möglich), maximal 80. Die Originalskala nach Lawton & Brody wertet jeden Bereich mit 0–1 (maximal 8); die Summen sind daher nicht austauschbar.'
   },
   pl: {
-    tag: 'Geriatria i stan funkcjonalny', title: 'IADL (Lawton)', subtitle: 'Ocenia złożone czynności dnia codziennego niezbędne do samodzielnego funkcjonowania w społeczności.',
+    tag: 'Geriatria i stan funkcjonalny', title: 'IADL (Lawton)', subtitle: 'Ocenia złożone czynności dnia codziennego niezbędne do samodzielnego funkcjonowania w społeczności. Trzystopniowa wersja czeska, 0–80 punktów.',
     criteria_heading: 'Dla każdego obszaru wybierz poziom samodzielności',
     d0: 'Zdolność korzystania z telefonu', d1: 'Robienie zakupów', d2: 'Przygotowywanie posiłków', d3: 'Prowadzenie gospodarstwa domowego',
     d4: 'Pranie', d5: 'Sposób przemieszczania się', d6: 'Odpowiedzialność za przyjmowanie własnych leków', d7: 'Zdolność zarządzania finansami',
-    opt_indep: 'Samodzielny(a) (1)', opt_dep: 'Wymaga pomocy / zależny(a) (0)',
-    calc_btn: 'Oblicz', score_label: 'Wynik = ', of8: ' / 8',
-    interp_note: 'Wyższy wynik oznacza większą samodzielność. Nie ma jednego uniwersalnego progu; wyniki są zwykle interpretowane w kontekście klinicznym i w czasie.'
+    calc_btn: 'Oblicz', score_label: 'Wynik = ',
+    opt_10: 'Samodzielnie, bez pomocy (10)',
+    opt_5: 'Z pomocą (5)',
+    opt_0: 'Nie jest w stanie (0)',
+    of80: ' / 80',
+    interp_indep: '80 — niezależny(a) w złożonych czynnościach życia codziennego.',
+    interp_partial: '45–75 — częściowo zależny(a) w złożonych czynnościach życia codziennego.',
+    interp_dep: '0–40 — zależny(a) w złożonych czynnościach życia codziennego.',
+    scoring_note: 'Punktacja według czeskiej wersji testu IADL: każdy obszar 10 (bez pomocy) / 5 (z pomocą) / 0 (nie jest w stanie), maksimum 80. Oryginalna skala Lawtona i Brody punktuje każdy obszar 0–1 (maksimum 8), dlatego sumy nie są zamienne.'
   }
 };
 
@@ -99,13 +130,14 @@ var DOMAIN_KEYS = ['d0','d1','d2','d3','d4','d5','d6','d7'];
 function renderItems() {
   var itemsDiv = document.getElementById('items');
   var existing = DOMAIN_KEYS.map(function(k, i){ return document.getElementById('d' + i); });
-  var currentValues = existing.map(function(el){ return el ? el.value : '1'; });
+  var currentValues = existing.map(function(el){ return el ? el.value : ''; });
   itemsDiv.innerHTML = '';
   DOMAIN_KEYS.forEach(function(key, i) {
     var wrap = document.createElement('div');
     wrap.className = 'field';
     wrap.innerHTML = '<label>' + ucmT(key) + '</label>' +
-      '<select id="d' + i + '"><option value="1">' + ucmT('opt_indep') + '</option><option value="0">' + ucmT('opt_dep') + '</option></select>';
+      '<select id="d' + i + '"><option value="">' + ucmT('opt_select') + '</option>' +
+      '<option value="10">' + ucmT('opt_10') + '</option><option value="5">' + ucmT('opt_5') + '</option><option value="0">' + ucmT('opt_0') + '</option></select>';
     itemsDiv.appendChild(wrap);
     document.getElementById('d' + i).value = currentValues[i];
   });
@@ -117,10 +149,17 @@ function calcIADL() { _hasResult = true; renderResult(); }
 
 function renderResult() {
   if (!_hasResult) return;
-  var total = 0;
-  DOMAIN_KEYS.forEach(function(key, i){ total += parseInt(document.getElementById('d' + i).value, 10); });
-  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of8');
-  document.getElementById('resultInterp').innerHTML = ucmT('interp_note');
+  // Three levels per domain: without help 10 / with help 5 / unable 0 (previously "with help" and "unable" were one
+  // 0-point answer). 8 domains, maximum 80: 80 independent, 45–75 partially dependent, 0–40 dependent.
+  var total = 0, missing = false;
+  DOMAIN_KEYS.forEach(function(key, i){
+    var v = document.getElementById('d' + i).value;
+    if (v === '') missing = true; else total += parseInt(v, 10);
+  });
+  if (missing) { document.getElementById('result').classList.remove('show'); return; }
+  var interp = total >= 80 ? ucmT('interp_indep') : (total >= 45 ? ucmT('interp_partial') : ucmT('interp_dep'));
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of80');
+  document.getElementById('resultInterp').innerHTML = interp;
   document.getElementById('result').classList.add('show');
 }
 

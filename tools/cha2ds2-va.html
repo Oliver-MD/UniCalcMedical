@@ -22,18 +22,19 @@
 
   <div class="card">
     <h2 data-i18n="criteria_heading">Criteria</h2>
-    <div class="field"><label data-i18n="c_chf">Congestive heart failure / LV dysfunction</label><select id="c_chf"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
-    <div class="field"><label data-i18n="c_htn">Hypertension</label><select id="c_htn"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_chf">Congestive heart failure / LV dysfunction</label><select id="c_chf"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_htn">Hypertension</label><select id="c_htn"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <div class="field"><label data-i18n="c_age">Age</label>
       <select id="c_age">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="age0">&lt; 65 years (+0)</option>
         <option value="1" data-i18n="age1">65–74 years (+1)</option>
         <option value="2" data-i18n="age2">≥ 75 years (+2)</option>
       </select>
     </div>
-    <div class="field"><label data-i18n="c_dm">Diabetes mellitus</label><select id="c_dm"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
-    <div class="field"><label data-i18n="c_stroke">Prior stroke, TIA, or thromboembolism</label><select id="c_stroke"><option value="0" data-i18n="opt_no">No</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select></div>
-    <div class="field"><label data-i18n="c_vasc">Vascular disease (prior MI, peripheral artery disease, or aortic plaque)</label><select id="c_vasc"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_dm">Diabetes mellitus</label><select id="c_dm"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
+    <div class="field"><label data-i18n="c_stroke">Prior stroke, TIA, or thromboembolism</label><select id="c_stroke"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="2" data-i18n="opt_yes2">Yes (+2)</option></select></div>
+    <div class="field"><label data-i18n="c_vasc">Vascular disease (prior MI, peripheral artery disease, or aortic plaque)</label><select id="c_vasc"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes1">Yes (+1)</option></select></div>
     <button class="btn" data-i18n="calc_btn" onclick="calcCHA2DS2VA()">Calculate</button>
     <div class="result" id="result">
       <div class="score" id="resultScore"></div>

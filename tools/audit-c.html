@@ -24,6 +24,7 @@
     <h2 data-i18n="items_heading">Questions</h2>
     <div class="field"><label data-i18n="q0">How often do you have a drink containing alcohol?</label>
       <select id="q0">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="q0_a">Never</option>
         <option value="1" data-i18n="q0_b">Monthly or less</option>
         <option value="2" data-i18n="q0_c">2–4 times a month</option>
@@ -33,6 +34,7 @@
     </div>
     <div class="field"><label data-i18n="q1">How many standard drinks containing alcohol do you have on a typical day when drinking?</label>
       <select id="q1">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="q1_a">1 or 2</option>
         <option value="1" data-i18n="q1_b">3 or 4</option>
         <option value="2" data-i18n="q1_c">5 or 6</option>
@@ -42,6 +44,7 @@
     </div>
     <div class="field"><label data-i18n="q2">How often do you have six or more drinks on one occasion?</label>
       <select id="q2">
+        <option value="" data-i18n="opt_select">Select…</option>
         <option value="0" data-i18n="q2_a">Never</option>
         <option value="1" data-i18n="q2_b">Less than monthly</option>
         <option value="2" data-i18n="q2_c">Monthly</option>
@@ -50,7 +53,7 @@
       </select>
     </div>
     <div class="field"><label data-i18n="sex_label">Sex</label>
-      <select id="sex"><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select>
+      <select id="sex"><option value="" data-i18n="opt_select">Select…</option><option value="f" data-i18n="opt_female">Female</option><option value="m" data-i18n="opt_male">Male</option></select>
     </div>
     <button class="btn" data-i18n="calc_btn" onclick="calcAUDITC()">Calculate</button>
     <div class="result" id="result">

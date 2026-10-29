@@ -44,7 +44,7 @@
     </div>
 
     <div class="field"><label data-i18n="l_sex" for="sex">Sex</label>
-      <select id="sex"><option value="female" data-i18n="opt_female">Female</option><option value="male" data-i18n="opt_male">Male</option></select>
+      <select id="sex"><option value="" data-i18n="opt_select">Select…</option><option value="female" data-i18n="opt_female">Female</option><option value="male" data-i18n="opt_male">Male</option></select>
     </div>
 
     <div class="field"><label data-i18n="l_age" for="age">Age (years)</label>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="field"><label data-i18n="l_smoker" for="smoker">Current smoker</label>
-      <select id="smoker"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+      <select id="smoker"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
     </div>
 
     <div class="field"><label data-i18n="l_sbp" for="sbp">Systolic blood pressure (mmHg)</label>
@@ -70,7 +70,7 @@
     </div>
 
     <div class="field"><label data-i18n="l_dm" for="dm">Type 2 diabetes mellitus</label>
-      <select id="dm"><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
+      <select id="dm"><option value="" data-i18n="opt_select">Select…</option><option value="0" data-i18n="opt_no">No</option><option value="1" data-i18n="opt_yes">Yes</option></select>
       <div class="help" id="dmOldNote" style="display:none;" data-i18n="dm_old_note">From age 70 the SCORE2-OP model is used, with diabetes as a yes/no factor — the diabetes-specific data below are not needed.</div>
     </div>
 
@@ -725,7 +725,7 @@ function renderRegionList() {
 function calcSCORE2() {
   var p = readSCORE2Inputs();
   var errors = SCORE2ENGINE.validate(p);
-  if (errors.length) { alert(ucmT('err_intro') + '\n\n• ' + errors.map(function (k) { return ucmT(k); }).join('\n• ')); return; }
+  if (errors.length) { ucmShowError(ucmT('err_intro') + '\n• ' + errors.map(function (k) { return ucmT(k); }).join('\n• ')); return; }
   _lastSCORE2 = { p: p, est: SCORE2ENGINE.estimate(p) };
   renderSCORE2Result();
 }
@@ -752,7 +752,7 @@ function renderSCORE2Result() {
   if (p.age >= 69 && p.age <= 71) notes.push('note_boundary');
   notes.push('note_scope');
   notes.forEach(function (k) { h += '<div' + gap + '><strong>' + ucmT('note_prefix') + '</strong> ' + ucmT(k) + '</div>'; });
-  s2el('resultScore').textContent = risk.toFixed(1) + ucmT('pct');
+  s2el('resultScore').textContent = ucmFmt(risk, 1) + ucmT('pct');
   s2el('resultInterp').innerHTML = h;
   s2el('result').classList.add('show');
 }
