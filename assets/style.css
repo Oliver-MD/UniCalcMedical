@@ -216,6 +216,12 @@ select:focus, input:focus {
   outline: none;
   border-color: var(--accent);
 }
+/* Touch screens: 16 px text in fields and lists. A phone (an iPhone in particular) zooms the whole page in when a field
+   with smaller text is tapped, and the page stays zoomed afterwards. (The antibiotic search of the AWaRe page sets its
+   own size in that page, hence the stronger selector.) */
+@media (pointer: coarse), (max-width: 560px) {
+  select, input[type="number"], input[type="text"], input[data-ucm-num], .lang-select, html #awSearch { font-size: 16px; }
+}
 .radio-row, .check-row {
   display: flex;
   align-items: center;

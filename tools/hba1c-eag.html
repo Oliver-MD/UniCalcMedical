@@ -107,7 +107,7 @@ function calcEAG() {
   if (!src || document.getElementById(src).value === '') src = pctEl.value !== '' ? 'hba1cPct' : (mmolEl.value !== '' ? 'hba1cMmol' : null);
   if (!src) { ucmShowError(ucmT('err_invalid')); return; }
   var pct, mmol;
-  // Master equation (IFCC-NGSP), matching dashboard.html exactly:
+  // Master equation (IFCC-NGSP):
   // pct = 0.0915*mmol + 2.15  <->  mmol = (pct - 2.15) / 0.0915
   if (src === 'hba1cMmol') {
     mmol = parseFloat(mmolEl.value);
@@ -121,7 +121,7 @@ function calcEAG() {
     mmolEl.value = mmol.toFixed(0);
   }
   _hbaSource = src;
-  var eagMmol = 1.59 * pct - 2.59; // matches dashboard.html's eAG formula exactly
+  var eagMmol = 1.59 * pct - 2.59; // eAG (ADAG study)
   var eagMgDl = eagMmol * 18;
   _lastHbA1c = { pct: pct, mmol: mmol, eagMmol: eagMmol, eagMgDl: eagMgDl };
   renderResult();

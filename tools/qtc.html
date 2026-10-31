@@ -103,7 +103,7 @@ function calcQTc() {
   var hr = parseFloat(document.getElementById('hr').value);
   var sex = document.getElementById('sex').value;
   if (!qt || !hr || qt <= 0 || hr <= 0) { ucmShowError(ucmT('err_invalid')); return; }
-  var rr = 60 / hr; // in seconds, matching dashboard.html's rr = 60/hr
+  var rr = 60 / hr; // RR interval in seconds
   var bazett = qt / Math.sqrt(rr);
   var fridericia = qt / Math.pow(rr, 1 / 3);
   _lastQTc = { bazett: bazett, fridericia: fridericia, sex: sex };

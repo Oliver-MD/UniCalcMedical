@@ -541,7 +541,7 @@ var UCM_I18N_PAGE = {
 };
 
 /* SCORE2-ENGINE-BEGIN
-   Pure calculation code, no DOM access. tests/score2.test.js extracts and runs exactly this block.
+   Pure calculation code, no DOM access, so it can be tested on its own.
    Independent implementation of the published equations:
      SCORE2            Eur Heart J 2021;42(25):2439-2454   doi:10.1093/eurheartj/ehab309
      SCORE2-OP         Eur Heart J 2021;42(25):2455-2467   doi:10.1093/eurheartj/ehab312
@@ -608,7 +608,7 @@ var SCORE2ENGINE = (function () {
   }
 
   // SCORE2-Diabetes: type 2 diabetes, age 40-69. Coefficients are the final ones (SCORE2 term + diabetes correction).
-  // Baseline survival is the SCORE2 value: it reproduces the published worked examples (see tests/README.md).
+  // Baseline survival is the SCORE2 value: it reproduces the published worked examples.
   function score2diabetes(p) {
     var a = (p.age - 60) / 5, s = (p.sbp - 120) / 20, t = p.tchol - 6, h = (p.hdl - 1.3) / 0.5;
     var d = (p.dmAge - 50) / 5, b = (p.hba1c - 31) / 9.34, g = (Math.log(p.egfr) - 4.5) / 0.15;
