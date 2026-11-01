@@ -1,0 +1,379 @@
+/* UniCalcMedical — stylesheet
+   Direction: an academic reference/journal feel — warm paper background,
+   serif type, thin rules instead of heavy card shadows, monospace for
+   numeric results. Deliberately not a generic navy-card SaaS template.
+   System/web-safe fonts only — no external font loading. */
+
+:root {
+  --paper: #FAF6EE;
+  --paper-2: #F3EDE0;
+  --ink: #221E1A;
+  --ink-soft: #6B6259;
+  --ink-faint: #8F867B;
+  --rule: #DCD2BF;
+  --rule-strong: #C8BA9F;
+  --accent: #7A2E2E;
+  --accent-dark: #5A2020;
+  --accent-tint: #F2E2DF;
+  --card: #FFFFFF;
+  --warn-bg: #FBF1DD;
+  --warn-border: #D9B876;
+  --warn-text: #5C4415;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "SF Mono", "Courier New", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+a:hover { border-bottom-color: var(--accent); }
+
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 22px 70px;
+}
+
+/* Masthead — journal-style header, not a SaaS gradient bar */
+.site-header {
+  border-bottom: 3px double var(--ink);
+  background: var(--paper);
+  padding: 22px 22px 14px;
+  margin-bottom: 34px;
+}
+.site-header .inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.site-header a.brand {
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-bottom: none;
+}
+.site-header nav {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-sans);
+}
+.site-header nav a {
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-left: 20px;
+  border-bottom: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.site-header nav a:hover { color: var(--accent); }
+.lang-select {
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 3px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.lang-select:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Page title block */
+.page-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 8px;
+  letter-spacing: -0.2px;
+}
+.page-subtitle {
+  color: var(--ink-soft);
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  margin: 0 0 24px;
+  max-width: 600px;
+}
+.category-tag {
+  display: inline-block;
+  font-family: var(--font-sans);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+
+/* Search bar */
+.search-wrap { position: relative; margin-bottom: 30px; }
+.search-wrap svg {
+  position: absolute; left: 3px; top: 50%; transform: translateY(-50%);
+  color: var(--ink-faint); pointer-events: none;
+}
+#tool-search {
+  width: 100%;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-style: italic;
+  padding: 10px 8px 10px 30px;
+  border: none;
+  border-bottom: 2px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+#tool-search::placeholder { color: var(--ink-faint); }
+#tool-search:focus { outline: none; border-bottom-color: var(--accent); }
+.search-empty {
+  display: none;
+  font-family: var(--font-sans);
+  color: var(--ink-faint);
+  font-size: 13.5px;
+  padding: 24px 0;
+  font-style: italic;
+}
+.search-empty.show { display: block; }
+
+/* Disclaimer — treated like a marginal note, not a UI alert box */
+.disclaimer {
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn-border);
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--warn-text);
+  margin-bottom: 26px;
+  line-height: 1.55;
+}
+.disclaimer strong { display: block; margin-bottom: 3px; font-family: var(--font-sans); }
+
+/* Cards — thin rule + generous whitespace, not shadowed boxes */
+.card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 24px 26px;
+  margin-bottom: 18px;
+}
+.card h2 {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 10px;
+}
+
+/* Form elements */
+.field { margin-bottom: 16px; font-family: var(--font-sans); }
+.field label {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.field .help {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+select, input[type="number"], input[type="text"], input[data-ucm-num] {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  padding: 9px 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  background: var(--paper);
+  color: var(--ink);
+}
+select:focus, input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+/* Touch screens: 16 px text in fields and lists. A phone (an iPhone in particular) zooms the whole page in when a field
+   with smaller text is tapped, and the page stays zoomed afterwards. (The antibiotic search of the AWaRe page sets its
+   own size in that page, hence the stronger selector.) */
+@media (pointer: coarse), (max-width: 560px) {
+  select, input[type="number"], input[type="text"], input[data-ucm-num], .lang-select, html #awSearch { font-size: 16px; }
+}
+.radio-row, .check-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 14px;
+  padding: 5px 0;
+  font-family: var(--font-sans);
+}
+
+.btn {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 12px 26px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background .12s;
+}
+.btn:hover { background: var(--accent); }
+
+/* Result — presented like a data readout, monospace score */
+.result {
+  display: none;
+  margin-top: 22px;
+  padding: 18px 20px;
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--accent);
+  background: var(--accent-tint);
+}
+.result.show { display: block; }
+.result .score {
+  font-family: var(--font-mono);
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+.result .interp {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.result .interp strong { color: var(--accent-dark); }
+
+/* Source / citation block — footnote style */
+.source-block {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--ink-soft);
+  border-top: 1px solid var(--rule);
+  margin-top: 26px;
+  padding-top: 16px;
+  line-height: 1.7;
+}
+.source-block a { color: var(--ink-soft); border-bottom: 1px dotted var(--ink-faint); }
+.source-block a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+/* Tool index grid */
+.tool-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+.tool-grid.hidden { display: none; }
+@media (max-width: 560px) {
+  .tool-grid { grid-template-columns: 1fr; }
+}
+.tool-card {
+  display: block;
+  padding: 13px 14px;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  border-right: 1px solid var(--rule);
+  transition: background .1s;
+}
+.tool-grid > .tool-card:nth-child(2n) { border-right: none; }
+.tool-card:hover { background: var(--paper-2); }
+.tool-card.hidden { display: none; }
+.tool-card .name { font-family: var(--font-serif); font-weight: 700; font-size: 15px; color: var(--ink); margin-bottom: 2px; }
+.tool-card .use { font-family: var(--font-sans); font-size: 12px; color: var(--ink-soft); }
+
+.section-label {
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 34px 0 0;
+}
+.section-label:first-of-type { margin-top: 0; }
+.section-label.hidden { display: none; }
+
+.site-footer {
+  text-align: center;
+  font-family: var(--font-sans);
+  color: var(--ink-faint);
+  font-size: 12px;
+  padding: 40px 20px;
+  line-height: 1.7;
+  border-top: 1px solid var(--rule);
+  margin-top: 40px;
+}
+.site-footer a { color: var(--ink-faint); }
+
+/* Inline error shown under a calculate button (missing answers, out-of-range numbers) */
+.ucm-error {
+  display: none;
+  margin-top: 14px;
+  padding: 11px 14px;
+  border: 1px solid #E2B4AD;
+  border-left: 4px solid #B83A3A;
+  background: #FBECE9;
+  color: #6E1F1F;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+.ucm-error.show { display: block; }
+select.ucm-invalid, input.ucm-invalid {
+  border-color: #B83A3A;
+  background: #FFF6F4;
+  box-shadow: 0 0 0 2px rgba(184, 58, 58, 0.16);
+}
+
+/* Warning line inside a result (e.g. a dose above the drug's daily maximum) */
+.result .warn-line {
+  display: block;
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: var(--warn-bg);
+  border-left: 3px solid var(--warn-border);
+  color: var(--warn-text);
+}
+
+/* Indented list of sub-items under one criterion (e.g. the 11 illnesses of the FRAIL scale) */
+.sub-checks {
+  margin: 2px 0 10px 26px;
+  padding: 6px 0 6px 12px;
+  border-left: 2px solid var(--rule);
+}
+.sub-checks .check-row { padding: 3px 0; font-size: 13.5px; }
+.sub-checks .sub-count { font-family: var(--font-sans); font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; }

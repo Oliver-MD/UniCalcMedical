@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ottawa Knee Rules — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Musculoskeletal &amp; trauma</span>
+  <h1 class="page-title" data-i18n="title">Ottawa Knee Rules</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Decision rule for when knee X-rays are indicated after an acute injury.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">X-ray indicated if any of the following are present</h2>
+    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n="c1">Age ≥ 55 years</label></div>
+    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n="c2">Isolated tenderness of the patella (no bone tenderness other than the patella)</label></div>
+    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n="c3">Tenderness at the head of the fibula</label></div>
+    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n="c4">Inability to flex the knee to 90°</label></div>
+    <div class="check-row"><input type="checkbox" id="c5"><label for="c5" data-i18n="c5">Inability to bear weight, both immediately after injury and in the assessment (4 steps)</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcOttawaKnee()">Check result</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Stiell IG, Greenberg GH, Wells GA, et al. Prospective validation of a decision rule for the use of radiography in acute knee injuries. JAMA. 1996;275(8):611–615.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/1247/ottawa-knee-rule" target="_blank" rel="noopener">MDCalc — Ottawa Knee Rule</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Musculoskeletal & trauma', title: 'Ottawa Knee Rules', subtitle: 'Decision rule for when knee X-rays are indicated after an acute injury.',
+    criteria_heading: 'X-ray indicated if any of the following are present',
+    c1: 'Age ≥ 55 years', c2: 'Isolated tenderness of the patella (no bone tenderness other than the patella)',
+    c3: 'Tenderness at the head of the fibula', c4: 'Inability to flex the knee to 90°',
+    c5: 'Inability to bear weight, both immediately after injury and in the assessment (4 steps)',
+    calc_btn: 'Check result',
+    interp_yes: 'X-ray indicated.', interp_no: 'X-ray not indicated based on these criteria.'
+  },
+  cs: {
+    tag: 'Pohybový aparát a trauma', title: 'Ottawská pravidla kolena', subtitle: 'Rozhodovací pravidlo pro indikaci RTG kolena po akutním úrazu.',
+    criteria_heading: 'RTG je indikováno, pokud je přítomno alespoň jedno z následujícího',
+    c1: 'Věk ≥ 55 let', c2: 'Izolovaná bolestivost pately (žádná jiná kostní bolestivost kromě pately)',
+    c3: 'Bolestivost hlavičky fibuly', c4: 'Neschopnost flexe kolena do 90°',
+    c5: 'Neschopnost zatížit končetinu, a to jak bezprostředně po úrazu, tak při vyšetření (4 kroky)',
+    calc_btn: 'Zobrazit výsledek',
+    interp_yes: 'RTG vyšetření je indikováno.', interp_no: 'Na základě těchto kritérií není RTG indikováno.'
+  },
+  fr: {
+    tag: 'Musculo-squelettique et traumatologie', title: 'Règles d\u2019Ottawa pour le genou', subtitle: "Règle de décision pour l'indication d'une radiographie du genou après un traumatisme aigu.",
+    criteria_heading: "Radiographie indiquée si l'un des éléments suivants est présent",
+    c1: 'Âge ≥ 55 ans', c2: "Douleur isolée de la rotule (aucune autre douleur osseuse que la rotule)",
+    c3: 'Douleur à la tête du péroné', c4: "Incapacité à fléchir le genou à 90°",
+    c5: "Incapacité à porter du poids, à la fois immédiatement après le traumatisme et lors de l'évaluation (4 pas)",
+    calc_btn: 'Voir le résultat',
+    interp_yes: 'Radiographie indiquée.', interp_no: 'Radiographie non indiquée sur la base de ces critères.'
+  },
+  de: {
+    tag: 'Bewegungsapparat & Trauma', title: 'Ottawa Knee Rules', subtitle: 'Entscheidungsregel für die Indikation einer Röntgenaufnahme des Knies nach akuter Verletzung.',
+    criteria_heading: 'Röntgen indiziert, wenn eines der folgenden Kriterien zutrifft',
+    c1: 'Alter ≥ 55 Jahre', c2: 'Isolierter Druckschmerz der Patella (kein weiterer Knochendruckschmerz außer der Patella)',
+    c3: 'Druckschmerz am Fibulaköpfchen', c4: 'Unfähigkeit, das Knie auf 90° zu beugen',
+    c5: 'Unfähigkeit zur Belastung, sowohl unmittelbar nach der Verletzung als auch bei der Untersuchung (4 Schritte)',
+    calc_btn: 'Ergebnis anzeigen',
+    interp_yes: 'Röntgenaufnahme indiziert.', interp_no: 'Röntgenaufnahme anhand dieser Kriterien nicht indiziert.'
+  },
+  pl: {
+    tag: 'Układ mięśniowo-szkieletowy i urazy', title: 'Reguły ottawskie dla kolana', subtitle: 'Reguła decyzyjna dotycząca wskazań do RTG kolana po ostrym urazie.',
+    criteria_heading: 'RTG jest wskazane, jeśli występuje którekolwiek z poniższych',
+    c1: 'Wiek ≥ 55 lat', c2: 'Izolowana bolesność rzepki (brak innej bolesności kostnej poza rzepką)',
+    c3: 'Bolesność głowy strzałki', c4: 'Niemożność zgięcia kolana do 90°',
+    c5: 'Niemożność obciążenia kończyny, zarówno bezpośrednio po urazie, jak i podczas badania (4 kroki)',
+    calc_btn: 'Pokaż wynik',
+    interp_yes: 'RTG jest wskazane.', interp_no: 'Na podstawie tych kryteriów RTG nie jest wskazane.'
+  }
+};
+
+var _lastResult = null;
+
+function calcOttawaKnee() {
+  var any = ['c1','c2','c3','c4','c5'].some(function(id){ return document.getElementById(id).checked; });
+  _lastResult = any;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastResult === null) return;
+  var yes = _lastResult;
+  document.getElementById('resultScore').textContent = yes ? '⚠' : '✓';
+  document.getElementById('resultInterp').innerHTML = yes ? ucmT('interp_yes') : ucmT('interp_no');
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

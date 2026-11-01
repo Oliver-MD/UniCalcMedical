@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>qSOFA — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Infection &amp; antimicrobials</span>
+  <h1 class="page-title" data-i18n="title">qSOFA</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Quick Sequential Organ Failure Assessment — rapid bedside screen for sepsis-related risk of poor outcome.</p>
+
+  <div class="card">
+    <h2 data-i18n="criteria_heading">Criteria (1 point each)</h2>
+    <div class="check-row"><input type="checkbox" id="c_rr"><label for="c_rr" data-i18n="c_rr">Respiratory rate ≥ 22/min</label></div>
+    <div class="check-row"><input type="checkbox" id="c_mental"><label for="c_mental" data-i18n="c_mental">Altered mentation (GCS &lt; 15)</label></div>
+    <div class="check-row"><input type="checkbox" id="c_sbp"><label for="c_sbp" data-i18n="c_sbp">Systolic blood pressure ≤ 100 mmHg</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcQSOFA()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Singer M, Deutschman CS, Seymour CW, et al. The Third International Consensus Definitions for Sepsis and Septic Shock (Sepsis-3). JAMA. 2016;315(8):801–810.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/2654/qsofa-quick-sofa-score-sepsis" target="_blank" rel="noopener">MDCalc — qSOFA</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Infection & antimicrobials', title: 'qSOFA', subtitle: 'Quick Sequential Organ Failure Assessment — rapid bedside screen for sepsis-related risk of poor outcome.',
+    criteria_heading: 'Criteria (1 point each)',
+    c_rr: 'Respiratory rate ≥ 22/min', c_mental: 'Altered mentation (GCS < 15)', c_sbp: 'Systolic blood pressure ≤ 100 mmHg',
+    calc_btn: 'Calculate', score_label: 'Score = ', of3: ' / 3',
+    interp_low: 'Score 0–1 — lower risk; qSOFA is a screening prompt, not a diagnostic test for sepsis.',
+    interp_high: 'Score ≥ 2 — associated with greater risk of poor outcome; prompts further assessment for organ dysfunction/sepsis.'
+  },
+  cs: {
+    tag: 'Infekce a antimikrobiální léčba', title: 'qSOFA', subtitle: 'Rychlé bed-side skóre orgánové dysfunkce — screening rizika nepříznivého průběhu při podezření na sepsi.',
+    criteria_heading: 'Kritéria (1 bod za každé)',
+    c_rr: 'Dechová frekvence ≥ 22/min', c_mental: 'Změna vědomí (GCS < 15)', c_sbp: 'Systolický krevní tlak ≤ 100 mmHg',
+    calc_btn: 'Vypočítat', score_label: 'Skóre = ', of3: ' / 3',
+    interp_low: 'Skóre 0–1 — nižší riziko; qSOFA je screeningový nástroj, ne diagnostický test sepse.',
+    interp_high: 'Skóre ≥ 2 — spojeno s vyšším rizikem nepříznivého průběhu; indikuje další vyšetření orgánové dysfunkce/sepse.'
+  },
+  fr: {
+    tag: 'Infection et antimicrobiens', title: 'qSOFA', subtitle: "Score rapide au lit du patient d'évaluation de la défaillance d'organe — dépistage du risque d'évolution défavorable en cas de sepsis.",
+    criteria_heading: 'Critères (1 point chacun)',
+    c_rr: 'Fréquence respiratoire ≥ 22/min', c_mental: 'Altération de la conscience (GCS < 15)', c_sbp: 'Pression artérielle systolique ≤ 100 mmHg',
+    calc_btn: 'Calculer', score_label: 'Score = ', of3: ' / 3',
+    interp_low: "Score 0–1 — risque plus faible ; le qSOFA est un outil de dépistage, pas un test diagnostique du sepsis.",
+    interp_high: "Score ≥ 2 — associé à un risque plus élevé d'évolution défavorable ; justifie une évaluation complémentaire de la défaillance d'organe/sepsis."
+  },
+  de: {
+    tag: 'Infektion & Antibiotika', title: 'qSOFA', subtitle: 'Schnelles Bedside-Score zur Organdysfunktion — Screening auf erhöhtes Risiko bei Sepsisverdacht.',
+    criteria_heading: 'Kriterien (je 1 Punkt)',
+    c_rr: 'Atemfrequenz ≥ 22/min', c_mental: 'Bewusstseinsveränderung (GCS < 15)', c_sbp: 'Systolischer Blutdruck ≤ 100 mmHg',
+    calc_btn: 'Berechnen', score_label: 'Score = ', of3: ' / 3',
+    interp_low: 'Score 0–1 — geringeres Risiko; qSOFA ist ein Screening-Hinweis, kein diagnostischer Sepsistest.',
+    interp_high: 'Score ≥ 2 — mit erhöhtem Risiko eines ungünstigen Verlaufs assoziiert; weitere Abklärung von Organdysfunktion/Sepsis angezeigt.'
+  },
+  pl: {
+    tag: 'Infekcje i leki przeciwdrobnoustrojowe', title: 'qSOFA', subtitle: 'Szybka skala oceny dysfunkcji narządowej przy łóżku pacjenta — przesiewowa ocena ryzyka niekorzystnego przebiegu przy podejrzeniu sepsy.',
+    criteria_heading: 'Kryteria (1 punkt każde)',
+    c_rr: 'Częstość oddechów ≥ 22/min', c_mental: 'Zaburzenia świadomości (GCS < 15)', c_sbp: 'Ciśnienie skurczowe ≤ 100 mmHg',
+    calc_btn: 'Oblicz', score_label: 'Wynik = ', of3: ' / 3',
+    interp_low: 'Wynik 0–1 — niższe ryzyko; qSOFA jest narzędziem przesiewowym, a nie testem diagnostycznym sepsy.',
+    interp_high: 'Wynik ≥ 2 — związany z wyższym ryzykiem niekorzystnego przebiegu; wskazuje na potrzebę dalszej oceny dysfunkcji narządowej/sepsy.'
+  }
+};
+
+var _lastQSOFA = null;
+
+function calcQSOFA() {
+  var ids = ['c_rr','c_mental','c_sbp'];
+  var total = ids.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastQSOFA = total;
+  renderQSOFAResult();
+}
+
+function renderQSOFAResult() {
+  if (_lastQSOFA === null) return;
+  var total = _lastQSOFA;
+  var interp = total >= 2 ? ucmT('interp_high') : ucmT('interp_low');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of3');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderQSOFAResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>

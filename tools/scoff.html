@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCOFF Questionnaire — UniCalcMedical</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="../index.html" data-i18n="brand">UniCalcMedical</a>
+    <nav><a href="../index.html" data-i18n="nav_all_tools">All tools</a><select id="lang-select" class="lang-select"></select></nav>
+  </div>
+</header>
+
+<div class="container">
+  <span class="category-tag" data-i18n="tag">Mental health &amp; substance use</span>
+  <h1 class="page-title" data-i18n="title">SCOFF Questionnaire</h1>
+  <p class="page-subtitle" data-i18n="subtitle">Five-item screening tool for possible eating disorders.</p>
+
+  <div class="card">
+    <h2 data-i18n="items_heading">Questions</h2>
+    <div class="check-row"><input type="checkbox" id="c0"><label for="c0" data-i18n="c0">Do you make yourself Sick because you feel uncomfortably full?</label></div>
+    <div class="check-row"><input type="checkbox" id="c1"><label for="c1" data-i18n="c1">Do you worry you have lost Control over how much you eat?</label></div>
+    <div class="check-row"><input type="checkbox" id="c2"><label for="c2" data-i18n="c2">Have you recently lost more than One stone (about 6.35 kg) in a 3-month period?</label></div>
+    <div class="check-row"><input type="checkbox" id="c3"><label for="c3" data-i18n="c3">Do you believe yourself to be Fat when others say you are too thin?</label></div>
+    <div class="check-row"><input type="checkbox" id="c4"><label for="c4" data-i18n="c4">Would you say that Food dominates your life?</label></div>
+    <button class="btn" data-i18n="calc_btn" onclick="calcSCOFF()">Calculate</button>
+    <div class="result" id="result">
+      <div class="score" id="resultScore"></div>
+      <div class="interp" id="resultInterp"></div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <strong data-i18n="disclaimer_title">Not a medical device.</strong>
+    <span data-i18n="disclaimer_body">These calculators are reference implementations of published clinical scoring systems, intended for educational and informational use. They are not intended for clinical diagnosis, treatment decisions, or patient care, and do not replace independent clinical judgement.</span>
+  </div>
+
+  <div class="source-block">
+    <strong data-i18n="reference_label">Reference:</strong> Morgan JF, Reid F, Lacey JH. The SCOFF questionnaire: assessment of a new screening tool for eating disorders. BMJ. 1999;319(7223):1467–1468.<br>
+    <span data-i18n="verify_against">Verify against:</span> <a href="https://www.mdcalc.com/calc/10192/scoff-questionnaire-eating-disorder-screening" target="_blank" rel="noopener">MDCalc — SCOFF</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <a href="../index.html" data-i18n="back_to_all">← All UniCalcMedical tools</a>
+</footer>
+
+<script>
+var UCM_I18N_PAGE = {
+  en: {
+    tag: 'Mental health & substance use', title: 'SCOFF Questionnaire', subtitle: 'Five-item screening tool for possible eating disorders.',
+    items_heading: 'Questions',
+    c0: 'Do you make yourself Sick because you feel uncomfortably full?', c1: 'Do you worry you have lost Control over how much you eat?',
+    c2: 'Have you recently lost more than One stone (about 6.35 kg) in a 3-month period?', c3: 'Do you believe yourself to be Fat when others say you are too thin?',
+    c4: 'Would you say that Food dominates your life?', calc_btn: 'Calculate', score_label: 'Score = ', of5: ' / 5',
+    interp_low: 'Score 0–1 — screen negative.', interp_high: 'Score ≥2 — screen positive; further clinical assessment recommended.'
+  },
+  cs: {
+    tag: 'Duševní zdraví a návykové látky', title: 'Dotazník SCOFF', subtitle: 'Pětiotázkový screeningový nástroj pro možnou poruchu příjmu potravy.',
+    items_heading: 'Otázky',
+    c0: 'Vyvoláváte si zvracení, protože se cítíte nepříjemně plný(á)?', c1: 'Máte obavy, že jste ztratil(a) kontrolu nad tím, kolik toho sníte?',
+    c2: 'Zhubl(a) jste nedávno o více než 6 kg za období 3 měsíců?', c3: 'Věříte, že jste tlustý(á), i když vám ostatní říkají, že jste příliš hubený(á)?',
+    c4: 'Řekl(a) byste, že jídlo ovládá váš život?', calc_btn: 'Vypočítat', score_label: 'Skóre = ', of5: ' / 5',
+    interp_low: 'Skóre 0–1 — negativní screening.', interp_high: 'Skóre ≥2 — pozitivní screening; doporučeno další klinické vyšetření.'
+  },
+  fr: {
+    tag: 'Santé mentale et addictions', title: 'Questionnaire SCOFF', subtitle: 'Outil de dépistage en cinq questions pour un éventuel trouble du comportement alimentaire.',
+    items_heading: 'Questions',
+    c0: 'Vous faites-vous vomir parce que vous vous sentez inconfortablement plein(e) ?', c1: "Craignez-vous d'avoir perdu le contrôle de la quantité de nourriture que vous mangez ?",
+    c2: 'Avez-vous récemment perdu plus de 6 kg en une période de 3 mois ?', c3: 'Pensez-vous être gros(se) alors que les autres vous trouvent trop maigre ?',
+    c4: 'Diriez-vous que la nourriture domine votre vie ?', calc_btn: 'Calculer', score_label: 'Score = ', of5: ' / 5',
+    interp_low: 'Score 0–1 — dépistage négatif.', interp_high: 'Score ≥2 — dépistage positif ; une évaluation clinique complémentaire est recommandée.'
+  },
+  de: {
+    tag: 'Psychische Gesundheit & Substanzgebrauch', title: 'SCOFF-Fragebogen', subtitle: 'Fünf-Item-Screening-Instrument für eine mögliche Essstörung.',
+    items_heading: 'Fragen',
+    c0: 'Erbrechen Sie sich, weil Sie sich unangenehm voll fühlen?', c1: 'Befürchten Sie, die Kontrolle darüber verloren zu haben, wie viel Sie essen?',
+    c2: 'Haben Sie kürzlich mehr als 6 kg innerhalb von 3 Monaten abgenommen?', c3: 'Halten Sie sich für dick, obwohl andere sagen, Sie seien zu dünn?',
+    c4: 'Würden Sie sagen, dass Essen Ihr Leben dominiert?', calc_btn: 'Berechnen', score_label: 'Score = ', of5: ' / 5',
+    interp_low: 'Score 0–1 — negatives Screening.', interp_high: 'Score ≥2 — positives Screening; weitere klinische Abklärung empfohlen.'
+  },
+  pl: {
+    tag: 'Zdrowie psychiczne i uzależnienia', title: 'Kwestionariusz SCOFF', subtitle: 'Pięciopytaniowe narzędzie przesiewowe w kierunku możliwego zaburzenia odżywiania.',
+    items_heading: 'Pytania',
+    c0: 'Czy wywołuje Pan/Pani u siebie wymioty, ponieważ czuje się Pan/Pani nieprzyjemnie najedzony(a)?', c1: 'Czy obawia się Pan/Pani, że stracił(a) Pan/Pani kontrolę nad ilością spożywanego jedzenia?',
+    c2: 'Czy w ciągu ostatnich 3 miesięcy schudł(a) Pan/Pani więcej niż 6 kg?', c3: 'Czy uważa się Pan/Pani za osobę otyłą, mimo że inni mówią, że jest Pan/Pani zbyt szczupły(a)?',
+    c4: 'Czy powiedział(a)by Pan/Pani, że jedzenie dominuje w Pana/Pani życiu?', calc_btn: 'Oblicz', score_label: 'Wynik = ', of5: ' / 5',
+    interp_low: 'Wynik 0–1 — wynik ujemny.', interp_high: 'Wynik ≥2 — wynik dodatni; zalecana dalsza ocena kliniczna.'
+  }
+};
+
+var _lastSCOFF = null;
+
+function calcSCOFF() {
+  var ids = ['c0','c1','c2','c3','c4'];
+  var total = ids.filter(function(id){ return document.getElementById(id).checked; }).length;
+  _lastSCOFF = total;
+  renderResult();
+}
+
+function renderResult() {
+  if (_lastSCOFF === null) return;
+  var total = _lastSCOFF;
+  var interp = total >= 2 ? ucmT('interp_high') : ucmT('interp_low');
+  document.getElementById('resultScore').textContent = ucmT('score_label') + total + ucmT('of5');
+  document.getElementById('resultInterp').innerHTML = interp;
+  document.getElementById('result').classList.add('show');
+}
+
+window.ucmOnLangChange = function() { renderResult(); };
+</script>
+<script src="../assets/i18n.js"></script>
+</body>
+</html>
